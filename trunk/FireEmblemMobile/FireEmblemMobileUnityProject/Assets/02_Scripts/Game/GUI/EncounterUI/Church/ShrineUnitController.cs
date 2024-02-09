@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,8 @@ namespace LostGrace
         [SerializeField] private SpriteRenderer sprite;
         private int currentPosition = 0;
 
-        [SerializeField] private float movetime = 1.5f;
+        [SerializeField] private float movetimeStart = 1.5f;
+        private float moveTime = 0;
         [SerializeField] private AnimationSpriteSwapper spriteSwapper;
         [SerializeField] private Queue<QueueEntry> positionQueue;
         private static readonly int Walking = Animator.StringToHash("Walking");
@@ -60,18 +62,22 @@ namespace LostGrace
             if(positionQueue.Count==2)
                 Move(LeanTweenType.linear);
         }
-        
+
+        public Action<bool> onMoveFinished;
         void Move(LeanTweenType ease)
         {
+            moveTime = movetimeStart / positionQueue.Count;
             LeanTween.cancel(toMove);
-            LeanTween.moveX(toMove, positionQueue.Peek().Transform.position.x, movetime).setEase(positionQueue.Peek().Direction?(positionQueue.Peek().PositionIndex%2==0?LeanTweenType.easeInQuad:LeanTweenType.easeOutQuad):positionQueue.Peek().PositionIndex%2==0?LeanTweenType.easeInQuad:LeanTweenType.easeOutQuad).setOnComplete(()=>
+            LeanTween.moveX(toMove, positionQueue.Peek().Transform.position.x, moveTime).setEase(positionQueue.Peek().Direction?(positionQueue.Peek().PositionIndex%2==0?LeanTweenType.easeInQuad:LeanTweenType.easeOutQuad):positionQueue.Peek().PositionIndex%2==0?LeanTweenType.easeInQuad:LeanTweenType.easeOutQuad).setOnComplete(()=>
             {
                
                    // animator.SetTrigger(Idle);
             });
-            LeanTween.moveZ(toMove, positionQueue.Peek().Transform.position.z, movetime).setEase(positionQueue.Peek().Direction?(positionQueue.Peek().PositionIndex%2==0?LeanTweenType.easeOutQuad:LeanTweenType.easeInQuad):positionQueue.Peek().PositionIndex%2==0?LeanTweenType.easeOutQuad:LeanTweenType.easeInQuad).setOnComplete(()=>
+            LeanTween.moveZ(toMove, positionQueue.Peek().Transform.position.z, moveTime).setEase(positionQueue.Peek().Direction?(positionQueue.Peek().PositionIndex%2==0?LeanTweenType.easeOutQuad:LeanTweenType.easeInQuad):positionQueue.Peek().PositionIndex%2==0?LeanTweenType.easeOutQuad:LeanTweenType.easeInQuad).setOnComplete(()=>
             {
+                onMoveFinished?.Invoke(positionQueue.Peek().Direction);
                  positionQueue.Dequeue();
+                 
                 if (positionQueue.Count != 0)
                 {
                     if(positionQueue.Count==1)

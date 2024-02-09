@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace LostGrace
@@ -8,8 +9,10 @@ namespace LostGrace
     {
         [SerializeField] private GameObject pivot;
 
-        [SerializeField] private float rotTime = 1.5f;
+        [SerializeField] private float startRotTime = 1.5f;
+        private float rotTime = 0;
         [SerializeField] private List<float> rotations;
+        public Queue<float> rotationQueue;
 
         private int currentRotation;
 
@@ -17,7 +20,7 @@ namespace LostGrace
         // Start is called before the first frame update
         void Start()
         {
-        
+            rotationQueue = new Queue<float>();
         }
 
         // Update is called once per frame
@@ -26,13 +29,24 @@ namespace LostGrace
         
         }
 
-        void Rotate()
+        void Rotate(bool freshStart=false)
         {
+            if (rotationQueue.Count == 0)
+                return;
             LeanTween.cancel(pivot);
-            float currentRotY = transform.localRotation.eulerAngles.y;
-            float diff = currentRotationExact + currentRotY;
-            MyDebug.LogTest("Rotation: "+currentRotationExact+" "+diff);
-            LeanTween.rotateAroundLocal(pivot, Vector3.up,diff, rotTime).setEaseInOutQuad();
+            MyDebug.LogTest("RotTime: "+rotTime);
+            var easeType = rotationQueue.Count == 1 ? LeanTweenType.easeOutQuad : LeanTweenType.notUsed;
+            if (freshStart)
+                easeType = LeanTweenType.easeInOutQuad;
+            rotTime = startRotTime/rotationQueue.Count;
+            LeanTween.rotateLocal(pivot, new Vector3(0,rotationQueue.Peek(),0), rotTime).setEase(easeType).setOnComplete(()=>
+            {
+                rotationQueue.Dequeue();
+                if (rotationQueue.Count() != 0)
+                {
+                    Rotate();
+                }
+            });
 
         }
 
@@ -41,8 +55,8 @@ namespace LostGrace
             currentRotation--;
             if (currentRotation < 0)
                 currentRotation = rotations.Count - 1;
-            currentRotationExact -= 90;
-            Rotate();
+            rotationQueue.Enqueue(rotations[currentRotation]);
+            Rotate(rotationQueue.Count==1);
         }
 
         public void RotateLeft()
@@ -50,8 +64,10 @@ namespace LostGrace
             currentRotation++;
             if (currentRotation >rotations.Count - 1)
                 currentRotation = 0;
-            currentRotationExact += 90;
-            Rotate();
+            rotationQueue.Enqueue(rotations[currentRotation]);
+            
+            //if(rotationQueue.Count==1)
+            Rotate(rotationQueue.Count==1);
         }
     }
 }

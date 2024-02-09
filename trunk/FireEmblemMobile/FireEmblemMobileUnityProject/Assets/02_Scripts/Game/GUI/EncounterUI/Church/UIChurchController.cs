@@ -219,7 +219,7 @@ public class UIChurchController : MonoBehaviour
         canvas.enabled = true;
         this.party = party;
         this.church = node.church;
-        shrineController.Show();
+        shrineController.Show(gods);
         party.onActiveUnitChanged -= ActiveUnitChanged;
         party.onActiveUnitChanged += ActiveUnitChanged;
         alreadyPrayed = new List<Unit>();
