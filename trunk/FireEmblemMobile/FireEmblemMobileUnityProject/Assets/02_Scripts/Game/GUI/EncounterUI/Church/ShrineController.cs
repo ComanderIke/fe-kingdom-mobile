@@ -56,5 +56,12 @@ namespace LostGrace
             unitController.MoveRight();
             //godStatueController.Previous();
         }
+
+        public void JumpToGod(int selectedGod)
+        {
+            MyDebug.LogTest("Jump To: "+selectedGod);
+            cameraController.JumpTo(selectedGod);
+            unitController.MoveTo(selectedGod);
+        }
     }
 }

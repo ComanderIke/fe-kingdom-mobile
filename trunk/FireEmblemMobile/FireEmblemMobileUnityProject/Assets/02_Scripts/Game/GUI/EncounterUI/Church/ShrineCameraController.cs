@@ -69,5 +69,18 @@ namespace LostGrace
             //if(rotationQueue.Count==1)
             Rotate(rotationQueue.Count==1);
         }
+
+        public void JumpTo(int selectedGod)
+        {
+            if (selectedGod % rotations.Count() == currentRotation&&selectedGod!=currentRotation)
+                selectedGod += 2;
+            currentRotation = selectedGod % rotations.Count();
+            rotationQueue.Clear();
+            LeanTween.cancel(pivot);
+            rotationQueue.Enqueue(rotations[currentRotation]);
+            
+            //if(rotationQueue.Count==1)
+            Rotate(rotationQueue.Count==1);
+        }
     }
 }

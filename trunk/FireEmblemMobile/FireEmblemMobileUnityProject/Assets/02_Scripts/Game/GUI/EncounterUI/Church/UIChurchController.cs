@@ -93,8 +93,11 @@ public class UIChurchController : MonoBehaviour
         unitIdleAnimation.Show(party.ActiveUnit);
         if (prevGod != selectedGod)
         {
-           
-           if(prevGod>selectedGod)
+            if (Math.Abs(prevGod - selectedGod) > 1)
+            {
+                shrineController.JumpToGod(selectedGod);
+            }
+           else if(prevGod>selectedGod)
                 shrineController.NextStatue();
            else
            {

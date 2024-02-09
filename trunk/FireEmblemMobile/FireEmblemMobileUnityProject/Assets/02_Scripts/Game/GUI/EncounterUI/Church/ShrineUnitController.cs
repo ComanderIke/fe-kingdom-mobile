@@ -49,6 +49,18 @@ namespace LostGrace
         {
             animator.SetTrigger(Idle);
         }
+
+        public void MoveTo(int index)
+        {
+            if (index % positions.Count() == currentPosition&&index!=currentPosition)
+                index += 2;
+            MyDebug.LogTest("Move To: "+index);
+            currentPosition = index % positions.Count;
+            positionQueue.Clear();
+            LeanTween.cancel(toMove);
+            positionQueue.Enqueue(new QueueEntry(positions[currentPosition], false, currentPosition));
+            Move(LeanTweenType.easeInOutQuad);
+        }
         
         public void MoveRight()
         {
