@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4c365e0321c4b1fa3b810f9a3461d02, type: 3}
-  m_Name: FastLearner
+  m_Name: MaxPotential
   m_EditorClassIdentifier: 
-  label: Fast Learners
+  label: Maxpotential
   maxLevel: 3
   costToLevel: 64000000c80000002c010000
-  Description: Your units earn 5% more exp in battle.
-  icon: {fileID: 4290992548648280643, guid: 362d3326f35b9534f88830408980c9f2, type: 3}
-  xPosInTree: 4
-  yPosInTree: 1
-  availableAtStart: 1
+  Description: Increases chance to learn higher tier skills.
+  icon: {fileID: 21300000, guid: c4aeed02233dcdb41bff6bc162353da3, type: 3}
+  requiredFlameLevel: 0
+  toggle: 0
+  mixins:
+  - {fileID: 11400000, guid: 660f412a7dd7b4959a8102ee2f61aea1, type: 2}

@@ -9,8 +9,6 @@ public class MetaUpgradeBP: ScriptableObject
     public int[] costToLevel;
     public string Description;
     public Sprite icon;
-    public int xPosInTree=0;
-    public int yPosInTree=0;
     public int requiredFlameLevel = 0;
     public bool toggle = false;
     public List<MetaUpgradeMixin> mixins;

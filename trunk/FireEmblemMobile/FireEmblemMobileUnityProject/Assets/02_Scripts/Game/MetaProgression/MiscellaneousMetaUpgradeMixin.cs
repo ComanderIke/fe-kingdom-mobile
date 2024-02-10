@@ -6,11 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/Miscellaneous", fileName = "MetaUpgrade1")]
 public class MiscellaneousMetaUpgradeMixin : MetaUpgradeMixin
 {
-    public SerializableDictionary<MiscellaneousType, int> intValues;
+    public SerializableDictionary<MiscellaneousType, int>[] intValues;
 
     public override void Activate(int level)
     {
-        foreach (KeyValuePair<MiscellaneousType, int> valuePair in intValues)
+        foreach (KeyValuePair<MiscellaneousType, int> valuePair in intValues[level])
         {
             switch (valuePair.Key)
             {

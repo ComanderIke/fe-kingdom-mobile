@@ -9,19 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fad418b7bee8462683c663d06c9c9e6e, type: 3}
-  m_Name: AttributeModifier
+  m_Script: {fileID: 11500000, guid: f04fd13e0a7f4ce2883bef17316eba24, type: 3}
+  m_Name: PartyModifier 1
   m_EditorClassIdentifier: 
-  label: 
-  maxLevel: 0
-  costToLevel: 
-  Description: 
-  icon: {fileID: 0}
-  xPosInTree: 0
-  yPosInTree: 0
-  requiredFlameLevel: 0
-  toggle: 0
-  attributes:
-    list:
+  value: 01000000
+  ModifierType: 1
+  flags:
+  - list:
     - Key: 0
+      Value: 1
+  - list:
+    - Key: 0
+      Value: 1
+    - Key: 2
+      Value: 1
+  - list:
+    - Key: 0
+      Value: 1
+    - Key: 2
+      Value: 1
+    - Key: 4
       Value: 1

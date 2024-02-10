@@ -8,7 +8,7 @@ public class PartyModifierMetaUpgradeMixin : MetaUpgradeMixin
 {
     public int[] value;
     public PartyModifierType ModifierType;
-    public SerializableDictionary<PartyFlag, bool> flags;
+    public SerializableDictionary<PartyFlag, bool>[] flags;
     public override void Activate(int level)
     {
         switch (ModifierType)
@@ -28,7 +28,7 @@ public class PartyModifierMetaUpgradeMixin : MetaUpgradeMixin
             
         }
 
-        foreach (KeyValuePair<PartyFlag, bool> valuePair in flags)
+        foreach (KeyValuePair<PartyFlag, bool> valuePair in flags[level])
         {
             switch (valuePair.Key)
             {

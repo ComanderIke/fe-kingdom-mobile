@@ -4,6 +4,7 @@ namespace Game.GameActors.Players
     {
         public Modifiers()
         {
+            GrowthIncrease = 0;
             ExperienceGain = 1.0f;
             GoldGain = 1.0f;
             GraceGain = 1.0f;
@@ -17,6 +18,9 @@ namespace Game.GameActors.Players
             KillExpRate = 1.0f;
             RestHealRate = 1.0f;
             RareEncounterRate = 1.0f;
+            RareSkillRarity = 1.0f;
+            EpicSkillRarity = 1.0f;
+            LegendarySkillRarity = 1.0f;
         }
         public float ExperienceGain { get; set; }
         public float GoldGain { get; set; }
@@ -33,5 +37,9 @@ namespace Game.GameActors.Players
         public float KillExpRate { get; set; }
         public float RestHealRate { get; set; }
         public float RareEncounterRate { get; set; }
+        public float GrowthIncrease { get; set; }
+        public float RareSkillRarity { get; set; }
+        public float EpicSkillRarity { get; set; }
+        public float LegendarySkillRarity { get; set; }
     }
 }

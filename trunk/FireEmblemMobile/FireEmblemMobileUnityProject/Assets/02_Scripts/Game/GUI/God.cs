@@ -12,6 +12,7 @@ namespace LostGrace
         public Color Color;
         public Color TooltipColor;
         public Color TooltipFrameColor;
+        public Color upgradeBGColor;
         public BlessingBP BlessingBp;
         public Material GlowMaterial;
         public Sprite statueSprite;

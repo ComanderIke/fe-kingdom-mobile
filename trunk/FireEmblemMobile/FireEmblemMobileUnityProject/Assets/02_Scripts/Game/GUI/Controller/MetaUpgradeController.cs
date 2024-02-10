@@ -82,7 +82,7 @@ public class MetaUpgradeController : MonoBehaviour
         LeanTween.cancel(gameObject);
         LeanTween.value(gameObject, 0, 1, pageAnimationTime).setEaseInOutQuad().setOnUpdate((val) =>
         {
-            Color color = Color.Lerp( backgroundImage1.material.GetColor(TintColor),upgradePages[currentPage].god.Color, val);
+            Color color = Color.Lerp( backgroundImage1.material.GetColor(TintColor),upgradePages[currentPage].god.upgradeBGColor, val);
             Color color2 = Color.Lerp( titleImage.material.GetColor(TintColor),upgradePages[currentPage].god.TooltipFrameColor, val);
             backgroundImage1.material.SetColor(TintColor, color);
             backgroundImage2.material.SetColor(TintColor, color);

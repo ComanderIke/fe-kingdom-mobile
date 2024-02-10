@@ -11,6 +11,9 @@ public class ModifierMetaUpgradeMixin: MetaUpgradeMixin
     {
         switch (ModifierType)
         {
+            case ModifierType.Growth:
+                Player.Instance.Modifiers.GrowthIncrease = percentage[level];
+                break;
             case ModifierType.Experience:
                 Player.Instance.Modifiers.ExperienceGain = percentage[level];
                 break;
@@ -56,6 +59,15 @@ public class ModifierMetaUpgradeMixin: MetaUpgradeMixin
             case ModifierType.RareEncounterRate: 
                 Player.Instance.Modifiers.RareEncounterRate = percentage[level];
                 break;
+            case ModifierType.RareSkillRarity:
+                Player.Instance.Modifiers.RareSkillRarity = percentage[level];
+                break;
+            case ModifierType.EpicSkillRarity:
+                Player.Instance.Modifiers.EpicSkillRarity = percentage[level];
+                break;
+            case ModifierType.LegendarySkillRarity:
+                Player.Instance.Modifiers.LegendarySkillRarity = percentage[level];
+                break;
             
         }
     }
@@ -68,6 +80,7 @@ public enum ModifierType
     Grace,
     Gold,
     BondExp,
+    Growth,
     CurseResistance,
     RelicDropRate,
     GemstoneDropRate,
@@ -78,5 +91,9 @@ public enum ModifierType
     KillExpRate,
     AssistExpRate,
     HealingRate,
-    EliteBattlesRate
+    EliteBattlesRate,
+    RareSkillRarity,
+    EpicSkillRarity,
+    LegendarySkillRarity
+    
 }
