@@ -377,6 +377,7 @@ namespace Game.GameActors.Units.Numbers
         LVL,
         NONE,
         ATK,
-        ALL
+        ALL,
+        MOV
     }
 }

@@ -9,12 +9,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/ItemModifier", fileName = "MetaUpgrade1")]
 public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
 {
-    public SerializableDictionary<ResourceType, int> startResource;
-    public SerializableDictionary<ItemBP, int> startItems;
-    public SerializableDictionary<ItemModifierType, int> itemModifiers;
+    public SerializableDictionary<ResourceType, int> []startResource;
+    public SerializableDictionary<ItemBP, int> []startItems;
+    public SerializableDictionary<ItemModifierType, int>[] itemModifiers;
     public override void Activate(int level)
     {
-        foreach (KeyValuePair<ResourceType, int> valuePair in startResource)
+        foreach (KeyValuePair<ResourceType, int> valuePair in startResource[level])
         {
             switch (valuePair.Key)
             {
@@ -22,12 +22,12 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
                     Party.StartGold = valuePair.Value; break;
             }
         }
-        foreach (KeyValuePair<ItemBP, int> valuePair in startItems)
+        foreach (KeyValuePair<ItemBP, int> valuePair in startItems[level])
         {
             Convoy.StartItems.Add(valuePair.Key, valuePair.Value);
         }
 
-        foreach (KeyValuePair<ItemModifierType, int> valuePair in itemModifiers)
+        foreach (KeyValuePair<ItemModifierType, int> valuePair in itemModifiers[level])
         {
             switch (valuePair.Key)
             {
@@ -39,5 +39,6 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
 }
 public enum ItemModifierType
 {
-    HealthPotionsHeal
+    HealthPotionsHeal,
+    HolyWaterCurse
 }

@@ -59,6 +59,9 @@ public class ModifierMetaUpgradeMixin: MetaUpgradeMixin
             case ModifierType.RareEncounterRate: 
                 Player.Instance.Modifiers.RareEncounterRate = percentage[level];
                 break;
+            case ModifierType.RareMerchants: 
+                Player.Instance.Modifiers.RareMerchants = percentage[level];
+                break;
             case ModifierType.RareSkillRarity:
                 Player.Instance.Modifiers.RareSkillRarity = percentage[level];
                 break;
@@ -85,6 +88,7 @@ public enum ModifierType
     RelicDropRate,
     GemstoneDropRate,
     RareEncounterRate,
+    RareMerchants,
     FoodHealRate,
     RestHealRate,
     FlameLevelRate,

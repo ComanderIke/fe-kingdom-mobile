@@ -30,6 +30,7 @@ namespace Game.GameActors.Players
         public bool PartyMemberAfterArea4 { get; set; }
         public bool PartyMemberAfterArea5 { get; set; }
         public bool PartyMemberAfterArea6 { get; set; }
+        public bool StartingUpgrade { get; set; }
     }
 
     [System.Serializable]

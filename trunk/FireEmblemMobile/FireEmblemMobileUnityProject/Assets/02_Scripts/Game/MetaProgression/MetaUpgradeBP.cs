@@ -7,6 +7,8 @@ public class MetaUpgradeBP: ScriptableObject
     public string label;
     public int maxLevel;
     public int[] costToLevel;
+    public bool costIsDeathStone;
+    public bool costCorrupted;
     public string Description;
     public Sprite icon;
     public int requiredFlameLevel = 0;

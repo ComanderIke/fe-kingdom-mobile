@@ -21,6 +21,7 @@ namespace Game.GameActors.Players
             RareSkillRarity = 1.0f;
             EpicSkillRarity = 1.0f;
             LegendarySkillRarity = 1.0f;
+            RareMerchants = 1.0f;
         }
         public float ExperienceGain { get; set; }
         public float GoldGain { get; set; }
@@ -41,5 +42,6 @@ namespace Game.GameActors.Players
         public float RareSkillRarity { get; set; }
         public float EpicSkillRarity { get; set; }
         public float LegendarySkillRarity { get; set; }
+        public float RareMerchants { get; set; }
     }
 }
