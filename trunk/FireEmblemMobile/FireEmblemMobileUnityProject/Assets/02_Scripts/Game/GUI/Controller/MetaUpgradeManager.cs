@@ -41,4 +41,15 @@ public class MetaUpgradeManager
     {
         metaUpgrades.Add(metaUpgrade);
     }
+
+    public MetaUpgrade GetUpgrade(MetaUpgradeBP metaUpgradeBp)
+    {
+        foreach (var metaUpgrade in metaUpgrades)
+        {
+            if (metaUpgrade.blueprint == metaUpgradeBp)
+                return metaUpgrade;
+        }
+
+        return null;
+    }
 }

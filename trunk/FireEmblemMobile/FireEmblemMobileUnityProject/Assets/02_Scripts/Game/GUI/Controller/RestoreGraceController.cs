@@ -30,7 +30,11 @@ public class RestoreGraceController : UIMenu, IDataPersistance
     {
         StartCoroutine(ShowCoroutine());
     }
-    
+
+    void UpgradeSelected(UIMetaUpgradeButton metaUpgradeButton)
+    {
+        detailPanelController.Show(metaUpgradeButton.metaUpgradeBp);
+    }
     IEnumerator ShowCoroutine()
     {
         base.Show();
@@ -43,6 +47,8 @@ public class RestoreGraceController : UIMenu, IDataPersistance
         tutorialRaycastBlocker.gameObject.SetActive(true);
         detailPanelController.SetButtonInteractable(false);
         yield return new WaitForSeconds(.5f);
+        upgradeController.onSelected -= UpgradeSelected;
+        upgradeController.onSelected += UpgradeSelected;
         upgradeController.Show();
         TweenUtility.FadeIn(upgradesGroup);
         TweenUtility.FadeIn(titleGroup);
@@ -79,6 +85,7 @@ public class RestoreGraceController : UIMenu, IDataPersistance
     }
     public override void Hide()
     {
+        upgradeController.onSelected -= UpgradeSelected;
         StartCoroutine(HideCoroutine());
     }
     IEnumerator HideCoroutine()

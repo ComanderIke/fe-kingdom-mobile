@@ -6,38 +6,36 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
 public class MetaUpgradeDetailPanelController : MonoBehaviour
 {
-    public static MetaUpgradeDetailPanelController Instance;
-     [SerializeField]private MetaUpgrade metaUpgrade;
+    
+    private MetaUpgradeBP metaUpgradeBP;
 
     public TextMeshProUGUI description;
     public TextMeshProUGUI cost;
+    public TextMeshProUGUI costLabel;  
+    public Image costResourceIcon;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI level;
     public GameObject currentTextGo;
     public GameObject upgradeTextGo;
     public GameObject levelTextGo;
     public GameObject costTextGo;
-
+    public TextMeshProUGUI flameLevelReqLabel;
+    public TextMeshProUGUI flameLevelReqValue;
     public Button learnButton;
     public TextMeshProUGUI learnButtonText;
     public Image icon;
+    public TMP_ColorGradient red;
+    public TMP_ColorGradient blue;
+    
+    
 
-    public Sprite lockedSprite;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        Instance = this;
-    }
-
-    public void Show(MetaUpgrade metaUpgrade)
+    public void Show(MetaUpgradeBP metaUpgrade)
     {
         Debug.Log("Show Detail Page");
         gameObject.SetActive(true);
-        this.metaUpgrade = metaUpgrade;
+        this.metaUpgradeBP = metaUpgrade;
         UpdateUI();
     }
 
@@ -49,16 +47,17 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
 
     void UpdateUI()
     {
-        if (metaUpgrade == null|| metaUpgrade.blueprint==null)
+        if (metaUpgradeBP == null)
             return;
-        nameText.text = metaUpgrade.blueprint.name;
-        description.text = metaUpgrade.blueprint.Description;
-        cost.text = "" + metaUpgrade.blueprint.costToLevel[0];
-        level.text = "" + metaUpgrade.level + "/" + metaUpgrade.blueprint.maxLevel;
-        icon.sprite = metaUpgrade.blueprint.icon;
+        var metaUpgrade = Player.Instance.MetaUpgradeManager.GetUpgrade(metaUpgradeBP);
+        nameText.text = metaUpgradeBP.name;
+        description.text = metaUpgradeBP.Description;
+        cost.text = "" + metaUpgradeBP.costToLevel[0];
+       
+        icon.sprite = metaUpgradeBP.icon;
         level.transform.gameObject.SetActive(true);
         cost.transform.gameObject.SetActive(true);
-     
+        flameLevelReqValue.text = ""+metaUpgradeBP.requiredFlameLevel;
         description.transform.gameObject.SetActive(true);
         nameText.transform.gameObject.SetActive(true);
         learnButton.gameObject.SetActive(true);
@@ -67,55 +66,56 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
         currentTextGo.gameObject.SetActive(false);
         upgradeTextGo.gameObject.SetActive(false);
         levelTextGo.gameObject.SetActive(false);
+        level.text = "" + (metaUpgrade==null?"0":metaUpgrade.level )+ "/" + metaUpgradeBP.maxLevel;
 
 
-        if (metaUpgrade.locked)
-        {
-            Debug.Log("Locked");
-            icon.sprite = lockedSprite;
-            learnButton.gameObject.SetActive(false);
-            level.transform.gameObject.SetActive(false);
-            cost.transform.gameObject.SetActive(false);
-            description.transform.gameObject.SetActive(false);
-            nameText.transform.gameObject.SetActive(false);
-            costTextGo.gameObject.SetActive(false);
-        }
-        else if (metaUpgrade.IsMaxed())
-        {
-            learnButtonText.text = "Maxed";
-            learnButton.interactable = false;
-            currentTextGo.gameObject.SetActive(true);
-            levelTextGo.gameObject.SetActive(true);
-            costTextGo.gameObject.SetActive(false);
-        }
-        else if (Player.Instance.HasLearned(metaUpgrade))
-        {
-            learnButtonText.text = "Upgrade";
-            currentTextGo.gameObject.SetActive(true);
-            upgradeTextGo.gameObject.SetActive(true);
-            levelTextGo.gameObject.SetActive(true);
-            costTextGo.gameObject.SetActive(false);
-        }
-        else
-        {
-            levelTextGo.gameObject.SetActive(true);
-            upgradeTextGo.gameObject.SetActive(true);
-            costTextGo.gameObject.SetActive(true);
-        }
+        // if (metaUpgrade.locked)
+        // {
+        //     Debug.Log("Locked");
+        //     icon.sprite = lockedSprite;
+        //     learnButton.gameObject.SetActive(false);
+        //     level.transform.gameObject.SetActive(false);
+        //     cost.transform.gameObject.SetActive(false);
+        //     description.transform.gameObject.SetActive(false);
+        //     nameText.transform.gameObject.SetActive(false);
+        //     costTextGo.gameObject.SetActive(false);
+        // }
+        // else if (metaUpgrade.IsMaxed())
+        // {
+        //     learnButtonText.text = "Maxed";
+        //     learnButton.interactable = false;
+        //     currentTextGo.gameObject.SetActive(true);
+        //     levelTextGo.gameObject.SetActive(true);
+        //     costTextGo.gameObject.SetActive(false);
+        // }
+        // else if (Player.Instance.HasLearned(metaUpgrade))
+        // {
+        //     learnButtonText.text = "Upgrade";
+        //     currentTextGo.gameObject.SetActive(true);
+        //     upgradeTextGo.gameObject.SetActive(true);
+        //     levelTextGo.gameObject.SetActive(true);
+        //     costTextGo.gameObject.SetActive(false);
+        // }
+        // else
+        // {
+        //     levelTextGo.gameObject.SetActive(true);
+        //     upgradeTextGo.gameObject.SetActive(true);
+        //     costTextGo.gameObject.SetActive(true);
+        // }
         Debug.Log("Weird End Page");
     }
 
     void OnEnable()
     {
-        if (metaUpgrade == null)
+        if (metaUpgradeBP == null)
             return;
         UpdateUI();
     }
 
     public void LearnClicked()
     {
-        Player.Instance.LearnMetaUpgrade(metaUpgrade);
-        UpdateUI();
+        // Player.Instance.LearnMetaUpgrade(metaUpgradeBP);
+        // UpdateUI();
         Debug.Log("Learn Clicked!");
     }
 

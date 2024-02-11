@@ -16,11 +16,11 @@ public class UpgradePage
     [SerializeField] public Image backgroundArt;
     [SerializeField] public God god;
 }
+
 public class MetaUpgradeController : MonoBehaviour
 {
     [SerializeField] private UINavigationBar navigationBar;
-    [SerializeField] private MetaUpgradeBP[] upgradeBPs;
-    [SerializeField] private List<GameObject> upgradeButtons;
+    [SerializeField] private List<UIMetaUpgradeButton> upgradeButtons;
     [SerializeField] private List<UpgradePage> upgradePages;
     [SerializeField] private float pageAnimationTime = .5f;
     [SerializeField] private TextMeshProUGUI titleText;
@@ -32,7 +32,10 @@ public class MetaUpgradeController : MonoBehaviour
     [SerializeField] private Image titleImage;
     private int currentPage = 0;
     private int previousPage = -1;
+    private UIMetaUpgradeButton selectedUpgrade;
     private static readonly int TintColor = Shader.PropertyToID("_TintColor");
+    public event Action<UIMetaUpgradeButton> onSelected;
+    
 
     void Start()
     {
@@ -50,8 +53,9 @@ public class MetaUpgradeController : MonoBehaviour
 
     public void Show()
     {
-        
-        
+
+        selectedUpgrade = null;
+        onSelected?.Invoke(selectedUpgrade);
         CheckDependencies();
         
     }
@@ -64,8 +68,8 @@ public class MetaUpgradeController : MonoBehaviour
 
     void UpdateUI()
     {
-       
-        titleText.text = upgradePages[currentPage].god.ChronikComponent.Name;
+        var currentGod = upgradePages[currentPage].god;
+        titleText.text = currentGod.ChronikComponent.Name;
         LeanTween.cancel(upgradePages[currentPage].backgroundArt.gameObject);
         if (previousPage != -1)
         {
@@ -76,14 +80,14 @@ public class MetaUpgradeController : MonoBehaviour
         LeanTween.alpha(upgradePages[currentPage].backgroundArt.rectTransform, .35f, pageAnimationTime).setEaseInOutQuad();
         LeanTween.alpha(statueImage.rectTransform, 0f, pageAnimationTime/2f).setEaseInOutQuad().setOnComplete(() =>
         {
-            statueImage.sprite = upgradePages[currentPage].god.statueSprite;
+            statueImage.sprite = currentGod.StatueSprite;
             LeanTween.alpha(statueImage.rectTransform, 1f, pageAnimationTime / 2f).setEaseInOutQuad();
         });
         LeanTween.cancel(gameObject);
         LeanTween.value(gameObject, 0, 1, pageAnimationTime).setEaseInOutQuad().setOnUpdate((val) =>
         {
-            Color color = Color.Lerp( backgroundImage1.material.GetColor(TintColor),upgradePages[currentPage].god.upgradeBGColor, val);
-            Color color2 = Color.Lerp( titleImage.material.GetColor(TintColor),upgradePages[currentPage].god.TooltipFrameColor, val);
+            Color color = Color.Lerp( backgroundImage1.material.GetColor(TintColor),currentGod.upgradeBGColor, val);
+            Color color2 = Color.Lerp( titleImage.material.GetColor(TintColor),currentGod.TooltipFrameColor, val);
             backgroundImage1.material.SetColor(TintColor, color);
             backgroundImage2.material.SetColor(TintColor, color);
             detailFrameImage1.material.SetColor(TintColor, color2);
@@ -94,8 +98,10 @@ public class MetaUpgradeController : MonoBehaviour
        
         for (int i = 0; i < upgradeButtons.Count; i++)
         {
-            LeanTween.cancel(upgradeButtons[i]);
-            LeanTween.move(upgradeButtons[i], upgradePages[currentPage].upgradeButtonsPositions[i].position,
+            if(i < currentGod.MetaUpgrades.Count)
+                upgradeButtons[i].SetValues(currentGod.MetaUpgrades[i], this);
+            LeanTween.cancel(upgradeButtons[i].gameObject);
+            LeanTween.move(upgradeButtons[i].gameObject, upgradePages[currentPage].upgradeButtonsPositions[i].position,
                 pageAnimationTime).setEaseInOutQuad();
             
         }
@@ -145,7 +151,18 @@ public class MetaUpgradeController : MonoBehaviour
         UpdateUI();
     }
 
-   
-    
-    
+
+    public void UpgradeClicked(UIMetaUpgradeButton uiMetaUpgradeButton)
+    {
+        //TODO
+        if (selectedUpgrade != null)
+        {
+            selectedUpgrade = null;
+            selectedUpgrade.Deselect();
+        }
+            
+        selectedUpgrade = uiMetaUpgradeButton;
+        selectedUpgrade.Select();
+        onSelected?.Invoke(selectedUpgrade);
+    }
 }

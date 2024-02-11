@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 7764680176356735613}
   - component: {fileID: 5108317031754669064}
   - component: {fileID: 1949036909765500656}
+  - component: {fileID: 508854132398846852}
   m_Layer: 5
   m_Name: MetaUpgradeButton
   m_TagString: Untagged
@@ -365,4 +366,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5108317031754669064}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 508854132398846852}
+        m_TargetAssemblyTypeName: UIMetaUpgradeButton, Game
+        m_MethodName: Clicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &508854132398846852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7115393139053390516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3b8e22f9564b6fb2e407a03c3e773b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 9039926768834028380}

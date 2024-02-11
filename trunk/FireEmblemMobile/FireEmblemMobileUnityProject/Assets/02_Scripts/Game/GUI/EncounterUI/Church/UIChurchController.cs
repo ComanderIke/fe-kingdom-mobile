@@ -67,7 +67,7 @@ public class UIChurchController : MonoBehaviour
         donateGoldCost.color = affordable?normalColor:tooExpensiveTextColor;
         receiveBlessingButton.gameObject.SetActive(false);
         godStatueNameText.text =  gods[selectedGod].Name;
-        godStatueImage.sprite =  gods[selectedGod].statueSprite;
+        godStatueImage.sprite =  gods[selectedGod].StatueSprite;
         Bonusestext.text = church.GetGod().Name + "\nBond Exp +15%";
         bondExpText.text = party.ActiveUnit.Bonds.GetBondExperience(gods[selectedGod]) + "/100";
         bondLevelText.text = "Lv. " + party.ActiveUnit.Bonds.GetBondLevel(gods[selectedGod]);

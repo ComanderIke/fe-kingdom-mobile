@@ -1,5 +1,7 @@
-﻿using Game.GameActors.Units;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LostGrace
 {
@@ -15,7 +17,8 @@ namespace LostGrace
         public Color upgradeBGColor;
         public BlessingBP BlessingBp;
         public Material GlowMaterial;
-        public Sprite statueSprite;
+        [FormerlySerializedAs("statueSprite")] public Sprite StatueSprite;
+        public List<MetaUpgradeBP> MetaUpgrades;
         [field:SerializeField]public ChronikEntry ChronikComponent { get; set; }
         [field:SerializeField]public float BondExpRate { get; set; }
         [field:SerializeField]public int MaxBondLevel { get; set; }

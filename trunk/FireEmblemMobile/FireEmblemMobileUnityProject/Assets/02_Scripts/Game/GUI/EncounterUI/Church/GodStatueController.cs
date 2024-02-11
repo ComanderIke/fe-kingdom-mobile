@@ -48,9 +48,9 @@ namespace LostGrace
                 prevGodIndex = gods.Count - 1;
             MyDebug.LogTest("GodIndex: "+currentGod+" Next: "+nextGodIndex+" Prev: "+prevGodIndex);
             MyDebug.LogTest("StatueIndex: "+currentStatue+" Next: "+nextStatueIndex+" Prev: "+prevStatueIndex);
-            statues[currentStatue].sprite = gods[currentGod].statueSprite;
-            statues[nextStatueIndex].sprite = gods[nextGodIndex].statueSprite;
-            statues[prevStatueIndex].sprite = gods[prevGodIndex].statueSprite;
+            statues[currentStatue].sprite = gods[currentGod].StatueSprite;
+            statues[nextStatueIndex].sprite = gods[nextGodIndex].StatueSprite;
+            statues[prevStatueIndex].sprite = gods[prevGodIndex].StatueSprite;
         }
 
         public void Reset()
