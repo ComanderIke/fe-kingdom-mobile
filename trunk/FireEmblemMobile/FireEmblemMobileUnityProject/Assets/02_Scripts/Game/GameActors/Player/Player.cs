@@ -179,8 +179,30 @@ namespace Game.GameActors.Players
                 onGraceValueChanged?.Invoke();
             }
         }
+        private int corruptedGrace;
+        public int CorruptedGrace
+        {
+            get { return corruptedGrace;}
+            set
+            {
+                corruptedGrace = value;
+                onCorruptedGraceValueChanged?.Invoke();
+            }
+        }
+        private int deathstones;
+        public int DeathStones
+        {
+            get { return deathstones;}
+            set
+            {
+                deathstones = value;
+                onDeathStoneValueChanged?.Invoke();
+            }
+        }
 
         public event Action onGraceValueChanged;
+        public event Action onCorruptedGraceValueChanged;
+        public event Action onDeathStoneValueChanged;
     
 
         public override string ToString()
@@ -272,6 +294,11 @@ namespace Game.GameActors.Players
         public event Action<float> FlameExpChanged;
         private float flameExp = 0;
         private int flameLevel = 1;
+
+        public int GetFlameLevel()
+        {
+            return flameLevel;
+        }
         public void AddFlameExp(int exp)
         {
             flameExp += exp;
@@ -283,6 +310,21 @@ namespace Game.GameActors.Players
             }
                
             FlameExpChanged?.Invoke(flameExp);
+        }
+
+        public bool CanAfford(int cost, MetaUpgradeCost costType)
+        {
+            switch (costType)
+            {
+                case MetaUpgradeCost.Grace:
+                    return Grace >= cost;break;
+                case MetaUpgradeCost.CorruptedGrace:
+                    return CorruptedGrace >= cost;break;
+                case MetaUpgradeCost.DeathStone:
+                    return DeathStones >= cost;break;
+            }
+
+            return false;
         }
     }
 }

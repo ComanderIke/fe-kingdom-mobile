@@ -157,8 +157,9 @@ public class MetaUpgradeController : MonoBehaviour
         //TODO
         if (selectedUpgrade != null)
         {
-            selectedUpgrade = null;
             selectedUpgrade.Deselect();
+            selectedUpgrade = null;
+            
         }
             
         selectedUpgrade = uiMetaUpgradeButton;

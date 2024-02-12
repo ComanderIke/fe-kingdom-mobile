@@ -7,5 +7,7 @@ namespace Game.Graphics
     public class Icons
     {
         public Sprite Grace;
+        public Sprite CorruptedGrace;
+        public Sprite DeathStones;
     }
 }

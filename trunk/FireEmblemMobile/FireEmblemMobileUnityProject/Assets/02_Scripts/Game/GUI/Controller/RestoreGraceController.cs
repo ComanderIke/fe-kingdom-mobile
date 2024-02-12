@@ -33,7 +33,12 @@ public class RestoreGraceController : UIMenu, IDataPersistance
 
     void UpgradeSelected(UIMetaUpgradeButton metaUpgradeButton)
     {
-        detailPanelController.Show(metaUpgradeButton.metaUpgradeBp);
+        if(metaUpgradeButton!=null)
+            detailPanelController.Show(metaUpgradeButton.metaUpgradeBp);
+        else
+        {
+            detailPanelController.Hide();
+        }
     }
     IEnumerator ShowCoroutine()
     {
@@ -57,11 +62,17 @@ public class RestoreGraceController : UIMenu, IDataPersistance
         TweenUtility.FadeIn(detailPanel);
         TweenUtility.FadeIn(buttonBackGroup);
 
-        yield return new WaitForSeconds(.6f);
-        goddessUI.Show();
-        yield return new WaitForSeconds(4.5f);
-        //if (GameConfig.Instance.config.tutorial)
-            yield return TutorialCoroutine();
+        // yield return new WaitForSeconds(.6f);
+        // goddessUI.Show();
+        // yield return new WaitForSeconds(4.5f);
+        // //if (GameConfig.Instance.config.tutorial)
+        //     yield return TutorialCoroutine();
+        //TutorialSequenceFinished();
+        
+        // DONT DO THIS WHEN TUTORIAL(After tutorial finished)
+        tutorialRaycastBlocker.gameObject.SetActive(false);
+        detailPanelController.SetButtonInteractable(true);
+        
         // else
         // {
         //  tutorialRaycastBlocker.gameObject.SetActive(false);

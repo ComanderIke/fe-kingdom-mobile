@@ -6,7 +6,7 @@ public class UIMetaUpgradeButton : MonoBehaviour
     public Image icon;
     private MetaUpgradeController metaUpgradeController;
     public MetaUpgradeBP metaUpgradeBp;
-    private Image selected;
+    public Image selected;
 
     public void SetValues(MetaUpgradeBP upgrade, MetaUpgradeController controller)
     {
