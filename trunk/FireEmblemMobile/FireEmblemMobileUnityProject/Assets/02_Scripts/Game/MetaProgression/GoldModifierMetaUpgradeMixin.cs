@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Game.GUI.EncounterUI.Inn;
+using LostGrace;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/GoldModifier", fileName = "MetaUpgrade1")]
@@ -24,6 +26,17 @@ public class GoldModifierMetaUpgradeMixin: MetaUpgradeMixin
                 Smithy.PriceRate = percentage[level];
                 break;
         }
+    }
+    public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
+    {
+        var list = new List<EffectDescription>();
+        int upgLevel = level;
+        if (upgLevel < percentage.Length-1)
+            upgLevel++;
+        list.Add(new EffectDescription(""+ModifierType, ""+percentage[level], ""+percentage[upgLevel]));
+       
+        return list;
+    
     }
 }
 public enum GoldModifierType

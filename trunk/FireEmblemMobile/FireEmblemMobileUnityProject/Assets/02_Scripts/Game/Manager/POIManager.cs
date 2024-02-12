@@ -241,7 +241,7 @@ namespace LostGrace
        
         public void UpgradeClicked()
         {
-            StartCoroutine(HideCoroutine(upgradeMenu));
+            upgradeMenu.Show();
         }
    
     }

@@ -13,12 +13,11 @@ public class RestoreGraceController : UIMenu, IDataPersistance
 {
     [SerializeField] private CanvasGroup detailPanel;
     [SerializeField] private CanvasGroup buttonBackGroup;
-    [SerializeField] private CanvasGroup gracePanel;
+    [SerializeField] private UIRessourceAmount gracePanel;
     [SerializeField] private CanvasGroup titleGroup;
     [FormerlySerializedAs("tabGroup")] [SerializeField] private CanvasGroup upgradesGroup;
     [SerializeField] private GoddessUI goddessUI;
     [SerializeField] private CanvasGroup Fade;
-    [SerializeField] private UIRessourceAmount graceAmount;
     [SerializeField] private MetaUpgradeController upgradeController;
     [SerializeField] private DialogueManager dialogueManager;
     [SerializeField] private Conversation tutorialConversation;
@@ -26,6 +25,18 @@ public class RestoreGraceController : UIMenu, IDataPersistance
     [SerializeField] private GameObject tutorialRaycastBlocker;
 
 [SerializeField] private MetaUpgradeDetailPanelController detailPanelController;
+
+    void Start()
+    {
+       
+    }
+
+    void GraceValueChanged()
+    {
+        gracePanel.Amount = Player.Instance.Grace;
+        detailPanelController.UpdateUI();
+        upgradeController.UpdateUI();
+    }
     public override void Show()
     {
         StartCoroutine(ShowCoroutine());
@@ -40,25 +51,29 @@ public class RestoreGraceController : UIMenu, IDataPersistance
             detailPanelController.Hide();
         }
     }
+
+    
     IEnumerator ShowCoroutine()
     {
         base.Show();
-        graceAmount.Amount = 0;
+        gracePanel.Amount = Player.Instance.Grace;
+        Player.Instance.onGraceValueChanged += GraceValueChanged;
         detailPanel.alpha = 0;
         buttonBackGroup.alpha = 0;
-        gracePanel.alpha = 0;
+        gracePanel.GetComponent<CanvasGroup>().alpha = 0;
         titleGroup.alpha = 0;
         upgradesGroup.alpha = 0;
         tutorialRaycastBlocker.gameObject.SetActive(true);
         detailPanelController.SetButtonInteractable(false);
         yield return new WaitForSeconds(.5f);
+        
         upgradeController.onSelected -= UpgradeSelected;
         upgradeController.onSelected += UpgradeSelected;
         upgradeController.Show();
         TweenUtility.FadeIn(upgradesGroup);
         TweenUtility.FadeIn(titleGroup);
         yield return new WaitForSeconds(.5f);
-        TweenUtility.FadeIn(gracePanel);
+        TweenUtility.FadeIn(gracePanel.GetComponent<CanvasGroup>());
         TweenUtility.FadeIn(detailPanel);
         TweenUtility.FadeIn(buttonBackGroup);
 
@@ -82,7 +97,7 @@ public class RestoreGraceController : UIMenu, IDataPersistance
     }
     IEnumerator TutorialCoroutine()
     {
-        graceAmount.Amount += 100;
+        Player.Instance.Grace += 100;
         yield return new WaitForSeconds(3.0f);
         dialogueManager.ShowDialog(tutorialConversation);
         dialogueManager.dialogEnd += TutorialSequenceFinished;
@@ -96,6 +111,7 @@ public class RestoreGraceController : UIMenu, IDataPersistance
     }
     public override void Hide()
     {
+        Player.Instance.onGraceValueChanged -= GraceValueChanged;
         upgradeController.onSelected -= UpgradeSelected;
         StartCoroutine(HideCoroutine());
     }
@@ -103,7 +119,7 @@ public class RestoreGraceController : UIMenu, IDataPersistance
     {
         TweenUtility.FadeOut(buttonBackGroup);
         TweenUtility.FadeOut(titleGroup);
-        TweenUtility.FadeOut(gracePanel);
+        TweenUtility.FadeOut(gracePanel.GetComponent<CanvasGroup>());
         goddessUI.Hide();
         yield return new WaitForSeconds(0.5f);
            
@@ -114,7 +130,6 @@ public class RestoreGraceController : UIMenu, IDataPersistance
         TweenUtility.FadeIn(Fade).setOnComplete(()=>
         {
             base.Hide();
-            parent?.Show();
             TweenUtility.FadeOut(Fade);
         });
     }

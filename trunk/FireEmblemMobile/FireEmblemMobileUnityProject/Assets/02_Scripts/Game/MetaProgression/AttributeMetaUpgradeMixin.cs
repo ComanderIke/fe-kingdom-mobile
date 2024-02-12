@@ -25,4 +25,15 @@ public class AttributeMetaUpgradeMixin : MetaUpgradeMixin
             // }
         }
     }
+
+    public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
+    {
+        var list = new List<EffectDescription>();
+        foreach (var entry in attributes)
+        {
+            list.Add(new EffectDescription(""+entry.Key, ""+entry.Value, ""+entry.Value));
+        }
+       
+        return list;
+    }
 }

@@ -4,6 +4,7 @@ using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Players;
 using Game.WorldMapStuff.Model;
+using LostGrace;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/ItemModifier", fileName = "MetaUpgrade1")]
@@ -35,6 +36,18 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
                     HealthPotion.ExtraHealAmount = valuePair.Value;break;
             }
         }
+    }
+    public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
+    {
+        var list = new List<EffectDescription>();
+        foreach (var entry in startResource[level])
+        {
+            list.Add(new EffectDescription(""+entry.Key, ""+entry.Value, ""+entry.Value));
+          
+        }
+       
+        return list;
+    
     }
 }
 public enum ItemModifierType

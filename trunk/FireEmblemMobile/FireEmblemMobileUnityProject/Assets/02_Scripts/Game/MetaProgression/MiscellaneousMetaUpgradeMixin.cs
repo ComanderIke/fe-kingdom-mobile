@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Units.Numbers;
+using LostGrace;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/Miscellaneous", fileName = "MetaUpgrade1")]
@@ -27,6 +28,17 @@ public class MiscellaneousMetaUpgradeMixin : MetaUpgradeMixin
                 case MiscellaneousType.GoldBonusPerTurnCount: break;
             }
         }
+    }
+
+    public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
+    {
+        var list = new List<EffectDescription>();
+        foreach (var entry in intValues[level])
+        {
+            list.Add(new EffectDescription(""+entry.Key, ""+entry.Value, ""+entry.Value));
+        }
+       
+        return list;
     }
 }
 

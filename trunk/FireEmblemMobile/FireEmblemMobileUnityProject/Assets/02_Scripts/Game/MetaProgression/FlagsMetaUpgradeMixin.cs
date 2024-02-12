@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Players;
+using LostGrace;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/Flags", fileName = "MetaUpgrade1")]
@@ -40,6 +41,16 @@ public class FlagsMetaUpgradeMixin : MetaUpgradeMixin
                     Player.Instance.Flags.StrongestAttributeIncrease = valuePair.Value;break;
             }
         }
+    }
+    public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
+    {
+        var list = new List<EffectDescription>();
+        foreach (var entry in flags)
+        {
+            list.Add(new EffectDescription(""+entry.Key, ""+entry.Value, ""+entry.Value));
+        }
+       
+        return list;
     }
 }
 

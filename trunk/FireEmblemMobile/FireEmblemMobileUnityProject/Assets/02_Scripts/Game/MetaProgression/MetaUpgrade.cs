@@ -18,7 +18,7 @@ public class MetaUpgrade:IEquatable<MetaUpgrade>
 
     public bool IsMaxed()
     {
-        return level == blueprint.maxLevel;
+        return level == (blueprint.maxLevel-1);
     }
 
     public bool Equals(MetaUpgrade other)

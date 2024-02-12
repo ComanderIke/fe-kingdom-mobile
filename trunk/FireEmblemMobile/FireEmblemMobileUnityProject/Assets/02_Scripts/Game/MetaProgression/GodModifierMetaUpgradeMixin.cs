@@ -18,15 +18,33 @@ public class GodModifierMetaUpgradeMixin: MetaUpgradeMixin
                 case GodModifierType.BondExp:
                     keyValuePair.Key.BondExpRate = percentage[level];
                     break;
-                case GodModifierType.MaxBondLevelINT:
-                    keyValuePair.Key.MaxBondLevel = (int)percentage[level];
-                    break;
             }
         }
+    }
+    
+    public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
+    {
+        var list = new List<EffectDescription>();
+        if (level >= percentage.Length)
+            return list;
+        int upgLevel = level;
+        if (upgLevel < percentage.Length-1)
+            upgLevel++;
+        foreach (var entry in godModifierType)
+        {
+            //list.Add(new EffectDescription(""+entry.Key.name+": ", "", ""));
+            list.Add(new EffectDescription("Bond exp: ","+"+(percentage[level]*100-100).ToString("0")+"%", "+"+(percentage[upgLevel]*100-100).ToString("0")+"%"));
+
+          
+        }
+
+   
+        
+        return list;
+    
     }
 }
 public enum GodModifierType
 {
-    BondExp,
-    MaxBondLevelINT
+    BondExp
 }

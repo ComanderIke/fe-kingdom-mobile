@@ -176,6 +176,7 @@ namespace Game.GameActors.Players
             set
             {
                 grace = value;
+                MyDebug.LogTest("Grace: "+grace);
                 onGraceValueChanged?.Invoke();
             }
         }
@@ -218,14 +219,32 @@ namespace Game.GameActors.Players
             return playerData;
         }
 
-        public void LearnMetaUpgrade(MetaUpgrade metaUpgrade)
+        public void LearnMetaUpgrade(MetaUpgradeBP metaUpgradeBp)
         {
-            if (metaUpgrade.IsMaxed())
-                return;
-            if(!HasLearned(metaUpgrade))
+            var metaUpgrade = metaUpgradeBp.Create();
+            int levelBefore = 0;
+            if (!HasLearned(metaUpgrade))
+            {
                 MetaUpgradeManager.Add(metaUpgrade);
-            metaUpgrade.level++;
-            
+            }
+            else
+            {
+                metaUpgrade=MetaUpgradeManager.GetUpgrade(metaUpgradeBp);
+                if (metaUpgrade.IsMaxed())
+                    return;
+                levelBefore = metaUpgrade.level;
+                metaUpgrade.level++;
+            }
+
+            switch (metaUpgradeBp.costType)
+            {
+                case MetaUpgradeCost.Grace:
+                    Grace -= metaUpgradeBp.costToLevel[levelBefore];break;
+                case MetaUpgradeCost.CorruptedGrace: 
+                    CorruptedGrace -= metaUpgradeBp.costToLevel[levelBefore]; break;
+                case MetaUpgradeCost.DeathStone: 
+                    DeathStones -= metaUpgradeBp.costToLevel[levelBefore]; break;
+            }
             onMetaUpgradesChanged?.Invoke();
         }
 

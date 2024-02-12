@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using __2___Scripts.Game.Utility;
 using Game.GameActors.Players;
 using Game.GameResources;
+using LostGrace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -12,14 +14,16 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
     
     private MetaUpgradeBP metaUpgradeBP;
 
+    public GameObject detailLinePrefab;
+    public Transform lineContainer;
+    public LayoutGroup layout;
+    public int lineSiblingIndex = 3;
     public TextMeshProUGUI description;
     public TextMeshProUGUI cost;
     public TextMeshProUGUI costLabel;  
     public Image costResourceIcon;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI level;
-    public GameObject currentTextGo;
-    public GameObject upgradeTextGo;
     public GameObject levelTextGo;
     public GameObject costTextGo;
     public TextMeshProUGUI flameLevelReqLabel;
@@ -46,24 +50,29 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void UpdateUI()
+    public void UpdateUI()
     {
         if (metaUpgradeBP == null)
             return;
+        learnButtonText.text = "<bounce>Upgrade";
         var metaUpgrade = Player.Instance.MetaUpgradeManager.GetUpgrade(metaUpgradeBP);
         nameText.text = metaUpgradeBP.name;
         description.text = metaUpgradeBP.Description;
-        if (Player.Instance.CanAfford(metaUpgradeBP.costToLevel[0], metaUpgradeBP.costType))
+        if (Player.Instance.CanAfford(metaUpgradeBP.GetCost(metaUpgrade==null?0:metaUpgrade.level+1), metaUpgradeBP.costType))
         {
             costLabel.colorGradientPreset = null;
             cost.colorGradientPreset = null;
             learnButton.interactable = true;
+            learnButtonText.text = "<bounce>Upgrade";
+            MyDebug.LogTest("LearnButton interactable");
         }
         else
         {
             costLabel.colorGradientPreset = red;
             cost.colorGradientPreset = red;
             learnButton.interactable = false;
+            learnButtonText.text = "</bounce>Upgrade";
+            MyDebug.LogTest("LearnButton not interactable");
         }
 
         costResourceIcon.sprite = metaUpgradeBP.costType == MetaUpgradeCost.Grace
@@ -73,11 +82,14 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
             metaUpgradeBP.costType == MetaUpgradeCost.CorruptedGrace
                 ? GameAssets.Instance.visuals.Icons.CorruptedGrace
                 : GameAssets.Instance.visuals.Icons.DeathStones;
-        cost.text = "" + metaUpgradeBP.costToLevel[0];
-        if (Player.Instance.GetFlameLevel() < metaUpgradeBP.requiredFlameLevel)
+        cost.text = "" + metaUpgradeBP.GetCost((metaUpgrade==null?0:metaUpgrade.level+1));
+      
+        if (Player.Instance.GetFlameLevel() < metaUpgradeBP.GetRequiredFlameLevel(metaUpgrade==null?0:metaUpgrade.level+1))
         {
             flameLevelReqLabel.colorGradientPreset = red;
             flameLevelReqValue.colorGradientPreset = red;
+            learnButton.interactable = false;
+            learnButtonText.text = "</bounce>Upgrade";
 
         }
         else
@@ -85,36 +97,75 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
             flameLevelReqLabel.colorGradientPreset = null;
             flameLevelReqValue.colorGradientPreset = null;
         }
-        flameLevelReqValue.text = "Flame Level "+metaUpgradeBP.requiredFlameLevel;
-        learnButtonText.text = "Upgrade";
+        flameLevelReqValue.text = "Flame Level "+metaUpgradeBP.GetRequiredFlameLevel(metaUpgrade==null?0:metaUpgrade.level+1);
+       
         icon.sprite = metaUpgradeBP.icon;
         level.transform.gameObject.SetActive(true);
         cost.transform.gameObject.SetActive(true);
         description.transform.gameObject.SetActive(true);
         nameText.transform.gameObject.SetActive(true);
-        currentTextGo.gameObject.SetActive(false);
-        upgradeTextGo.gameObject.SetActive(false);
+        lineContainer.DeleteAllChildren();
         levelTextGo.gameObject.SetActive(false);
-        level.text = "" + (metaUpgrade==null?"0":metaUpgrade.level )+ "/" + metaUpgradeBP.maxLevel;
+        level.text = "" + (metaUpgrade==null?"0":metaUpgrade.level+1 )+ "/" + metaUpgradeBP.maxLevel;
+        
+        var effects=metaUpgradeBP.GetEffectDescriptions(metaUpgrade==null?0:metaUpgrade.level);
+        flameLevelReqLabel.gameObject.SetActive(true);
+        flameLevelReqValue.gameObject.SetActive(true);
         if (metaUpgrade!=null&&metaUpgrade.IsMaxed())
         {
-            learnButtonText.text = "Maxed";
+            learnButtonText.text = "</bounce>Maxed";
             learnButton.interactable = false;
             costTextGo.gameObject.SetActive(false);
+            flameLevelReqLabel.gameObject.SetActive(false);
+            flameLevelReqValue.gameObject.SetActive(false);
+            foreach (var effect in effects)
+            {
+                var go = Instantiate(detailLinePrefab, lineContainer);
+                go.GetComponent<UIMetaUpgradeLine>().SetValues(effect.label, effect.value, false);
+
+            }
         }
         else if (Player.Instance.HasLearned(metaUpgrade))
         {
-            currentTextGo.gameObject.SetActive(true);
-            upgradeTextGo.gameObject.SetActive(true);
+           
             levelTextGo.gameObject.SetActive(true);
             costTextGo.gameObject.SetActive(true);
+          
+            foreach (var effect in effects)
+            {
+                bool upgrade = false;
+                var go = Instantiate(detailLinePrefab, lineContainer);
+                bool upg = effect.upgValue != effect.value && upgrade;
+                go.GetComponent<UIMetaUpgradeLine>().SetValues(effect.label, effect.value, false);
+
+            }
+            var effectsUpgrade=metaUpgradeBP.GetEffectDescriptions(metaUpgrade.level+1);
+            foreach (var effect in effectsUpgrade)
+            {
+                bool upgrade = true;
+                var go = Instantiate(detailLinePrefab, lineContainer);
+                //bool upg = effect.upgValue != effect.value && upgrade;
+                go.GetComponent<UIMetaUpgradeLine>().SetValues("Upgrade: ", effect.value, true);
+
+            }
         }
         else
         {
             levelTextGo.gameObject.SetActive(true);
-            upgradeTextGo.gameObject.SetActive(true);
             costTextGo.gameObject.SetActive(true);
+            foreach (var effect in effects)
+            {
+               
+                var go = Instantiate(detailLinePrefab, lineContainer);
+                go.GetComponent<UIMetaUpgradeLine>().SetValues(effect.label, effect.value, false);
+
+            }
         }
+
+       
+        
+        LayoutRebuilder.ForceRebuildLayoutImmediate(layout.GetComponent<RectTransform>());
+
     }
 
     void OnEnable()
@@ -126,13 +177,13 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
 
     public void LearnClicked()
     {
-        // Player.Instance.LearnMetaUpgrade(metaUpgradeBP);
-        // UpdateUI();
+        Player.Instance.LearnMetaUpgrade(metaUpgradeBP); 
+        UpdateUI();
         Debug.Log("Learn Clicked!");
     }
 
     public void SetButtonInteractable(bool value)
     {
-        learnButton.interactable = value;
+        // learnButton.interactable = value;
     }
 }

@@ -66,7 +66,7 @@ public class MetaUpgradeController : MonoBehaviour
             Player.Instance.onMetaUpgradesChanged -= CheckDependencies;
     }
 
-    void UpdateUI()
+    public void UpdateUI()
     {
         var currentGod = upgradePages[currentPage].god;
         titleText.text = currentGod.ChronikComponent.Name;
@@ -128,31 +128,11 @@ public class MetaUpgradeController : MonoBehaviour
     }
     void CheckDependencies()
     {
-        // foreach (var upg in upgradeGrid)
-        // {
-        //     
-        //         if(upg==null)
-        //             continue;
-        //         if(Player.Instance!=null&&Player.Instance.HasLearned(upg))
-        //             continue;
-        //         
-        //         if (CheckNeighborsLearned(upg))
-        //         {
-        //             upg.locked = false;
-        //         }
-        //         else
-        //         {
-        //             // if (upg.blueprint.availableAtStart)
-        //             //     upg.locked = false;
-        //             // else
-        //                 upg.locked = false;
-        //         }
-        // }
         UpdateUI();
     }
 
 
-    public void UpgradeClicked(UIMetaUpgradeButton uiMetaUpgradeButton)
+    public void Clicked(UIMetaUpgradeButton uiMetaUpgradeButton)
     {
         //TODO
         if (selectedUpgrade != null)

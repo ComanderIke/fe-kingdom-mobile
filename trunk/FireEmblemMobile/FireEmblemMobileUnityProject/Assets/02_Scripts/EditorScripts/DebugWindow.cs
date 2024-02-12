@@ -115,6 +115,10 @@ namespace __2___Scripts.External.Editor
                 {
                     Player.Instance.Grace+=50;
                 }
+                if (GUILayout.Button("+500 Grace (Player)"))
+                {
+                    Player.Instance.Grace+=500;
+                }
                 if (GUILayout.Button("-50 Grace (Player)"))
                 {
                     Player.Instance.Grace-=50;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Players;
+using LostGrace;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/PartyModifier", fileName = "MetaUpgrade1")]
@@ -52,6 +53,18 @@ public class PartyModifierMetaUpgradeMixin : MetaUpgradeMixin
                     break;
             }
         }
+    }
+    public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
+    {
+        var list = new List<EffectDescription>();
+        
+        int upgLevel = level;
+        if (upgLevel < value.Length-1)
+            upgLevel++;
+        list.Add(new EffectDescription(""+ModifierType, ""+value[level], ""+value[upgLevel]));
+
+       
+        return list;
     }
 }
 

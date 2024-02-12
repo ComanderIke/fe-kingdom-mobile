@@ -16,7 +16,7 @@ public class UIMetaUpgradeButton : MonoBehaviour
     }
     public void Clicked()
     {
-        metaUpgradeController.UpgradeClicked(this);
+        metaUpgradeController.Clicked(this);
     }
 
     public void Deselect()

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Items;
 using Game.GUI.EncounterUI.Inn;
+using LostGrace;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/EncounterNodeModifier", fileName = "MetaUpgrade1")]
@@ -23,6 +24,17 @@ public class EncounterNodeModifierMetaUpgradeMixin : MetaUpgradeMixin
                 
             }
         }
+    }
+
+    public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
+    {
+        var list = new List<EffectDescription>();
+        foreach (var entry in modifiers)
+        {
+            list.Add(new EffectDescription(""+entry.Key, ""+entry.Value, ""+entry.Value));
+        }
+       
+        return list;
     }
 }
 
