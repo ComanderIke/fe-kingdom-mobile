@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Game.GameResources;
 using UnityEngine;
 
 public enum MetaUpgradeCost
@@ -8,6 +10,7 @@ public enum MetaUpgradeCost
     DeathStone
 }
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade", fileName = "MetaUpgrade1")]
+
 public class MetaUpgradeBP: ScriptableObject
 {
     public string label;
@@ -20,4 +23,10 @@ public class MetaUpgradeBP: ScriptableObject
     public int requiredFlameLevel = 0;
     public bool toggle = false;
     public List<MetaUpgradeMixin> mixins;
+
+    public void OnEnable()
+    {
+        //if (icon == null)
+            icon=GameAssets.Instance.visuals.Icons.GetRandomMetaUpgradeIcon();
+    }
 }
