@@ -104,7 +104,7 @@ namespace Game.States
                     }
                     
                 }
-            yield return new WaitForSeconds(WaitTimeWhenFinished);
+            //yield return new WaitForSeconds(WaitTimeWhenFinished);
             Finished();
             
         }
