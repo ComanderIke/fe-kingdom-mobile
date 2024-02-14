@@ -32,6 +32,7 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
    }
 
    public static Action<Unit> OnUnitCircleClicked;
+   public static Action OnToggleZoomClicked;
     public void ShowTileInfo(Tile selectedTile)
     {
         //Debug.Log("ShowTileInfo!");
@@ -56,6 +57,8 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
         SelectionUI.OnBackClicked -= action;
     }
 
+    
+
     public void SubscribeOnCharacterCircleClicked(Action<Unit> action)
     {
         OnUnitCircleClicked += action;
@@ -65,7 +68,15 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
     {
         OnUnitCircleClicked -= action;
     }
+    public void SubscribeOnToggleZoomClicked(Action action)
+    {
+        OnToggleZoomClicked += action;
+    }
 
+    public void UnsubscribeOnToggleZoomClicked(Action action)
+    {
+        OnToggleZoomClicked -= action;
+    }
     public void ViewUnit(Unit unit)
     {
         if(unit.IsPlayerControlled())
@@ -160,7 +171,10 @@ public class PlayerPhaseUI : MonoBehaviour, IPlayerPhaseUI
        
     }
 
-
+    public void ToggleZoom()
+    {
+        OnToggleZoomClicked?.Invoke();
+    }
     public void ToggleDangerArea()
     {
         GridGameManager.Instance.GetSystem<GridSystem>().ToggleDangerArea();

@@ -97,7 +97,7 @@ namespace Game.States
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(TagManager.UnitTag),new MouseCameraInputProvider());
 
-            cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
+            cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height,0);
         }
 
         private void CreateDemoParty()

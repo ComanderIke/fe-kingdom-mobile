@@ -11,6 +11,8 @@ public interface IPlayerPhaseUI
     public void HideTileInfo();
     public void SubscribeOnBackClicked(Action action);
     public void UnsubscribeOnBackClicked(Action action);
+    public void SubscribeOnToggleZoomClicked(Action action);
+    public void UnsubscribeOnToggleZoomClicked(Action action);
     public void SubscribeOnCharacterCircleClicked(Action<Unit> onCharacterCircleClicked);
     void UnsubscribeOnCharacterCircleClicked(Action<Unit> onCharacterCircleClicked);
     void ViewUnit(Unit unit);

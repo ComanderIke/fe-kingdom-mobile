@@ -70,6 +70,12 @@ namespace Game.Mechanics
             cameraSystem.Init();
         }
 
+        private int zoomLevel = 0;
+        public void ToggleZoom()
+        {
+            cameraSystem.GetMixin<ViewOnGridMixin>().ToogleZoom();
+            zoomLevel = cameraSystem.GetMixin<ViewOnGridMixin>().zoomLevel;
+        }
         public override void Enter()
         {
 
@@ -86,7 +92,7 @@ namespace Game.Mechanics
             int width = gridGameManager.BattleMap.width;
            // cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
            if(!cameraSystem.HasMixin<ViewOnGridMixin>())
-            cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
+            cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height,zoomLevel);
            
         }
         private void FindBetterName(Unit unit)

@@ -19,12 +19,14 @@ namespace GameCamera
         private float minY=-5;
         [SerializeField]
         private float maxY=12;
-     
-        
+
+        private const float defaultOrthSize = 3;
+        public int zoomLevel;
+        public int maxZoomLevel = 3;
         public float zoomSpeed=0.004f;
-        private float startDistance;
-        public void Construct(float width, float height)
+        public void Construct(float width, float height, int zoomLevel)
         {
+            this.zoomLevel = zoomLevel;
             SetBounds(width, height);
         }
         private void SetBounds(float width, float height)
@@ -38,46 +40,33 @@ namespace GameCamera
             maxY = height + CameraSystem.cameraData.cameraBoundsBorder.y;
         }
 
+        public void ToogleZoom()
+        {
+            zoomLevel++;
+            if (zoomLevel >= maxZoomLevel)
+                zoomLevel = 0;
+        }
         private void Update()
         {
-            if (Input.touchCount == 2)
-            {
-                 Touch touch0, touch1;
-                 Vector2 touch0prevPos, touch1prevPos;
-                // float distance;
-                 touch0 = Input.GetTouch(0);
-                 touch1 = Input.GetTouch(1);
-                 touch0prevPos = touch0.position - touch0.deltaPosition;
-                 touch1prevPos = touch1.position - touch1.deltaPosition;
-                 float prevTouchDeltaMag = (touch0prevPos - touch1prevPos).magnitude;
-                 float touchDeltaMag = (touch0.position-touch1.position).magnitude;
-                 float deltaMagDiff = prevTouchDeltaMag - touchDeltaMag;
-
-                 CameraSystem.camera.orthographicSize += deltaMagDiff * zoomSpeed;
-                 CameraSystem.camera.orthographicSize = Mathf.Max(CameraSystem.camera.orthographicSize,minZoom);
-                 CameraSystem.camera.orthographicSize = Mathf.Min(CameraSystem.camera.orthographicSize,maxZoom);
-                 CameraSystem.uiCamera.orthographicSize = CameraSystem.camera.orthographicSize;
-               
-                 // distance = Vector2.Distance(touch0, touch1);
-                 //
-                 // if (startDistance == 0)
-                 //     startDistance = distance;
-                 // else if (distance - startDistance >= 100)
-                 // {
-                 //     zoom=0;
-                 //     startDistance = distance;
-                 // }
-                 // else if (distance - startDistance <= -100)
-                 // {
-                 //     zoom=1;
-                 //     startDistance = distance;
-                 // }
-                 // Debug.Log("Distance: " + distance+" Start: "+startDistance+ " Zoom: "+zoom);
-            }
-            else
-            {
-                startDistance = 0;
-            }
+            // if (Input.touchCount == 2)
+            // {
+            //      Touch touch0, touch1;
+            //      Vector2 touch0prevPos, touch1prevPos;
+            //     // float distance;
+            //      touch0 = Input.GetTouch(0);
+            //      touch1 = Input.GetTouch(1);
+            //      touch0prevPos = touch0.position - touch0.deltaPosition;
+            //      touch1prevPos = touch1.position - touch1.deltaPosition;
+            //      float prevTouchDeltaMag = (touch0prevPos - touch1prevPos).magnitude;
+            //      float touchDeltaMag = (touch0.position-touch1.position).magnitude;
+            //      float deltaMagDiff = prevTouchDeltaMag - touchDeltaMag;
+            //
+            //      CameraSystem.camera.orthographicSize += deltaMagDiff * zoomSpeed;
+            //      CameraSystem.camera.orthographicSize = Mathf.Max(CameraSystem.camera.orthographicSize,minZoom);
+            //      CameraSystem.camera.orthographicSize = Mathf.Min(CameraSystem.camera.orthographicSize,maxZoom);
+            //      CameraSystem.uiCamera.orthographicSize = CameraSystem.camera.orthographicSize;
+            // }
+            CameraSystem.camera.orthographicSize = zoomLevel + defaultOrthSize;
             Vector3  topRight =  CameraSystem.camera.ScreenToWorldPoint(new Vector3( CameraSystem.camera.pixelWidth,  CameraSystem.camera.pixelHeight, -transform.position.z));
             Vector3  bottomLeft =  CameraSystem.camera.ScreenToWorldPoint(new Vector3(0,0,-transform.position.z));
        

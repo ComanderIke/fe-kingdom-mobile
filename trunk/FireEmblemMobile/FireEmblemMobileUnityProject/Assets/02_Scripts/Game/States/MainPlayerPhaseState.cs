@@ -34,6 +34,10 @@ namespace Game.Mechanics
             this.playerPhaseState = playerPhaseState;
         }
 
+        public void ToggleZoom()
+        {
+            playerPhaseState.ToggleZoom();
+        }
         public override void Enter()
         {
             gridGameManager.GetSystem<GridSystem>().cursor.OnCursorPositionChanged += CursorPosChanged;
@@ -41,6 +45,7 @@ namespace Game.Mechanics
             gridInputSystem.SetActive(true);
             unitInputSystem.SetActive(true);
             playerPhaseUI.Show(gridGameManager.GetSystem<TurnSystem>().TurnCount);
+            playerPhaseUI.SubscribeOnToggleZoomClicked(ToggleZoom);
             playerPhaseUI.SubscribeOnBackClicked(Undo);
             playerPhaseUI.SubscribeOnCharacterCircleClicked(OnCharacterCircleClicked);
             foreach (var member in factionManager.EnemyFaction.Units)
@@ -67,6 +72,7 @@ namespace Game.Mechanics
         public override void Exit()
         {
             playerPhaseUI.UnsubscribeOnBackClicked(Undo);
+            playerPhaseUI.UnsubscribeOnToggleZoomClicked(ToggleZoom);
             playerPhaseUI.UnsubscribeOnCharacterCircleClicked(OnCharacterCircleClicked);
             UnitSelectionSystem.OnSelectedInActiveCharacter -=OnSelectedCharacter;
             UnitSelectionSystem.OnDeselectCharacter -= OnDeselectedCharacter;
