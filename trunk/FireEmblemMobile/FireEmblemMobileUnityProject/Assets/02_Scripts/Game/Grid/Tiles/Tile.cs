@@ -21,7 +21,7 @@ namespace Game.Grid
             }
             set
             {
-                //Debug.Log("Actor: "+actor);
+                MyDebug.LogTest("Actor: "+gridObject+" Value: "+value);
                 gridObject = value;
                //Debug.Log("Tile: "+this.X+" "+this.Y+ " "+actor);
                if (gridObject != null)

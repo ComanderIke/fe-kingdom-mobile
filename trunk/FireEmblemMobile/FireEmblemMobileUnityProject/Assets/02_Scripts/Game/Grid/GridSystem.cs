@@ -355,6 +355,7 @@ namespace Game.Map
         }
         public void SetUnitPosition(IGridActor unit, int x, int y, bool deleteOldGridObject=true, bool moveGameObject=true)
         {
+            
             if (x != -1 && y != -1 && x < width && y < height)
             {
                 if (unit.GridComponent.GridPosition.X != -1 && unit.GridComponent.GridPosition.Y != -1)
@@ -362,7 +363,10 @@ namespace Game.Map
                     if(deleteOldGridObject|| (Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject!=null &&Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject.Equals(unit))){
 
                         // Debug.Log("Delete Object at: "+unit.GridComponent.GridPosition.X +" "+ unit.GridComponent.GridPosition.Y);
-                        Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
+                        // if (x == unit.GridComponent.GridPosition.X && y == unit.GridComponent.GridPosition.Y)
+                        //     ;
+                        // else
+                            Tiles[unit.GridComponent.GridPosition.X, unit.GridComponent.GridPosition.Y].GridObject = null;
                     }
                 }
 

@@ -136,7 +136,8 @@ namespace Game.Mechanics
 
             var originTile = unit.GridComponent.OriginTile;
             gridGameManager.GetSystem<GridSystem>().SetUnitPosition(unit,x,y);
-            gridGameManager.GetSystem<GridSystem>().DeleteObjectAtTile(originTile);
+            if(!(originTile.X==x&& originTile.Y==y))
+                gridGameManager.GetSystem<GridSystem>().DeleteObjectAtTile(originTile);
             //unit.TurnStateManager.IsSelected = false;
             
             OnMovementFinished?.Invoke(unit);

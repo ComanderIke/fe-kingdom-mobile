@@ -8,6 +8,7 @@ using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using MoreMountains.Feedbacks;
 using TMPro;
+using TreeEditor;
 using UnityEngine;
 
 namespace LostGrace
@@ -60,6 +61,7 @@ namespace LostGrace
         public void Show(BattleResult result)
         {
 
+            finished = false;
             this.result = result;
             canvas.enabled = true;
             TweenUtility.FadeIn(canvasGroup);
@@ -141,9 +143,20 @@ namespace LostGrace
                 index++;
                 yield return new WaitForSeconds(0.5f);
             }
+
+            finished = true;
         }
-      
-        
+
+        private bool finished = false;
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0)&&finished)
+            {
+                Hide();
+            }
+        }
+
         public void Hide()
         {
             Debug.Log("HIDE RESULT PANNEL");

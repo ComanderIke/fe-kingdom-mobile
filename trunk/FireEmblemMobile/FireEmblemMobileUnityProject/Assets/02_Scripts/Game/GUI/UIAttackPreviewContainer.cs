@@ -16,6 +16,7 @@ namespace LostGrace
         [SerializeField] private TextMeshProUGUI hitValue;
         [SerializeField] private TextMeshProUGUI critValue;
         [SerializeField] private AttackPreviewStatBar hpBar;
+        [SerializeField] private GameObject redBlinkGO;
         private int maxHp;
         
 
@@ -44,6 +45,8 @@ namespace LostGrace
             }
 
             UpdateAllButHpBar(face, dmg, hit, crit, canCounter);
+            if(redBlinkGO!=null)
+                redBlinkGO.gameObject.SetActive(afterHp<=0);
         }
 
         void UpdateAllButHpBar(Sprite face, int dmg, int hit, int crit, bool canCounter=true)

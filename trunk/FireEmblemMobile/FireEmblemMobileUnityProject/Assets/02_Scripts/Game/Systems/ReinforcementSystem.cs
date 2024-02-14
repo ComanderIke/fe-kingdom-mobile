@@ -43,11 +43,12 @@ namespace LostGrace
         {
             if (!movedUnit.Faction.IsPlayerControlled)
                 return;
-          
+            var toRemove = new List<Reinforcement>();
             foreach (var reinforcement in reinforcements)
             {
                 
                 List<ReinforcementUnit>addedUnits = new List<ReinforcementUnit>();
+                List<ReinforcementUnit>removeUnits = new List<ReinforcementUnit>();
                 foreach (var unit in reinforcement.ReinforcementUnits)
                 {
                    
@@ -69,9 +70,14 @@ namespace LostGrace
                             };
                             addedUnits.Add(addedUnit);
                             
-                            
+                            removeUnits.Add(unit);
                         }
                     }
+                }
+
+                foreach (var removeUnit in removeUnits)
+                {
+                    reinforcement.ReinforcementUnits.Remove(removeUnit);
                 }
 
                 foreach(var addedUnit in addedUnits)
@@ -81,13 +87,20 @@ namespace LostGrace
                     reinforcement.ReinforcementUnits.Add(addedUnit);
                    
                 }
+                if (reinforcement.ReinforcementUnits.Count == 0)
+                    toRemove.Add(reinforcement);
                     
             }
+            foreach (var reinforcement in toRemove)
+            {
+                reinforcements.Remove(reinforcement);
+            }
+            toRemove.Clear();
         }
 
         void CheckTurnReinforcements()
         {
-            
+            var toRemove = new List<Reinforcement>();
             foreach (var reinforcement in reinforcements)
             {
                 List<ReinforcementUnit> spawnedUnits = new List<ReinforcementUnit>();
@@ -112,10 +125,16 @@ namespace LostGrace
                     
                 }
                 if (reinforcement.ReinforcementUnits.Count == 0)
-                    reinforcements.Remove(reinforcement);
+                    toRemove.Add(reinforcement);
                 
             }
-           
+
+            foreach (var reinforcement in toRemove)
+            {
+                reinforcements.Remove(reinforcement);
+            }
+            toRemove.Clear();
+
         }
 
         bool SpawnReinforcement(Reinforcement reinforcement, ReinforcementUnit unit)
@@ -125,10 +144,13 @@ namespace LostGrace
             //add unit to enemy faction
             var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             var spawnedUnit=unit.unitBp.Create(Guid.NewGuid());
+            MyDebug.LogLogic("Spawn Reinforcement on: "+reinforcement.X+" "+reinforcement.Y);
             if (!gridSystem.Tiles[reinforcement.X, reinforcement.Y].CanMoveOnto(spawnedUnit))
             {
+                MyDebug.LogLogic("ReinforcementBlocked");
                 return false;
             }
+            
           
            
             spawnedUnit.AIComponent.WeightSet = unit.AIWeightSet;
