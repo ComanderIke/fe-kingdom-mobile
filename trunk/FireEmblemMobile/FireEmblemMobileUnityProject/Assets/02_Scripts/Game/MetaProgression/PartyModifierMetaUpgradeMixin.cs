@@ -63,7 +63,7 @@ public class PartyModifierMetaUpgradeMixin : MetaUpgradeMixin
         if (upgLevel < value.Length-1)
             upgLevel++;
         if(flags.Length==0)
-            list.Add(new EffectDescription(""+ModifierType.EnumToString()+":", "+"+value[level], ""+value[upgLevel]));
+            list.Add(new EffectDescription(""+ModifierType.EnumToString()+":", (value[level]>0?"+":"")+value[level], (value[level]>0?"+":"")+value[upgLevel]));
         else
             foreach (var flag in flags[level])
             {

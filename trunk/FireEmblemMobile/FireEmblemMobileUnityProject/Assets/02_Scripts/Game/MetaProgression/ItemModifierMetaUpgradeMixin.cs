@@ -33,7 +33,7 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
         {
             switch (valuePair.Key)
             {
-                case ItemModifierType.HealthPotionsHeal:
+                case ItemModifierType.PotionsHeal:
                     HealthPotion.ExtraHealAmount = valuePair.Value;break;
             }
         }
@@ -50,7 +50,7 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
         if(level <startItems.Length)
             foreach (var entry in startItems[level])
             {
-                list.Add(new EffectDescription(entry.Key.name+":", "+"+entry.Value, "+"+entry.Value));
+                list.Add(new EffectDescription(entry.Key.name+"s:", "+"+entry.Value, "+"+entry.Value));
               
             }
         if(level <itemModifiers.Length)
@@ -66,6 +66,6 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
 }
 public enum ItemModifierType
 {
-    HealthPotionsHeal,
+    PotionsHeal,
     HolyWaterCurse
 }

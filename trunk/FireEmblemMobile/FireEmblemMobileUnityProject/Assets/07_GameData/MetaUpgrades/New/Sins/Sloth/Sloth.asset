@@ -15,10 +15,11 @@ MonoBehaviour:
   label: Sloth
   maxLevel: 1
   costToLevel: 64000000
-  costIsDeathStone: 0
-  costCorrupted: 1
-  Description: Recover more health for resting but all allied units gain -1 MOV
-  icon: {fileID: 21300000, guid: c4aeed02233dcdb41bff6bc162353da3, type: 3}
-  requiredFlameLevel: 0
+  costType: 0
+  Description: Recover more health for resting but all allied units gain -1 MOV.
+  icon: {fileID: 21300000, guid: 7734a9b8bfa28f44db8e7ecf98e02f4a, type: 3}
+  requiredFlameLevel: 01000000
   toggle: 0
-  mixins: []
+  mixins:
+  - {fileID: 11400000, guid: 48b090d3db8ed4ef48b4867051bf1340, type: 2}
+  - {fileID: 11400000, guid: 9a14d9a0d14ee42c9849b2f0c83bf5ca, type: 2}

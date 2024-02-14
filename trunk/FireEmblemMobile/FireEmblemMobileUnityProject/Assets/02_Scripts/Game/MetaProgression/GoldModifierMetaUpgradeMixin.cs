@@ -16,7 +16,7 @@ public class GoldModifierMetaUpgradeMixin: MetaUpgradeMixin
                 Merchant.PriceRateBuying = percentage[level]; break;
             case GoldModifierType.PriceSelling:
                 Merchant.PriceRateSelling = percentage[level]; break;
-            case GoldModifierType.PriceChurch:
+            case GoldModifierType.PriceShrine:
                 Church.PriceRate = percentage[level];
                 break;
             case GoldModifierType.PriceInn:
@@ -41,7 +41,7 @@ public class GoldModifierMetaUpgradeMixin: MetaUpgradeMixin
 }
 public enum GoldModifierType
 {
-    PriceChurch,
+    PriceShrine,
     PriceSmithy,
     PriceSelling,
     PriceBuying,
