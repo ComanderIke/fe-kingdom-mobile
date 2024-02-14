@@ -22,10 +22,9 @@ public class MiscellaneousMetaUpgradeMixin : MetaUpgradeMixin
                 case MiscellaneousType.DamageDoneIncrease: break;
                 case MiscellaneousType.DamageReceivedIncrease: break;
                 case MiscellaneousType.GemstoneMaxSouls: break;
-                case MiscellaneousType.MaxStatCaps1: break;
-                case MiscellaneousType.MaxStatCaps2: break;
+                case MiscellaneousType.MaxStats: break;
                 case MiscellaneousType.GemStoneMergeAmount: break;
-                case MiscellaneousType.GoldBonusPerTurnCount: break;
+                case MiscellaneousType.GoldBonusPerTurn: break;
             }
         }
     }
@@ -35,7 +34,7 @@ public class MiscellaneousMetaUpgradeMixin : MetaUpgradeMixin
         var list = new List<EffectDescription>();
         foreach (var entry in intValues[level])
         {
-            list.Add(new EffectDescription(""+entry.Key, ""+entry.Value, ""+entry.Value));
+            list.Add(new EffectDescription(""+TextUtility.EnumToString(entry.Key)+":", (entry.Value>0?"+":"")+entry.Value, (entry.Value>0?"+":"")+entry.Value));
         }
        
         return list;
@@ -44,9 +43,8 @@ public class MiscellaneousMetaUpgradeMixin : MetaUpgradeMixin
 
 public enum MiscellaneousType
 {
-    GoldBonusPerTurnCount,
-    MaxStatCaps1,
-    MaxStatCaps2,
+    GoldBonusPerTurn,
+    MaxStats,
     NightMaluses,
     DayBonuses,
     GemstoneMaxSouls,

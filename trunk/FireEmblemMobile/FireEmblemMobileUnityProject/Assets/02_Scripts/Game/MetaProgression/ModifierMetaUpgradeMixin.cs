@@ -79,11 +79,12 @@ public class ModifierMetaUpgradeMixin: MetaUpgradeMixin
     public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
     {
         var list = new List<EffectDescription>();
-        
+        if (level >= percentage.Length)
+            return list;
         int upgLevel = level;
         if (upgLevel < percentage.Length-1)
             upgLevel++;
-        list.Add(new EffectDescription(""+ModifierType, ""+percentage[level], ""+percentage[upgLevel]));
+        list.Add(new EffectDescription(ModifierType.EnumToString()+":", TextUtility.FormatPercentage(percentage[level]),TextUtility.FormatPercentage(percentage[upgLevel])));
 
        
         return list;

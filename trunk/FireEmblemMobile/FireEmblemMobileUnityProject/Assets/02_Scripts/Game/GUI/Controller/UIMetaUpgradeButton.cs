@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +8,25 @@ public class UIMetaUpgradeButton : MonoBehaviour
     private MetaUpgradeController metaUpgradeController;
     public MetaUpgradeBP metaUpgradeBp;
     public Image selected;
+    public TextMeshProUGUI levelText;
+    public Image levelTextBackground;
+    public Sprite levelTextBackgroundGreen;
+    public Sprite levelTextBackgroundRed;
+    public TMP_ColorGradient maxedGradient;
 
-    public void SetValues(MetaUpgradeBP upgrade, MetaUpgradeController controller)
+    public void SetValues(MetaUpgradeBP upgrade, int level, bool affordable, MetaUpgradeController controller)
     {
         this.metaUpgradeBp = upgrade;
         this.metaUpgradeController = controller;
         icon.sprite = upgrade.icon;
+        levelText.text = level+"/" + upgrade.maxLevel;
+        if (level >= upgrade.maxLevel)
+            levelText.colorGradientPreset = maxedGradient;
+        else
+        {
+            levelText.colorGradientPreset = null;
+        }
+        levelTextBackground.sprite = affordable ? levelTextBackgroundGreen : levelTextBackgroundRed;
     }
     public void Clicked()
     {

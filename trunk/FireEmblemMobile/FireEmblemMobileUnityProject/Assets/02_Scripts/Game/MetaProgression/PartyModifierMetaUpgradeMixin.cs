@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Players;
 using LostGrace;
@@ -33,22 +34,22 @@ public class PartyModifierMetaUpgradeMixin : MetaUpgradeMixin
         {
             switch (valuePair.Key)
             {
-                case PartyFlag.PartyMemberAfterArea1:
+                case PartyFlag.Area1:
                     Player.Instance.Flags.PartyMemberAfterArea1 = valuePair.Value;
                     break;
-                case PartyFlag.PartyMemberAfterArea2:
+                case PartyFlag.Area2:
                     Player.Instance.Flags.PartyMemberAfterArea2 = valuePair.Value;
                     break;
-                case PartyFlag.PartyMemberAfterArea3:
+                case PartyFlag.Area3:
                     Player.Instance.Flags.PartyMemberAfterArea3 = valuePair.Value;
                     break;
-                case PartyFlag.PartyMemberAfterArea4:
+                case PartyFlag.Area4:
                     Player.Instance.Flags.PartyMemberAfterArea4 = valuePair.Value;
                     break;
-                case PartyFlag.PartyMemberAfterArea5:
+                case PartyFlag.Area5:
                     Player.Instance.Flags.PartyMemberAfterArea5 = valuePair.Value;
                     break;
-                case PartyFlag.PartyMemberAfterArea6:
+                case PartyFlag.Area6:
                     Player.Instance.Flags.PartyMemberAfterArea6 = valuePair.Value;
                     break;
             }
@@ -61,7 +62,13 @@ public class PartyModifierMetaUpgradeMixin : MetaUpgradeMixin
         int upgLevel = level;
         if (upgLevel < value.Length-1)
             upgLevel++;
-        list.Add(new EffectDescription(""+ModifierType, ""+value[level], ""+value[upgLevel]));
+        if(flags.Length==0)
+            list.Add(new EffectDescription(""+ModifierType.EnumToString()+":", "+"+value[level], ""+value[upgLevel]));
+        else
+            foreach (var flag in flags[level])
+            {
+                list.Add(new EffectDescription(""+flag.Key.EnumToString()+":", "+"+value[0], ""+value[0]));
+            }
 
        
         return list;
@@ -70,12 +77,13 @@ public class PartyModifierMetaUpgradeMixin : MetaUpgradeMixin
 
 public enum PartyFlag
     {
-        PartyMemberAfterArea1,
-        PartyMemberAfterArea2,
-        PartyMemberAfterArea3,
-        PartyMemberAfterArea4,
-        PartyMemberAfterArea5,
-        PartyMemberAfterArea6
+        Area1,
+        Area2,
+        Area3,
+        Area4,
+        Area5,
+        Area6,
+        Area7
     
     }
     public enum PartyModifierType

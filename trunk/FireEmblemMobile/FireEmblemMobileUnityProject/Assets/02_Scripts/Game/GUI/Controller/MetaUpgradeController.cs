@@ -98,8 +98,14 @@ public class MetaUpgradeController : MonoBehaviour
        
         for (int i = 0; i < upgradeButtons.Count; i++)
         {
-            if(i < currentGod.MetaUpgrades.Count)
-                upgradeButtons[i].SetValues(currentGod.MetaUpgrades[i], this);
+            if (i < currentGod.MetaUpgrades.Count)
+            {
+                var metaUpgrade= Player.Instance.MetaUpgradeManager.GetUpgrade(currentGod.MetaUpgrades[i]);
+                int level = metaUpgrade == null ? 0 : metaUpgrade.level+1;
+                bool affordable = Player.Instance.CanAfford(currentGod.MetaUpgrades[i].GetCost(level), currentGod.MetaUpgrades[i].costType)&&Player.Instance.GetFlameLevel()>=currentGod.MetaUpgrades[i].GetRequiredFlameLevel(level);
+                upgradeButtons[i].SetValues(currentGod.MetaUpgrades[i], level, affordable,this);
+            }
+                
             LeanTween.cancel(upgradeButtons[i].gameObject);
             LeanTween.move(upgradeButtons[i].gameObject, upgradePages[currentPage].upgradeButtonsPositions[i].position,
                 pageAnimationTime).setEaseInOutQuad();

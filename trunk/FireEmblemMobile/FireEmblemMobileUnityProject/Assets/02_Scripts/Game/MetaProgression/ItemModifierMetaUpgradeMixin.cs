@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using _02_Scripts.Game.GUI.Utility;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
@@ -40,11 +41,24 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
     public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
     {
         var list = new List<EffectDescription>();
-        foreach (var entry in startResource[level])
-        {
-            list.Add(new EffectDescription(""+entry.Key, ""+entry.Value, ""+entry.Value));
-          
-        }
+        if(level <startResource.Length)
+            foreach (var entry in startResource[level])
+            {
+                list.Add(new EffectDescription(entry.Key.EnumToString()+":", "+"+entry.Value, "+"+entry.Value));
+              
+            }
+        if(level <startItems.Length)
+            foreach (var entry in startItems[level])
+            {
+                list.Add(new EffectDescription(entry.Key.name+":", "+"+entry.Value, "+"+entry.Value));
+              
+            }
+        if(level <itemModifiers.Length)
+            foreach (var entry in itemModifiers[level])
+            {
+                list.Add(new EffectDescription(entry.Key.EnumToString()+":", "+"+entry.Value, "+"+entry.Value));
+              
+            }
        
         return list;
     

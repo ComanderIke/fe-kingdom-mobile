@@ -8,10 +8,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/EncounterNodeModifier", fileName = "MetaUpgrade1")]
 public class EncounterNodeModifierMetaUpgradeMixin : MetaUpgradeMixin
 {
-    public SerializableDictionary<EncounterNodeModifierType, int> modifiers;
+    public SerializableDictionary<EncounterNodeModifierType, int>[] modifiers;
     public override void Activate(int level)
     {
-        foreach (KeyValuePair<EncounterNodeModifierType, int> keyValuePair in modifiers)
+        foreach (KeyValuePair<EncounterNodeModifierType, int> keyValuePair in modifiers[level])
         {
             switch (keyValuePair.Key)
             {
@@ -29,9 +29,9 @@ public class EncounterNodeModifierMetaUpgradeMixin : MetaUpgradeMixin
     public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
     {
         var list = new List<EffectDescription>();
-        foreach (var entry in modifiers)
+        foreach (var entry in modifiers[level])
         {
-            list.Add(new EffectDescription(""+entry.Key, ""+entry.Value, ""+entry.Value));
+            list.Add(new EffectDescription(entry.Key.EnumToString()+":", "+"+entry.Value, "+"+entry.Value));
         }
        
         return list;

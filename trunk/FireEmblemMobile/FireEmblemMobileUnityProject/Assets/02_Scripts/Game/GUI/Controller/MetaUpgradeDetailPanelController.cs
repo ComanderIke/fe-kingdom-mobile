@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.Game.Utility;
@@ -56,7 +57,7 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
             return;
         learnButtonText.text = "<bounce>Upgrade";
         var metaUpgrade = Player.Instance.MetaUpgradeManager.GetUpgrade(metaUpgradeBP);
-        nameText.text = metaUpgradeBP.name;
+        nameText.text = metaUpgradeBP.label;
         description.text = metaUpgradeBP.Description;
         if (Player.Instance.CanAfford(metaUpgradeBP.GetCost(metaUpgrade==null?0:metaUpgrade.level+1), metaUpgradeBP.costType))
         {
@@ -130,12 +131,14 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
            
             levelTextGo.gameObject.SetActive(true);
             costTextGo.gameObject.SetActive(true);
-          
+
+            List<EffectDescription> previous = new List<EffectDescription>();
             foreach (var effect in effects)
             {
                 bool upgrade = false;
                 var go = Instantiate(detailLinePrefab, lineContainer);
                 bool upg = effect.upgValue != effect.value && upgrade;
+                previous.Add(effect);
                 go.GetComponent<UIMetaUpgradeLine>().SetValues(effect.label, effect.value, false);
 
             }
@@ -143,10 +146,25 @@ public class MetaUpgradeDetailPanelController : MonoBehaviour
             foreach (var effect in effectsUpgrade)
             {
                 bool upgrade = true;
-                var go = Instantiate(detailLinePrefab, lineContainer);
-                //bool upg = effect.upgValue != effect.value && upgrade;
-                go.GetComponent<UIMetaUpgradeLine>().SetValues("Upgrade: ", effect.value, true);
+                bool equals = false;
+                bool labelEquals = false;
+                foreach (var prev in previous)
+                {
+                    if (prev.Equals(effect))
+                        equals = true;
+                    if (String.Equals(prev.label, effect.label))
+                        labelEquals = true;
+                }
 
+                if (!equals)
+                {
+                    var go = Instantiate(detailLinePrefab, lineContainer);
+                    //bool upg = effect.upgValue != effect.value && upgrade;
+
+                    go.GetComponent<UIMetaUpgradeLine>()
+                        .SetValues(labelEquals? "Upgrade: " : effect.label, effect.value,
+                            true);
+                }
             }
         }
         else

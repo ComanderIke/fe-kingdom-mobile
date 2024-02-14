@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4c365e0321c4b1fa3b810f9a3461d02, type: 3}
-  m_Name: NoLimits
+  m_Name: Reinforcements
   m_EditorClassIdentifier: 
-  label: No Limits
-  maxLevel: 2
+  label: Reinforcements
+  maxLevel: 3
   costToLevel: c80000002c01000090010000
-  Description: increase the MAX Attribute CAP for your units by +2
-  icon: {fileID: 21300000, guid: 7d10c7865911c214ca096c1afc07b909, type: 3}
-  xPosInTree: 3
-  yPosInTree: 2
-  availableAtStart: 0
+  costType: 0
+  Description: Receive Reinforcements after specific milestones.
+  icon: {fileID: 21300000, guid: d1b779d20babcd54b92b19c5f5affab3, type: 3}
+  requiredFlameLevel: 010000000100000001000000
+  toggle: 0
+  mixins:
+  - {fileID: 11400000, guid: 14ce2c8611fa846ef946bf409d0360b1, type: 2}

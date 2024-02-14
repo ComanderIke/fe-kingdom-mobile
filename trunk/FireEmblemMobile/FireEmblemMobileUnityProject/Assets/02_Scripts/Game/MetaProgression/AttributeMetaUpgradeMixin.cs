@@ -31,7 +31,7 @@ public class AttributeMetaUpgradeMixin : MetaUpgradeMixin
         var list = new List<EffectDescription>();
         foreach (var entry in attributes)
         {
-            list.Add(new EffectDescription(""+entry.Key, ""+entry.Value, ""+entry.Value));
+            list.Add(new EffectDescription(""+entry.Key, ((entry.Value>0)?"+":"")+entry.Value, ((entry.Value>0)?"+":"")+entry.Value));
         }
        
         return list;

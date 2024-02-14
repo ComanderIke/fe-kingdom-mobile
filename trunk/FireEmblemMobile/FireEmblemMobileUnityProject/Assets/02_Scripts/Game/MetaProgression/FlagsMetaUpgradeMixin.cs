@@ -47,7 +47,7 @@ public class FlagsMetaUpgradeMixin : MetaUpgradeMixin
         var list = new List<EffectDescription>();
         foreach (var entry in flags)
         {
-            list.Add(new EffectDescription(""+entry.Key, ""+entry.Value, ""+entry.Value));
+            list.Add(new EffectDescription(""+TextUtility.EnumToString(entry.Key)+":", entry.Value?"Unlocked": "Deactivated", ""+entry.Value));
         }
        
         return list;

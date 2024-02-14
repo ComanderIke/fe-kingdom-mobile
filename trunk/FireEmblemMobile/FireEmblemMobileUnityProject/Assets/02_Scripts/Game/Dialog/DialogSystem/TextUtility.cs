@@ -1,5 +1,12 @@
-﻿public static class TextUtility
+﻿using System;
+using System.Text;
+
+public static class TextUtility
 {
+    public static string FormatPercentage(float percentage)
+    {
+        return (percentage<=1?"":"+")+(percentage * 100 - 100).ToString("0") + "%";
+    }
     public static bool IsWhitespace(this char character)
     {
         switch (character)
@@ -87,5 +94,18 @@
         }
  
         return new string(textCharacters, 0, currentWhitespacelessTextLength);
+    }
+
+    public static string EnumToString(this Enum entryKey)
+    {
+        string enumString=entryKey.ToString();
+        var bld = new StringBuilder();
+        for (var i = 0; i < enumString.Length; i++)
+        {
+            if ((char.IsUpper(enumString[i])||char.IsNumber(enumString[i]))&& i!=0)
+                bld.Append(" ");
+            bld.Append(enumString[i]);
+        }
+        return bld.ToString();
     }
 }

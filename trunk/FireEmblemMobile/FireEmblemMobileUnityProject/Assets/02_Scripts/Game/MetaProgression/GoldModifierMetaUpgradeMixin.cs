@@ -33,7 +33,7 @@ public class GoldModifierMetaUpgradeMixin: MetaUpgradeMixin
         int upgLevel = level;
         if (upgLevel < percentage.Length-1)
             upgLevel++;
-        list.Add(new EffectDescription(""+ModifierType, ""+percentage[level], ""+percentage[upgLevel]));
+        list.Add(new EffectDescription(""+ModifierType.EnumToString()+":", TextUtility.FormatPercentage(percentage[level]), TextUtility.FormatPercentage(percentage[upgLevel])));
        
         return list;
     
