@@ -61,11 +61,8 @@ MonoBehaviour:
     Mov: 3
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
-    startSkills:
-    - {fileID: 11400000, guid: e10cf9e427b74994dbb617f13be86c35, type: 2}
-    - {fileID: 11400000, guid: a1c99be54693bcc45997c1934ed5801a, type: 2}
-    - {fileID: 11400000, guid: 1328cd72a582cf344a6fb1bef8830cd9, type: 2}
-    startBlessing: {fileID: 11400000, guid: 574b483c7e49fe2449dd8e280a0a969f, type: 2}
+    startSkills: []
+    startBlessing: {fileID: 0}
     maxSkillCount: 0
     maxSkillPoints: 0
     skillPoints: 1
@@ -86,6 +83,7 @@ MonoBehaviour:
         type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
+    AttackDelay: 0
   audio: {fileID: 11400000, guid: fd881e99a40e9be4faaaa55bd1b1481f, type: 2}
   experienceManager:
     level: 1

@@ -20,24 +20,29 @@ namespace GameCamera
         [SerializeField]
         private float maxY=12;
 
-        private const float defaultOrthSize = 3;
+        private const float defaultOrthSize = 3.2f;
         public int zoomLevel;
         public int maxZoomLevel = 3;
         public float zoomSpeed=0.004f;
+        private float extraBoundsPerZoomLevel = 2.0f;
+        private float width;
+        private float height;
         public void Construct(float width, float height, int zoomLevel)
         {
             this.zoomLevel = zoomLevel;
+            this.width = width;
+            this.height = height;
             SetBounds(width, height);
         }
         private void SetBounds(float width, float height)
         {
            
-            minX = -CameraSystem.cameraData.cameraBoundsBorder.x;
+            minX = -CameraSystem.cameraData.cameraBoundsBorder.x-extraBoundsPerZoomLevel*zoomLevel;
 
 
-            maxX = width + CameraSystem.cameraData.cameraBoundsBorder.x;
-            minY = -CameraSystem.cameraData.cameraBoundsBorder.y;
-            maxY = height + CameraSystem.cameraData.cameraBoundsBorder.y;
+            maxX = width + CameraSystem.cameraData.cameraBoundsBorder.x+extraBoundsPerZoomLevel*zoomLevel;
+            minY = -CameraSystem.cameraData.cameraBoundsBorder.y-extraBoundsPerZoomLevel*zoomLevel;
+            maxY = height + CameraSystem.cameraData.cameraBoundsBorder.y+extraBoundsPerZoomLevel*zoomLevel;
         }
 
         public void ToogleZoom()
@@ -45,8 +50,9 @@ namespace GameCamera
             zoomLevel++;
             if (zoomLevel >= maxZoomLevel)
                 zoomLevel = 0;
+            SetBounds(width, height);
         }
-        private void Update()
+        private void LateUpdate()
         {
             // if (Input.touchCount == 2)
             // {
@@ -67,6 +73,7 @@ namespace GameCamera
             //      CameraSystem.uiCamera.orthographicSize = CameraSystem.camera.orthographicSize;
             // }
             CameraSystem.camera.orthographicSize = zoomLevel + defaultOrthSize;
+            CameraSystem.uiCamera.orthographicSize = zoomLevel + defaultOrthSize;
             Vector3  topRight =  CameraSystem.camera.ScreenToWorldPoint(new Vector3( CameraSystem.camera.pixelWidth,  CameraSystem.camera.pixelHeight, -transform.position.z));
             Vector3  bottomLeft =  CameraSystem.camera.ScreenToWorldPoint(new Vector3(0,0,-transform.position.z));
        
@@ -89,33 +96,7 @@ namespace GameCamera
             {
                 transform.position = new Vector3(transform.position.x, transform.position.y + (minY - bottomLeft.y), transform.position.z);
             }
-            // if (currentZoom != zoom)
-            // {
-            //     currentZoom = zoom;
-            //     var cam = CameraSystem.camera;
-            //     switch (zoom)
-            //     {
-            //         case 0:
-            //             cam.orthographicSize = 3f;
-            //
-            //             cam.transform.localPosition = new Vector3(5.33f, 3f, cam.transform.localPosition.z);
-            //             break;
-            //         case 1:
-            //             cam.orthographicSize = 4f;
-            //
-            //             cam.transform.localPosition = new Vector3(7, 4f, cam.transform.localPosition.z);
-            //             break;
-            //         // case 2:
-            //         //     cam.orthographicSize = 5f;
-            //         //
-            //         //     cam.transform.localPosition = new Vector3(7, 4f, cam.transform.localPosition.z);
-            //         //     break;
-            //         // case 3:
-            //         //     cam.orthographicSize = 6f;
-            //         //     cam.transform.localPosition = new Vector3(9, 5f, cam.transform.localPosition.z);
-            //         //     break;
-            //     }
-            // }
+           
         }
     }
 }

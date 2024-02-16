@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units;
-using Unity.Plastic.Newtonsoft.Json.Serialization;
 using UnityEngine;
-using UnityEngine.Advertisements;
 
 namespace LostGrace
 {

@@ -44,19 +44,6 @@ namespace GameCamera
                     {
                         DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
                     }
-
-                    // if (EventSystem.current.currentSelectedGameObject == null ||
-                    //     !HitChecker.HasTagExcluded(EventSystem.current
-                    //         .currentSelectedGameObject.tag))
-                    // Debug.Log(CurrentInput.GameObjectUnderPointer());
-                    // if(Input.touchCount>0 && !EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
-                    // {
-
-                    // }
-                    // else if (CurrentInput.GameObjectUnderPointer()!=null &&CurrentInput.GameObjectUnderPointer().CompareTag("Grid"))
-                    // {
-                    //     DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
-                    // }
                 }
             }
 
