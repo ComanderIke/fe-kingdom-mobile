@@ -98,7 +98,7 @@ namespace Game.GameInput
         }
 
         public void CheckAttackPreview(IBattleActor u, IAttackableTarget attackTarget, GridPosition attackPosition)
-        {
+                {
             OnCheckAttackPreview?.Invoke(u, attackTarget, attackPosition);
         }
 

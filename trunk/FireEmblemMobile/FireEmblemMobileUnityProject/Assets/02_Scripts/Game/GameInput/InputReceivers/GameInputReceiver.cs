@@ -581,8 +581,12 @@ namespace Game.GameInput
                     {
                         var lastMovementPathPosition = inputPathManager.GetLastMovementPathPosition();
                         if (lastMovementPathPosition.x == -1 || lastMovementPathPosition.y == -1)
-                            return;
-                        gameplayCommands.CheckAttackPreview(battleActor, enemyBattleActor,
+                        {
+                            lastMovementPathPosition = new Vector2Int(selectedActor.GridComponent.OriginTile.X,
+                                selectedActor.GridComponent.OriginTile.Y);
+                            //return;
+                        }
+    gameplayCommands.CheckAttackPreview(battleActor, enemyBattleActor,
                             new GridPosition(lastMovementPathPosition.x,
                                 lastMovementPathPosition.y));
                         selectionDataProvider.SetUndoAbleActor(selectionDataProvider.SelectedActor);

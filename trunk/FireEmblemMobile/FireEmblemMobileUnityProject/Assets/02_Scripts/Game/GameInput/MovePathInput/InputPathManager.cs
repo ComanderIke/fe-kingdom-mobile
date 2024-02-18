@@ -69,7 +69,7 @@ namespace Game.GameInput
                                 Mathf.Abs(tile.Y - target.GridComponent.OriginTile.Y);
                     foreach (int range in character.AttackRanges)
                     {
-                        if (delta == range && gridSystem.GetTileChecker().IsTileFree(tile.X, tile.Y))
+                        if (delta == range && (gridSystem.GetTileChecker().IsTileFree(tile.X, tile.Y)||tile.GridObject.Equals(character)))
                         {
                             tilesInAttackRange.Add(tile);
                         }
@@ -92,13 +92,21 @@ namespace Game.GameInput
                 var p = pathProvider.FindPath(character.GridComponent.OriginTile.X,
                     character.GridComponent.OriginTile.Y, nearestTile.X, nearestTile.Y, character);
                 MovementPath = new List<Vector2Int>();
+                if (p == null)
+                {
+                    p = new MovementPath();
+                    p.PrependStep(nearestTile.X, nearestTile.Y);
+                }
+                    
+                
                 p.Reverse();
                 for (int i = 1; i < p.GetLength(); i++)
                 {
                     //Debug.Log(new Vector2(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
                     MovementPath.Add(new Vector2Int(p.GetStep(i).GetX(), p.GetStep(i).GetY()));
                 }
-               
+                
+
 
                 UpdatedMovementPath(character.GridComponent.OriginTile.X, character.GridComponent.OriginTile.Y);
 
