@@ -20,7 +20,10 @@ namespace Game.GameActors.Items.Weapons
 
         public override void Use(Unit character, Party convoy)
         {
-            ServiceProvider.Instance.GetSystem<UnitProgressSystem>().LearnNewSkill(character, skillPool);
+            if(skillPool.Count==0)
+                ServiceProvider.Instance.GetSystem<UnitProgressSystem>().LearnNewSkill(character);
+            else
+                ServiceProvider.Instance.GetSystem<UnitProgressSystem>().LearnNewSkill(character, skillPool);
             //character.SkillManager.LearnSkill(skill);
             //ServiceProvider.Instance.GetSystem<UnitProgressSystem>().LearnNewSkill(character);
             base.Use(character, convoy);

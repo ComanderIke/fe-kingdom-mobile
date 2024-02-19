@@ -44,15 +44,14 @@ public class UIChurchController : MonoBehaviour
     [SerializeField] private Button prayButton;
     [SerializeField] private Button donateButton;
     [SerializeField] private Button receiveBlessingButton;
-    [SerializeField] private float goldExpConvert = .5f;
-    [SerializeField] private float faithExpMult = 2f;
+    [SerializeField] private float faithExpMult = 5f;
     [SerializeField] private List<Unit> alreadyPrayed;
     [SerializeField] private TextMeshProUGUI donateGoldCost;
     [SerializeField] private TextMeshProUGUI bondExpText;
     [SerializeField] private TextMeshProUGUI bondLevelText;
     [SerializeField] private MMProgressBar bondExpBar;
     private int goldCost = 100;
-    private int donateExtraExp = 100;
+    private int donateExtraExp = 50;
     public void UpdateUI()
     {
 
@@ -130,12 +129,7 @@ public class UIChurchController : MonoBehaviour
             go.GetComponent<UICharacterFace>().onClicked += CharacterClicked;
         }
     }
-
-    int GoldToExp(int gold, int faith)
-    {
-        
-        return (int)((gold*goldExpConvert)*(1+((faith*faithExpMult)/100f)));
-    }
+    
 
     Unit GetUnitFromGod(God god)
     {
@@ -242,13 +236,13 @@ public class UIChurchController : MonoBehaviour
     public void PrayClicked()
     {
         alreadyPrayed.Add(party.ActiveUnit);
-        party.ActiveUnit.Bonds.Increase(gods[selectedGod], party.ActiveUnit.Stats.CombinedAttributes().FAITH);
+        party.ActiveUnit.Bonds.Increase(gods[selectedGod], (int)(party.ActiveUnit.Stats.CombinedAttributes().FAITH*faithExpMult));
         UpdateUI();
     }
     public void DonateClicked()
     {
         party.AddGold(-100);
-        party.ActiveUnit.Bonds.Increase(gods[selectedGod],donateExtraExp+ party.ActiveUnit.Stats.CombinedAttributes().FAITH);
+        party.ActiveUnit.Bonds.Increase(gods[selectedGod],donateExtraExp);
         UpdateUI();
         
     }

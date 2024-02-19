@@ -70,7 +70,8 @@ public class UICharacterFace : MonoBehaviour
         if (hpBar.currentValue > unit.Hp)
         {
             Debug.Log(unit.name);
-            feedbacks.PlayFeedbacks();
+            if(feedbacks!=null)
+                feedbacks.PlayFeedbacks();
         }
         
         hpBar.SetValue(unit.Hp, unit.MaxHp, true);
@@ -83,7 +84,7 @@ public class UICharacterFace : MonoBehaviour
         // {
         //     feedbacks.PlayFeedbacks();
         // }
-        
+        Debug.Log("Unit: "+unit.name+" "+expBar.gameObject.name);
         expBar.UpdateInstant(expBefore);
         expBar.UpdateWithAnimatedTextOnly(expGained);
     }

@@ -56,8 +56,8 @@ namespace Game.GUI
         [SerializeField]
         private RectTransform attractor;
         public IClickedReceiver parentController;
-        [SerializeField] private MMF_Player lowHealthFeedback;
-        [SerializeField] private MMF_Player normalHealthFeedback;
+        // [SerializeField] private MMF_Player lowHealthFeedback;
+        // [SerializeField] private MMF_Player normalHealthFeedback;
 
        // [SerializeField]
       //  private IStatBar spBar;
@@ -86,7 +86,7 @@ namespace Game.GUI
             MyDebug.LogTest("UNIT HP VALUE CHANGE SUBSCRIBE");
             unit.ExperienceManager.ExpGained -= UpdateExp;
             unit.ExperienceManager.ExpGained += UpdateExp;
-            UpdateValues();
+           
             gameObject.SetActive(true);
             hpText.fontSize = hpTextSizeBig;
             hpValueText.fontSize = hpTextSizeBig;
@@ -101,6 +101,8 @@ namespace Game.GUI
             animator.SetBool(Dead, !unit.IsAlive());
             animator.SetBool(Active, true);
             canvas.sortingOrder = sortOrder+10;
+            hpBar.SetValue(unit.Hp, unit.MaxHp, false);
+            UpdateValues();
             //GameplayInput.SelectUnit(unit);
 
 
@@ -115,12 +117,12 @@ namespace Game.GUI
            // Debug.Log("Show UnitCharacterUI: "+unit.name);
             unit.HpValueChanged -= UpdateValues;
             unit.HpValueChanged += UpdateValues;
-            MyDebug.LogTest("UNIT HP VALUE CHANGE SUBSCRIBE");
+           // MyDebug.LogTest("UNIT HP VALUE CHANGE SUBSCRIBE");
             unit.ExperienceManager.ExpGained -= UpdateExp;
             unit.ExperienceManager.ExpGained += UpdateExp;
             hpText.fontSize = hpTextSizeSmall;
             hpValueText.fontSize = hpTextSizeSmall;
-            UpdateValues();
+            
             gameObject.SetActive(true);
             hpBar.transform.localScale = normalScale;
             hpBarToScale.transform.localScale = normalScale;
@@ -132,6 +134,8 @@ namespace Game.GUI
             
             animator.SetBool(Dead, !unit.IsAlive());
             animator.SetBool(Active, false);
+            hpBar.SetValue(unit.Hp, unit.MaxHp, false);
+            UpdateValues();
 
 
         }
@@ -189,26 +193,26 @@ namespace Game.GUI
 
         void UpdateValues()
         {
-            MyDebug.LogTest("UNIT UPDATE VALUES");
+//            MyDebug.LogTest("UNIT UPDATE VALUES");
             if (unit == null)
                 return;
             characterName.SetText(unit.name);
             
             expBar.UpdateInstant(unit.ExperienceManager.Exp);
             Debug.Log("Update Unit Values: "+unit.name+" "+unit.Hp+" "+ unit.MaxHp);
-             hpBar.SetValue(unit.Hp, unit.MaxHp, true);
+            hpBar.SetValue(unit.Hp, unit.MaxHp, true);
             
-            if ((unit.Hp*1.0f) / unit.MaxHp <= lowHealthThreshold)
-            {
-               normalHealthFeedback.StopFeedbacks();
-                lowHealthFeedback.PlayFeedbacks();
-                
-            }
-            else
-            {
-                lowHealthFeedback.StopFeedbacks();
-                normalHealthFeedback.PlayFeedbacks();
-            }
+            // if ((unit.Hp*1.0f) / unit.MaxHp <= lowHealthThreshold)
+            // {
+            //    normalHealthFeedback.StopFeedbacks();
+            //     lowHealthFeedback.PlayFeedbacks();
+            //     
+            // }
+            // else
+            // {
+            //     lowHealthFeedback.StopFeedbacks();
+            //     normalHealthFeedback.PlayFeedbacks();
+            // }
             if(unit.visuals.CharacterSpriteSet!=null)
                 faceSprite.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
             animator.SetBool(Dead, !unit.IsAlive());

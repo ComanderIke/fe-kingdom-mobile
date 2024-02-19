@@ -211,6 +211,7 @@ namespace Game.GameResources
         public Relic GetRelic(string name)
         {
             RelicBP weaponBp = null;
+            MyDebug.LogTest("Get Relic: "+name);
             weaponBp = allRelics.First(a => a.name == name);
 
             return (Relic)weaponBp.Create();

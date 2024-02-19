@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Passive;
 using Game.GameResources;
 using Game.Grid;
 using Game.Grid.GridPathFinding;
@@ -33,8 +34,8 @@ namespace Game.Map
 
         private void Awake()
         {
-            width = GridGameManager.Instance.BattleMap.width;
-            height= GridGameManager.Instance.BattleMap.height;
+            width = GridGameManager.Instance.BattleMap.GetWidth();
+            height= GridGameManager.Instance.BattleMap.GetHeight();
             GetComponent<GridBuilder>().Build(width,height);
             Tiles = GetComponent<GridBuilder>().GetTiles();
 
@@ -259,6 +260,9 @@ namespace Game.Map
         {
             ResetDangerArea();
             var factionManager = GridGameManager.Instance.FactionManager;
+            //MyDebug.LogTODO("Clear only for enemy units? Dont clear player Data");
+            GridLogic.gridSessionData.Save();
+            GridLogic.gridSessionData.Clear();
             foreach (var faction in factionManager.Factions)
             {
                 if (factionManager.GetPlayerControlledFaction().IsOpponentFaction(faction))
@@ -266,13 +270,17 @@ namespace Game.Map
                     Debug.Log("FACTION: ");
                     foreach (var enemy in faction.FieldedUnits)
                     {
+                        if(!enemy.IsAlive())
+                            continue;
                         ShowMovementRangeOnGrid(enemy, false, true);
 
                         ShowAttackRangeOnGrid(enemy, new List<int>(enemy.AttackRanges), true, true);
+                       // MyDebug.LogTODO("Clear only for enemy units? Dont clear player Data");
                         GridLogic.gridSessionData.Clear();
                     }
                 }
             }
+            GridLogic.gridSessionData.Restore();
            
             //TODO Show All Attack Ranges add a bool for dangerzone than make mov and attack use danger sprite instead
         }
@@ -649,13 +657,38 @@ namespace Game.Map
         public void ToggleDangerArea()
         {
             dangerAreaShown = !dangerAreaShown;
-            if(dangerAreaShown)
+            if (dangerAreaShown)
+            {
                 ShowDangerArea();
+                GridComponent.OnTileChangedStatic += UpdateDangerArea;
+                Unit.UnitDied += UpdateDangerArea;
+            }
             else
             {
+                GridActorComponent.OnTileChangedStatic -= UpdateDangerArea;
+                Unit.UnitDied -= UpdateDangerArea;
                 ResetDangerArea();
             }
         }
+
+        void UpdateDangerArea(IGridActor actor)
+        {
+           UpdateDangerArea();  
+        }
+
+        void UpdateDangerArea(Tile tile)
+        {
+            UpdateDangerArea();  
+        }
+        void UpdateDangerArea()
+        {
+            if (!dangerAreaShown)
+                return;
+            MyDebug.LogTest("Update Danger Area!");
+            //ResetDangerArea();
+            ShowDangerArea();   
+        }
+
 
         public void DeleteObjectAtTile(Tile gridComponentOriginTile)
         {

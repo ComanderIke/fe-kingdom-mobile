@@ -30,8 +30,12 @@ namespace Game.GameActors.Units.Humans
                     Skills.Add(skillbp.Create());
                 }
             }
+
             if (startBlessing != null)
+            {
                 blessing = (Blessing)startBlessing.Create();
+                MyDebug.LogTest("Add Start Blessing");
+            }
 
         }
         public List<Skill> Skills
@@ -107,6 +111,7 @@ namespace Game.GameActors.Units.Humans
         {
             if (skill is Blessing blessing)
             {
+                blessing.BindSkill(unit);
                 this.blessing = blessing;
             }
             else
@@ -129,6 +134,12 @@ namespace Game.GameActors.Units.Humans
             foreach (var skill in Skills)
             {
                 skill.BindSkill(u);
+            }
+
+            if (blessing != null)
+            {
+                MyDebug.LogTest("Bind Blessing: "+blessing.Name);
+                blessing.BindSkill(u);
             }
         }
 
@@ -154,6 +165,7 @@ namespace Game.GameActors.Units.Humans
         {
             if (skill is Blessing blessing)
             {
+                blessing.UnbindSkill(unit);
                 this.blessing = null;
             }
             else
@@ -210,6 +222,19 @@ namespace Game.GameActors.Units.Humans
                     skill.CombatSkillMixin.RefreshUses(skill.level);
                 }
             }
+
+            if (blessing != null)
+            {
+                if (blessing.FirstActiveMixin != null)
+                {
+                    blessing.FirstActiveMixin.RefreshUses(blessing.level);
+                }
+                if (blessing.CombatSkillMixin != null)
+                {
+                    blessing.CombatSkillMixin.RefreshUses(blessing.level);
+                }
+            }
+                
         }
 
         public List<Curse> GetCurses()

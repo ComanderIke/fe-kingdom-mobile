@@ -27,6 +27,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 {
     public static AreaGameManager Instance;
     private List<IEngineSystem> Systems { get; set; }
+    
+
     private Area_ActionSystem actionSystem;
     public EncounterUIController uiCOntroller;
     public UIPartyCharacterCircleController uiPartyController;

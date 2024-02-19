@@ -6452,8 +6452,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.0033000112, y: -0.14920002, z: 0}
-    m_Extent: {x: 1.0501001, y: 0.7238, z: 0}
+    m_Center: {x: -0.0027999878, y: -0.14950001, z: 0}
+    m_Extent: {x: 1.0397, y: 0.7238, z: 0}
   m_PointLightInnerAngle: 35.059395
   m_PointLightOuterAngle: 83.51548
   m_PointLightInnerRadius: 3.56
@@ -33130,6 +33130,22 @@ MonoBehaviour:
     LastProgressUpdate: 0
     Achieved: 0
     Claimed: 0
+  - Progress: 1
+    LastProgressUpdate: 0
+    Achieved: 0
+    Claimed: 0
+  - Progress: 0
+    LastProgressUpdate: 0
+    Achieved: 0
+    Claimed: 0
+  - Progress: 1
+    LastProgressUpdate: 0
+    Achieved: 1
+    Claimed: 0
+  - Progress: 1
+    LastProgressUpdate: 0
+    Achieved: 1
+    Claimed: 0
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -33156,7 +33172,7 @@ MonoBehaviour:
     UnlockedAfter: 
   - Key: cleansing1
     DisplayName: Cleansing 1
-    Description: 'Defeat '
+    Description: Defeat
     RewardAmount: 50
     RewardType: 0
     LockedIcon: {fileID: 0}
@@ -33182,6 +33198,66 @@ MonoBehaviour:
     ProgressGoal: 10
     NotificationFrequency: 10
     ProgressSuffix: enemies
+    Chain: 0
+    UnlockedAfter: 
+  - Key: churchVisited
+    DisplayName: Shrine Visits
+    Description: Visit
+    RewardAmount: 10
+    RewardType: 0
+    LockedIcon: {fileID: 0}
+    LockOverlay: 0
+    AchievedIcon: {fileID: 0}
+    Spoiler: 0
+    Progression: 1
+    ProgressGoal: 1
+    NotificationFrequency: 1
+    ProgressSuffix: shrine(s)
+    Chain: 0
+    UnlockedAfter: 
+  - Key: innVisited
+    DisplayName: Inn Visits
+    Description: Visit
+    RewardAmount: 10
+    RewardType: 0
+    LockedIcon: {fileID: 0}
+    LockOverlay: 0
+    AchievedIcon: {fileID: 0}
+    Spoiler: 0
+    Progression: 1
+    ProgressGoal: 1
+    NotificationFrequency: 1
+    ProgressSuffix: Inn(s)
+    Chain: 0
+    UnlockedAfter: 
+  - Key: smithyVisited
+    DisplayName: Smithy Visits
+    Description: Visit
+    RewardAmount: 10
+    RewardType: 0
+    LockedIcon: {fileID: 0}
+    LockOverlay: 0
+    AchievedIcon: {fileID: 0}
+    Spoiler: 0
+    Progression: 1
+    ProgressGoal: 1
+    NotificationFrequency: 1
+    ProgressSuffix: Smithy(s)
+    Chain: 0
+    UnlockedAfter: 
+  - Key: merchantVisited
+    DisplayName: Merchant Visits
+    Description: Visit
+    RewardAmount: 10
+    RewardType: 0
+    LockedIcon: {fileID: 0}
+    LockOverlay: 0
+    AchievedIcon: {fileID: 0}
+    Spoiler: 0
+    Progression: 1
+    ProgressGoal: 1
+    NotificationFrequency: 1
+    ProgressSuffix: merchant(s)
     Chain: 0
     UnlockedAfter: 
   Stack: {fileID: 1592906229}

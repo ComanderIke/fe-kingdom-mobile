@@ -120,13 +120,18 @@ namespace Game.GameActors.Players
             }
 
 
-            unit.equippedWeapon = weaponData.Load();
-            unit.EquippedRelic = relicData.Load();
-          
+           // unit.equippedWeapon = weaponData.Load();
+            unit.Equip(weaponData.Load());
+            unit.Equip(relicData.Load());
+            //unit.EquippedRelic = relicData.Load();
+
             if (!string.IsNullOrEmpty(combatItem1Id))
             {
-                unit.CombatItem1 = new StockedCombatItem((IEquipableCombatItem)GameBPData.Instance.GetItemByName(combatItem1Id), combatItem1Stock);
+                unit.Equip(new StockedCombatItem(
+                    (IEquipableCombatItem)GameBPData.Instance.GetItemByName(combatItem1Id),
+                    combatItem1Stock),1);
             }
+
             unit.ClassUpgraded = classUpgraded;
             unit.SkillManager.Reset();
             skillData.Load(unit.SkillManager);

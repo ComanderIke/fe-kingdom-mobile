@@ -13,9 +13,9 @@ namespace Game.Grid
         private const string CELL_TAG = "Grid";
         private const int CELL_LAYER = 10;
 
-[HideInInspector]
+//[HideInInspector]
         public int width;
-        [HideInInspector]
+       // [HideInInspector]
         public int height;
         private Tile[,] tiles;
         public Transform gridTransform;
@@ -69,8 +69,8 @@ namespace Game.Grid
 
         private void InitTiles()
         {
-            width = GridGameManager.Instance.BattleMap.width;
-            height = GridGameManager.Instance.BattleMap.height;
+            width = GridGameManager.Instance.BattleMap.GetWidth();
+            height = GridGameManager.Instance.BattleMap.GetHeight();
             tiles = new Tile[width, height];
             var tileeffectVisualRenderer = FindObjectOfType<TileEffectRenderer>();
             for (int i = 0; i < width; i++)
@@ -97,9 +97,15 @@ namespace Game.Grid
 
             return go;
         }
-        
 
-  
 
+        public int GetWidth()
+        {
+            return width;
+        }
+        public int GetHeight()
+        {
+            return height;
+        }
     }
 }

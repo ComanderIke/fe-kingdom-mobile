@@ -9,12 +9,18 @@ namespace Game.Grid
         private List<Vector2Int> validPositions;
         private List<Vector2Int> validAttackPositions;
         private List<Vector2Int> validTargetPositions;
+        private List<Vector2Int> savedValidPositions;
+        private List<Vector2Int> savedValidAttackPositions;
+        private List<Vector2Int> savedValidTargetPositions;
 
         public GridSessionData()
         {
             validPositions = new List<Vector2Int>();
             validTargetPositions = new List<Vector2Int>();
             validAttackPositions= new List<Vector2Int>();
+            savedValidTargetPositions = new List<Vector2Int>();
+            savedValidAttackPositions = new List<Vector2Int>();
+            savedValidPositions = new List<Vector2Int>();
         }
         public bool IsMoveableAndActive(int x, int y)
         {
@@ -49,6 +55,19 @@ namespace Game.Grid
             validPositions.Clear();
             validAttackPositions.Clear();
             validTargetPositions.Clear();
+        }
+
+        public void Save()
+        {
+            savedValidAttackPositions = new List<Vector2Int>(validAttackPositions);
+            savedValidPositions = new List<Vector2Int>(validPositions);
+            savedValidTargetPositions = new List<Vector2Int>(validTargetPositions);
+        }
+        public void Restore()
+        {
+            validPositions = new List<Vector2Int>(savedValidPositions);
+            validAttackPositions = new List<Vector2Int>(savedValidAttackPositions);
+            validTargetPositions = new List<Vector2Int>(savedValidTargetPositions);
         }
 
         public bool IsTargetable(int x, int y)

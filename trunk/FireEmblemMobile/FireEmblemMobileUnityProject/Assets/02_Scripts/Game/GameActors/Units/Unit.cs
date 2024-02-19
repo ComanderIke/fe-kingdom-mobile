@@ -351,13 +351,17 @@ namespace Game.GameActors.Units
         {
             if (w == equippedWeapon)
                 return;
+            Debug.Log("Unit: "+Name+" Equip: "+w.Name);
             if (equippedWeapon != null)
             {
+                Debug.Log("Unequip: "+equippedWeapon.Name+" Equip: "+w.Name);
+                Debug.Log("Hitrate: " + stats.BonusStatsFromWeapon.Hit);
                 stats.BonusStatsFromWeapon.Attack -= equippedWeapon.GetDamage();
                 stats.BonusStatsFromWeapon.Hit -= equippedWeapon.GetHit();
                 stats.BonusStatsFromWeapon.Crit -= equippedWeapon.GetCrit();
                 equippedWeapon.Unbind(this);
             }
+            Debug.Log("HitrateAfterUnequip: " + stats.BonusStatsFromWeapon.Hit);
             Stats.AttackRanges.Clear();
             equippedWeapon = w;
             equippedWeapon.Bind(this);
@@ -366,7 +370,7 @@ namespace Game.GameActors.Units
             stats.BonusStatsFromWeapon.Attack += equippedWeapon.GetDamage();
             stats.BonusStatsFromWeapon.Hit += equippedWeapon.GetHit();
             stats.BonusStatsFromWeapon.Crit += equippedWeapon.GetCrit();
-
+            Debug.Log("HitratAfterEquip: " + stats.BonusStatsFromWeapon.Hit);
             OnEquippedWeapon?.Invoke();
         }
         public void AutoEquip()
@@ -444,6 +448,8 @@ namespace Game.GameActors.Units
       
         public void Equip(Relic r, bool triggerEvents=true)
         {
+            if (r == null)
+                return;
             if (EquippedRelic == null)
             {
                 EquippedRelic = r;
@@ -570,6 +576,10 @@ namespace Game.GameActors.Units
 
         public bool IsEnemy(IGridActor unit)
         {
+            Debug.Log("Name: "+name);
+            Debug.Log("Faction: "+Faction);
+            Debug.Log("IsEnemy: "+unit);
+            Debug.Log("unit.Faction.Id: "+unit);
             return Faction.Id != unit.Faction.Id;
         }
 

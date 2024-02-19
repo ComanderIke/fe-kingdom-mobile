@@ -7,12 +7,18 @@ using UnityEngine;
 
 namespace Game.GameActors.Units.Skills
 {
+    public enum BonusEffectType
+    {
+        Effect,
+        Blessing
+    }
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Stats", fileName = "StatsEffect")]
     public class BoostStatsEffect : SelfTargetSkillEffectMixin
     {
       
         public Attributes[] BonusAttributes;
         public CombatStats[] BonusStats;
+        public BonusEffectType effectType;
         public int BonusMov; 
         [SerializeField] private int[] cantoAmount;
         public float multiplier = 1;
@@ -29,9 +35,9 @@ namespace Game.GameActors.Units.Skills
 
         void UpdateTurn()
         {
-            RemoveAttributes(activatedLevel);
+            RemoveBonuses(activatedLevel);
             malus++;
-            ApplyAttributes(activatedLevel);
+            ApplyBonuses(activatedLevel);
         }
         public override void Activate(Unit target, int level)
         {
@@ -45,11 +51,11 @@ namespace Game.GameActors.Units.Skills
                 target.TurnStateManager.OnUpdateTurn+=UpdateTurn;
             }
                 
-            ApplyAttributes(level);
+            ApplyBonuses(level);
             activated = true;
         }
 
-        private void ApplyAttributes(int level)
+        private void ApplyBonuses(int level)
         {
             if (skillTransferDataIsMultiplier && SkillTransferData != null&& SkillTransferData.data!=null)
             {
@@ -59,29 +65,67 @@ namespace Game.GameActors.Units.Skills
 
             if (BonusAttributes != null&& BonusAttributes.Length>0)
             {
-                if(level < BonusAttributes.Length)
-                    target.Stats.BonusAttributesFromEffects += BonusAttributes[level].GetWithMalus(malus)*multiplier;
-                else
-                {
-                    target.Stats.BonusAttributesFromEffects += BonusAttributes[BonusAttributes.Length-1].GetWithMalus(malus)*multiplier;
-                }
-
+                ApplyAttributes(level);
             }
 
             if (BonusStats != null&& BonusStats.Length>0)
             {
-                if(level < BonusStats.Length)
-                    target.Stats.BonusStatsFromEffects += BonusStats[level].GetWithMalus(malus)*multiplier;
-                else
-                {
-                    target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length-1].GetWithMalus(malus)*multiplier;
-                }
+                ApplyStats(level);
             }
             if(level<cantoAmount.Length)
                 target.GridComponent.Canto = cantoAmount[level];
         }
 
-        void RemoveAttributes(int level)
+        private void ApplyStats(int level)
+        {
+            if (effectType == BonusEffectType.Effect)
+            {
+                if (level < BonusStats.Length)
+                    target.Stats.BonusStatsFromEffects += BonusStats[level].GetWithMalus(malus) * multiplier;
+                else
+                {
+                    target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length - 1].GetWithMalus(malus) * multiplier;
+                }
+            }
+            else
+            {
+                if (level < BonusStats.Length)
+                    target.Stats.BonusStatsFromBlessings += BonusStats[level].GetWithMalus(malus) * multiplier;
+                else
+                {
+                    target.Stats.BonusStatsFromBlessings += BonusStats[BonusStats.Length - 1].GetWithMalus(malus) * multiplier;
+                }
+            }
+            
+        }
+
+        private void ApplyAttributes(int level)
+        {
+            if (effectType == BonusEffectType.Effect)
+            {
+                if (level < BonusAttributes.Length)
+                    target.Stats.BonusAttributesFromEffects +=
+                        BonusAttributes[level].GetWithMalus(malus) * multiplier;
+                else
+                {
+                    target.Stats.BonusAttributesFromEffects +=
+                        BonusAttributes[BonusAttributes.Length - 1].GetWithMalus(malus) * multiplier;
+                }
+            }
+            else
+            {
+                if (level < BonusAttributes.Length)
+                    target.Stats.BonusAttributesFromBlessings +=
+                        BonusAttributes[level].GetWithMalus(malus) * multiplier;
+                else
+                {
+                    target.Stats.BonusAttributesFromBlessings +=
+                        BonusAttributes[BonusAttributes.Length - 1].GetWithMalus(malus) * multiplier;
+                }
+            }
+        }
+
+        void RemoveBonuses(int level)
         {
             // if (skillTransferDataIsMultiplier && SkillTransferData != null&& SkillTransferData.data!=null)
             //     multiplier = (float)SkillTransferData.data * skillTransferDataMultiplierMultiplier;
@@ -115,7 +159,7 @@ namespace Game.GameActors.Units.Skills
         {
             if (!activated)
                 return;
-            RemoveAttributes(level);
+            RemoveBonuses(level);
             malus = 0;
             this.target = null;
             this.activatedLevel = 0;

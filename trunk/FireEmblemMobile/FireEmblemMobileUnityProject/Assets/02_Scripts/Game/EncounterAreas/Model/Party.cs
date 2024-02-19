@@ -123,6 +123,7 @@ namespace Game.WorldMapStuff.Model
         }
 
         public static int StartGold { get; set; }
+        
 
 
         public void SetActiveUnit(Unit unit)

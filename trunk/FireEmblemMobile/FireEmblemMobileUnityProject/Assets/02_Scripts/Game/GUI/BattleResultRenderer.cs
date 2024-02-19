@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using __2___Scripts.Game.Utility;
 using Game.AI;
 using Game.GameActors.Players;
 using Game.GUI;
@@ -35,6 +36,9 @@ namespace LostGrace
         [SerializeField] private Canvas canvas;
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField]private BattleResult result;
+        [SerializeField] private TMP_ColorGradient bonusBlue;
+        [SerializeField] private TMP_ColorGradient bonusRed;
+        [SerializeField] private TMP_ColorGradient normal;
         struct Bonuses
         {
             public string description;
@@ -57,21 +61,32 @@ namespace LostGrace
         //     Show(result);
         // }
 
+        enum Efficiency
+        {
+            Fast,
+            Normal,
+            Slow
+        }
         public void Show(BattleResult result)
         {
 
+            itemRewardParent.DeleteChildren();
             finished = false;
             this.result = result;
             canvas.enabled = true;
             TweenUtility.FadeIn(canvasGroup);
-           goldBonusesList = new List<Bonuses>();
-           goldBonusesList.Add(new Bonuses(result.GetVictoryGold(),"Victory", 1));
-           goldBonusesList.Add(new Bonuses(result.GetGoldFromTurnCount(),"Turn Bonus", 1));
-           graceBonusesList = new List<Bonuses>();
-           graceBonusesList.Add(new Bonuses(result.GetVictoryGrace(),"Victory", 1));
-           graceBonusesList.Add(new Bonuses(result.GetGraceFromTurnCount(),"Turn Bonus", 1));
-           itemBonusesList = new List<StockedItem>();
-           itemBonusesList.AddRange(result.GetItemBonuses());
+            goldBonusesList = new List<Bonuses>();
+            Efficiency efficiency = Efficiency.Normal;
+            turnCount.SetTextCounting(0,result.GetTurnCount(), false);
+            efficiency= result.GetTurnCount() < result.GetMaxTurnCount()? Efficiency.Fast:result.GetTurnCount()> result.GetMaxTurnCount()?Efficiency.Slow:Efficiency.Normal;
+            turnCount.GetComponent<TextMeshProUGUI>().colorGradientPreset = efficiency == Efficiency.Fast ? bonusBlue: efficiency==Efficiency.Slow? bonusRed:normal;
+            goldBonusesList.Add(new Bonuses(result.GetVictoryGold(),"Victory", 1));
+            goldBonusesList.Add(new Bonuses(result.GetGoldFromTurnCount(),"Turn Bonus", 1));
+            graceBonusesList = new List<Bonuses>();
+            graceBonusesList.Add(new Bonuses(result.GetVictoryGrace(),"Victory", 1));
+            graceBonusesList.Add(new Bonuses(result.GetGraceFromTurnCount(),"Turn Bonus", 1));
+            itemBonusesList = new List<StockedItem>();
+            itemBonusesList.AddRange(result.GetItemBonuses());
             showFeedback.PlayFeedbacks();
           
             // if (result.GetTurnCount() != 0)

@@ -63,9 +63,14 @@ namespace Game.States
             var turnSystem = GridGameManager.Instance.GetSystem<TurnSystem>();
             var defeatedEnemies = battleStatsSystem.GetDefeatedEnemies();
             var eliteEnemies = battleStatsSystem.GetDefeatedEliteEnemies();
+            BattleMap battleMap=null;
+            if (SceneTransferData.Instance != null &&SceneTransferData.Instance.BattleMap!=null )
+                battleMap = SceneTransferData.Instance.BattleMap;
+            else
+                battleMap = GameObject.FindObjectOfType<DemoUnits>().battleMap;
             var battleResult = new BattleResult(battleStatsSystem.GetDefeatedEnemyCount(),
                 battleStatsSystem.GetDefeatedEliteEnemyCount(), turnSystem.TurnCount, battleStatsSystem.GetMvp(),
-                defeatedEnemies, eliteEnemies);
+                defeatedEnemies, eliteEnemies, battleMap);
             var winState = new WinState(battleResult)
             {
                 successRenderer = GameObject.FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First(),

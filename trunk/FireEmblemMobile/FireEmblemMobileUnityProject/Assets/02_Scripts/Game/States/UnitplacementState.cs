@@ -91,8 +91,8 @@ namespace Game.States
       
         private void InitCamera()
         {
-            int height = GridGameManager.Instance.BattleMap.height;
-            int width = GridGameManager.Instance.BattleMap.width;
+            int height = GridGameManager.Instance.BattleMap.GetHeight();
+            int width = GridGameManager.Instance.BattleMap.GetWidth();
             //Order of Mixins Matters!!!Laggy Camera otherwise
             cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(TagManager.UnitTag),new MouseCameraInputProvider());

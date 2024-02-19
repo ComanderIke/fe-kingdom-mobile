@@ -20,8 +20,10 @@ namespace Game.GameActors.Units.Numbers
         public Attributes BonusAttributesFromWeapon { get; set; }
         public Attributes BonusAttributesFromFood { get; set; }
         public Attributes BonusAttributesFromEffects { get; set; }
+        public Attributes BonusAttributesFromBlessings { get; set; }
         public CombatStats BonusStatsFromTerrain { get; set; }
         public CombatStats BonusStatsFromEffects { get; set; }
+        public CombatStats BonusStatsFromBlessings { get; set; }
         public CombatStats BonusStatsFromEquips { get; set; }
 
         public CombatStats BonusStatsFromWeapon { get; set; }
@@ -43,10 +45,12 @@ namespace Game.GameActors.Units.Numbers
             BonusAttributesFromEquips = new Attributes();
             BonusAttributesFromWeapon = new Attributes();
             BonusAttributesFromFood = new Attributes();
+            BonusAttributesFromBlessings = new Attributes();
             BonusStatsFromEffects = new CombatStats();
             BonusStatsFromEquips = new CombatStats();
             BonusStatsFromTerrain = new CombatStats();
             BonusStatsFromWeapon = new CombatStats();
+            BonusStatsFromBlessings = new CombatStats();
             AttackRanges = new List<int>();
             Bane = AttributeType.NONE;
             Boon = AttributeType.NONE;
@@ -55,6 +59,7 @@ namespace Game.GameActors.Units.Numbers
             BonusAttributesFromEquips.OnAttributesUpdated += AttributesUpdate;
             BonusAttributesFromFood.OnAttributesUpdated += AttributesUpdate;
             BonusAttributesFromWeapon.OnAttributesUpdated += AttributesUpdate;
+            BonusAttributesFromBlessings.OnAttributesUpdated += AttributesUpdate;
             
         }
 
@@ -97,11 +102,13 @@ namespace Game.GameActors.Units.Numbers
             stats.BonusAttributesFromWeapon = new Attributes(BonusAttributesFromWeapon);
             stats.BonusAttributesFromEquips = new Attributes(BonusAttributesFromEquips);
             stats.BonusAttributesFromFood = new Attributes(BonusAttributesFromFood);
+            stats.BonusAttributesFromBlessings = new Attributes(BonusAttributesFromBlessings);
             stats.Mov = Mov;
             stats.BonusStatsFromEffects = new CombatStats(BonusStatsFromEffects);
             stats.BonusStatsFromTerrain = new CombatStats(BonusStatsFromTerrain);
             stats.BonusStatsFromEquips = new CombatStats(BonusStatsFromEquips);
             stats.BonusStatsFromWeapon = new CombatStats(BonusStatsFromWeapon);
+            stats.BonusStatsFromBlessings = new CombatStats(BonusStatsFromBlessings);
             
 
             return stats;
@@ -123,12 +130,12 @@ namespace Game.GameActors.Units.Numbers
         }
         public Attributes CombinedAttributes()
         {
-            return BaseAttributes + BonusAttributesFromWeapon + BonusAttributesFromEffects + BonusAttributesFromEquips+ BonusAttributesFromFood;
+            return BaseAttributes + BonusAttributesFromWeapon + BonusAttributesFromEffects +BonusAttributesFromBlessings+ BonusAttributesFromEquips+ BonusAttributesFromFood;
         }
 
         public CombatStats CombinedBonusStats()
         {
-            return BonusStatsFromEquips + BonusStatsFromWeapon + BonusStatsFromEffects + BonusStatsFromTerrain;
+            return BonusStatsFromEquips + BonusStatsFromWeapon + BonusStatsFromEffects +BonusStatsFromBlessings+ BonusStatsFromTerrain;
         }
 
         public Attributes BaseAttributesAndWeapons()

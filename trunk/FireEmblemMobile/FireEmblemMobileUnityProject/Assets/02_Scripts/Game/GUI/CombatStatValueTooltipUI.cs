@@ -16,7 +16,7 @@ namespace LostGrace
         [SerializeField] private Transform statContainerParent;
      
         [SerializeField] private string labelSum;
-      
+        [SerializeField] private string labelBlessing="Blessing";
         [SerializeField] private string labelEffects;
         [SerializeField] private string labelTerrain;
         [SerializeField] private string labelWeapon;
@@ -126,6 +126,14 @@ namespace LostGrace
                  var statContainerEquip= equipGo.GetComponent<StatContainerUI>();
                  statContainerEquip.SetValue(labelRelic, bonusFromEquips, true, bonusFromEquips>0?AttributeBonusState.Increasing:bonusFromEquips<0?AttributeBonusState.Decreasing:AttributeBonusState.Same);
                  instantiatedObjects.Add(equipGo);
+             }
+             int bonusFromBlessing= unit.Stats.BonusStatsFromBlessings.GetStatFromEnum(statType);
+             if (bonusFromBlessing != 0)
+             {
+                 var effectGo = Instantiate(statContainerPrefab, statContainerParent);
+                 var statContainerEffect = effectGo.GetComponent<StatContainerUI>();
+                 statContainerEffect.SetValue(labelBlessing, bonusFromBlessing, true, bonusFromBlessing>0?AttributeBonusState.Increasing:bonusFromBlessing<0?AttributeBonusState.Decreasing:AttributeBonusState.Same);
+                 instantiatedObjects.Add(effectGo);
              }
              int bonusFromEffects = unit.Stats.BonusStatsFromEffects.GetStatFromEnum(statType);
              if (bonusFromEffects != 0)

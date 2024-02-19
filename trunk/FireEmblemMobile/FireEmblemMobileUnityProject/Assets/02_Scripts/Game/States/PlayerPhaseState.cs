@@ -82,8 +82,8 @@ namespace Game.Mechanics
             // Debug.Log("PlayerPhaseEnter");
             stateMachine = new StateMachine<PPStateTrigger>(mainState);
            stateMachine.Init();
-           int height = gridGameManager.BattleMap.height;
-           int width = gridGameManager.BattleMap.width;
+           int height = gridGameManager.BattleMap.GetHeight();
+           int width = gridGameManager.BattleMap.GetWidth();
            if(!cameraSystem.HasMixin<ViewOnGridMixin>())
                cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height,zoomLevel);
 

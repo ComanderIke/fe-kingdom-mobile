@@ -30,8 +30,8 @@ namespace Game.AI
                 aiSystem = GridGameManager.Instance.GetSystem<AISystem>();
             aiSystem.NewTurn();
             //cameraSystem.AddMixin<FocusCameraMixin>().Construct();
-            int height = gridGameManager.BattleMap.height;
-            int width = gridGameManager.BattleMap.width;
+            int height = gridGameManager.BattleMap.GetHeight();
+            int width = gridGameManager.BattleMap.GetWidth();
             // cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
             //cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
 

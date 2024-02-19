@@ -41,6 +41,12 @@ public class UISmithyController : MonoBehaviour
     [SerializeField] private Button accuracy;
     [SerializeField] private Button criticalSmithingButton;
     [SerializeField] private Button specialSmithingButton;
+    [SerializeField] private Image powerSmithingButtonBorder;
+    [SerializeField] private Image accuracyBorder;
+    [SerializeField] private Image criticalSmithingButtonBorder;
+    [SerializeField] private Image specialSmithingButtonBorder;
+    [SerializeField] private Material selectedBorderMaterial;
+    [SerializeField] private Material defaultBorderMaterial;
     private Weapon selectedWeapon;
     private Relic selectedRelic;
     public SmithyUIState state = SmithyUIState.Smithing;
@@ -76,12 +82,19 @@ public class UISmithyController : MonoBehaviour
         }
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
-       
-        specialSmithingButton.interactable = upgradeMode != WeaponUpgradeMode.Special;
-        powerSmithingButton.interactable = upgradeMode != WeaponUpgradeMode.Power;
-        accuracy.interactable = upgradeMode != WeaponUpgradeMode.Accuracy;
-        criticalSmithingButton.interactable = upgradeMode != WeaponUpgradeMode.Critical;
+
+        specialSmithingButton.interactable = true;
+        powerSmithingButton.interactable =  true;
+        accuracy.interactable =  true;
+        criticalSmithingButton.interactable = true;
+        specialSmithingButtonBorder.material = WeaponUpgradeMode.Special == upgradeMode ? selectedBorderMaterial:defaultBorderMaterial;
         
+        powerSmithingButtonBorder.material = WeaponUpgradeMode.Power == upgradeMode ? selectedBorderMaterial:defaultBorderMaterial;
+
+        accuracyBorder.material = WeaponUpgradeMode.Accuracy == upgradeMode ? selectedBorderMaterial:defaultBorderMaterial;
+
+        criticalSmithingButtonBorder.material = WeaponUpgradeMode.Critical == upgradeMode ? selectedBorderMaterial:defaultBorderMaterial;
+
         combineGemsButtonAlpha.interactable = Player.Instance.Party.Storage.HasGems();
         insertGemsButtonAlpha.interactable = selectedRelic != null;
         

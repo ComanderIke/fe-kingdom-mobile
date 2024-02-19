@@ -13,7 +13,7 @@ namespace Game.GameActors.Units
             if (previousTile != null)
             {
                 Tile = previousTile;
-                OnTileChanged?.Invoke(Tile);
+                //OnTileChanged?.Invoke(Tile);
               
             }
 
@@ -32,6 +32,7 @@ namespace Game.GameActors.Units
             }
             set
             {
+                bool changed = !(previousTile!=null&&previousTile.Equals(value));
                 if (previousTile == null)
                     previousTile = value;
                 else
@@ -40,7 +41,12 @@ namespace Game.GameActors.Units
                 }
                 
                 tile = value;
-                OnTileChanged?.Invoke(Tile);
+                if (changed)
+                {
+                    OnTileChanged?.Invoke(Tile);
+                    OnTileChangedStatic?.Invoke(Tile);
+                }
+                    
             }
         }
 
@@ -71,6 +77,7 @@ namespace Game.GameActors.Units
 
 
         public event Action<Tile> OnTileChanged;
+        public static event Action<Tile> OnTileChangedStatic;
 
 
         public void SetToOriginPosition()

@@ -17,9 +17,11 @@ namespace LostGrace
         private List<Unit> enemy;
         private List<Unit> eliteEnemy;
         private Unit mvp;
+        private BattleMap battleMap;
 
-        public BattleResult(int defeatedEnemyCount, int defeatedEliteEnemyCount, int turnCount, Unit mvp, List<Unit> enemy, List<Unit> eliteEnemy)
+        public BattleResult(int defeatedEnemyCount, int defeatedEliteEnemyCount, int turnCount, Unit mvp, List<Unit> enemy, List<Unit> eliteEnemy, BattleMap battleMap)
         {
+            this.battleMap = battleMap;
             this.defeatedEnemyCount = defeatedEnemyCount;
             this.defeatedEliteEnemyCount = defeatedEliteEnemyCount;
             this.turnCount = turnCount;
@@ -30,7 +32,7 @@ namespace LostGrace
         }
         public int GetExpFromEnemies()
         {
-            return config.BexpPerEnemy * defeatedEnemyCount;
+            return config.GracePerEnemy * defeatedEnemyCount;
         }
 
         public int GetGoldFromEnemies()
@@ -65,7 +67,7 @@ namespace LostGrace
 
         public int GetExpFromEliteEnemies()
         {
-            return config.BexpPerEnemy * defeatedEliteEnemyCount;
+            return config.GracePerEnemy * defeatedEliteEnemyCount;
         }
 
         public Unit GetFirstEliteEnemy()
@@ -79,9 +81,13 @@ namespace LostGrace
             return mvp;
         }
 
+        private int GetMapTurnCount()
+        {
+            return battleMap.turnCount == 0 ? config.DefaultTurnCount : battleMap.turnCount;
+        }
         public int GetGoldFromTurnCount()
         {
-            return config.GoldPerTurnLeft * Math.Max(0,config.DefaultTurnCount-turnCount);
+            return config.GoldPerTurnLeft * Math.Max(0,GetMapTurnCount()-turnCount);
         }
 
       
@@ -98,26 +104,34 @@ namespace LostGrace
 
         public int GetVictoryGold()
         {
-            return 100;
+            return battleMap.victoryGold==0?config.VictoryGold:battleMap.victoryGold;
         }
 
         public int GetVictoryGrace()
         {
-            return 50;
+            return battleMap.victoryGrace==0?config.VictoryGrace:battleMap.victoryGrace;
         }
 
         public int GetGraceFromTurnCount()
         {
-            return config.BexpPerTurnLeft * Math.Max(0,config.DefaultTurnCount-turnCount);
+            return config.GracePerTurnLeft * Math.Max(0,GetMapTurnCount()-turnCount);
         }
 
         public IEnumerable<StockedItem> GetItemBonuses()
         {
             var list = new List<StockedItem>();
-            int rng = Random.Range(3, 5);
-            for(int i=0; i <rng; i++)
-                list.Add(new StockedItem(GameBPData.Instance.GetRandomItem(), 1));
+            foreach (var rewardItem in battleMap.victoryItems)
+            {
+                if(Random.value< rewardItem.chance)
+                    list.Add(new StockedItem(rewardItem.item.Create(), rewardItem.count));
+            }
+                
             return list;
+        }
+
+        public int GetMaxTurnCount()
+        {
+            return GetMapTurnCount();
         }
     }
 }

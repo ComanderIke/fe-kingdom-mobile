@@ -10,7 +10,7 @@ namespace LostGrace
 {
     public class ClickAndHoldButton : MonoBehaviour
     {
-        private const bool clickAndHold = true;
+        private const bool clickAndHold = false;
         [SerializeField] private float holdTime = 1.2f;
         private float time = 0;
         [SerializeField] private Image fill;

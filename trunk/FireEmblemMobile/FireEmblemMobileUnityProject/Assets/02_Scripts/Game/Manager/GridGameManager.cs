@@ -43,7 +43,7 @@ namespace Game.Manager
             Instance = this;
             MyDebug.LogEngine("Awake " +gameObject.name);
             MyDebug.LogTest("BOSS AWAKE: "+SceneTransferData.Instance.IsBoss);
-            if (SceneTransferData.Instance != null &&SceneTransferData.Instance.BattleMap!=null&&SceneTransferData.Instance.BattleMap!=null )
+            if (SceneTransferData.Instance != null &&SceneTransferData.Instance.BattleMap!=null )
                 BattleMap = SceneTransferData.Instance.BattleMap;
             else
                 BattleMap = FindObjectOfType<DemoUnits>().battleMap;
@@ -139,7 +139,7 @@ namespace Game.Manager
             // var battleRenderers = FindObjectsOfType<MonoBehaviour>().OfType<IBattleRenderer>();
             // GetSystem<BattleSystem>().BattleRenderer = battleRenderers.First();
             var gridSystem = GetSystem<GridSystem>();
-            var tileChecker = new GridTileChecker(gridSystem.Tiles, BattleMap.width, BattleMap.height);
+            var tileChecker = new GridTileChecker(gridSystem.Tiles, BattleMap.GetWidth(), BattleMap.GetHeight());
             gridSystem.GridLogic.tileChecker = tileChecker;
             var pathFinder = new GridAStar(tileChecker);
             gridSystem.pathFinder = pathFinder;

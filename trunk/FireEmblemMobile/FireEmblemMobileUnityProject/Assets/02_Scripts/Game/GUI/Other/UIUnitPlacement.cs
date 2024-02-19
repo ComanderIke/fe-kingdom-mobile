@@ -9,6 +9,7 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
+using Game.GameResources;
 using Game.Grid;
 using Game.GUI;
 using Game.Manager;
@@ -152,6 +153,7 @@ public class UIUnitPlacement : IUnitPlacementUI
     {
         // SaveGameManager.Save();
         // SceneController.LoadSceneAsync(Scenes.TestScene, false);
+        Player.Instance.Party.Convoy.AddItem(GameBPData.Instance.GetItemByName("SmokeBomb"));
         if (Player.Instance.Party.Convoy.ContainsItem(new Bomb(null, "SmokeBomb", "", 0, 0, 0, null)))
         {
             var smokeBomb =

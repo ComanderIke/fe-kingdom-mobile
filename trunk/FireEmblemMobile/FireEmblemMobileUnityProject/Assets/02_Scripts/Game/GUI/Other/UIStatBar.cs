@@ -31,7 +31,7 @@ namespace Game.GUI
             //MyDebug.LogTest("HP Bar Set Value: "+value+" "+maxValue+" "+animated);
             if (progressBar != null)
             {
-                if (!animated || !init)
+                if (!animated)
                 {
                     progressBar.SetBar01((currentValue * 1.0f )/ maxValue);
                     init = true;

@@ -52,9 +52,10 @@ public class UIConvoyController:MonoBehaviour
     private float timeShown = 0;
     private void Start()
     {
-     
+        equipButton.OnClick -= EquipClicked;
         useButton.OnClick -= UseClicked;
         dropButton.OnClick -= DropButtonClicked;
+        useButton.OnClick += UseClicked;
         equipButton.OnClick += EquipClicked;
         dropButton.OnClick += DropButtonClicked;
     }

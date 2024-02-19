@@ -10,6 +10,7 @@ namespace LostGrace
         // Start is called before the first frame update
         void OnEnable()
         {
+            MyDebug.LogTest("Screen Width: "+Screen.width+" Height: "+Screen.height);
             GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
         }
 

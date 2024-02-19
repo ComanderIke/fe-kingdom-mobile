@@ -19,8 +19,9 @@ using UnityEngine;
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            mytarget.width = EditorGUILayout.IntSlider("Width:", mytarget.width, 6, 24);
-            mytarget.height = EditorGUILayout.IntSlider("Height:", mytarget.height, 6, 24);
+            Debug.Log("OnInspectorGUI: "+mytarget.width+" "+mytarget.height);
+            // mytarget.width = EditorGUILayout.IntSlider("Width:", mytarget.width, 6, 24);
+            // mytarget.height = EditorGUILayout.IntSlider("Height:", mytarget.height, 6, 24);
             if (GUILayout.Button("Build Grid"))
             {
                 mytarget.Build(mytarget.width, mytarget.height);

@@ -67,7 +67,7 @@ public class UIAchievement : MonoBehaviour
             Title.text = Information.DisplayName;
             Description.text = Information.Description;
             if (Information.Progression)
-                Description.text = Information.Description +(State.Achieved?greenColor:redColor) +(int)State.Progress+"</color>/"+Information.ProgressGoal+" "+Information.ProgressSuffix;
+                Description.text = Information.Description +" "+(State.Achieved?greenColor:redColor) +(int)State.Progress+"</color>/"+Information.ProgressGoal+" "+Information.ProgressSuffix;
             claimText.text = State.Claimed?"Claimed":"Claim";
             ClaimIcon.sprite = State.Achieved ? ClaimSprite : greyClaimSprite;
             canvasGroup.alpha = State.Claimed ? .3f : 1f;

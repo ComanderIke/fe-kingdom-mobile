@@ -16,6 +16,7 @@ namespace Game.GameActors.Players
 
 
         [SerializeField] public Attributes Attributes;
+       
         [SerializeField] public Attributes BaseGrowths;
         public StatsData(int mov, Attributes attributes,Attributes baseGrowths,  List<int> attackRanges)
         {

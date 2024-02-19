@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.WorldMapStuff.Model
@@ -9,6 +10,7 @@ namespace Game.WorldMapStuff.Model
         public string EncounterNodeId { get; set; }
 
         private EncounterNode encounterNode;
+        public static event Action<EncounterNode> OnNodeVisited;
         public EncounterNode EncounterNode
         {
             get
@@ -38,6 +40,8 @@ namespace Game.WorldMapStuff.Model
         {
            
            MovedEncounterIds.Add(node.GetId());
+           OnNodeVisited?.Invoke(node);
+           
             // MovedEncounterIds.Add(node.GetId());DONT DO THIS ENDLESS LOOP
         }
         public EncounterPosition()
