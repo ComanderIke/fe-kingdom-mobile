@@ -31,6 +31,10 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     [SerializeField] private UIBlessingButton blessingButton;
     [SerializeField] private TextMeshProUGUI attributeHeaderText;
     [SerializeField] private UIBoonBaneController boonBaneController;
+    [SerializeField] private Image frame;
+    [SerializeField] private Material SelectedBorderMaterial;
+    [SerializeField] private Material defaultMateril;
+    [SerializeField] private GameObject invisibleButton;
     public void SkillTreeClicked()
     {
         skillTreeUI.Show(unit);
@@ -42,10 +46,16 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     //         return;
     //     ToolTipSystem.Show(unit.Blessing, blessingImage.transform.position);
     // }
-    public override void Show(Unit unit)
+    public override void Show(Unit unit, bool button = false)
     {
+        if(button)
+            invisibleButton.gameObject.SetActive(true);
+        else
+        {
+            invisibleButton.gameObject.SetActive(false);
+        }
         showAttributeState = ShowAttributeState.Attributes;
-        base.Show(unit);
+        base.Show(unit, button);
         // Debug.Log("SHOW");
         if (boonBaneController != null)
         {
@@ -221,6 +231,16 @@ public class UIDetailedCharacterViewController : UICharacterViewController
         equipmentController.Hide();
         skillsUI.Hide();
         base.Hide();
+    }
+
+    public void Select()
+    {
+        frame.material = SelectedBorderMaterial;
+    }
+
+    public void Deselect()
+    {
+        frame.material = defaultMateril;
     }
 }
 

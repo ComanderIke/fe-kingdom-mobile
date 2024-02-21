@@ -32,6 +32,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public static event Action<AreaData> OnAreaStarted;
 
 
+    [SerializeField] private ChooseReinforcementUI reinforcementUI;
     private Area_ActionSystem actionSystem;
     public EncounterUIController uiCOntroller;
     public UIPartyCharacterCircleController uiPartyController;
@@ -138,6 +139,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         MyDebug.LogLogic("Enter Area: "+ (Player.Instance.Party.AreaIndex+1));
         areaText.SetText("Area <size=120%>"+(Player.Instance.Party.AreaIndex+1));
         startReady = true;
+        MonoUtility.DelayFunction(()=>ShowReinforcements(),2.0f);
     }
 
     void SceneReady()
@@ -182,6 +184,12 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         {
             ResetLoadArea();
         },delayBeforeLoadingNewScene);
+    }
+
+    void ShowReinforcements()
+    {
+        Player.Instance.Party.MaxSize++;
+        reinforcementUI.Show(GameBPData.Instance.GetHumanFromBlueprint("Witch"),GameBPData.Instance.GetHumanFromBlueprint("Mercenary"), GameBPData.Instance.GetHumanFromBlueprint("Scorpion"));
     }
     private void ResetLoadArea()
     {

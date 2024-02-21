@@ -66,13 +66,14 @@ public class UICharacterViewController : MonoBehaviour
  
     
     protected int currentFixedIndex;
-    public virtual void Show(Unit unit)
+    public virtual void Show(Unit unit, bool button=false)
     {
         
       
         if(canvas!=null)
             canvas.enabled = true;
-        Player.Instance.Party.SetActiveUnit(unit);
+        if(!button)
+            Player.Instance.Party.SetActiveUnit(unit);
        // Debug.Log("Showing Character UI for: "+unit.name);
         UpdateUI(unit);
 
