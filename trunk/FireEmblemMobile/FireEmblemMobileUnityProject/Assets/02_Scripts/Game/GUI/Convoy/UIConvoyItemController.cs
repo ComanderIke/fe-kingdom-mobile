@@ -20,6 +20,7 @@ public class UIConvoyItemController : UIButtonController
     public TextMeshProUGUI stockCount;
     [SerializeField] private Image gemImage;
     [SerializeField] private GameObject slot;
+    [SerializeField] private GameObject showTooltipButtonArea;
     public event Action<UIConvoyItemController> onClicked;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Sprite normalSprite;
@@ -34,13 +35,14 @@ public class UIConvoyItemController : UIButtonController
     public Color normalColor;
     public TextMeshProUGUI cost;
     public Image costIcon;
-    public void SetValues(StockedItem stockeditem,bool affordable, bool first,IShopItemClickedReceiver receiver)
+    public void SetValues(StockedItem stockeditem,bool affordable, bool first,IShopItemClickedReceiver receiver, bool showTooltipButton)
     {
        
         ShopItemState();
         this.affordable = affordable;
         this.clickedReceiver = receiver;
         this.cost.SetText(""+stockeditem.item.cost);
+        showTooltipButtonArea.gameObject.SetActive(showTooltipButtonArea);
         if (affordable)
         {
             cost.color = normalColor;
@@ -111,9 +113,10 @@ public class UIConvoyItemController : UIButtonController
             canvasGroup.alpha = 1.0f;
         }
     }
-    public void SetValues(StockedItem stockeditem, int index, bool added=false,bool grayedOut=false)
+    public void SetValues(StockedItem stockeditem, int index, bool added=false,bool grayedOut=false, bool showTooltipButton=true)
     {
         MyDebug.LogTest("CONVOYSTATE WHUT?");
+        showTooltipButtonArea.gameObject.SetActive(showTooltipButton);
         ConvoyItemState();
         UpdateUI(stockeditem,added,grayedOut);
        
@@ -121,7 +124,11 @@ public class UIConvoyItemController : UIButtonController
        
         
     }
-    
+
+    public void TooltipClicked()
+    {
+        ToolTipSystem.Show(stockedItem, transform.position);
+    }
 
     public virtual void Clicked()
     {

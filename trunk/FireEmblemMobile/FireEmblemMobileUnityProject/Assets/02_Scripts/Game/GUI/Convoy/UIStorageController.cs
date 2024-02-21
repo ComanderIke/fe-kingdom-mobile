@@ -17,7 +17,8 @@ public class UIStorageController : MonoBehaviour
 {
     [SerializeField] private Canvas canvas;
     public GameObject convoyItemPrefab;
-    private List<GameObject> instantiatedItems;
+   private List<GameObject> instantiatedItems;
+    
     public List<ConvoyDropArea> DropAreas;
     private Convoy storage;
     private bool init = false;
@@ -70,6 +71,8 @@ public class UIStorageController : MonoBehaviour
         instantiatedItems.Add(go);
         return itemController;
     }
+
+   
     
     private void UpdateValues()
     {
@@ -143,7 +146,7 @@ public class UIStorageController : MonoBehaviour
         // DropAreas[currentSelected].Deselect();
         // currentSelected = clickedItem.index;
         // DropAreas[currentSelected].Select();
-        ToolTipSystem.Show(clickedItem.stockedItem, clickedItem.transform.position);
+        //ToolTipSystem.Show(clickedItem.stockedItem, clickedItem.transform.position);
         UpdateValues();
         
         

@@ -113,7 +113,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                     shopItems.Add(go.GetComponent<UIConvoyItemController>());
                     bool affordable = party.CanAfford(merchant.GetCost(merchant.shopItems[i].item));
 
-                    shopItems[i].SetValues(item, affordable, first,this);
+                    shopItems[i].SetValues(item, affordable, first,this, true);
                     
                 }
                 if(selectedItemIndex< shopItems.Count)
@@ -143,7 +143,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                 shopItems.Add(go.GetComponent<UIConvoyItemController>());
                 bool affordable =true; //Because we are selling
     
-                shopItems[i].SetValues(item, affordable, first,this);
+                shopItems[i].SetValues(item, affordable, first,this, true);
             }
             if(selectedItemIndex< shopItems.Count)
                 buyItemUI.Show( shopItems[selectedItemIndex].stockedItem.item,  true, buying);

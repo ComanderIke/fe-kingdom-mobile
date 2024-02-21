@@ -16,6 +16,7 @@ using Game.WorldMapStuff.Model;
 using LostGrace;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class UIConvoyController:MonoBehaviour
@@ -28,7 +29,8 @@ public class UIConvoyController:MonoBehaviour
         Battle,
         SelectCombatItem
     }
-    
+
+    [SerializeField] private LayoutGroup layout;
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject noneButton;
     [SerializeField] private UIEquipmentController equipmentController;
@@ -37,9 +39,12 @@ public class UIConvoyController:MonoBehaviour
     [SerializeField] private ClickAndHoldButton useButton;
     [SerializeField] private ClickAndHoldButton dropButton;
     [SerializeField] private TextMeshProUGUI contextText;
+    [SerializeField] GameObject equippedItemArea;
+    [SerializeField] private ConvoyDropArea equippedItemSlot;
     [SerializeField] private Color EquipColor;
     [SerializeField] private Color UseColor;
 
+    private GameObject instantiatedEquippedItem = null;
     public GameObject convoyItemPrefab;
     public List<ConvoyDropArea> DropAreas;
 
@@ -58,6 +63,25 @@ public class UIConvoyController:MonoBehaviour
         useButton.OnClick += UseClicked;
         equipButton.OnClick += EquipClicked;
         dropButton.OnClick += DropButtonClicked;
+    }
+    public void CreateEquippedRelicObject(StockedItem stockedItem)
+    {
+      
+        
+        equippedItemSlot.transform.DeleteChildren();
+        var go = Instantiate(convoyItemPrefab, equippedItemSlot.transform);
+        var itemController = go.GetComponent<UIConvoyItemController>();
+        Debug.Log("Create Item: "+stockedItem.item);
+        itemController.SetValues(stockedItem, -1, false,false);
+        itemController.onClicked += EquippedItemClicked;
+
+        instantiatedEquippedItem = go;
+    }
+    public void EquippedItemClicked(UIConvoyItemController itemController)
+    {
+        
+        convoy.Deselect();
+        itemController.Select();
     }
     private void Update()
     {
@@ -196,10 +220,31 @@ public class UIConvoyController:MonoBehaviour
     {
         switch(context){
             case ConvoyContext.Default: contextText.text = "Convoy";
+                equippedItemArea.gameObject.SetActive(false);
                 break;
             case ConvoyContext.SelectRelic: contextText.text = "Select a relic to equip";
+                equippedItemArea.gameObject.SetActive(true);
+                if(instantiatedEquippedItem!=null)
+                    Destroy(instantiatedEquippedItem);
+                if (Player.Instance.Party.ActiveUnit.EquippedRelic != null)
+                {
+                    var stockedRelicItem = new StockedItem(Player.Instance.Party.ActiveUnit.EquippedRelic, 1);
+                    CreateEquippedRelicObject(stockedRelicItem);
+                }
+
                 break;
             case ConvoyContext.SelectCombatItem: contextText.text = "Select a combat item to equip";
+                equippedItemArea.gameObject.SetActive(true);
+                if(instantiatedEquippedItem!=null)
+                    Destroy(instantiatedEquippedItem);
+                if (Player.Instance.Party.ActiveUnit.CombatItem1 != null)
+                {
+                    var stockedCombatItem = new StockedItem((Item)Player.Instance.Party.ActiveUnit.CombatItem1.item,
+                        Player.Instance.Party.ActiveUnit.CombatItem1.stock);
+
+                    CreateEquippedRelicObject(stockedCombatItem);
+                }
+
                 break;
         }
         var selectedItem =  convoy.SelectedItem;
@@ -310,7 +355,8 @@ public class UIConvoyController:MonoBehaviour
             noneButton.gameObject.SetActive(false);
         }
 
-        
+        layout.enabled = false;
+        layout.enabled = true;
 
     }
     private void UpdateConvoy()
@@ -331,7 +377,7 @@ public class UIConvoyController:MonoBehaviour
         MyDebug.LogInput("ItemClicked "+clickedItem.stockedItem.item);
         itemClicked = true;
         convoy.Select(clickedItem.stockedItem);
-        ToolTipSystem.Show(clickedItem.stockedItem, clickedItem.transform.position);
+        //ToolTipSystem.Show(clickedItem.stockedItem, clickedItem.transform.position);
         UpdateValues();
 
     }

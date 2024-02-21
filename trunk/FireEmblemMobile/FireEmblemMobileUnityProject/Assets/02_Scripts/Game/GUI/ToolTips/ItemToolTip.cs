@@ -76,7 +76,7 @@ public class ItemToolTip : MonoBehaviour
         descriptionText.text = item.item.Description;
         MyDebug.LogTest("Tooltip Position before Offset: "+position);
         if(itemIcon!=null)
-            itemIcon.SetValues(item, 0);
+            itemIcon.SetValues(item, 0, false, false, false);
         rectTransform.anchoredPosition = position+ new Vector3(offset.x,exactPos?0:offset.y,0);
         UpdateTextWrap(position);
     }

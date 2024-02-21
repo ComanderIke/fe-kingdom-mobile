@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Items;
 using Game.GameActors.Units;
 using TMPro;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace LostGrace
         [SerializeField] Image backGround;
         [SerializeField] Color bGNormalColor;
         [SerializeField] Color bGSelectedColor;
+        [SerializeField] private GameObject toolTipButtonArea;
         public event Action<UICombatItemSlot> OnClicked;
         private StockedCombatItem item;
         private bool selected = false;
@@ -44,9 +46,12 @@ namespace LostGrace
         {
             if (item == null)
             {
+                toolTipButtonArea.gameObject.SetActive(false);
                 Hide();
+                
                 return;
             }
+            toolTipButtonArea.gameObject.SetActive(true);
             this.stockText.text = item.stock + "";
             this.iconImage.sprite = item.item.GetIcon();
             if (selected)
@@ -66,6 +71,10 @@ namespace LostGrace
             iconImage.enabled = false;
         }
 
+        public void TooltipClicked()
+        {
+            ToolTipSystem.Show(new StockedItem((Item)item.item, item.stock), transform.position);
+        }
         public StockedCombatItem GetCombatItem()
         {
             return item;

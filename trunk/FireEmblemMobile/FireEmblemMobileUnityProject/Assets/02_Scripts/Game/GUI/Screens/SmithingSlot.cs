@@ -18,6 +18,7 @@ public class SmithingSlot : MonoBehaviour
     [SerializeField] private GameObject slot;
     [SerializeField] private SkillUI skillUI;
     [SerializeField] private TextMeshProUGUI soulsText;
+    [SerializeField] private GameObject TooltipButtonArea;
     private bool selected = false;
     private EquipableItem equipable;
     private Unit unit;
@@ -28,6 +29,11 @@ public class SmithingSlot : MonoBehaviour
         this.equipable = equipable;
        UpdateUI();
       
+    }
+
+    public void TooltipButtonClicked()
+    {
+        ToolTipSystem.Show(new StockedItem(equipable,1), transform.position);
     }
 
     void UpdateUI()
@@ -54,6 +60,8 @@ public class SmithingSlot : MonoBehaviour
         }
         if (equipable == null)
         {
+            if(TooltipButtonArea!=null)
+                TooltipButtonArea.gameObject.SetActive(false);
             image.color = emptyColor;
             image.sprite = emptySprite;
             slot.gameObject.SetActive(false);
@@ -63,6 +71,8 @@ public class SmithingSlot : MonoBehaviour
         }
         else
         {
+            if(TooltipButtonArea!=null)
+                TooltipButtonArea.gameObject.SetActive(true);
             image.sprite = equipable.Sprite;
             image.color = normalColor;
             if (equipable is Relic relic)

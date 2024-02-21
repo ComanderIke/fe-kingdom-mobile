@@ -32,12 +32,13 @@ public class UIEquipmentController:MonoBehaviour
     [SerializeField]Image equipmentLineImage;
     public UICombatItemSlot selectedSlotCombatItemSlot = null;
 
+    
     public void RelicSlotUpperClicked()
     {
         if (relic != null)
         {
             
-            ToolTipSystem.Show(new StockedItem(relic,1), RelicSlotUpper.transform.position);
+            //ToolTipSystem.Show(new StockedItem(relic,1), RelicSlotUpper.transform.position);
           
         }
 
@@ -57,7 +58,7 @@ public class UIEquipmentController:MonoBehaviour
     {
         if (combatItem1 != null)
         {
-            ToolTipSystem.Show(new StockedItem((Item)combatItem1.item, combatItem1.stock), combatItemSlot1.transform.position);
+           // ToolTipSystem.Show(new StockedItem((Item)combatItem1.item, combatItem1.stock), combatItemSlot1.transform.position);
           
         }
         if (!openConvoyWhenEquipmentClicked)
