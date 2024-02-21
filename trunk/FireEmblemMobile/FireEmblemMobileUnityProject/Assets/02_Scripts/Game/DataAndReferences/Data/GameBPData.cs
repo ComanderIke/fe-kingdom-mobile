@@ -31,7 +31,7 @@ namespace Game.GameResources
     public class GameBPData : SingletonScriptableObject<GameBPData> , IBlessingData   {
         public DialogData DialogTexts;
         public UnitData UnitData;
-        
+        public List<AreaData> AreaDataList;
 
         // [SerializeField] private List<EquipableItem> armor = default;
         [SerializeField] private RelicBP[] allRelics = default;

@@ -28,8 +28,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 {
     public static AreaGameManager Instance;
     private List<IEngineSystem> Systems { get; set; }
-    public static event Action OnAreaCompleted;
-    public static event Action OnAreaStarted;
+    public static event Action<int> OnAreaCompleted;
+    public static event Action<AreaData> OnAreaStarted;
 
 
     private Area_ActionSystem actionSystem;
@@ -146,7 +146,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         if (startReady)
         {
             if(areaStart)
-                OnAreaStarted?.Invoke();
+                OnAreaStarted?.Invoke(GameBPData.Instance.AreaDataList[Player.Instance.Party.AreaIndex]);
             if (SceneTransferData.Instance.IsBoss)
             {
                 AreaCompleted();
@@ -160,7 +160,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
                 MonoUtility.DelayFunction(() =>
                 {
                     if(areaStart)
-                        OnAreaStarted?.Invoke();
+                        OnAreaStarted?.Invoke( GameBPData.Instance.AreaDataList[Player.Instance.Party.AreaIndex]);
                     if (SceneTransferData.Instance.IsBoss)
                     {
                         AreaCompleted();
@@ -172,7 +172,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     }
     private void AreaCompleted()
     {
-        OnAreaCompleted?.Invoke();
+        OnAreaCompleted?.Invoke(Player.Instance.Party.AreaIndex);
         MyDebug.LogTODO("Wait for ContinueClickedOnLoadingScreen");
         SceneTransferData.Instance.Reset();
         Player.Instance.Party.AreaIndex++;

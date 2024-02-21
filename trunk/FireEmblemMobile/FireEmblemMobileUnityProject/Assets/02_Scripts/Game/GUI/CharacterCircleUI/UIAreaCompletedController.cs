@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace LostGrace
@@ -11,6 +12,7 @@ namespace LostGrace
         [SerializeField] private float fadeInTime=1.2f;
         [SerializeField] private float stayDuration=2f;
         [SerializeField] private float fadeOutTime=1f;
+        [SerializeField] private TextMeshProUGUI areaIndex;
         // Start is called before the first frame update
         void Start()
         {
@@ -24,8 +26,9 @@ namespace LostGrace
         }
 
         // Update is called once per frame
-        void Show()
+        void Show(int areaIndex)
         {
+            this.areaIndex.SetText(areaIndex.ToString());
             canvasGroup.alpha = 0;
             canvasGroup.blocksRaycasts = true;
             LeanTween.alphaCanvas(canvasGroup, 1, fadeInTime).setEaseInOutQuad().setOnComplete(() =>

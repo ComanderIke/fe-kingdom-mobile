@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 namespace LostGrace
@@ -10,6 +12,8 @@ namespace LostGrace
         [SerializeField] private float fadeInTime;
         [SerializeField] private float stayDuration;
         [SerializeField] private float fadeOutTime;
+        [SerializeField] private TextMeshProUGUI areaLabel;
+        [SerializeField] private TextMeshProUGUI areaIndexText;
         void Start()
         {
             AreaGameManager.OnAreaStarted -= Show;
@@ -21,8 +25,22 @@ namespace LostGrace
         {
             AreaGameManager.OnAreaStarted -= Show;
         }
-        void Show()
+        void Show(AreaData areaData)
         {
+            this.areaIndexText.SetText(areaData.Index.ToString());
+            string tagBegin = "";
+            string tagEnd = "";
+            foreach (var tag in areaData.textAnimatorTags)
+            {
+                tagBegin += "<" + tag + ">";
+            }
+            foreach (var tag in areaData.textAnimatorTags)
+            {
+                tagEnd += "</" + tag + ">";
+            }
+            this.areaLabel.SetText(tagBegin+areaData.Label+tagEnd);
+            this.areaLabel.colorGradientPreset = areaData.ColorGradient;
+           
             canvasGroup.alpha = 0;
             canvasGroup.blocksRaycasts = true;
             LeanTween.alphaCanvas(canvasGroup, 1, fadeInTime).setEaseInOutQuad().setOnComplete(() =>
