@@ -23,6 +23,16 @@ public class BattleEncounterNode : EncounterNode
         this.BattleType = battleType;
     }
 
+    public override void Init()
+    {
+        MyDebug.LogTest("INIT BATTLE ENCOUNTER NODE");
+        if (Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(base.GetId()))
+        {
+            MyDebug.LogTest("NOT VISITED");
+            gameObject.GetComponent<BattleEncounterController>().HideSprite();
+        }
+            
+    }
     public override void Activate(Party party)
     {
         MyDebug.LogLogic("Visiting Battle" );

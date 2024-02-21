@@ -22,6 +22,7 @@ public abstract class EncounterNode
     {
         this.gameObject = gameObject;
         renderer = gameObject.GetComponentInChildren<NodeRenderer>();
+        Init();
     }
     public NodeRenderer renderer;
 
@@ -91,6 +92,7 @@ public abstract class EncounterNode
     {
         Player.Instance.Party.EncounterComponent.activatedEncounter = false;
     }
+    
 
     public Road GetRoad(EncounterNode node)
     {
@@ -125,6 +127,11 @@ public abstract class EncounterNode
                 roads[i].SetMoveable(b);
             renderer.Reset();
         }
+    }
+
+    public virtual void Init()
+    {
+        Debug.Log("Init Node: "+label);
     }
 
     public void Grow()

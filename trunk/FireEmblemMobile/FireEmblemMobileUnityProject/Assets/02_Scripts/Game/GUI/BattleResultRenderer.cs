@@ -86,7 +86,7 @@ namespace LostGrace
             graceBonusesList.Add(new Bonuses(result.GetVictoryGrace(),"Victory", 1));
             graceBonusesList.Add(new Bonuses(result.GetGraceFromTurnCount(),"Turn Bonus", 1));
             itemBonusesList = new List<StockedItem>();
-            itemBonusesList.AddRange(result.GetItemBonuses());
+            itemBonusesList.AddRange(result.GenerateItemBonuses());
             showFeedback.PlayFeedbacks();
           
             // if (result.GetTurnCount() != 0)

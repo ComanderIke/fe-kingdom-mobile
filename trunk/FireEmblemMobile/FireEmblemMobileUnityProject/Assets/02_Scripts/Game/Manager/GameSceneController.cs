@@ -62,7 +62,10 @@ namespace Game.WorldMapStuff.Controller
 
         }
 
-      
+        public void ResetEncounterArea()
+        {
+            SceneTransferData.Instance.Reset();
+        }
         
         public void LoadEncounterAreaAfterBattle(bool victory)
         {
@@ -71,12 +74,12 @@ namespace Game.WorldMapStuff.Controller
             MyDebug.LogTest("Boss: "+SceneTransferData.Instance.IsBoss);
             if (victory)
             {
-                if (SceneTransferData.Instance.IsBoss)
-                {
-                    Player.Instance.Party.AreaIndex++;
-                    MyDebug.LogTest("AREAINDEX: "+ Player.Instance.Party.AreaIndex);
-                    Player.Instance.Party.EncounterComponent.Reset();
-                }
+                // if (SceneTransferData.Instance.IsBoss)
+                // {
+                //     Player.Instance.Party.AreaIndex++;
+                //     MyDebug.LogTest("AREAINDEX: "+ Player.Instance.Party.AreaIndex);
+                //     Player.Instance.Party.EncounterComponent.Reset();
+                // }
                     
             }
             Player.Instance.Party.ResetFoodBuffs();

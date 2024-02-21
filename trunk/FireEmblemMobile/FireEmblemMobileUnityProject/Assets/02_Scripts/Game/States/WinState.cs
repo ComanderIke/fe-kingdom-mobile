@@ -53,6 +53,12 @@ namespace Game.States
         public void Finish()
         {
             Debug.Log("FINISH");
+            Player.Instance.Party.AddGold(result.GetTotalGold());
+            Player.Instance.Party.AddGrace(result.GetTotalGrace());
+            foreach (var item in result.GetItemBonuses())
+            {
+                Player.Instance.Party.AddStockedItem(item);
+            }
             Player.Instance.LastBattleOutcome = BattleOutcome.Victory;
             GameSceneController.Instance.LoadEncounterAreaAfterBattle(true);
         }

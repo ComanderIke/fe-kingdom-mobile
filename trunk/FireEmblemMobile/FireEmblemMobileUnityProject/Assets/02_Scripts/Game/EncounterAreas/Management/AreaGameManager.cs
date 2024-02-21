@@ -13,6 +13,7 @@ using Game.Manager;
 using Game.Mechanics;
 using Game.States;
 using Game.Systems;
+using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using Game.WorldMapStuff.Systems;
 using GameCamera;
@@ -27,7 +28,9 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 {
     public static AreaGameManager Instance;
     private List<IEngineSystem> Systems { get; set; }
-    
+    public static event Action OnAreaCompleted;
+    public static event Action OnAreaStarted;
+
 
     private Area_ActionSystem actionSystem;
     public EncounterUIController uiCOntroller;
@@ -44,10 +47,16 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     
     public TimeOfDayManager timeOfDayManager;
     [SerializeField] private bool startFreshSave = false;
+    [SerializeField] private float delayBeforeLoadingNewScene=2f;
     private static bool startFreshSaveFirstTime;
     private List<EncounterNodeClickController> nodeClickControllers;
     void Awake()
     {
+        startReady = false;
+        MyDebug.LogTest("Subscribe SceneReady");
+        SceneController.OnSceneReady -= SceneReady;
+        SceneController.OnSceneReady += SceneReady;
+
         Instance = this;
        
         Debug.Log(Player.Instance.Party);
@@ -68,11 +77,11 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
        
     }
 
+    private bool areaStart = false;
+    private bool startReady = false;
     private void Start()
     {
        
-    
-
         cursor = FindObjectOfType<EncounterCursorController>();
         //Debug.Log("WHY IS START NOT CALLED?");
         actionSystem = new Area_ActionSystem();
@@ -87,8 +96,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             
         }
 
-    
 
+        
         if (Player.Instance.Party == null || Player.Instance.Party.members.Count == 0){
             MyDebug.LogLogic("No existing party! Creating new party with default units");
            
@@ -100,10 +109,6 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             Player.Instance.Party.EncounterComponent.EncounterNode = EncounterTree.Instance.startNode;
             Player.Instance.Party.EncounterComponent.AddMovedEncounter(EncounterTree.Instance.startNode);
         }
-
-       
-        
-        //Debug.Log("Player Node Null");
            
         AddSystems();
       
@@ -132,6 +137,58 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         ShowActiveUnitGroundFX();
         MyDebug.LogLogic("Enter Area: "+ (Player.Instance.Party.AreaIndex+1));
         areaText.SetText("Area <size=120%>"+(Player.Instance.Party.AreaIndex+1));
+        startReady = true;
+    }
+
+    void SceneReady()
+    {
+        MyDebug.LogTest("SCENE IS READY");
+        if (startReady)
+        {
+            if(areaStart)
+                OnAreaStarted?.Invoke();
+            if (SceneTransferData.Instance.IsBoss)
+            {
+                AreaCompleted();
+           
+            }
+        }
+        else
+        {
+            Debug.LogError("START WAS NOT READY WHEN SCENE WAS READY!!!!!");
+            MyDebug.LogTODO("START WAS NOT READY WHEN SCENE WAS READY!!!!!");
+                MonoUtility.DelayFunction(() =>
+                {
+                    if(areaStart)
+                        OnAreaStarted?.Invoke();
+                    if (SceneTransferData.Instance.IsBoss)
+                    {
+                        AreaCompleted();
+           
+                    }
+                },.05f);
+        }
+        
+    }
+    private void AreaCompleted()
+    {
+        OnAreaCompleted?.Invoke();
+        MyDebug.LogTODO("Wait for ContinueClickedOnLoadingScreen");
+        SceneTransferData.Instance.Reset();
+        Player.Instance.Party.AreaIndex++;
+        MyDebug.LogTest("AREAINDEX: "+ Player.Instance.Party.AreaIndex);
+        Player.Instance.Party.EncounterComponent.Reset();
+        MonoUtility.DelayFunction(() =>
+        {
+            ResetLoadArea();
+        },delayBeforeLoadingNewScene);
+    }
+    private void ResetLoadArea()
+    {
+        Player.Instance.Party.ResetFoodBuffs();
+        SaveGameManager.Save();
+        GridGameManager.Instance.CleanUp();
+        SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
     }
 
     
@@ -190,6 +247,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         {
             Player.Instance.Party.EncounterComponent.EncounterNode = EncounterTree.Instance.startNode;
             Player.Instance.Party.EncounterComponent.AddMovedEncounter(EncounterTree.Instance.startNode);
+            areaStart = true;
         }
 
         partyGo = new GameObject("Partytest");
@@ -390,6 +448,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     private EncounterCursorController cursor;
     public void Deactivate()
     {
+        SceneController.OnSceneReady -= SceneReady;
         Player.Instance.Party.onActiveUnitChanged-=UpdatePartyGameObjects;
         foreach (var system in Systems)
         {

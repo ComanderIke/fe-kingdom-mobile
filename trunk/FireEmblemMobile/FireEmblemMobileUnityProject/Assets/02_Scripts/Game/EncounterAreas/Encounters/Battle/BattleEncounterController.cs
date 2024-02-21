@@ -22,4 +22,9 @@ public class BattleEncounterController : EncounterController
         GameObject.Destroy(enemySprite);
         //GameSceneController.Instance.LoadBattleLevel(sceneIndex, enemyArmyData);
     }
+
+    public void HideSprite()
+    {
+        enemySprite.gameObject.SetActive(false);
+    }
 }

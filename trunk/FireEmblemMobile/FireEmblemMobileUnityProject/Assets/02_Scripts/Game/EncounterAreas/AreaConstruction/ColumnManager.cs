@@ -314,6 +314,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
         if (node is EventEncounterNode eventNode)
             go.name = eventNode.randomEvent.name + " Event Column: " + index;
         node.SetGameObject(go);
+       
         //Debug.Log("Create Node: " + node + " Index: " + index);
         go.GetComponentInChildren<EncounterNodeClickController>().encounterNode = node;
     }

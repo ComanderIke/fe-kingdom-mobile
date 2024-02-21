@@ -20,7 +20,7 @@ namespace Menu
        
         private float loadTime;
         public float MinLoadTime = 0f;
-
+      
         private AsyncOperation resourceUnloadTask;
       //  private AsyncOperation sceneLoadTask;
         private SceneState sceneState;
@@ -89,6 +89,7 @@ namespace Menu
 
         void StartLoadingProcess()
         {
+            MyDebug.LogTest("Start Scene loading");
             LoadingScreen.onBlack -= StartLoadingProcess;
             sceneState = SceneState.Reset;
         }
@@ -100,6 +101,21 @@ namespace Menu
             if (_instance == null)
             {
                 _instance = this;
+                MyDebug.LogTest("SceneController Init");
+
+
+                updateDelegates = new UpdateDelegate[(int) SceneState.Count];
+
+                updateDelegates[(int) SceneState.Reset] = UpdateSceneReset;
+                updateDelegates[(int) SceneState.PreLoading] = UpdateScenePreload;
+                updateDelegates[(int) SceneState.Load] = UpdateSceneLoad;
+                updateDelegates[(int) SceneState.Unload] = UpdateSceneUnload;
+                updateDelegates[(int) SceneState.PostLoading] = UpdateScenePostload;
+                updateDelegates[(int) SceneState.Ready] = UpdateSceneReady;
+                updateDelegates[(int) SceneState.Run] = UpdateIdle;
+
+                //nextSceneName = "MainMenu";
+                sceneState = SceneState.Run;
             }
             else
             {
@@ -107,20 +123,7 @@ namespace Menu
                 Destroy(gameObject);
                 return;
             }
-
-
-            updateDelegates = new UpdateDelegate[(int) SceneState.Count];
-
-            updateDelegates[(int) SceneState.Reset] = UpdateSceneReset;
-            updateDelegates[(int) SceneState.PreLoading] = UpdateScenePreload;
-            updateDelegates[(int) SceneState.Load] = UpdateSceneLoad;
-            updateDelegates[(int) SceneState.Unload] = UpdateSceneUnload;
-            updateDelegates[(int) SceneState.PostLoading] = UpdateScenePostload;
-            updateDelegates[(int) SceneState.Ready] = UpdateSceneReady;
-            updateDelegates[(int) SceneState.Run] = UpdateIdle;
-
-            //nextSceneName = "MainMenu";
-            sceneState = SceneState.Run;
+           
         }
 
         private void Update()
@@ -141,7 +144,7 @@ namespace Menu
         // handle anything that needs to happen before loading
         private void UpdateScenePreload()
         {
-     
+            MyDebug.LogTest(" Scene Preloading");
             foreach (var scene in scenesToLoad)
             {
                 //Debug.Log("Scene in scenesToLoad: " +scene);
@@ -175,6 +178,7 @@ namespace Menu
         // show the loading screen until it's loaded
         private void UpdateSceneLoad()
         {
+          //  MyDebug.LogTest(" Scene  Load");
             //Debug.Log("UpdateSceneLoad");
             if (loadTime >= MinLoadTime)
             {
@@ -182,6 +186,8 @@ namespace Menu
                 {
                     scene.task.allowSceneActivation = true;
                 }
+
+
             }
 
             bool done = true;
@@ -191,10 +197,12 @@ namespace Menu
                 if (!scene.task.isDone)
                 {
                     done = false;
+                 //   MyDebug.LogTest(" Scene Progress: "+scene.task.progress);
                     //Debug.Log("Progress: "+scene.task.progress);
                 }
                 else
                 {
+                  //  MyDebug.LogTest(" Scene Task done");
                     if (!scene.unload)
                     {
                         var activeScene = SceneManager.GetSceneByBuildIndex((int)scene.scene);
@@ -215,7 +223,7 @@ namespace Menu
                         unload = false; //If there is one normal loaded scene wait for loading screen click to continue!
                     }
                 }
-
+               // MyDebug.LogTest(" Scene done");
                 clickContinueText.gameObject.SetActive(true);
                 if (Input.touchCount > 0|| unload)
                 {
@@ -223,12 +231,14 @@ namespace Menu
                     progressBar.SetFill(0);
                     progressText.text = "0%";
                     LoadingScreen.Hide();
+                    MyDebug.LogTest("Scene actually Ready");
                     OnSceneReady?.Invoke();
                 }
             }
             else
             {
                 
+               // MyDebug.LogTest(" Scene Not done yet");
                 float sumProgress = 0;
                 foreach (var scene in scenesToLoad.Where(s=>s.task!=null))
                 {
@@ -249,6 +259,7 @@ namespace Menu
         // clean up unused resources by unloading them
         private void UpdateSceneUnload()
         {
+           // MyDebug.LogTest(" Scene Unload");
        
             if (resourceUnloadTask == null)
             {
@@ -277,7 +288,7 @@ namespace Menu
             }
 
             scenesToLoad.Clear();
-            
+           // MyDebug.LogTest(" Scene Postloading");
             sceneState = SceneState.Ready;
         }
 
@@ -290,6 +301,7 @@ namespace Menu
             // but may be used later DON'T do this here
             GC.Collect();
             sceneState = SceneState.Run;
+            MyDebug.LogTest("Scene complettely Ready");
             OnSceneCompletelyFinished?.Invoke();
            
         }
@@ -313,6 +325,7 @@ namespace Menu
                     updateDelegates = null;
                 }
                 _instance = null;
+                MyDebug.LogTest("Scene Controller DESTROY");
             }
         }
 

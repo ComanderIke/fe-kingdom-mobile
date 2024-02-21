@@ -351,26 +351,29 @@ namespace Game.GameActors.Units
         {
             if (w == equippedWeapon)
                 return;
-            Debug.Log("Unit: "+Name+" Equip: "+w.Name);
+           
             if (equippedWeapon != null)
             {
-                Debug.Log("Unequip: "+equippedWeapon.Name+" Equip: "+w.Name);
-                Debug.Log("Hitrate: " + stats.BonusStatsFromWeapon.Hit);
-                stats.BonusStatsFromWeapon.Attack -= equippedWeapon.GetDamage();
-                stats.BonusStatsFromWeapon.Hit -= equippedWeapon.GetHit();
-                stats.BonusStatsFromWeapon.Crit -= equippedWeapon.GetCrit();
+                
+                if(stats.BonusStatsFromWeapon.GetSum()!=0)
+                {
+                    stats.BonusStatsFromWeapon.Attack -= equippedWeapon.GetDamage();
+                    stats.BonusStatsFromWeapon.Hit -= equippedWeapon.GetHit();
+                    stats.BonusStatsFromWeapon.Crit -= equippedWeapon.GetCrit();
+                }
+                
                 equippedWeapon.Unbind(this);
             }
-            Debug.Log("HitrateAfterUnequip: " + stats.BonusStatsFromWeapon.Hit);
+           
             Stats.AttackRanges.Clear();
             equippedWeapon = w;
             equippedWeapon.Bind(this);
-            foreach (int r in w.AttackRanges) Stats.AttackRanges.Add(r);
-            // Debug.Log("Equip " + w.Name + " on " + name + " " + w.AttackRanges.Length+" "+ Stats.AttackRanges.Count);
+            foreach (int r in w.AttackRanges) 
+                Stats.AttackRanges.Add(r);
             stats.BonusStatsFromWeapon.Attack += equippedWeapon.GetDamage();
             stats.BonusStatsFromWeapon.Hit += equippedWeapon.GetHit();
             stats.BonusStatsFromWeapon.Crit += equippedWeapon.GetCrit();
-            Debug.Log("HitratAfterEquip: " + stats.BonusStatsFromWeapon.Hit);
+         
             OnEquippedWeapon?.Invoke();
         }
         public void AutoEquip()

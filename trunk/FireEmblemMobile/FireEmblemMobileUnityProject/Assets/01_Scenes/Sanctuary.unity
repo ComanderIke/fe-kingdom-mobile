@@ -6452,8 +6452,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.0027999878, y: -0.14950001, z: 0}
-    m_Extent: {x: 1.0397, y: 0.7238, z: 0}
+    m_Center: {x: 0.00040000677, y: -0.14230001, z: 0}
+    m_Extent: {x: 1.0488, y: 0.7249, z: 0}
   m_PointLightInnerAngle: 35.059395
   m_PointLightOuterAngle: 83.51548
   m_PointLightInnerRadius: 3.56
@@ -13028,6 +13028,7 @@ Transform:
   m_Children:
   - {fileID: 188704784}
   - {fileID: 1645680108}
+  - {fileID: 2011134434}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21907,7 +21908,6 @@ Transform:
   m_Children:
   - {fileID: 651786964}
   - {fileID: 2052638457}
-  - {fileID: 2011134434}
   - {fileID: 1704062331}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -33130,13 +33130,17 @@ MonoBehaviour:
     LastProgressUpdate: 0
     Achieved: 0
     Claimed: 0
+  - Progress: 5
+    LastProgressUpdate: 0
+    Achieved: 1
+    Claimed: 0
+  - Progress: 10
+    LastProgressUpdate: 0
+    Achieved: 1
+    Claimed: 0
   - Progress: 1
     LastProgressUpdate: 0
-    Achieved: 0
-    Claimed: 0
-  - Progress: 0
-    LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
     Claimed: 0
   - Progress: 1
     LastProgressUpdate: 0
@@ -33146,13 +33150,9 @@ MonoBehaviour:
     LastProgressUpdate: 0
     Achieved: 1
     Claimed: 0
-  - Progress: 0
+  - Progress: 1
     LastProgressUpdate: 0
-    Achieved: 0
-    Claimed: 0
-  - Progress: 0
-    LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
     Claimed: 0
   AchievementList:
   - Key: warrioroflight
@@ -34805,7 +34805,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1117705888}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1704062332
 MonoBehaviour:
@@ -53085,6 +53085,7 @@ MonoBehaviour:
   slot: {fileID: 4034621059498348141}
   skillUI: {fileID: 0}
   soulsText: {fileID: 0}
+  TooltipButtonArea: {fileID: 0}
 --- !u!114 &1941177311187200944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53576,6 +53577,7 @@ MonoBehaviour:
   slot: {fileID: 1311262607991509882}
   skillUI: {fileID: 0}
   soulsText: {fileID: 0}
+  TooltipButtonArea: {fileID: 0}
 --- !u!1 &2187715248681738144
 GameObject:
   m_ObjectHideFlags: 0
@@ -63391,7 +63393,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1117705888}
+    m_TransformParent: {fileID: 625892188}
     m_Modifications:
     - target: {fileID: 745978497, guid: 64f1a21af25cd464fb3ac05aa9524e8f, type: 3}
       propertyPath: m_Name
@@ -63409,17 +63411,17 @@ PrefabInstance:
     - target: {fileID: 3595040175385252017, guid: 64f1a21af25cd464fb3ac05aa9524e8f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 540
+      value: 540.10376
       objectReference: {fileID: 0}
     - target: {fileID: 3595040175385252017, guid: 64f1a21af25cd464fb3ac05aa9524e8f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 960
+      value: 958.1112
       objectReference: {fileID: 0}
     - target: {fileID: 3595040175385252017, guid: 64f1a21af25cd464fb3ac05aa9524e8f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2.001599
       objectReference: {fileID: 0}
     - target: {fileID: 3595040175385252017, guid: 64f1a21af25cd464fb3ac05aa9524e8f,
         type: 3}
@@ -73726,6 +73728,7 @@ MonoBehaviour:
   backGround: {fileID: 8570936991041487517}
   bGNormalColor: {r: 0.8509804, g: 0.62352943, b: 0.39607844, a: 1}
   bGSelectedColor: {r: 0.64705884, g: 0.7647059, b: 0.38431373, a: 1}
+  toolTipButtonArea: {fileID: 0}
   slotNumber: 1
 --- !u!224 &6833704853560028162
 RectTransform:
@@ -74475,6 +74478,7 @@ MonoBehaviour:
   backGround: {fileID: 5510303714957579755}
   bGNormalColor: {r: 0.8509804, g: 0.62352943, b: 0.39607844, a: 1}
   bGSelectedColor: {r: 0.64705884, g: 0.7647059, b: 0.38431373, a: 1}
+  toolTipButtonArea: {fileID: 0}
   slotNumber: 1
 --- !u!114 &7272315420622853022
 MonoBehaviour:
@@ -80549,6 +80553,7 @@ MonoBehaviour:
   slot: {fileID: 6008741902888796486}
   skillUI: {fileID: 0}
   soulsText: {fileID: 0}
+  TooltipButtonArea: {fileID: 0}
 --- !u!222 &9138611490203026686
 CanvasRenderer:
   m_ObjectHideFlags: 0

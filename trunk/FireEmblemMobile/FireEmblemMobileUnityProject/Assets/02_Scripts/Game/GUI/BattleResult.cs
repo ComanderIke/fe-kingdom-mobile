@@ -29,6 +29,7 @@ namespace LostGrace
             this.mvp = mvp;
             this.enemy = enemy;
             this.eliteEnemy = eliteEnemy;
+            itemBonuses = null;
         }
         public int GetExpFromEnemies()
         {
@@ -117,16 +118,24 @@ namespace LostGrace
             return config.GracePerTurnLeft * Math.Max(0,GetMapTurnCount()-turnCount);
         }
 
-        public IEnumerable<StockedItem> GetItemBonuses()
+        private List<StockedItem> itemBonuses;
+
+        public   IEnumerable<StockedItem> GetItemBonuses()
         {
-            var list = new List<StockedItem>();
+            if (itemBonuses == null)
+                GenerateItemBonuses();
+            return itemBonuses;
+        }
+        public IEnumerable<StockedItem> GenerateItemBonuses()
+        {
+            itemBonuses = new List<StockedItem>();
             foreach (var rewardItem in battleMap.victoryItems)
             {
                 if(Random.value< rewardItem.chance)
-                    list.Add(new StockedItem(rewardItem.item.Create(), rewardItem.count));
+                    itemBonuses.Add(new StockedItem(rewardItem.item.Create(), rewardItem.count));
             }
                 
-            return list;
+            return itemBonuses;
         }
 
         public int GetMaxTurnCount()

@@ -295,5 +295,10 @@ namespace Game.Mechanics.Battle
                 ret.CritAvoid = 0;
             return ret;
         }
+
+        public int GetSum()
+        {
+            return Attack + AttackSpeed + Hit + Avoid + CritAvoid + Crit + Armor + CurseResistance + MagicResistance;
+        }
     }
 }
