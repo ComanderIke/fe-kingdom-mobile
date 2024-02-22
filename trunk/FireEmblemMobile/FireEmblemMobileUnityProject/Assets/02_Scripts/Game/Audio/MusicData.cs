@@ -22,5 +22,6 @@ namespace Audio
         [HideInInspector] public AudioSource Source;
 
         [Range(0f, 1f)] public float Volume = 1;
+        public MusicData playAfter;
     }
 }

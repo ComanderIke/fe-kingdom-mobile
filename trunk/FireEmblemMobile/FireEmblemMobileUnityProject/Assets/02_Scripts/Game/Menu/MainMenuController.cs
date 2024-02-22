@@ -44,7 +44,8 @@ namespace Game.GUI
         {
             // animator.SetBool(Show1, true);
             // animator.SetBool(Side, false);
-                AudioSystem.Instance.ChangeAllMusic("MainMenuTheme");
+            AudioSystem.Instance.ChangeAllMusic("MainMenuTheme");
+      
             TweenUtility.FadeIn(canvasGroup);
             TweenUtility.FadeIn(titleCanvasGroup);
             TweenUtility.FadeIn(playButtonCanvasGroup);

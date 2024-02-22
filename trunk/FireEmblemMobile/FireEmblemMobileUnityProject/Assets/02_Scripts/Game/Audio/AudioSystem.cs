@@ -97,6 +97,17 @@ namespace Audio
                 s.Source.Play();
         }
 
+        // private void Update()
+        // {
+        //     foreach (var cpm in currentlyPlayedMusic)
+        //     {
+        //         if (cpm.playAfter != null)
+        //         {
+        //             cpm.Source.pl
+        //         }
+        //     }
+        // }
+
         private void PlayMusic(string name, float delay = 0, float fadeDuration = -1.0f)
         {
             var m = Array.Find(Music, music => music.Name == name);
@@ -115,6 +126,8 @@ namespace Audio
                 FadeIn(name, fadeDuration, delay);
             else
                 m.Source.Play();
+            if(m.playAfter!=null)
+                m.playAfter.Source.PlayDelayed(m.Clip.length+delay);
         }
 
         public void SwitchIntoBattle()
