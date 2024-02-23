@@ -88,8 +88,11 @@ public class ChooseReinforcementUI : MonoBehaviour
 
     void UpdateUI()
     {
-        charView1.Show(unit1, true);
+        if(unit1!=null)
+         charView1.Show(unit1, true);
+        if(unit2!=null)
          charView2.Show(unit2, true);
+        if(unit3!=null)
          charView3.Show(unit3, true);
     }
 

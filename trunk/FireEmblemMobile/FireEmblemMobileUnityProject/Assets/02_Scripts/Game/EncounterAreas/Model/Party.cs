@@ -244,6 +244,7 @@ namespace Game.WorldMapStuff.Model
             // Debug.Log(ActiveUnit);
             
             onMemberAdded?.Invoke(unit);
+            onActiveUnitChanged?.Invoke();
         }
 
         void InitMember(Unit unit)

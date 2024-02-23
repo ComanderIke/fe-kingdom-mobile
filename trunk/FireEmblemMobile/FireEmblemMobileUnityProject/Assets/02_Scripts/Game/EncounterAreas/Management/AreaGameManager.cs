@@ -20,6 +20,7 @@ using GameCamera;
 using GameEngine;
 using LostGrace;
 using Menu;
+using MoreMountains.Tools;
 using TMPro;
 using UnityEngine;
 using IServiceProvider = Game.Manager.IServiceProvider;
@@ -112,7 +113,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
            
         AddSystems();
-      
+        Player.Instance.Party.onMemberAdded += MemberAdded;
         SpawnPartyMembers();
         uiCOntroller.Init(Player.Instance.Party);
        
@@ -139,16 +140,25 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         MyDebug.LogLogic("Enter Area: "+ (Player.Instance.Party.AreaIndex+1));
         areaText.SetText("Area <size=120%>"+(Player.Instance.Party.AreaIndex+1));
         startReady = true;
-        MonoUtility.DelayFunction(()=>ShowReinforcements(),2.0f);
+        
     }
 
+    void MemberAdded(Unit unit)
+    {
+        SpawnPartyMembers();
+    }
     void SceneReady()
     {
         MyDebug.LogTest("SCENE IS READY");
         if (startReady)
         {
-            if(areaStart)
+            if (areaStart)
+            {
                 OnAreaStarted?.Invoke(GameBPData.Instance.AreaDataList[Player.Instance.Party.AreaIndex]);
+                if(Player.Instance.Party.AreaIndex>1)
+                    MonoUtility.DelayFunction(()=>ShowReinforcements(),2.0f);
+            }
+                
             if (SceneTransferData.Instance.IsBoss)
             {
                 AreaCompleted();
@@ -189,7 +199,22 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     void ShowReinforcements()
     {
         Player.Instance.Party.MaxSize++;
-        reinforcementUI.Show(GameBPData.Instance.GetHumanFromBlueprint("Witch"),GameBPData.Instance.GetHumanFromBlueprint("Mercenary"), GameBPData.Instance.GetHumanFromBlueprint("Scorpion"));
+        var reinforcements= GenerateReinforcements();
+        if (reinforcements.Count == 0)
+            return;
+        reinforcementUI.Show(reinforcements[0],reinforcements.Count>1?reinforcements[1]:null, reinforcements.Count>1?reinforcements[2]:null);
+    }
+
+    List<Unit> GenerateReinforcements()
+    {
+        var list = new List<Unit>();
+        foreach (var unlockedCharId in Player.Instance.UnlockedCharacterIds)
+        {
+            if(!Player.Instance.Party.MembersContainsByBluePrintID(unlockedCharId))
+                list.Add(GameBPData.Instance.GetHumanFromBlueprint(unlockedCharId));
+        }
+        list.MMShuffle();
+        return list;
     }
     private void ResetLoadArea()
     {
@@ -247,8 +272,15 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
 
     private GameObject partyGo;
     private List<EncounterPlayerUnitController> partyGameObjects;
+
+    void DeletePartyMembersGO()
+    {
+        if(partyGo!=null)
+            GameObject.Destroy(partyGo);
+    }
     void SpawnPartyMembers()
     {
+        DeletePartyMembersGO();
        //Debug.Log("Party Count: "+Player.Instance.Party.members.Count);
         int cnt = 1;
         if (Player.Instance.Party.EncounterComponent.EncounterNode == null)
@@ -456,8 +488,10 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     private EncounterCursorController cursor;
     public void Deactivate()
     {
+        
         SceneController.OnSceneReady -= SceneReady;
         Player.Instance.Party.onActiveUnitChanged-=UpdatePartyGameObjects;
+        Player.Instance.Party.onMemberAdded += MemberAdded;
         foreach (var system in Systems)
         {
             system.Deactivate();
