@@ -151,7 +151,7 @@ namespace Game.GUI
             {
                 fillAlternate.SetFill(currentExp / 100f);
                 if (Math.Abs(currentExp/100f - 1) < 0.1f)
-                    fill.fillAmount = 0;
+                    fillAlternate.SetFill(0);
             }
                
           

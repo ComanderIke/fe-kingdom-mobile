@@ -62,7 +62,7 @@ namespace Game.GameResources
 
         public LGEventDialogSO GetEventById(string prefabName)
         {
-            // Debug.Log("Get Event by ID: "+prefabName);
+             Debug.Log("Get Event by ID: "+prefabName);
             return allEvents.First(a => a.name == prefabName);
         }
     }

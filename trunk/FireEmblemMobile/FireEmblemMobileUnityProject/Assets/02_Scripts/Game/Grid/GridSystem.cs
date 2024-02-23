@@ -66,6 +66,8 @@ namespace Game.Map
             UnitSelectionSystem.OnSelectedInActiveCharacter -= OnEnemySelected;
             MovementState.OnMovementFinished -= InvokeHideMoveRange;
             Unit.UnitDied -= RemoveUnitFromGrid;
+            GridActorComponent.OnTileChangedStatic -= UpdateDangerArea;
+            Unit.UnitDied -= UpdateDangerArea;
         }
 
         public void Activate()

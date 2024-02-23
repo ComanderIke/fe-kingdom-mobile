@@ -12,10 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f35130efcc46a2ba309d79b3c3cf5c, type: 3}
   m_Name: HPChangedSkillMixin
   m_EditorClassIdentifier: 
-  toogleAble: 0
+  synergies:
+    list: []
+  conditionBigPackage:
+    CompareType: 0
+    Conditions:
+    - CompareType: 0
+      Conditions:
+      - {fileID: 11400000, guid: ec698640df5ba2c418bb5e5c1cb3fabb, type: 2}
   skillEffectMixins:
   - {fileID: 11400000, guid: 1027688c1e092b84390989dd94c46661, type: 2}
   - {fileID: 11400000, guid: 672e7c9b4def2df4da719c5ca235ef12, type: 2}
+  toogleAble: 0
+  toggledOn: 1
   conditionManager:
     CompareType: 0
     Conditions:

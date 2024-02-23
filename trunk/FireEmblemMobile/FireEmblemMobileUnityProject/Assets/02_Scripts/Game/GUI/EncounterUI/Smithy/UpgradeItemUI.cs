@@ -32,7 +32,7 @@ public class UpgradeItemUI : BuyItemUI
             stoneCost.text = "" + upgradeStoneCost;
             cost2Icon.sprite = stoneIcon;
            
-            stoneCost.color = Player.Instance.Party.Convoy.GetItemCount(GameBPData.Instance.GetSmithingStone().Name) >= upgradeStoneCost? textNormalColor:tooExpensiveTextColor;
+            stoneCost.color = Player.Instance.Party.Storage.GetItemCount(GameBPData.Instance.GetSmithingStone().Name) >= upgradeStoneCost? textNormalColor:tooExpensiveTextColor;
           
         }
         else if (dragonScaleCost != 0)
@@ -41,7 +41,7 @@ public class UpgradeItemUI : BuyItemUI
             cost2Icon.gameObject.SetActive(true);
             cost2Icon.sprite = dragonScaleIcon;
             stoneCost.text = "" + dragonScaleCost;
-            stoneCost.color = Player.Instance.Party.Convoy.GetItemCount(GameBPData.Instance.GetDragonScale().Name) >= dragonScaleCost? textNormalColor:tooExpensiveTextColor;
+            stoneCost.color = Player.Instance.Party.Storage.GetItemCount(GameBPData.Instance.GetDragonScale().Name) >= dragonScaleCost? textNormalColor:tooExpensiveTextColor;
         }
         else
         {
@@ -50,9 +50,9 @@ public class UpgradeItemUI : BuyItemUI
         }
 
         buyButton.interactable = affordable &&
-                              Player.Instance.Party.Convoy.GetItemCount(GameBPData.Instance.GetDragonScale().Name) >=
+                              Player.Instance.Party.Storage.GetItemCount(GameBPData.Instance.GetDragonScale().Name) >=
                               dragonScaleCost &&
-                              Player.Instance.Party.Convoy.GetItemCount(GameBPData.Instance.GetSmithingStone().Name) >=
+                              Player.Instance.Party.Storage.GetItemCount(GameBPData.Instance.GetSmithingStone().Name) >=
                               upgradeStoneCost;
         buttonText.text = buyButton.interactable?"<bounce>Upgrade": "</>Upgrade";
         if (equip is Weapon weapon)

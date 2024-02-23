@@ -70,6 +70,7 @@ namespace LostGrace
         public void Show(BattleResult result)
         {
 
+            BottomUI.Hide();
             itemRewardParent.DeleteChildren();
             finished = false;
             this.result = result;
@@ -162,14 +163,6 @@ namespace LostGrace
         }
 
         private bool finished = false;
-
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0)&&finished)
-            {
-                Hide();
-            }
-        }
 
         public void Hide()
         {

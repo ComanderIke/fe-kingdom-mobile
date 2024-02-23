@@ -34,7 +34,7 @@ namespace Game.Mechanics
                 {
                     if (time >= DELAY)
                     {
-                        GameSceneController.Instance.LoadEncounterAreaAfterBattle(false);
+                        GameSceneController.Instance.LoadSanctuaryFromCampaign();
                     }
                 }
             }

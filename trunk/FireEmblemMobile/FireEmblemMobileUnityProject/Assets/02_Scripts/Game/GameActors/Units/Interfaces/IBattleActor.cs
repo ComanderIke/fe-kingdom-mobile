@@ -26,6 +26,7 @@ namespace Game.GameInput
         UnitVisual Visuals { get; }
         GridComponent GridComponent { get; set; }
         StatusEffectManager StatusEffectManager { get; set; }
+        int RevivalStones { get; set; }
         Weapon GetEquippedWeapon();
         Tile GetTile();
 

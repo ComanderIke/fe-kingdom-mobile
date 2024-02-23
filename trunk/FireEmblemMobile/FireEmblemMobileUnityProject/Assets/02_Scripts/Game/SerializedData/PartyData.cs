@@ -56,6 +56,8 @@ namespace Game.GameActors.Players
             {
                 visitedMaps.Add(id.name);
             }
+
+            collectedGrace = party.CollectedGrace;
             activeUnitIndex = party.ActiveUnitIndex;
             convoy = new ConvoyData(party.Convoy);
             storage = new ConvoyData(party.Storage);

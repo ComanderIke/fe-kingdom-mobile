@@ -43,13 +43,14 @@ public class BattleEncounterNode : EncounterNode
         if (BattleMap == null)
         {
             BattleMap = GameBPData.Instance.GetRandomMap(BattleType);
+            int cnt = 0;
+            while (party.HasVisitedMap(BattleMap)&& cnt<100)
+            {
+                BattleMap = GameBPData.Instance.GetRandomMap(BattleType);;
+                cnt++;
+            }
         }
-        int cnt = 0;
-        while (party.HasVisitedMap(BattleMap)&& cnt<100)
-        {
-            BattleMap = GameBPData.Instance.GetRandomMap(BattleType);;
-            cnt++;
-        }
+       
 
         MyDebug.LogTest("Visited BattleMap: " + BattleMap.name);
         party.VisitedMaps.Add(BattleMap);

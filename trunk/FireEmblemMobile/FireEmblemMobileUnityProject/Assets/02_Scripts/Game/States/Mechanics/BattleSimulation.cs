@@ -373,6 +373,8 @@ namespace Game.Mechanics
           //  Debug.Log("HP After CombatRound: "+Defender.Hp);
             combatRound.AttackerHP = Attacker.Hp;
             combatRound.DefenderHP = Defender.Hp;
+            combatRound.DefenderRevivalStones = Defender.RevivalStones;
+            combatRound.AttackerRevivalStones = Attacker.RevivalStones;
         }
 
         private IEnumerable<Skill> ActivateAttackSkills(IBattleActor attacker)

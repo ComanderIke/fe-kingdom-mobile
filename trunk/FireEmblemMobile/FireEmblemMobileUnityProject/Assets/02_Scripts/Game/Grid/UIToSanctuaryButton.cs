@@ -23,7 +23,7 @@ namespace LostGrace
 
         public void Clicked()
         {
-            okCancelDialogController.Show("Return to the Sanctuary?",()=>GameSceneController.Instance.LoadSanctuary() );
+            okCancelDialogController.Show("Return to the Sanctuary?",()=>GameSceneController.Instance.LoadSanctuaryFromCampaign() );
             
         }
     }

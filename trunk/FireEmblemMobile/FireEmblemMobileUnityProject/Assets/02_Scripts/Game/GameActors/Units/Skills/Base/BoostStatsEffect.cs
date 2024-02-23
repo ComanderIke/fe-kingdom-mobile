@@ -41,7 +41,7 @@ namespace Game.GameActors.Units.Skills
         }
         public override void Activate(Unit target, int level)
         {
-
+MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
             this.target = target;
             this.activatedLevel = level;
             malus = 0;

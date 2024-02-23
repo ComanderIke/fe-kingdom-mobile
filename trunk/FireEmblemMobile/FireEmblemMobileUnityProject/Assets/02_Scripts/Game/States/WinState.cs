@@ -23,6 +23,7 @@ namespace Game.States
         {
             Debug.Log("Player Won");
             time = 0;
+            
             successRenderer.Show();
             successRenderer.OnFinished -= ShowBattleResult;
             successRenderer.OnFinished += ShowBattleResult;

@@ -48,11 +48,15 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     // }
     public override void Show(Unit unit, bool button = false)
     {
-        if(button)
-            invisibleButton.gameObject.SetActive(true);
+        if (button)
+        {
+            if(invisibleButton!=null)
+                invisibleButton.gameObject.SetActive(true);
+        }
         else
         {
-            invisibleButton.gameObject.SetActive(false);
+            if(invisibleButton!=null)
+                invisibleButton.gameObject.SetActive(false);
         }
         showAttributeState = ShowAttributeState.Attributes;
         base.Show(unit, button);

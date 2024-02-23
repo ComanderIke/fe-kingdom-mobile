@@ -101,6 +101,11 @@ namespace Game.WorldMapStuff.Controller
                 GridGameManager.Instance.CleanUp();
             SceneController.LoadSceneAsync(Scenes.Sanctuary, false);
         }
+        public void LoadSanctuaryFromCampaign()
+        {
+            Player.Instance.Grace += Player.Instance.Party.CollectedGrace;
+            LoadSanctuary();
+        }
 
         public void LoadMainMenu()
         {

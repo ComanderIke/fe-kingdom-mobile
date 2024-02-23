@@ -21,6 +21,8 @@ namespace Game.Mechanics
         public int DefenderCrit { get; set; }
         public DuringBattleCharacterStats AttackerStats { get; set; }
         public DuringBattleCharacterStats DefenderStats { get; set; }
+        public int AttackerRevivalStones { get; set; }
+        public int DefenderRevivalStones { get; set; }
 
         public List<AttackData> AttacksData;
     }
