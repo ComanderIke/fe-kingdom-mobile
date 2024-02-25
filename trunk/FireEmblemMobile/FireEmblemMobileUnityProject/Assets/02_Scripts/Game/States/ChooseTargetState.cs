@@ -307,16 +307,20 @@ namespace Game.Mechanics
                     playerPhaseState.Feed(PPStateTrigger.Cancel);
                     var task = new AfterBattleTasks(ServiceProvider.Instance.GetSystem<UnitProgressSystem>(),(Unit)selectedUnit, targets, false);
                     task.StartTask();
-                    task.OnFinished += () =>
-                    {
-                        if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
-                            GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
-                        else
-                            GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
-                    };
+                    AfterBattleTasks.OnFinished += AfterBattleTaskFinished;
                 });
             }, delay);
             
+        }
+
+        void AfterBattleTaskFinished()
+        {
+            AfterBattleTasks.OnFinished-= AfterBattleTaskFinished;
+            if(GridGameManager.Instance.FactionManager.ActiveFaction.IsPlayerControlled)
+                GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.PlayerPhaseState);
+            else
+                GridGameManager.Instance.GameStateManager.SwitchState( GridGameManager.Instance.GameStateManager.EnemyPhaseState);
+
         }
         private void PositionTargetClicked(IPosTargeted skillMixin, int x, int y, bool wait)
         {

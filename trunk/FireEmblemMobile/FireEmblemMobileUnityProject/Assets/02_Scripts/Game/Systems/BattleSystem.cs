@@ -227,11 +227,13 @@ namespace Game.Mechanics
             // Debug.Log("GET SYSTEM: "+system +" from serviceProvider: "+ServiceProvider.Instance);
             var task = new AfterBattleTasks(system, (Unit)attacker, defender);
             task.StartTask();
-            task.OnFinished += () =>
-            {
-                // Debug.Log("AfterBattleTaskFinished");
-                OnBattleFinished?.Invoke(battleSimulation.AttackResult);
-            };
+            AfterBattleTasks.OnFinished += AfterBattleTaskFinished;
+        }
+
+        void AfterBattleTaskFinished()
+        {
+            AfterBattleTasks.OnFinished -= AfterBattleTaskFinished;
+            OnBattleFinished?.Invoke(battleSimulation.AttackResult);
         }
         public BattleSimulation GetBattleSimulation(IBattleActor attacker, IBattleActor defender, bool grid, bool continuos=false)
         {

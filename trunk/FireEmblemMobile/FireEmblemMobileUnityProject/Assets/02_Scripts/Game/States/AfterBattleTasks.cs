@@ -18,7 +18,7 @@ namespace Game.States
     public class AfterBattleTasks
     {
 
-        public event Action OnFinished;
+        public static event Action OnFinished;
         private Unit attacker;
         private UnitProgressSystem progressSystem;
         private const float WaitTimeWhenFinished = 1.5f;

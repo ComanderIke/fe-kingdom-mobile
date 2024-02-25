@@ -12,12 +12,14 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.GameResources;
 using Game.Mechanics;
+using Game.States;
 using Game.Systems;
 using Game.WorldMapStuff.Controller;
 using Game.WorldMapStuff.Model;
 using LostGrace;
 using TMPro;
 using UnityEngine;
+using Utility;
 using Object = UnityEngine.Object;
 using Random = System.Random;
 
@@ -99,7 +101,7 @@ public class UIEventController : MonoBehaviour
     {
         MyDebug.LogTest("TEXT SHOWED");
         textAnimationFinished = true;
-        if(currentNode!=null)
+        if(currentNode!=null&&!(currentNode is LGFightEventDialogSO))
             ShowTextOptions(currentNode.Choices);
     }
    
@@ -129,7 +131,7 @@ public class UIEventController : MonoBehaviour
     {
         unitIdleAnimation.Show(party.ActiveUnit);
         characterFace.Show(party.ActiveUnit);
-        if(textAnimationFinished)
+        if(textAnimationFinished&&!(currentNode is LGFightEventDialogSO))
             ShowTextOptions(currentNode.Choices);
     }
     public void UpdateUI()
@@ -367,6 +369,8 @@ public class UIEventController : MonoBehaviour
     void BattleEnded(AttackResult result)
     {
         Debug.Log("BATTLE ENDED");
+        
+       
         BattleSystem.OnBattleFinishedBeforeAfterBattleStuff -= BattleEnded;
         //var battleOutcome = GetBattleOutcome(result);
         if(result == AttackResult.Win)
@@ -375,10 +379,27 @@ public class UIEventController : MonoBehaviour
         {
             currentNode =(LGEventDialogSO)currentNode.Choices[1].NextDialogue;
         }
-        CheckPossibleRewards();
-        UpdateUI();
+        AfterBattleTasksFinished();
+       
     }
 
+    void AfterBattleTasksFinished()
+    {
+        AfterBattleTasks.OnFinished -= AfterBattleTasksFinished;
+        CheckPossibleRewards();
+        AnimationQueue.OnAllAnimationsEnded += AnimationsEnded;
+        if(AnimationQueue.IsNoAnimationRunning())
+            AnimationsEnded();
+       
+    }
+
+    void AnimationsEnded()
+    {
+        AnimationQueue.OnAllAnimationsEnded -= AnimationsEnded;
+        //Having some delay here looks nicer
+        MonoUtility.DelayFunction(UpdateUI, .75f);
+       
+    }
     bool HasRequirement(LGDialogChoiceData choiceData)
     {
         return (choiceData.ItemRequirements!=null&&choiceData.ItemRequirements.Count>0)|| (choiceData.ResourceRequirements!=null&&choiceData.ResourceRequirements.Count>0)||(choiceData.AttributeRequirements!=null&&choiceData.AttributeRequirements.Count>0);
@@ -548,6 +569,7 @@ public class UIEventController : MonoBehaviour
             if (currentNode is LGFightEventDialogSO)
             {
                 StartFight();
+                UpdateUIValues();
             }
             else if (currentNode is LGBattleEventDialogSO)
             {
@@ -558,11 +580,16 @@ public class UIEventController : MonoBehaviour
                 // Debug.Log("RANDOM OUTCOME NODE");
                 RandomOutcome(randomOutcomeEventDialogSo);
             }
+            else if (currentNode.HeadLine == "Skip")
+            {
+                EndEvent();
+            }
             else
             {
                 // Debug.Log("Normal EVENT NODE");
                 UpdateUIValues();
             }
+            
         }
         else
         {
@@ -628,6 +655,8 @@ public class UIEventController : MonoBehaviour
             MyDebug.LogLogic("Start Event Battle: "+party.ActiveUnit+" "+enemy);
         battleSystem.StartBattle(party.ActiveUnit, enemy, false, true);
         BattleSystem.OnBattleFinishedBeforeAfterBattleStuff += BattleEnded;
+        // AfterBattleTasks.OnFinished += AfterBattleTasksFinished;
+        
     }
     private void CheckEvents()
     {
