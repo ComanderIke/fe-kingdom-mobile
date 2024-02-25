@@ -49,7 +49,8 @@ namespace LostGrace
 
         private void OnDisable()
         {
-           morality.OnMoralityChanged -= UpdateUI;
+            if(morality!=null)
+                morality.OnMoralityChanged -= UpdateUI;
         }
 
         public void Clicked()

@@ -259,6 +259,7 @@ public class UICharacterViewController : MonoBehaviour
     }
     public void UpdateUnit(Unit unit1)
     {
+        MyDebug.LogTest(gameObject);
        UpdateUI(unit1);
     }
 }

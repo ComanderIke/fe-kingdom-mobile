@@ -61,8 +61,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         CampaingFinished = false;
         startReady = false;
         MyDebug.LogTest("Subscribe SceneReady");
-         SceneController.OnSceneReady -= SceneReady;
-         SceneController.OnSceneReady += SceneReady;
+        
 
         Instance = this;
         if (startFreshSave&&startFreshSaveFirstTime==false)//Just for Testing when starting from encounterArea
@@ -77,7 +76,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             MyDebug.LogPersistance("Load game Slot 0:");
             SaveGameManager.Load(0); //Trigger load at start of scenes to trigger all persistance objects observers
         }
-
+        
         partyWasNotNullAtAwake = false;
         if (Player.Instance.Party != null)
         {
@@ -99,6 +98,10 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             Player.Instance.Party.Initialize();
             Player.Instance.Party.AreaIndex = GameObject.FindObjectOfType<DemoUnits>().StartAreaIndex;
         }
+        if(Player.Instance.Party.AreaIndex>=2)
+            CampaingFinished = true;
+        SceneController.OnSceneReady -= SceneReady;
+        SceneController.OnSceneReady += SceneReady;
 
     }
 
@@ -108,7 +111,9 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     private bool partyWasNullOrEmptyAtAwake = false;
     private void Start()
     {
-       
+
+        if (CampaingFinished)
+            return;
         cursor = FindObjectOfType<EncounterCursorController>();
         actionSystem = new Area_ActionSystem();
         nodeClickControllers = new List<EncounterNodeClickController>();
@@ -123,6 +128,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
            
         AddSystems();
+        Player.Instance.Party.onMemberAdded -= MemberAdded;
         Player.Instance.Party.onMemberAdded += MemberAdded;
         SpawnPartyMembers();
         uiCOntroller.Init(Player.Instance.Party);
@@ -141,7 +147,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
 
         FindObjectOfType<CameraSystem>().GetMixin<FocusCameraMixin>().SetTargets(Player.Instance.Party.EncounterComponent.EncounterNode.gameObject);
-        ShowActiveUnitGroundFX();
+        
         MyDebug.LogLogic("Enter Area: "+ (Player.Instance.Party.AreaIndex+1));
         areaText.SetText("Area <size=120%>"+(Player.Instance.Party.AreaIndex+1));
         startReady = true;
@@ -159,10 +165,20 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             if (areaStart)
             {
                 OnAreaStarted?.Invoke(GameBPData.Instance.AreaDataList[Player.Instance.Party.AreaIndex]);
-                if(Player.Instance.Party.AreaIndex>1)
-                    MonoUtility.DelayFunction(()=>ShowReinforcements(),2.0f);
+                if(Player.Instance.Party.AreaIndex>0)
+                    MonoUtility.DelayFunction(()=>ShowReinforcements(),3.9f);
             }
-                
+            if (CampaingFinished)
+            {
+           
+                OnDemoCompleted?.Invoke();
+                MonoUtility.DelayFunction(() =>
+                {
+            
+                    GameSceneController.Instance.LoadSanctuaryFromCampaign();
+                },delayBeforeLoadingNewScene);
+                return;
+            }
             if (SceneTransferData.Instance.IsBoss)
             {
                 AreaCompleted();
@@ -171,12 +187,23 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         }
         else
         {
-            Debug.LogError("START WAS NOT READY WHEN SCENE WAS READY!!!!!");
+            MyDebug.LogTest("START WAS NOT READY WHEN SCENE WAS READY!!!!!");
             MyDebug.LogTODO("START WAS NOT READY WHEN SCENE WAS READY!!!!!");
                 MonoUtility.DelayFunction(() =>
                 {
                     if(areaStart)
                         OnAreaStarted?.Invoke( GameBPData.Instance.AreaDataList[Player.Instance.Party.AreaIndex]);
+                    if (CampaingFinished)
+                    {
+           
+                        OnDemoCompleted?.Invoke();
+                        MonoUtility.DelayFunction(() =>
+                        {
+            
+                            GameSceneController.Instance.LoadSanctuaryFromCampaign();
+                        },delayBeforeLoadingNewScene);
+                        return;
+                    }
                     if (SceneTransferData.Instance.IsBoss)
                     {
                         AreaCompleted();
@@ -188,17 +215,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     }
     private void AreaCompleted()
     {
-        if (Player.Instance.Party.AreaIndex == 2)
-        {
-            CampaingFinished = true;
-            OnDemoCompleted?.Invoke();
-            MonoUtility.DelayFunction(() =>
-            {
-            
-                GameSceneController.Instance.LoadSanctuaryFromCampaign();
-            },delayBeforeLoadingNewScene);
-            return;
-        }
+        
         OnAreaCompleted?.Invoke(Player.Instance.Party.AreaIndex);
         MyDebug.LogTODO("Wait for ContinueClickedOnLoadingScreen");
         SceneTransferData.Instance.Reset();
@@ -218,7 +235,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         var reinforcements= GenerateReinforcements();
         if (reinforcements.Count == 0)
             return;
-        reinforcementUI.Show(reinforcements[0],reinforcements.Count>1?reinforcements[1]:null, reinforcements.Count>1?reinforcements[2]:null);
+        reinforcementUI.Show(reinforcements[0],reinforcements.Count>1?reinforcements[1]:null, reinforcements.Count>2?reinforcements[2]:null);
     }
 
     List<Unit> GenerateReinforcements()
@@ -293,6 +310,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     {
         if(partyGo!=null)
             GameObject.Destroy(partyGo);
+        activeUnitGroundGO = null;
     }
     void SpawnPartyMembers()
     {
@@ -347,6 +365,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         Player.Instance.Party.GameObject = partyGo;
         Player.Instance.Party.onActiveUnitChanged-=UpdatePartyGameObjects;
         Player.Instance.Party.onActiveUnitChanged+=UpdatePartyGameObjects;
+        ShowActiveUnitGroundFX();
         
     }
 
@@ -419,6 +438,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             }
         }
         MonoUtility.InvokeNextFrame(()=>uiPartyController.Show(Player.Instance.Party));//Otherwise mouse click will go through UI
+        MyDebug.LogTest(gameObject);
         uiCharacterView.UpdateUnit(Player.Instance.Party.ActiveUnit);
     }
    
@@ -479,6 +499,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     
     void Update()
     {
+        if (CampaingFinished)
+            return;
         if (Input.GetMouseButtonDown(1))
         {
             FindObjectOfType<CameraSystem>().GetMixin<FocusCameraMixin>().SetTargets(Player.Instance.Party.EncounterComponent.EncounterNode.gameObject);
@@ -507,7 +529,9 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         
         SceneController.OnSceneReady -= SceneReady;
         Player.Instance.Party.onActiveUnitChanged-=UpdatePartyGameObjects;
-        Player.Instance.Party.onMemberAdded += MemberAdded;
+        Player.Instance.Party.onMemberAdded -= MemberAdded;
+        if (CampaingFinished)
+            return;
         foreach (var system in Systems)
         {
             system.Deactivate();
@@ -605,6 +629,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     public void MoveClicked(EncounterNode node)
     {
         HideMoveOptions();
+        MyDebug.LogTest(gameObject);
         activeUnitGroundGO.FadeOut();
         SetAllEncountersNotMovable();
         // foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
