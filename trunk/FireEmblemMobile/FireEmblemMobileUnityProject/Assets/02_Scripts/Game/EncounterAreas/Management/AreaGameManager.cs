@@ -56,8 +56,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
     {
         startReady = false;
         MyDebug.LogTest("Subscribe SceneReady");
-        SceneController.OnSceneReady -= SceneReady;
-        SceneController.OnSceneReady += SceneReady;
+         SceneController.OnSceneReady -= SceneReady;
+         SceneController.OnSceneReady += SceneReady;
 
         Instance = this;
        

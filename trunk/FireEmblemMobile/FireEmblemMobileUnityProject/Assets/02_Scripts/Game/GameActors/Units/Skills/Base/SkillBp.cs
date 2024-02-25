@@ -25,19 +25,38 @@ namespace Game.GameActors.Units.Skills
             if(passiveMixins!=null)
                 foreach (var passive in passiveMixins)
                 {
-                    if(passive!=null)
-                        instantiatedPassiveMixins.Add(Instantiate(passive));
+                    if (passive != null)
+                    {
+                        var instPassive = Instantiate(passive);
+                        instPassive.Init();
+                        instantiatedPassiveMixins.Add(instPassive);
+                    }
+                        
                 }
             var instantiatedActiveMixins = new List<ActiveSkillMixin>();
             if(activeMixins!=null)
                 foreach (var active in activeMixins)
                 {
-                    if(active!=null)
-                        instantiatedActiveMixins.Add(Instantiate(active));
+                    if (active != null)
+                    {
+                        var instActive = Instantiate(active);
+                        instActive.Init();
+                        instantiatedActiveMixins.Add(instActive);
+                    }
+                       
                 }
 
+            CombatSkillMixin instCombatskill = null;
+            if (combatSkillMixin != null)
+            {
+                instCombatskill = Instantiate(combatSkillMixin);
+                instCombatskill.Init();
+            }
 
-            return new Skill(Name, Description, Icon, Tier,maxLevel, instantiatedPassiveMixins,combatSkillMixin==null?null:Instantiate(combatSkillMixin), instantiatedActiveMixins,SkillTransferData);
+            
+
+
+            return new Skill(Name, Description, Icon, Tier,maxLevel, instantiatedPassiveMixins,instCombatskill, instantiatedActiveMixins,SkillTransferData);
         }
     }
 }

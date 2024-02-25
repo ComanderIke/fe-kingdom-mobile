@@ -39,6 +39,7 @@ namespace Game.GameActors.Units
 
         public event Action<bool> OnSpecialState;
         public event Action HpValueChanged;
+        public event Action RevivalStonesChanged;
 
         public delegate void OnUnitShowActiveEffect(Unit unit, bool canMove, bool disableOthers);
 
@@ -339,7 +340,21 @@ namespace Game.GameActors.Units
         public List<float> HealingMultipliers { get; set; }
         public List<int> BonusAttackRanges { get; set; }
         public Bonds Bonds { get; set; }
-        public int RevivalStones { get; set; }
+
+        private int revivalStones=0;
+        public int RevivalStones
+        {
+            get
+            {
+                return revivalStones;
+            }
+            set
+            {
+                revivalStones = value;
+                RevivalStonesChanged?.Invoke();
+            }
+        }
+
         public event Action<Curse> OnAddCurse;
         public event Action OnCurseResisted;
         public event Action<Curse> OnRemoveCurse;

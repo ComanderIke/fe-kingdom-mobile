@@ -20,7 +20,8 @@ namespace Game.GameActors.Units.Skills
             Debug.Log("Bind Skill "+skill.Name+" "+unit.Name+" "+skill.Level);
 
             unit.HpValueChanged += HpValueChanged;
-            
+            unit.RevivalStonesChanged += HpValueChanged;
+
         }
 
         void HpValueChanged()
@@ -64,6 +65,7 @@ namespace Game.GameActors.Units.Skills
         public override void UnbindFromUnit(Unit unit, Skill skill)
         {
             unit.HpValueChanged -= HpValueChanged;
+            unit.RevivalStonesChanged -= HpValueChanged;
             base.UnbindFromUnit(unit, skill);
         }
         public override List<EffectDescription> GetEffectDescription(Unit unit, int level)

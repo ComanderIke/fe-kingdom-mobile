@@ -36,7 +36,24 @@ namespace LostGrace
             UpdateValues();
             unit.HpValueChanged -= UpdateValues;
             unit.HpValueChanged += UpdateValues;
-           
+            Unit.UnitDied -= CheckBossDied;
+            Unit.UnitDied += CheckBossDied;
+
+        }
+
+        void Hide()
+        {
+            if(unit!=null)
+                unit.HpValueChanged -= UpdateValues; 
+            Unit.UnitDied -= CheckBossDied;
+            canvas.enabled = false;
+        }
+        void CheckBossDied(Unit unit)
+        {
+            if (unit.Equals(this.unit))
+            {
+                Hide();
+            }
         }
 
         void UpdateValues()
@@ -59,8 +76,7 @@ namespace LostGrace
 
         private void OnDisable()
         {
-            if(unit!=null)
-                unit.HpValueChanged -= UpdateValues; 
+            
         }
 
         // Update is called once per frame

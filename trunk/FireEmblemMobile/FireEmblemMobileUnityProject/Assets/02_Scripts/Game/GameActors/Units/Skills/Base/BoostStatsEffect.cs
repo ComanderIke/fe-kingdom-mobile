@@ -28,28 +28,17 @@ namespace Game.GameActors.Units.Skills
         public SkillTransferData SkillTransferData;
         private bool activated = false;
         private float activatedMultiplier = 1;
-        [SerializeField] private bool decreaseOverTimeBy1;
         private Unit target;
         private int activatedLevel = 0;
-        private int malus;
-
-        void UpdateTurn()
-        {
-            RemoveBonuses(activatedLevel);
-            malus++;
-            ApplyBonuses(activatedLevel);
-        }
+        
         public override void Activate(Unit target, int level)
         {
 MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
+            if (activated)
+                return;
             this.target = target;
             this.activatedLevel = level;
-            malus = 0;
-            if (decreaseOverTimeBy1)
-            {
-                target.TurnStateManager.OnUpdateTurn-=UpdateTurn;
-                target.TurnStateManager.OnUpdateTurn+=UpdateTurn;
-            }
+ 
                 
             ApplyBonuses(level);
             activated = true;
@@ -81,19 +70,19 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
             if (effectType == BonusEffectType.Effect)
             {
                 if (level < BonusStats.Length)
-                    target.Stats.BonusStatsFromEffects += BonusStats[level].GetWithMalus(malus) * multiplier;
+                    target.Stats.BonusStatsFromEffects += BonusStats[level] * multiplier;
                 else
                 {
-                    target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length - 1].GetWithMalus(malus) * multiplier;
+                    target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length - 1] * multiplier;
                 }
             }
             else
             {
                 if (level < BonusStats.Length)
-                    target.Stats.BonusStatsFromBlessings += BonusStats[level].GetWithMalus(malus) * multiplier;
+                    target.Stats.BonusStatsFromBlessings += BonusStats[level] * multiplier;
                 else
                 {
-                    target.Stats.BonusStatsFromBlessings += BonusStats[BonusStats.Length - 1].GetWithMalus(malus) * multiplier;
+                    target.Stats.BonusStatsFromBlessings += BonusStats[BonusStats.Length - 1]* multiplier;
                 }
             }
             
@@ -105,22 +94,22 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
             {
                 if (level < BonusAttributes.Length)
                     target.Stats.BonusAttributesFromEffects +=
-                        BonusAttributes[level].GetWithMalus(malus) * multiplier;
+                        BonusAttributes[level]* multiplier;
                 else
                 {
                     target.Stats.BonusAttributesFromEffects +=
-                        BonusAttributes[BonusAttributes.Length - 1].GetWithMalus(malus) * multiplier;
+                        BonusAttributes[BonusAttributes.Length - 1]* multiplier;
                 }
             }
             else
             {
                 if (level < BonusAttributes.Length)
                     target.Stats.BonusAttributesFromBlessings +=
-                        BonusAttributes[level].GetWithMalus(malus) * multiplier;
+                        BonusAttributes[level] * multiplier;
                 else
                 {
                     target.Stats.BonusAttributesFromBlessings +=
-                        BonusAttributes[BonusAttributes.Length - 1].GetWithMalus(malus) * multiplier;
+                        BonusAttributes[BonusAttributes.Length - 1]* multiplier;
                 }
             }
         }
@@ -134,20 +123,20 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
             if (BonusAttributes != null && BonusAttributes.Length > 0)
             {
                 if (level < BonusAttributes.Length)
-                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[level].GetWithMalus(malus)*multiplier;
+                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[level]*multiplier;
                 else
                 {
-                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[^1].GetWithMalus(malus)*multiplier;
+                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[^1]*multiplier;
                 }
             }
 
             if (BonusStats != null&& BonusStats.Length>0)
             {
                 if(level < BonusStats.Length)
-                    target.Stats.BonusStatsFromEffects -= BonusStats[level].GetWithMalus(malus)*multiplier;
+                    target.Stats.BonusStatsFromEffects -= BonusStats[level]*multiplier;
                 else
                 {
-                    target.Stats.BonusStatsFromEffects -= BonusStats[^1].GetWithMalus(malus)*multiplier;
+                    target.Stats.BonusStatsFromEffects -= BonusStats[^1]*multiplier;
                 }
             }
             if(cantoAmount.Length>0)
@@ -160,11 +149,9 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
             if (!activated)
                 return;
             RemoveBonuses(level);
-            malus = 0;
             this.target = null;
             this.activatedLevel = 0;
-            if (decreaseOverTimeBy1)
-                target.TurnStateManager.OnUpdateTurn-=UpdateTurn;
+           
             activated = false;
            
         }

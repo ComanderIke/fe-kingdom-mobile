@@ -23,6 +23,23 @@ namespace Game.GameActors.Units.Skills
         private bool replaceEffects = false;
         private bool blessingConditionValid = false;
         private bool baseConditionValid = false;
+        private List<SkillEffectMixin> instantiatedSkillEffects;
+
+        public void Init()
+        {
+            instantiatedSkillEffects = new List<SkillEffectMixin>();
+            foreach (var skillEffect in skillEffectMixins)
+            {
+                var instSkillEffect = Instantiate(skillEffect);
+                instantiatedSkillEffects.Add(instSkillEffect);
+            }
+            skillEffectMixins.Clear();
+            foreach (var skillEffect in instantiatedSkillEffects)
+            {
+                skillEffectMixins.Add(skillEffect);
+            }
+            
+        }
 
         public virtual void BindToUnit(Unit unit, Skill skill)
         {
