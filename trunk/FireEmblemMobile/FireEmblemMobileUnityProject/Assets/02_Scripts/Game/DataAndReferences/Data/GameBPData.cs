@@ -40,6 +40,7 @@ namespace Game.GameResources
         [SerializeField] private RelicBP[]superRareRelics = default;
         [SerializeField] private WeaponBP[] allWeapons;
         [SerializeField] private SkillBp[] allSkills;
+        [SerializeField] private SkillBp[] allFilteredSkills;
         [SerializeField] private God[] allGods;
         [SerializeField] private GemBP[] allGems;
         [SerializeField] private GemBP[] allSmallGems;
@@ -138,12 +139,14 @@ namespace Game.GameResources
             if (GameConfig.Instance.ConfigProfile.overWriteSkills)
             {
                 var demoSkills = GameConfig.Instance.ConfigProfile.OverwritenSkills;
-                allSkills = GetAllInstances<SkillBp>().Intersect(demoSkills).ToArray();
+                allFilteredSkills = GetAllInstances<SkillBp>().Intersect(demoSkills).ToArray();
             }
             else
             {
-                allSkills = GetAllInstances<SkillBp>();
+                allFilteredSkills = GetAllInstances<SkillBp>();
             }
+
+            allSkills = GetAllInstances<SkillBp>();
             
             
             if (GameConfig.Instance.ConfigProfile.overWriteItems)

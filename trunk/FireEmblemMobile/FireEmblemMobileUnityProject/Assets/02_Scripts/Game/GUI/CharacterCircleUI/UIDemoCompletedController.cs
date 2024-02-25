@@ -1,34 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 namespace LostGrace
 {
-    public class UIAreaCompletedController : MonoBehaviour
+    public class UIDemoCompletedController : MonoBehaviour
     {
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private float fadeInTime=1.2f;
         [SerializeField] private float stayDuration=2f;
         [SerializeField] private float fadeOutTime=1f;
-        [SerializeField] private TextMeshProUGUI areaIndex;
         // Start is called before the first frame update
         void Start()
         {
-            AreaGameManager.OnAreaCompleted -= Show;
-            AreaGameManager.OnAreaCompleted += Show;
+            AreaGameManager.OnDemoCompleted -= Show;
+            AreaGameManager.OnDemoCompleted += Show;
         }
 
         private void OnDestroy()
         {
-            AreaGameManager.OnAreaCompleted -= Show;
+            AreaGameManager.OnDemoCompleted -= Show;
         }
 
         // Update is called once per frame
-        void Show(int areaIndex)
+        void Show()
         {
-            this.areaIndex.SetText((areaIndex+1).ToString());
             canvasGroup.alpha = 0;
             canvasGroup.blocksRaycasts = true;
             LeanTween.alphaCanvas(canvasGroup, 1, fadeInTime).setEaseInOutQuad().setOnComplete(() =>

@@ -5,6 +5,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using __2___Scripts.Game.Areas;
 using Game.GameActors.Players;
+using Game.GameResources;
 using Game.Systems;
 using LostGrace;
 using Pathfinding;
@@ -52,14 +53,18 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
     void Start()
     {
         //OnDisable();
-       
+        if (AreaGameManager.Instance.CampaingFinished)
+            return;
         if(!SaveGameManager.HasEncounterSaveData()||Player.Instance.Party.AreaIndex!=EncounterTree.Instance.AreaIndex)
         {
+           
             EncounterTree.Instance.AreaIndex = Player.Instance.Party.AreaIndex;
             EncounterTree.Instance.spawnData = spawnData;
             EncounterTree.Instance.columns.Clear();
             //Debug.Log(SaveGameManager.currentSaveData.encounterTreeData.columns.Count);
             MyDebug.LogLogic("Create New EncounterTree!");
+            //No more Areas implemented for now
+           
             EncounterTree.Instance.spawnData.InitNodeAppearanceChances();
             EncounterTree.Instance.Create();
             

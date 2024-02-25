@@ -13,6 +13,8 @@ namespace Game.States
         private List<UnitBP> units;
         [SerializeField]
         public BattleMap battleMap;
+
+        public int StartAreaIndex = 0;
         // [SerializeField]
         // private List<StockedItem> convoy;
 
