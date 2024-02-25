@@ -148,9 +148,9 @@ public class UIEventController : MonoBehaviour
         else
         {
             int diff= goal - current;
-            if (diff >= 10)
+            if (diff >= 5)
                 return 0.0f;
-            return 1.0f - diff/10f;
+            return 1.0f - diff*2/10f;
         }
     }
 
@@ -356,7 +356,7 @@ public class UIEventController : MonoBehaviour
     void MapBattleEnded(bool won)
     {
         Debug.Log("MapBattleEnded: "+won);
-        if(won)
+        if(true)//TODO CHANGE BACK TO won
             currentNode =(LGEventDialogSO)currentNode.Choices[0].NextDialogue;
         else
         {

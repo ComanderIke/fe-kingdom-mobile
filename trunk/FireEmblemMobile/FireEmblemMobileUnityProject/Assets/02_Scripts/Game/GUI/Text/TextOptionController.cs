@@ -155,7 +155,7 @@ public class TextOptionController : MonoBehaviour
             if (item != null)
             {
                 receiveItemText.gameObject.SetActive(true);
-                receiveItemText.text = item.name;
+                //receiveItemText.text = item.name;
                 receiveItemImage.sprite = item.sprite;
                 
             }

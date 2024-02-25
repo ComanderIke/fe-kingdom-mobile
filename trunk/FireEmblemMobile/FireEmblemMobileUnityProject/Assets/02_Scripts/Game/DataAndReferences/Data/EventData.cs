@@ -17,6 +17,7 @@ namespace Game.GameResources
         [SerializeField] List<LGEventDialogSO> Area1OnlyEvents;
         [SerializeField] List<LGEventDialogSO> Area2OnlyEvents;
         [SerializeField] private LGEventDialogSO[] allEvents;
+        [SerializeField] private LGEventDialogSO[] allEventsFiltered;
         [SerializeField] private List<LGEventDialogSO> allEventsExceptAreaOnlyEvents;
         private Random rng = new Random();
         public LGEventDialogSO GetRandomEvent()
@@ -47,14 +48,15 @@ namespace Game.GameResources
             if (GameConfig.Instance.ConfigProfile.overWriteEvents)
             {
                 var demoEvents = GameConfig.Instance.ConfigProfile.OverwritenEvents;
-                allEvents = GameBPData.GetAllInstances<LGEventDialogSO>().Intersect(demoEvents).ToArray();
+                allEventsFiltered = GameBPData.GetAllInstances<LGEventDialogSO>().Intersect(demoEvents).ToArray();
             }
             else
             {
-                allEvents = GameBPData.GetAllInstances<LGEventDialogSO>();
+                allEventsFiltered = GameBPData.GetAllInstances<LGEventDialogSO>();
                
             }
-            allEventsExceptAreaOnlyEvents = allEvents.Except(Area1OnlyEvents).ToList();
+            allEvents = GameBPData.GetAllInstances<LGEventDialogSO>();
+            allEventsExceptAreaOnlyEvents = allEventsFiltered.Except(Area1OnlyEvents).ToList();
             allEventsExceptAreaOnlyEvents = allEventsExceptAreaOnlyEvents.Except(Area2OnlyEvents).ToList();
         }
         #endif

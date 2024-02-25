@@ -17,11 +17,13 @@ namespace LostGrace
         public bool overWriteItems = false;
         public bool overWriteSkills = false;
         public bool overWriteEvents = false;
+      
         public bool overWriteAchievements = false;
         public bool overWriteMetaUpgrades = false;
         public ItemBP[] OverwritenItems;
         public SkillBp[] OverwritenSkills;
         public LGEventDialogSO[] OverwritenEvents;
+        public LGEventDialogSO[] TmpEventsHolder;
         public DifficultyProfile chosenDifficulty;
         
         [SerializeField] List<UnitBP> playableCharacters;
