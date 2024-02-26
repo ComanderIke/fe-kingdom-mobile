@@ -44,25 +44,25 @@ public class UIChurchController : MonoBehaviour
     [SerializeField] private Button prayButton;
     [SerializeField] private Button donateButton;
     [SerializeField] private Button receiveBlessingButton;
-    [SerializeField] private float faithExpMult = 5f;
-    [SerializeField] private List<Unit> alreadyPrayed;
+   
+    
     [SerializeField] private TextMeshProUGUI donateGoldCost;
     [SerializeField] private TextMeshProUGUI bondExpText;
     [SerializeField] private TextMeshProUGUI bondLevelText;
     [SerializeField] private MMProgressBar bondExpBar;
-    private int goldCost = 100;
-    private int donateExtraExp = 50;
+  
+   
     public void UpdateUI()
     {
 
         faithStat.text = ""+party.ActiveUnit.Stats.CombinedAttributes().FAITH;
         uiGodBlessings = new List<UIGodBlessing>();
         int cnt = 0;
-        bool affordable = party.CanAfford(goldCost);
+        bool affordable = party.CanAfford(church.DonateCost());
        
         donateButton.interactable = affordable;
         donateButton.GetComponentInChildren<TextMeshProUGUI>().text = donateButton.interactable ? "<bounce>Donate" : "</bounce>Donate";
-        donateGoldCost.text = ""+goldCost;
+        donateGoldCost.text = ""+church.DonateCost();
         donateGoldCost.color = affordable?normalColor:tooExpensiveTextColor;
         receiveBlessingButton.gameObject.SetActive(false);
         godStatueNameText.text =  gods[selectedGod].Name;
@@ -108,8 +108,8 @@ public class UIChurchController : MonoBehaviour
         shrineController.SetUnit(party.ActiveUnit);
 
         curseButton.gameObject.SetActive(party.ActiveUnit.Curses.Count != 0);
-        prayButton.GetComponentInChildren<TextMeshProUGUI>().text=(!alreadyPrayed.Contains(party.ActiveUnit)?"<bounce>Pray" : "</bounce>Already Prayed");
-        prayButton.interactable =!alreadyPrayed.Contains(party.ActiveUnit);
+        prayButton.GetComponentInChildren<TextMeshProUGUI>().text=(!church.AlreadyPrayed(party.ActiveUnit)?"<bounce>Pray" : "</bounce>Already Prayed");
+        prayButton.interactable =!church.AlreadyPrayed(party.ActiveUnit);
         characterFacesContainers.transform.DeleteAllChildren();
         godsContainers.transform.DeleteAllChildren(); //TODO Do this only at show not each time
         uiGodBlessings.Clear();
@@ -219,7 +219,7 @@ public class UIChurchController : MonoBehaviour
         shrineController.Show(gods);
         party.onActiveUnitChanged -= ActiveUnitChanged;
         party.onActiveUnitChanged += ActiveUnitChanged;
-        alreadyPrayed = new List<Unit>();
+        
         bondExpBar.SetBar01(party.ActiveUnit.Bonds.GetBondExperience(gods[selectedGod])/100f);
         UpdateUI();
     }
@@ -235,14 +235,12 @@ public class UIChurchController : MonoBehaviour
 
     public void PrayClicked()
     {
-        alreadyPrayed.Add(party.ActiveUnit);
-        party.ActiveUnit.Bonds.Increase(gods[selectedGod], (int)(party.ActiveUnit.Stats.CombinedAttributes().FAITH*faithExpMult));
-        UpdateUI();
+        church.Pray(party.ActiveUnit,gods[selectedGod]);
+       UpdateUI();
     }
     public void DonateClicked()
     {
-        party.AddGold(-100);
-        party.ActiveUnit.Bonds.Increase(gods[selectedGod],donateExtraExp);
+        church.Donate(party,party.ActiveUnit,gods[selectedGod]);
         UpdateUI();
         
     }

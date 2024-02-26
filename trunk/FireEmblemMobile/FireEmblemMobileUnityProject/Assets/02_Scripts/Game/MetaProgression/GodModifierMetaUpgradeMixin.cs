@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _02_Scripts.Game.GUI.Utility;
+using Game.GameActors.Players;
 using LostGrace;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ public class GodModifierMetaUpgradeMixin: MetaUpgradeMixin
                     break;
             }
         }
+
+       
     }
     
     public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)

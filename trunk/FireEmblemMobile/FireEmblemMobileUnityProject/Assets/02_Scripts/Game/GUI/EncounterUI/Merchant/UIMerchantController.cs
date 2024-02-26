@@ -117,7 +117,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                     
                 }
                 if(selectedItemIndex< shopItems.Count)
-                    buyItemUI.Show( shopItems[selectedItemIndex].stockedItem.item, party.CanAfford(merchant.GetCost(merchant.shopItems[0].item)), buying);
+                    buyItemUI.Show( shopItems[selectedItemIndex].stockedItem.item, merchant.GetSellCost(shopItems[selectedItemIndex].stockedItem.item),party.CanAfford(merchant.GetCost(merchant.shopItems[0].item)), buying);
                
             }
 
@@ -146,7 +146,7 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
                 shopItems[i].SetValues(item, affordable, first,this, true);
             }
             if(selectedItemIndex< shopItems.Count)
-                buyItemUI.Show( shopItems[selectedItemIndex].stockedItem.item,  true, buying);
+                buyItemUI.Show( shopItems[selectedItemIndex].stockedItem.item,  merchant.GetCost(shopItems[selectedItemIndex].stockedItem.item),true, buying);
     
             switchBuyButton.interactable = true;
             switchSellButton.interactable = false;
@@ -203,9 +203,9 @@ public class UIMerchantController : MonoBehaviour,IShopItemClickedReceiver
         UpdateUI();
         //Debug.Log(item.name+ " "+item.cost);
         if(buying)
-            buyItemUI.Show( shopItems[selectedItemIndex].stockedItem.item,  party.CanAfford(merchant.GetCost( shopItems[selectedItemIndex].stockedItem.item)), buying);
+            buyItemUI.Show( shopItems[selectedItemIndex].stockedItem.item,  merchant.GetCost( shopItems[selectedItemIndex].stockedItem.item),party.CanAfford(merchant.GetCost( shopItems[selectedItemIndex].stockedItem.item)), buying);
         else
-            buyItemUI.Show( shopItems[selectedItemIndex].stockedItem.item,  true, buying);
+            buyItemUI.Show( shopItems[selectedItemIndex].stockedItem.item,  merchant.GetSellCost(shopItems[selectedItemIndex].stockedItem.item),true, buying);
     }
 
     public void Hide()

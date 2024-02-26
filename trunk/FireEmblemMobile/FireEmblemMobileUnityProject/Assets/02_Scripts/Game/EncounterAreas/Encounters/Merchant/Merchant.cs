@@ -12,13 +12,17 @@ public class Merchant
 
     public Merchant(Sprite merchantFace, string merchantName)
     {
+        if (PriceRateSelling == 0)
+            PriceRateSelling = .5f;
+        if (PriceRateBuying == 0)
+            PriceRateBuying = 1.0f;
         this.merchantFace = merchantFace;
         this.merchantName = merchantName;
     }
     public float priceMultiplier = 1.0f;
     public static float PriceRateSelling { get; set; }
     public static float PriceRateBuying { get; set; }
-    public static int SlotCount { get; set; }
+    public static int SlotCount = 4;
 
     public void AddItem(StockedItem item)
     {
@@ -52,17 +56,24 @@ public class Merchant
 
     public void Buy(Item selectedItem)
     {
-        Player.Instance.Party.Money -=GetCost(selectedItem);
+        Player.Instance.Party.Money -=(int)(GetCost(selectedItem));
         Player.Instance.Party.AddItem(selectedItem);
         RemoveItem(selectedItem);
     }
 
     public void Sell(Item selectedItem)
     {
-        Player.Instance.Party.Money += GetCost(selectedItem);
+        Player.Instance.Party.Money += (int)(GetSellCost(selectedItem));
         Player.Instance.Party.RemoveItem(selectedItem);
     }
 
+    public int GetSellCost(Item item)
+    {
+        priceMultiplier = PriceRateSelling;
+        return (int)(item.cost*priceMultiplier);
+
+    }
+    
   
     public int GetCost(Item item)
     {
@@ -70,9 +81,24 @@ public class Merchant
             priceMultiplier = 0.8f;
         else
         {
-            priceMultiplier = 1.0f;
+            priceMultiplier = PriceRateBuying;
         }
         return (int)(item.cost*priceMultiplier);
 
+    }
+
+    public void GenerateItems()
+    {
+        for (int i = 0; i < SlotCount; i++)
+        {
+            if(i==0)
+                AddItem(new StockedItem(GameBPData.Instance.GetItemByName("Health Potion"), Random.Range(1,4)));
+            else if(i==1||i==6)
+                AddItem(GameBPData.Instance.GetRandomMerchantItemSingularStock());
+            else
+            {
+                AddItem(GameBPData.Instance.GetRandomMerchantItemMultipleStock());
+            }
+        }
     }
 }

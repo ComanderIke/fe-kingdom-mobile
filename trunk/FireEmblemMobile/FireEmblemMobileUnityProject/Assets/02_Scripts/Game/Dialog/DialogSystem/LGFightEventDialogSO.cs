@@ -12,7 +12,7 @@ namespace _02_Scripts.Game.Dialog.DialogSystem
         [field:SerializeField] public UnitBP Enemy { get; set; }
    
         public void Initialize(string dialogName, DialogActor dialogActor, string text, List<LGDialogChoiceData> choices, DialogType dialogType,
-            bool portraitLeft, bool isStartingDialog, string headline,List<ResourceEntry> resources, List<ItemBP> rewardItems, List<DialogEvent> events, UnitBP enemy)
+            bool portraitLeft, bool isStartingDialog, string headline,List<ResourceEntry> resources, List<ItemBP> rewardItems, List<DialogEvent> events,UnitBP enemy)
         {
             base.Initialize(dialogName, dialogActor, text, choices, dialogType, portraitLeft, isStartingDialog,headline, resources, rewardItems, events);
             Enemy = enemy;

@@ -25,6 +25,8 @@ public class FlagsMetaUpgradeMixin : MetaUpgradeMixin
                     Player.Instance.Flags.MoralityVisible = valuePair.Value;break;
                 case FlagType.StartingRelic:
                     Player.Instance.Flags.StartingRelic = valuePair.Value;break;
+                case FlagType.StartingSkill:
+                    Player.Instance.Flags.StartingSkill = valuePair.Value;break;
                 case FlagType.StartingUpgrade:
                     Player.Instance.Flags.StartingUpgrade = valuePair.Value;break;
                 case FlagType.RerollSkills:

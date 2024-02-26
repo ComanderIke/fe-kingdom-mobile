@@ -6,33 +6,12 @@ using Game.Systems;
 using Game.WorldMapStuff.Model;
 using GameEngine;
 using LostGrace;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
 
 namespace Game.GameActors.Players
 {
-    public class PlayerFlags
-    {
-        public bool BoonBaneUnlocked { get; set; }
-        public bool StrongestAttributeIncrease { get; set; }
-        public bool GluttonyForceEat { get; set; }
-        public bool SpecialUpgradeUnlocked { get; set; }
-        public bool EventPreviewsUnlocked { get; set; }
-        public bool StartingRelic { get; set; }
-        public bool MoralityVisible { get; set; }
-        public bool WeakestAttributeIncrease { get; set; }
-        public bool RerollSkills { get; set; }
-        public bool RerollLevelUps { get; set; }
-        public bool RevivalStoneStart { get; set; }
-        public bool PartyMemberAfterArea1 { get; set; }
-        public bool PartyMemberAfterArea2 { get; set; }
-        public bool PartyMemberAfterArea3 { get; set; }
-        public bool PartyMemberAfterArea4 { get; set; }
-        public bool PartyMemberAfterArea5 { get; set; }
-        public bool PartyMemberAfterArea6 { get; set; }
-        public bool StartingUpgrade { get; set; }
-    }
-
     [System.Serializable]
     public class Player : MonoBehaviour, IDataPersistance
     {

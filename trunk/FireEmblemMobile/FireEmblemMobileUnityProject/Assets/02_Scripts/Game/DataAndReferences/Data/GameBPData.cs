@@ -47,6 +47,9 @@ namespace Game.GameResources
         [SerializeField] private GemBP[] allMediumGems;
         [SerializeField] private GemBP[] allLargeGems;
         [SerializeField] private ItemBP[] allItems;
+        [SerializeField] private ItemBP[] merchantItemsMultipleStock;
+        [SerializeField] private ItemBP[] merchantItemsSingularStock;
+        
         [SerializeField] private ConsumableItemBp[] allConsumables;
         [SerializeField] private AttributePotionBP[] allAttributePotions;
         [SerializeField] private BuffPotionBP[] allBuffPotions;
@@ -486,6 +489,15 @@ namespace Game.GameResources
         public God GetGod(string godId)
         {
             return allGods.First(god => god.Name == godId);
+        }
+
+        public StockedItem GetRandomMerchantItemMultipleStock()
+        {
+            return new StockedItem(merchantItemsMultipleStock[Random.Range(0, merchantItemsMultipleStock.Length)].Create(),Random.Range(1,3));
+        }
+        public StockedItem GetRandomMerchantItemSingularStock()
+        {
+            return new StockedItem(merchantItemsSingularStock[Random.Range(0, merchantItemsSingularStock.Length)].Create(),1);
         }
     }
 }

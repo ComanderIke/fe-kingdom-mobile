@@ -126,7 +126,7 @@ namespace Game.GameActors.Units.Numbers
         }
         public Attributes CombinedGrowths()
         {
-            return BaseGrowths + BonusGrowths;
+            return BaseGrowths + BonusGrowths+ ((int)Player.Instance.Modifiers.GrowthIncrease);
         }
         public Attributes CombinedAttributes()
         {
@@ -231,7 +231,72 @@ namespace Game.GameActors.Units.Numbers
                     : AttributeBonusState.Same;
         }
 
-     
+
+        // public void IncreaseWeakest()
+        // {
+        //     List<AttributeType> weakest = new List<AttributeType>();
+        //     int weakestValue = 199;
+        //    
+        //     weakestValue=CheckWeakestValue(weakestValue, weakest, AttributeType.STR);
+        //     weakestValue=CheckWeakestValue(weakestValue, weakest, AttributeType.INT);
+        //     weakestValue=CheckWeakestValue(weakestValue, weakest, AttributeType.DEX);
+        //     weakestValue=CheckWeakestValue(weakestValue, weakest, AttributeType.DEF);
+        //     weakestValue=CheckWeakestValue(weakestValue, weakest, AttributeType.FTH);
+        //     weakestValue=CheckWeakestValue(weakestValue, weakest, AttributeType.LCK);
+        //     weakestValue=CheckWeakestValue(weakestValue, weakest, AttributeType.CON);
+        //     weakestValue=CheckWeakestValue(weakestValue, weakest, AttributeType.AGI);
+        //         
+        //     foreach(var weakestEntry in weakest)
+        //         BaseAttributes.IncreaseAttribute(1, weakestEntry);
+        // }
+        //
+        // int CheckWeakestValue(int weakestValue, List<AttributeType> weakest, AttributeType attribute)
+        // {
+        //     int attributeValue = BaseAttributes.GetFromIndex((int)attribute);
+        //     if (attributeValue < weakestValue)
+        //     {
+        //         weakestValue = attributeValue;
+        //         weakest.Clear();
+        //         weakest.Add(attribute);
+        //     }else if (attributeValue== weakestValue)
+        //     {
+        //         weakest.Add(attribute);
+        //     }
+        //
+        //     return weakestValue;
+        // }
+        //
+        // int CheckStrongestValue(int strongestValue, List<AttributeType> strongest, AttributeType attribute)
+        // {
+        //     int attributeValue = BaseAttributes.GetFromIndex((int)attribute);
+        //     if (attributeValue > strongestValue)
+        //     {
+        //         strongestValue =attributeValue;
+        //         strongest.Clear();
+        //         strongest.Add(attribute);
+        //     }else if (attributeValue== strongestValue)
+        //     {
+        //         strongest.Add(attribute);
+        //     }
+        //
+        //     return strongestValue;
+        // }
+        //
+        // public void IncreaseStrongest()
+        // {
+        //     List<AttributeType> strongest = new List<AttributeType>();
+        //     int strongestValue = 199;
+        //     strongestValue=CheckStrongestValue(strongestValue, strongest, AttributeType.STR);
+        //     strongestValue=CheckStrongestValue(strongestValue, strongest, AttributeType.INT);
+        //     strongestValue=CheckStrongestValue(strongestValue, strongest, AttributeType.DEX);
+        //     strongestValue=CheckStrongestValue(strongestValue, strongest, AttributeType.DEF);
+        //     strongestValue=CheckStrongestValue(strongestValue, strongest, AttributeType.FTH);
+        //     strongestValue=CheckStrongestValue(strongestValue, strongest, AttributeType.LCK);
+        //     strongestValue=CheckStrongestValue(strongestValue, strongest, AttributeType.CON);
+        //     strongestValue=CheckStrongestValue(strongestValue, strongest, AttributeType.AGI);
+        //     foreach(var strongestEntry in strongest)
+        //         BaseAttributes.IncreaseAttribute(1, strongestEntry);
+        // }
         public void SetBane(AttributeType bane)
         {
             if (this.Bane != AttributeType.NONE)

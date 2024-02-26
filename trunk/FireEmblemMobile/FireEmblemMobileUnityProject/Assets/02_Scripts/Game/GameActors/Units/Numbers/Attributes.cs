@@ -79,6 +79,19 @@ namespace Game.GameActors.Units.Numbers
             sum.faith += b.faith;
             return sum;
         }
+        public static Attributes operator +(Attributes a, int b)
+        {
+            var sum = new Attributes(a);
+            sum.agi += b;
+            sum.str += b;
+            sum.def += b;
+            sum.lck += b;
+            sum.maxHp += b;
+            sum.dex += b;
+            sum.intel += b;
+            sum.faith += b;
+            return sum;
+        }
         public static Attributes operator -(Attributes a, Attributes b)
         {
             var sum = new Attributes(a);

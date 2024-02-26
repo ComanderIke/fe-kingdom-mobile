@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _02_Scripts.Game.GUI.Utility;
+using Game.GameActors.Players;
 using Game.GameActors.Units.Numbers;
 using LostGrace;
 using UnityEngine;
@@ -24,7 +25,8 @@ public class MiscellaneousMetaUpgradeMixin : MetaUpgradeMixin
                 case MiscellaneousType.GemstoneMaxSouls: break;
                 case MiscellaneousType.MaxStats: break;
                 case MiscellaneousType.GemStoneMergeAmount: break;
-                case MiscellaneousType.GoldBonusPerTurn: break;
+                case MiscellaneousType.GoldBonusPerTurn:
+                    Player.Instance.Modifiers.GoldBonusPerTurn = valuePair.Value;break;
             }
         }
     }

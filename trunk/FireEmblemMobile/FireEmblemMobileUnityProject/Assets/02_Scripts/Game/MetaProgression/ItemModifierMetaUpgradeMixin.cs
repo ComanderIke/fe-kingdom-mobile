@@ -35,6 +35,8 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
             {
                 case ItemModifierType.PotionsHeal:
                     HealthPotion.ExtraHealAmount = valuePair.Value;break;
+                case ItemModifierType.HolyWaterCurse:
+                    HolyWater.RemoveAll = true; break;
             }
         }
     }

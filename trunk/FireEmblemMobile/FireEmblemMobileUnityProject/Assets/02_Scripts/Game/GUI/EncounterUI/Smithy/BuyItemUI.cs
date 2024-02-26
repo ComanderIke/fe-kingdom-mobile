@@ -27,11 +27,11 @@ public class BuyItemUI : MonoBehaviour
 
     
     // Start is called before the first frame update
-    public void Show(Item item, bool affordable, bool buying)
+    public void Show(Item item, int costAmount,bool affordable, bool buying)
     {
         gameObject.SetActive(true);
         Icon.sprite = item.Sprite;
-        cost.text = "" + item.cost;
+        cost.text = "" + costAmount;
         description.text = "" + item.Description;
         nameText.text = "" + item.Name;
         buttonText.text = affordable?"<bounce>BUY": "Underfunded";

@@ -22,7 +22,7 @@ public class UpgradeItemUI : BuyItemUI
     // Start is called before the first frame update
     public void Show(EquipableItem equip,WeaponUpgradeMode upgradeMode, int upgradegoldCost, int upgradeStoneCost, int dragonScaleCost, bool affordable)
     {
-        base.Show(equip, affordable, true);
+        base.Show(equip, 0,affordable, true);
         cost.text = "" + upgradegoldCost;
 
         if (upgradeStoneCost != 0)

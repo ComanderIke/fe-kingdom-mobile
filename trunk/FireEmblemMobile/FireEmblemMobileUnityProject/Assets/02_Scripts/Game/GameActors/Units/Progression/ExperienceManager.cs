@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GUI;
 using UnityEngine;
 
@@ -61,7 +62,7 @@ namespace Game.GameActors.Units
                 return false;
             if (exp > MAX_EXP)
                 exp = MAX_EXP;
-            int sumExp = exp;
+            int sumExp = (int)(exp * Player.Instance.Modifiers.ExperienceGain);
             foreach (var multiplier in ExpMultipliers)
             {
                 sumExp += (int)(exp*multiplier);

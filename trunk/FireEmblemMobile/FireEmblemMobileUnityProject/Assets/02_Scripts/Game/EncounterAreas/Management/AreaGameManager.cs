@@ -165,8 +165,12 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
             if (areaStart)
             {
                 OnAreaStarted?.Invoke(GameBPData.Instance.AreaDataList[Player.Instance.Party.AreaIndex]);
-                if(Player.Instance.Party.AreaIndex>0)
-                    MonoUtility.DelayFunction(()=>ShowReinforcements(),3.9f);
+                if (Player.Instance.Party.AreaIndex > 0)
+                {
+                    if(Player.Instance.Flags.HasPartyMemberAfterArea(Player.Instance.Party.AreaIndex))
+                        MonoUtility.DelayFunction(()=>ShowReinforcements(),3.9f);
+                }
+                    
             }
             if (CampaingFinished)
             {

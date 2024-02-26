@@ -14,12 +14,18 @@ namespace Game.GameActors.Items.Weapons
        
         }
 
-  
+        public static bool RemoveAll { get; set; }
+
 
         public override void Use(Unit character, Party convoy)
         {
-            
             character.RemoveCurse(character.Curses.GetRandomElement());
+            if(RemoveAll)
+            {
+                for (int i=character.Curses.Count;i>=0; i--)
+                    character.RemoveCurse(character.Curses[i]);
+            }
+           
             base.Use(character, convoy);
         }
     }

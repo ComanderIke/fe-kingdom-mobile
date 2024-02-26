@@ -665,10 +665,12 @@ namespace Game.GameActors.Units
         {
             SkillManager.LearnSkill(blessing);
             Debug.Log("TODO Receive Blessing");
+            OnUnitDataChanged?.Invoke(this);
         }
         public void RemoveBlessing()
         {
             SkillManager.RemoveSkill(SkillManager.GetBlessing());
+            OnUnitDataChanged?.Invoke(this);
         }
 
         public void ReceiveCurse(Curse curse)
@@ -688,6 +690,7 @@ namespace Game.GameActors.Units
             SkillManager.LearnSkill(curse);
             OnAddCurse?.Invoke(curse);
             Debug.Log("TODO Receive Curse");
+            OnUnitDataChanged?.Invoke(this);
         }
         
         public void EncounterTick()
@@ -792,6 +795,17 @@ namespace Game.GameActors.Units
             }
         }
 
-       
+
+        public void LearnSkill(Skill skill)
+        {
+            if(!SkillManager.IsFull())
+                SkillManager.LearnSkill(skill);
+            else
+            {
+                Debug.Log("Cant learn Skill! Skilllist is full!");
+                // renderer.ShowReplaceSkillUI(skill, unit);
+            }
+            OnUnitDataChanged?.Invoke(this);
+        }
     }
 }

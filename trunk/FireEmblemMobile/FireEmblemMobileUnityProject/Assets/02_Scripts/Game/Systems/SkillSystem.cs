@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using GameEngine;
@@ -76,13 +77,8 @@ public class SkillSystem : IEngineSystem
 
     void LearnSkill(Unit unit, Skill skill)
     {
-        if(!unit.SkillManager.IsFull())
-            unit.SkillManager.LearnSkill(skill);
-        else
-        {
-            Debug.Log("Cant learn Skill! Skilllist is full!");
-           // renderer.ShowReplaceSkillUI(skill, unit);
-        }
+        unit.LearnSkill(skill);
+       
     }
 
     void FinishedAnimation()
@@ -143,44 +139,65 @@ public class SkillSystem : IEngineSystem
     {
         var skillPool = skPool==null?new List<SkillBp>(config.CommonSkillPool):skPool;
         skillPool.AddRange(config.GetClassSkillPool(unit.rpgClass));
+       
+        List<SkillBp> tierSkillPool = GetSkillRarityPool(skPool);
+        
+        
         //Debug.Log("SKILLPOOL SIZE: "+skillPool.Count);
-        int rng = Random.Range(0, skillPool.Count);
+        int rng = Random.Range(0, tierSkillPool.Count);
        // Debug.Log("RNG: "+rng);
-        var skill = skillPool[rng].Create();
-        GenerateSkillRarity(skill);
+        var skill = tierSkillPool[rng].Create();
         return skill;
     }
-    private void GenerateSkillRarity(Skill skill)
+
+    List<SkillBp> GetSkillRarityPool(List<SkillBp> skillPool)
     {
-        float rng = Random.value;
-        float epicChance = config.EpicChance;
+       
+        float skillRarityRng = Random.value;
+        float chance=config.LegendaryChance + (Player.Instance.Modifiers.LegendarySkillRarity-1);
+        if (skillRarityRng <= chance)
+            return skillPool.FindAll(s => s.Tier == 3);
+        chance += config.EpicChance + (Player.Instance.Modifiers.EpicSkillRarity-1);
+        if( skillRarityRng <= chance)
+            return skillPool.FindAll(s => s.Tier == 2);
+        chance +=config.RareChance + (Player.Instance.Modifiers.RareSkillRarity-1);
+        if( skillRarityRng <= chance)
+           return skillPool.FindAll(s => s.Tier == 1);
+         
+        return skillPool.FindAll(s => s.Tier == 0);
         
-        if (rng <= config.MythicChance)
-        {
-            skill.Tier = 0;
-            skill.Level = 4;
-        }
-        else if (rng <= config.LegendaryChance)
-        {
-            skill.Tier = 1;
-            skill.Level = 3;
-        }
-        else if (rng <= config.EpicChance)
-        {
-            skill.Tier = 2;
-            skill.Level = 2;
-        }
-        else if (rng <= config.RareChance)
-        {
-            skill.Tier = 3;
-            skill.Level = 1;
-        }
-        else
-        {
-            skill.Tier = 4;
-            skill.Level = 0;
-        }
     }
+    // private void GenerateSkillRarity(Skill skill)
+    // {
+    //     float rng = Random.value;
+    //     float epicChance = config.EpicChance;
+    //     
+    //     if (rng <= config.MythicChance)
+    //     {
+    //         skill.Tier = 0;
+    //         skill.Level = 4;
+    //     }
+    //     else if (rng <= config.LegendaryChance)
+    //     {
+    //         skill.Tier = 1;
+    //         skill.Level = 3;
+    //     }
+    //     else if (rng <= config.EpicChance)
+    //     {
+    //         skill.Tier = 2;
+    //         skill.Level = 2;
+    //     }
+    //     else if (rng <= config.RareChance)
+    //     {
+    //         skill.Tier = 3;
+    //         skill.Level = 1;
+    //     }
+    //     else
+    //     {
+    //         skill.Tier = 4;
+    //         skill.Level = 0;
+    //     }
+    // }
 
     public void Deactivate()
     {

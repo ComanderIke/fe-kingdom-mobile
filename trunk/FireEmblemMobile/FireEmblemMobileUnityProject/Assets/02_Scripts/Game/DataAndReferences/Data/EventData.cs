@@ -17,6 +17,8 @@ namespace Game.GameResources
         [SerializeField] List<LGEventDialogSO> Area1OnlyEvents;
         [SerializeField] List<LGEventDialogSO> Area2OnlyEvents;
         [SerializeField] private LGEventDialogSO[] allEvents;
+        [SerializeField] private LGEventDialogSO[] rareEvents;
+        [SerializeField] private LGEventDialogSO[] rareMerchantEvents;
         [SerializeField] private LGEventDialogSO[] allEventsFiltered;
         [SerializeField] private List<LGEventDialogSO> allEventsExceptAreaOnlyEvents;
         private Random rng = new Random();
@@ -35,12 +37,22 @@ namespace Game.GameResources
                     case 1:
                         eventPool.AddRange(Area2OnlyEvents);break;
                 }
+
+                float eventRarityRng = UnityEngine.Random.value;
+                if(eventRarityRng<= rareMerchantRate*Player.Instance.Modifiers.RareMerchants)
+                    return rareMerchantEvents[rng.Next(0, rareMerchantEvents.Length)];
+                eventRarityRng = UnityEngine.Random.value;
+                if(eventRarityRng<= rareEventRate*Player.Instance.Modifiers.RareEncounterRate)
+                    return rareEvents[rng.Next(0, rareEvents.Length)];
                 return eventPool[rng.Next(0, eventPool.Count)];
             }
                 
             return testEvents[rng.Next(0, testEvents.Count)];
            
         }
+
+        public float rareEventRate = 0.1f;
+        public float rareMerchantRate = 0.02f;
        
 #if UNITY_EDITOR
         public void OnValidate()
@@ -48,7 +60,7 @@ namespace Game.GameResources
             if (GameConfig.Instance.ConfigProfile.overWriteEvents)
             {
                 var demoEvents = GameConfig.Instance.ConfigProfile.OverwritenEvents;
-                allEventsFiltered = GameBPData.GetAllInstances<LGEventDialogSO>().Intersect(demoEvents).ToArray();
+                allEventsFiltered = GameBPData.GetAllInstances<LGEventDialogSO>().Intersect(demoEvents).Except(rareEvents).ToArray();
             }
             else
             {

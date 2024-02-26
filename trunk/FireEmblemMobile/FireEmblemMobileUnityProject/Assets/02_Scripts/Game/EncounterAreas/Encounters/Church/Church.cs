@@ -5,6 +5,7 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameResources;
 using Game.Manager;
+using Game.WorldMapStuff.Model;
 using LostGrace;
 using UnityEngine;
 using Random = System.Random;
@@ -23,6 +24,7 @@ public class Church
     private const int ChurchDonationMiddleAmount = 100;
     private const int ChurchDonationHighAmount = 200;
     private God god;
+    
     public Church(IBlessingData blessingData)
     {
         this.blessingData = blessingData;
@@ -32,42 +34,15 @@ public class Church
         alreadyDonated = new List<Unit>();
         alreadyAcceptedBlessing = new Dictionary<Unit, Blessing>();
         alreadyGeneratedBlessing = new Dictionary<Unit, Blessing>();
+        alreadyPrayed = new List<Unit>();
     }
 
     public God GetGod()
     {
         return god;
     }
-    public static float PriceRate { get; set; }
-    // public void AddItem(ShopItem item)
-    // {
-    //     shopItems.Add(item);
-    // }
 
-    // public void RemoveItem(Item selectedItem)
-    // {
-    //     ShopItem itemToRemove = null;
-    //     foreach (var shopItem in shopItems)
-    //     {
-    //         if (shopItem.Item == selectedItem)
-    //         {
-    //           
-    //             itemToRemove = shopItem;
-    //             break;
-    //         }
-    //     }
-    //
-    //     if (itemToRemove != null)
-    //     {
-    //         itemToRemove.stock--;
-    //         if (itemToRemove.stock <= 0)
-    //             shopItems.Remove(itemToRemove);
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("No item found to remove!");
-    //     }
-    // }
+    public static float PriceRate = 1.0f;
 
     Blessing GenerateBlessing(int faith, int donation)
     {
@@ -89,44 +64,7 @@ public class Church
 
     private float blessingUpgradeChance = .1f;
     private int maxUpgrades = 2;
-    // void ShowBlessings(int faith, int donation)
-    // {
-    //     Blessing blessing1 = null;
-    //     var playerBlessing = Player.Instance.Party.ActiveUnit.SkillManager.GetBlessing();
-    //     if (playerBlessing!=null&& playerBlessing.Upgradable())
-    //     {
-    //         blessing1 = (Blessing)playerBlessing.Clone();
-    //         blessing1.Level++;
-    //     }
-    //     else{
-    //         blessing1 = GenerateBlessing(faith, donation);
-    //     }
-    //     var blessing2 = GenerateBlessing(faith, donation);
-    //     var blessing3 = GenerateBlessing(faith, donation);
-    //     ServiceProvider.Instance.GetSystem<SkillSystem>().LearnNewSkill(Player.Instance.Party.ActiveUnit, blessing1, blessing2, blessing3);
-    // // }
-    // public void DonateSmall(Unit unit, int faith)
-    // {
-    //     alreadyDonated.Add(unit);
-    //     unit.Party.Money -= ChurchDonationSmallCost;
-    //    // ShowBlessings(faith, ChurchDonationSmallAmount);
-    // }
-    //
-    // public void DonateMedium(Unit unit, int faith)
-    // {
-    //     alreadyDonated.Add(unit);
-    //     unit.Party.Money -= ChurchDonationMiddleCost;
-    //    // ShowBlessings(faith, ChurchDonationMiddleAmount);
-    //     
-    // }
-    //
-    // public void DonateHigh(Unit unit, int faith)
-    // {
-    //     Debug.Log("DonateHigh");
-    //     alreadyDonated.Add(unit);
-    //     unit.Party.Money -= ChurchDonationHighCost;
-    //     ShowBlessings(faith, ChurchDonationHighAmount);
-    // }
+ 
 
    
     public bool CanDonate(Unit unit)
@@ -153,6 +91,31 @@ public class Church
     public bool AlreadyRemovedCurse(Unit partyActiveUnit)
     {
         throw new System.NotImplementedException();
+    }
+    [SerializeField] private float faithExpMult = 5f;
+    [SerializeField] private List<Unit> alreadyPrayed;
+    public void Pray(Unit unit, God god)
+    {
+        alreadyPrayed.Add(unit);
+        unit.Bonds.Increase(god, (int)(unit.Stats.CombinedAttributes().FAITH*faithExpMult));
+
+    }
+
+    public bool AlreadyPrayed(Unit partyActiveUnit)
+    {
+        return alreadyPrayed.Contains(partyActiveUnit);
+    }
+    private int donateExtraExp = 50;
+    private int goldCost = 100;
+    public void Donate(Party party, Unit partyActiveUnit, God god)
+    {
+        party.AddGold(-DonateCost());
+        partyActiveUnit.Bonds.Increase(god,donateExtraExp);
+    }
+
+    public int DonateCost()
+    {
+        return (int)(goldCost* PriceRate);
     }
 }
 

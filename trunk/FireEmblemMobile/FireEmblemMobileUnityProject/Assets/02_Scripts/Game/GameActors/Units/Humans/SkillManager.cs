@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Players;
 using Game.GameActors.Units.Skills;
 using LostGrace;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace Game.GameActors.Units.Humans
     public class SkillManager : ICloneable
     {
         public Action<int> SkillPointsUpdated;
+        [SerializeField] private SkillBp uniqueStartSkill;
         [SerializeField] private List<SkillBp> startSkills;
         [SerializeField] private BlessingBP startBlessing;
         private List<Skill> skills;
@@ -23,6 +25,13 @@ namespace Game.GameActors.Units.Humans
 
         public void AddStartSkills()
         {
+            if (Player.Instance.Flags.StartingSkill)
+            {
+                if (uniqueStartSkill != null)
+                {
+                    Skills.Add(uniqueStartSkill.Create());
+                }
+            }
             if (startSkills != null)
             {
                 foreach (var skillbp in startSkills)
@@ -87,6 +96,7 @@ namespace Game.GameActors.Units.Humans
 
             startBlessing = sm.startBlessing;
             blessing = sm.blessing;
+            uniqueStartSkill = sm.uniqueStartSkill;
 
         }
 

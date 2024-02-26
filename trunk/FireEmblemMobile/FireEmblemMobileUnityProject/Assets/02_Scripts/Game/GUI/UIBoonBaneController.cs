@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units.Numbers;
 using Pathfinding;
 using UnityEngine;
@@ -129,6 +130,8 @@ namespace LostGrace
 
         public void AttributeClicked(AttributeType type)
         {
+            if (!Player.Instance.Flags.BoonBaneUnlocked)
+                return;
             if (currentBoon == type)
             {
                 

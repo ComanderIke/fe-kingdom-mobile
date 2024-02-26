@@ -102,7 +102,7 @@ namespace Game.WorldMapStuff.Model
             Convoy = new Convoy();
             Storage = new Convoy();
             EncounterComponent = new EncounterPosition();
-            money = 1000;
+            money = StartGold;
             Morality = new Morality();
             VisitedEvents = new List<LGEventDialogSO>();
             VisitedMaps = new List<BattleMap>();
@@ -122,7 +122,7 @@ namespace Game.WorldMapStuff.Model
             }
         }
 
-        public static int StartGold { get; set; }
+        public static int StartGold = 100;
         
 
 
@@ -183,6 +183,7 @@ namespace Game.WorldMapStuff.Model
         
         public void Initialize()
         {
+            
             foreach (var member in members)
             {
                 InitMember(member);
@@ -262,7 +263,10 @@ namespace Game.WorldMapStuff.Model
 
         public void AddGrace(int grace)
         {
-            CollectedGrace += grace;
+            if (grace < 0)
+                CollectedGrace += grace;
+            else
+                CollectedGrace += (int)(grace*Player.Instance.Modifiers.GraceGain);
         }
        
 

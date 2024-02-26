@@ -24,10 +24,10 @@ namespace Game.GameActors.Items.Weapons
             Debug.Log("Use Healthpotion!");
             if (percentage)
             {
-                character.Heal(strength, true);
+                character.Heal(strength+ ExtraHealAmount, true);
             }
             else
-                character.Heal(strength);
+                character.Heal(strength+ ExtraHealAmount);
             //Different Animation in GridBattle
             if(character.GameTransformManager.GameObject!=null)
                 GameObject.Instantiate(healEffect, character.GameTransformManager.GetCenterPosition(), Quaternion.identity,null);

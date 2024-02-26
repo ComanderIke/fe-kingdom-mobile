@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.GameActors.Players;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace LostGrace
@@ -27,7 +28,14 @@ namespace LostGrace
 
         public int GracePerTurnLeft => gracePerTurnLeft;
 
-        public int GoldPerTurnLeft => goldPerTurnLeft;
+        public int GoldPerTurnLeft
+        {
+            get
+            {
+                return goldPerTurnLeft+ Player.Instance.Modifiers.GoldBonusPerTurn; 
+                
+            }
+        }
 
         public int DefaultTurnCount => defaultTurnCount;
         public int VictoryGold => victoryGold;

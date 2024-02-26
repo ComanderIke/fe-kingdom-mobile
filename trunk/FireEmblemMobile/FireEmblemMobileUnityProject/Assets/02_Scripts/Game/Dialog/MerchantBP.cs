@@ -17,10 +17,19 @@ public class MerchantBP:ScriptableObject
     public Merchant Create()
     {
         var merchant = new Merchant(merchantFace, merchantName);
+        
+            
         foreach (var item in items)
         {
             merchant.AddItem(new StockedItem(item.item.Create(), item.stock));
         }
+        if (items == null || items.Count == 0)
+        {
+            merchant.GenerateItems();
+           
+        }
+
+        
 
         return merchant;
     }
