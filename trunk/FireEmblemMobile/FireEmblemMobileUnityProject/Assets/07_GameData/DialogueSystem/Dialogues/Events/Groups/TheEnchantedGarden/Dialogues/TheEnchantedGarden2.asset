@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: TheEnchantedGarden2
   m_EditorClassIdentifier: 
   <DialogName>k__BackingField: TheEnchantedGarden2
-  <Text>k__BackingField: DialogueText
+  <Text>k__BackingField: After you blink the nymph disappeared leaving no trace behind.
+    You search the garden for valuables but cant find anything of value except for
+    a few coins.
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Next Dialogue
+  - <Text>k__BackingField: Move on
     <NextDialogue>k__BackingField: {fileID: 0}
     <NextDialogueFail>k__BackingField: {fileID: 0}
     <NextDialogueRandom>k__BackingField: []
@@ -30,6 +32,10 @@ MonoBehaviour:
   <IsPortraitLeft>k__BackingField: 1
   <DialogActor>k__BackingField: {fileID: 0}
   <HeadLine>k__BackingField: 
-  <RewardResources>k__BackingField: []
+  <RewardResources>k__BackingField:
+  - Amount: -10
+    ResourceType: 3
+  - Amount: 50
+    ResourceType: 0
   <RewardItems>k__BackingField: []
   <Events>k__BackingField: []

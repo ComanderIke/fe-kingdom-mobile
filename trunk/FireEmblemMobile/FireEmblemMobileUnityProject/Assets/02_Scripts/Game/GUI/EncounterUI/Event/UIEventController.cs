@@ -356,6 +356,7 @@ public class UIEventController : MonoBehaviour
     void MapBattleEnded(bool won)
     {
         Debug.Log("MapBattleEnded: "+won);
+        MyDebug.LogTODO("CHANGE BACK TO WON");
         if(true)//TODO CHANGE BACK TO won
             currentNode =(LGEventDialogSO)currentNode.Choices[0].NextDialogue;
         else
@@ -540,9 +541,9 @@ public class UIEventController : MonoBehaviour
             {
                 case ResourceType.Gold: Player.Instance.Party.AddGold(-req.Amount);break;
                 case ResourceType.Grace: Player.Instance.Party.AddGrace(- req.Amount);break;
-                case ResourceType.Morality:Player.Instance.Party.Morality.AddMorality(- req.Amount); break;
+                case ResourceType.Morality: break;
                 case ResourceType.HP_Percent:
-                    Player.Instance.Party.ActiveUnit.Hp -= Player.Instance.Party.ActiveUnit.MaxHp * req.Amount; break;
+                     break;
             }
         }
     }
