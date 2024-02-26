@@ -242,11 +242,8 @@ public class UIEventController : MonoBehaviour
     {
         if (textOptionStates != null)
         {
-            
-            foreach (var textOption in textOptionStates)
-            {
-                SpawnTextOption(textOption);
-            }
+            textOptionIndex = 0;
+            SpawnTextOption(textOptionStates[0]);
         }
         
     }
@@ -289,18 +286,30 @@ public class UIEventController : MonoBehaviour
 
     private void SpawnTextOption(TextOptionVisualData textOptionVisualData)
     {
+        textOptionIndex++;
         if (textOptionVisualData.textOptionType != TextOptionState.SecretHidden)
         {
-            MonoUtility.DelayFunction(() =>
-            {
-                var go = Instantiate(textOptionVisualData.prefab, layout);
-                var textOptionController = go.GetComponent<TextOptionController>();
-                textOptionController.Setup(textOptionVisualData.textOption, textOptionVisualData.textOption.Text, textOptionVisualData.statText, textOptionVisualData.textOptionType, this);
-                if (textOptionVisualData.textOptionType != TextOptionState.Locked)
-                    textOptionController.SetIndex(textOptionVisualData.index);
+            
+            var go = Instantiate(textOptionVisualData.prefab, layout);
+            var textOptionController = go.GetComponent<TextOptionController>();
+            textOptionController.Setup(textOptionVisualData.textOption, textOptionVisualData.textOption.Text, textOptionVisualData.statText, textOptionVisualData.textOptionType, this);
+            if (textOptionVisualData.textOptionType != TextOptionState.Locked)
+                textOptionController.SetIndex(textOptionVisualData.index);
+            textOptionController.onTextAppeared += TextOptionAppeared;
                 
-            }, textOptionsDelay*textOptionVisualData.delayIndex);
         }
+        else
+        {
+            TextOptionAppeared();
+        }
+    }
+
+    private int textOptionIndex = 0;
+    void TextOptionAppeared()
+    {
+        if (textOptionIndex >= textOptionStates.Count)
+            return;
+        SpawnTextOption(textOptionStates[textOptionIndex]);
     }
 
     private float GetSuccessChance(ResponseStatRequirement req, Unit compareUnit)
@@ -608,9 +617,9 @@ public class UIEventController : MonoBehaviour
                 sum += choice.RandomRate;
         }
 
-        Debug.Log("Roll Between: "+1+"(inclusive) and "+sum+"(inclusive)");
+        MyDebug.LogTest("Roll Between: "+1+"(inclusive) and "+sum+"(inclusive)");
         int rand = UnityEngine.Random.Range(1, sum+1);
-        Debug.Log("RandomRoll: "+rand);
+        MyDebug.LogTest("RandomRoll: "+rand);
         int currentSum = 0;
         foreach (var choice in randomNode.Choices)
         {
@@ -620,11 +629,11 @@ public class UIEventController : MonoBehaviour
                 {
                     
                     currentNode =(LGEventDialogSO)choice.NextDialogue;
-                    UpdateUI();
+                    UpdateUIValues();
                     return;
                 }
                  
-                UpdateUI();
+                UpdateUIValues();
                 //Change to this node
                 currentSum += choice.RandomRate;
             }

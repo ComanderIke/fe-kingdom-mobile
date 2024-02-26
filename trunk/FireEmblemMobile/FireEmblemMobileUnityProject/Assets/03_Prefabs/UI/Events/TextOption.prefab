@@ -2764,7 +2764,19 @@ MonoBehaviour:
   disappearanceOrientation: 0
   onTextShowed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7568291982716112318}
+        m_TargetAssemblyTypeName: TextOptionController, Game
+        m_MethodName: OnTextAppeared
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onTypewriterStart:
     m_PersistentCalls:
       m_Calls: []
@@ -2785,7 +2797,7 @@ MonoBehaviour:
   waitForLastCharacter: 1
   useTypewriterWaitForDisappearances: 1
   disappearanceWaitTime: 0.015
-  disappearanceSpeedMultiplier: 1
+  disappearanceSpeedMultiplier: 1.5
 --- !u!1 &7568291982716112290
 GameObject:
   m_ObjectHideFlags: 0
@@ -2900,6 +2912,7 @@ MonoBehaviour:
   hpSprite: {fileID: 21300000, guid: 24f7d5a679cb5d64296f3ac806ecbdb1, type: 3}
   damageSprite: {fileID: 21300000, guid: 6fb33295d3eecdb40a305c1f695241b1, type: 3}
   expSprite: {fileID: 21300000, guid: ebc5a9e556806544eb72b62a28fde750, type: 3}
+  typeWriter: {fileID: 0}
 --- !u!225 &6510650201980892875
 CanvasGroup:
   m_ObjectHideFlags: 0

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _02_Scripts.Game.Dialog.DialogSystem;
+using Febucci.UI;
+using Febucci.UI.Core.Parsing;
 using Game.GameActors.Items;
 using Game.GameActors.Players;
 using Game.GUI.Text;
@@ -24,6 +26,7 @@ public enum TextOptionState
 }
 public class TextOptionController : MonoBehaviour
 {
+    public event Action onTextAppeared;
     public TextMeshProUGUI text;
     public TextMeshProUGUI StatPreview;
     [SerializeField] private TextSizer textSizer;
@@ -184,9 +187,9 @@ public class TextOptionController : MonoBehaviour
                 {
                     receiveResourceText.gameObject.SetActive(true);
                   
-                    receiveResourceText.text = "(receive           )"; //+ item.Amount;
+                    receiveResourceText.text = "receive"; //+ item.Amount;
                     if(option.NextDialogueFail!=null)
-                        receiveResourceText.text = "(Success          )"; 
+                        receiveResourceText.text = "Success"; 
                     receiveResImage.sprite = GetSpriteFromResourceType(item.ResourceType, item.Amount);
                 }
                 else if (Player.Instance.DialogOptionsExperienced.Contains(option)&&item != null && item.ResourceType == ResourceType.HP_Percent)
@@ -240,4 +243,11 @@ public class TextOptionController : MonoBehaviour
             Player.Instance.DialogOptionsExperienced.Add(Option);
         controller.OptionClicked(this);
     }
+
+    [SerializeField] private TypewriterByCharacter typeWriter;
+    public void OnTextAppeared()
+    {
+        onTextAppeared?.Invoke();
+    }
+   
 }
