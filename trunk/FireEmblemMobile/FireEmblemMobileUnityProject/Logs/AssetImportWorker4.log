@@ -6260,3 +6260,1600 @@ NullReferenceException: Object reference not set to an instance of an object
 
  -> (artifact id: '6f4bf281c13a8b18db2bf0c6b90d8d0a') in 0.004363 seconds 
 Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 191.490228 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Hephaestus/BiggerBags/BiggerBags.asset
+  artifactKey: Guid(7ca33bf0cc2ad4ad1ab93b2f72e5d24f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Hephaestus/BiggerBags/BiggerBags.asset using Guid(7ca33bf0cc2ad4ad1ab93b2f72e5d24f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: '400bd49e6a080394d9b963ac9442ecc3') in 0.004175 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001528 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16b98b000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.51 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.26 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.151 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1151ms)
+		BeginReloadAssembly (137ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (56ms)
+		EndReloadAssembly (970ms)
+			LoadAssemblies (77ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (214ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (36ms)
+			SetupLoadedEditorAssemblies (596ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (20ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (446ms)
+				ProcessInitializeOnLoadMethodAttributes (85ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.40 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7426.
+Memory consumption went from 357.7 MB to 355.6 MB.
+Total: 6.434041 ms (FindLiveObjects: 0.241750 ms CreateObjectMapping: 0.084292 ms MarkObjects: 4.962416 ms  DeleteObjects: 1.144875 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001494 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16b98b000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.34 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.041 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1042ms)
+		BeginReloadAssembly (99ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (45ms)
+		EndReloadAssembly (899ms)
+			LoadAssemblies (46ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (199ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (33ms)
+			SetupLoadedEditorAssemblies (576ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (441ms)
+				ProcessInitializeOnLoadMethodAttributes (78ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.42 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7441.
+Memory consumption went from 357.7 MB to 355.7 MB.
+Total: 5.787875 ms (FindLiveObjects: 0.244208 ms CreateObjectMapping: 0.083958 ms MarkObjects: 5.035542 ms  DeleteObjects: 0.423750 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001423 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16c1bf000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 2.96 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.172 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1173ms)
+		BeginReloadAssembly (130ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (8ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (48ms)
+		EndReloadAssembly (998ms)
+			LoadAssemblies (97ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (206ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (40ms)
+			SetupLoadedEditorAssemblies (611ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (24ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (3ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (460ms)
+				ProcessInitializeOnLoadMethodAttributes (81ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.27 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7456.
+Memory consumption went from 357.8 MB to 355.7 MB.
+Total: 5.270500 ms (FindLiveObjects: 0.227083 ms CreateObjectMapping: 0.090542 ms MarkObjects: 4.557416 ms  DeleteObjects: 0.395084 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 759.833462 seconds.
+  path: Assets/07_GameData/Areas/Area1.asset
+  artifactKey: Guid(116d4ad8064ad4f7dab6807ca639b752) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Areas/Area1.asset using Guid(116d4ad8064ad4f7dab6807ca639b752) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1993ca3f2d572da68ea736a86cffd85') in 0.475142 seconds 
+Number of asset objects unloaded after import = 5762
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001528 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16c1bf000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.23 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.104 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1105ms)
+		BeginReloadAssembly (108ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (52ms)
+		EndReloadAssembly (949ms)
+			LoadAssemblies (83ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (203ms)
+			ReleaseScriptCaches (4ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (576ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (40ms)
+				ProcessInitializeOnLoadAttributes (440ms)
+				ProcessInitializeOnLoadMethodAttributes (78ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.34 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.23 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 82 unused Assets / (2.1 MB). Loaded Objects now: 7471.
+Memory consumption went from 357.9 MB to 355.8 MB.
+Total: 5.478000 ms (FindLiveObjects: 0.252334 ms CreateObjectMapping: 0.074916 ms MarkObjects: 4.723167 ms  DeleteObjects: 0.427125 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001497 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2e33c7000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.25 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.028 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1029ms)
+		BeginReloadAssembly (91ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (42ms)
+		EndReloadAssembly (894ms)
+			LoadAssemblies (43ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (196ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (576ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (40ms)
+				ProcessInitializeOnLoadAttributes (441ms)
+				ProcessInitializeOnLoadMethodAttributes (78ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.21 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7486.
+Memory consumption went from 357.9 MB to 355.8 MB.
+Total: 5.428125 ms (FindLiveObjects: 0.221042 ms CreateObjectMapping: 0.081583 ms MarkObjects: 4.720792 ms  DeleteObjects: 0.404083 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 55.071722 seconds.
+  path: Assets/07_GameData/Gods/Hephaestus/Hephaestus.asset
+  artifactKey: Guid(c7fa59d01b80b904db2305ef3f384fb3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Gods/Hephaestus/Hephaestus.asset using Guid(c7fa59d01b80b904db2305ef3f384fb3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: '26c1645a08be9e4ef9149ba21924ee5c') in 0.146175 seconds 
+Number of asset objects unloaded after import = 38
+========================================================================
+Received Import Request.
+  Time since last request: 0.000084 seconds.
+  path: Assets/07_GameData/Gods/Hephaestus/HephaestusSpriteSet.asset
+  artifactKey: Guid(d32e0f10e3fe6724fbadf76d112a4a75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Gods/Hephaestus/HephaestusSpriteSet.asset using Guid(d32e0f10e3fe6724fbadf76d112a4a75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'edb8351d8ceaf4094f9e0b10e3d03095') in 0.002281 seconds 
+Number of asset objects unloaded after import = 7
+========================================================================
+Received Import Request.
+  Time since last request: 11.023676 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Hephaestus/StartMaterials/StartItemsModifier.asset
+  artifactKey: Guid(57bf0a7ceac0d41d4a09260c5a9cb3cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Hephaestus/StartMaterials/StartItemsModifier.asset using Guid(57bf0a7ceac0d41d4a09260c5a9cb3cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '68fe471ec522eba3a205b38c9f706290') in 0.001236 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 4.476217 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Hephaestus/WeaponPotential/WeaponPotential.asset
+  artifactKey: Guid(598af69ce4dbf45038664abce59b9639) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Hephaestus/WeaponPotential/WeaponPotential.asset using Guid(598af69ce4dbf45038664abce59b9639) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: 'f39b2dfc0355e048f412afef799bc1a2') in 0.002617 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 1.782130 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Hephaestus/StartWeaponUpgrade/StartWeaponUpgrade.asset
+  artifactKey: Guid(fc69271b263f94c04a58db10d69876be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Hephaestus/StartWeaponUpgrade/StartWeaponUpgrade.asset using Guid(fc69271b263f94c04a58db10d69876be) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: '053b2b7e4c8c20ee570154c3369a2c7b') in 0.002739 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 56.531966 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Hephaestus/TODOStartWeaponUpgrade
+  artifactKey: Guid(25616940f8337429e835a47b8f676dfa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Hephaestus/TODOStartWeaponUpgrade using Guid(25616940f8337429e835a47b8f676dfa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63ec98013d8c0957f91b84e78b527a2a') in 0.001575 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 27.050047 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Hephaestus/TODOWeaponPotential
+  artifactKey: Guid(acf6773a573204d0ab68f3593dd4c321) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Hephaestus/TODOWeaponPotential using Guid(acf6773a573204d0ab68f3593dd4c321) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b6ecd8c056f0c2c6c0266ccb6629e85') in 0.001605 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 117.998181 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Hestia/InnSlots/InnSlots.asset
+  artifactKey: Guid(947c5ac323cd04007bb0b210e3512b5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Hestia/InnSlots/InnSlots.asset using Guid(947c5ac323cd04007bb0b210e3512b5b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: '843606495f4c982a30068d4cb927f6ae') in 0.020920 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 151.632632 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Hestia/Intelligence/AttributeModifier.asset
+  artifactKey: Guid(33e1b3204346249a0ba3be3101f6f6aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Hestia/Intelligence/AttributeModifier.asset using Guid(33e1b3204346249a0ba3be3101f6f6aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1ef388e73cf8877bbb22afc0656837f2') in 0.002499 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001450 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2e33c7000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.35 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.161 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1162ms)
+		BeginReloadAssembly (129ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (60ms)
+		EndReloadAssembly (989ms)
+			LoadAssemblies (89ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (213ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (36ms)
+			SetupLoadedEditorAssemblies (608ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (18ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (466ms)
+				ProcessInitializeOnLoadMethodAttributes (80ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.33 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7501.
+Memory consumption went from 357.9 MB to 355.9 MB.
+Total: 5.589042 ms (FindLiveObjects: 0.346958 ms CreateObjectMapping: 0.093208 ms MarkObjects: 4.694834 ms  DeleteObjects: 0.453833 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001468 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2d9487000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.19 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.109 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1110ms)
+		BeginReloadAssembly (123ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (55ms)
+		EndReloadAssembly (942ms)
+			LoadAssemblies (98ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (201ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (32ms)
+			SetupLoadedEditorAssemblies (579ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (442ms)
+				ProcessInitializeOnLoadMethodAttributes (79ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.23 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7516.
+Memory consumption went from 358.0 MB to 355.9 MB.
+Total: 5.301250 ms (FindLiveObjects: 0.235000 ms CreateObjectMapping: 0.085750 ms MarkObjects: 4.566875 ms  DeleteObjects: 0.413209 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 309.748639 seconds.
+  path: Assets/07_GameData/Gods/Hestia/Hestia.asset
+  artifactKey: Guid(55f37776e68a0d24697069183d5d42e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/Gods/Hestia/Hestia.asset using Guid(55f37776e68a0d24697069183d5d42e4) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: 'd0388dec1087d825d3428acbc81da354') in 0.134428 seconds 
+Number of asset objects unloaded after import = 31
+========================================================================
+Received Import Request.
+  Time since last request: 0.000085 seconds.
+  path: Assets/07_GameData/DialogueSystem/Dialogues/Events/Groups/TheStarvingSettlement/TheStarvingSettlement.asset
+  artifactKey: Guid(a41a069673666574c8ee4d94caabd0a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/DialogueSystem/Dialogues/Events/Groups/TheStarvingSettlement/TheStarvingSettlement.asset using Guid(a41a069673666574c8ee4d94caabd0a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80bbc8e64de5622e202624a75bcfcd51') in 0.001697 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 9.528095 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Hestia/MotherOfFlame/MotherOfFlame.asset
+  artifactKey: Guid(07d78be59bcc84f34b6226281581cf27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Hestia/MotherOfFlame/MotherOfFlame.asset using Guid(07d78be59bcc84f34b6226281581cf27) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: 'f80e910ceb15a0fa0199380f64bd5bff') in 0.001844 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001559 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16c1bf000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.34 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.38 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.148 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1148ms)
+		BeginReloadAssembly (133ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (64ms)
+		EndReloadAssembly (970ms)
+			LoadAssemblies (88ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (207ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (37ms)
+			SetupLoadedEditorAssemblies (598ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (18ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (42ms)
+				ProcessInitializeOnLoadAttributes (452ms)
+				ProcessInitializeOnLoadMethodAttributes (83ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.37 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.24 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7531.
+Memory consumption went from 358.0 MB to 355.9 MB.
+Total: 10.164209 ms (FindLiveObjects: 0.238500 ms CreateObjectMapping: 0.067334 ms MarkObjects: 9.429083 ms  DeleteObjects: 0.428292 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 457.413245 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Hestia/SweetDreams/SweetDreams.asset
+  artifactKey: Guid(8521f174c033d475ea76599fe505dc91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Hestia/SweetDreams/SweetDreams.asset using Guid(8521f174c033d475ea76599fe505dc91) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: 'a8695de5369055b41a913862a505e34a') in 0.144333 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001503 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2d9487000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.36 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.20 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.153 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1153ms)
+		BeginReloadAssembly (135ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (68ms)
+		EndReloadAssembly (974ms)
+			LoadAssemblies (86ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (217ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (38ms)
+			SetupLoadedEditorAssemblies (587ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (447ms)
+				ProcessInitializeOnLoadMethodAttributes (80ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.23 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7546.
+Memory consumption went from 358.0 MB to 355.9 MB.
+Total: 5.245666 ms (FindLiveObjects: 0.234208 ms CreateObjectMapping: 0.092125 ms MarkObjects: 4.520333 ms  DeleteObjects: 0.398500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001433 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16b98b000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.41 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 1.03 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.136 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1137ms)
+		BeginReloadAssembly (111ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (47ms)
+		EndReloadAssembly (981ms)
+			LoadAssemblies (90ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (210ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (33ms)
+			SetupLoadedEditorAssemblies (609ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (19ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (48ms)
+				ProcessInitializeOnLoadAttributes (459ms)
+				ProcessInitializeOnLoadMethodAttributes (79ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.30 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.17 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7561.
+Memory consumption went from 358.0 MB to 356.0 MB.
+Total: 5.277958 ms (FindLiveObjects: 0.239708 ms CreateObjectMapping: 0.068292 ms MarkObjects: 4.561041 ms  DeleteObjects: 0.408542 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 2171.619244 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Aphrodite/AphroditeBond/AphroditeBond.asset
+  artifactKey: Guid(349a97fca87bd47a7aacc0a01c7b5a04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Aphrodite/AphroditeBond/AphroditeBond.asset using Guid(349a97fca87bd47a7aacc0a01c7b5a04) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: 'e275d72e6c8ae2effddeafa2c7e434ca') in 0.044888 seconds 
+Number of asset objects unloaded after import = 158
+========================================================================
+Received Import Request.
+  Time since last request: 1.205236 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Aphrodite/BondingExpert/ExpModifier 1.asset
+  artifactKey: Guid(6430b996eca4a4e64a0423216add6a53) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Aphrodite/BondingExpert/ExpModifier 1.asset using Guid(6430b996eca4a4e64a0423216add6a53) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cda4f02ae070031b49c975e1f6eceb4d') in 0.001799 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 32.330401 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Aphrodite/ConsolingBeauty/ConsolingBeauty.asset
+  artifactKey: Guid(f95a85b19bf1b435abb8f5ff74b67303) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Aphrodite/ConsolingBeauty/ConsolingBeauty.asset using Guid(f95a85b19bf1b435abb8f5ff74b67303) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: 'dcfdf329a82c45e3f95af4797f5a6a7a') in 0.057329 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 4.194302 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Aphrodite/GemstoneCraft/GemStoneCraft.asset
+  artifactKey: Guid(37f4546b6b92f403daf508416e45c8b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Aphrodite/GemstoneCraft/GemStoneCraft.asset using Guid(37f4546b6b92f403daf508416e45c8b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: 'd4324098263be3bc5c810a606fd76bf8') in 0.004043 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 5.931521 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Aphrodite/GemstoneCraft/MiscellaniousModifier 2.asset
+  artifactKey: Guid(58e7bdd0b2f36448cb7f0a287c0547bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Aphrodite/GemstoneCraft/MiscellaniousModifier 2.asset using Guid(58e7bdd0b2f36448cb7f0a287c0547bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c8069eff85e9a5b12b14f4b0e1b9d3f1') in 0.001272 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001556 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2d9487000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.08 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.22 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.137 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1138ms)
+		BeginReloadAssembly (134ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (63ms)
+		EndReloadAssembly (960ms)
+			LoadAssemblies (89ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (205ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (33ms)
+			SetupLoadedEditorAssemblies (601ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (42ms)
+				ProcessInitializeOnLoadAttributes (459ms)
+				ProcessInitializeOnLoadMethodAttributes (80ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.21 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.16 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7576.
+Memory consumption went from 358.1 MB to 356.0 MB.
+Total: 5.243416 ms (FindLiveObjects: 0.237250 ms CreateObjectMapping: 0.090291 ms MarkObjects: 4.507834 ms  DeleteObjects: 0.407584 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 132.286890 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Aphrodite/LuckyGemStones/LuckyGemStones.asset
+  artifactKey: Guid(3e9e2b15f74344400a8085e73d47f720) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Aphrodite/LuckyGemStones/LuckyGemStones.asset using Guid(3e9e2b15f74344400a8085e73d47f720) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: 'f4a40b6ce73bb61a91e7e5ca824f482f') in 0.021308 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 46.730091 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Ares/WinnersSpoils/WinnersSpoils.asset
+  artifactKey: Guid(e1217d74190e44460a38f559758678d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Ares/WinnersSpoils/WinnersSpoils.asset using Guid(e1217d74190e44460a38f559758678d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: 'c86295d43a8fade6649dbb9fcff10075') in 0.003866 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 2.064514 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Ares/WinnersSpoils/MiscellaniousModifier 2.asset
+  artifactKey: Guid(1f33c3d8aaa1846618d168b047a8b1bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Ares/WinnersSpoils/MiscellaniousModifier 2.asset using Guid(1f33c3d8aaa1846618d168b047a8b1bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7a00c75efc0435171ef34004b4303dcc') in 0.001922 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 200.446377 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Ares/WorthyOpponent/ExpModifier 1.asset
+  artifactKey: Guid(5dac6b9ecd39b4aa3ae4c3944edb50db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Ares/WorthyOpponent/ExpModifier 1.asset using Guid(5dac6b9ecd39b4aa3ae4c3944edb50db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99cc94d113c5cee053713471dfdeb53c') in 0.006959 seconds 
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 1.578036 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Ares/WorthyOpponent/WorthyOpponent.asset
+  artifactKey: Guid(4b539d616e90b43b8a849ab09ce0e3c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Ares/WorthyOpponent/WorthyOpponent.asset using Guid(4b539d616e90b43b8a849ab09ce0e3c8) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: 'da480c7f75b3a193004a51c137e0f6bc') in 0.004107 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001561 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2d9487000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.34 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.30 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.132 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1132ms)
+		BeginReloadAssembly (119ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (50ms)
+		EndReloadAssembly (966ms)
+			LoadAssemblies (87ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (203ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (34ms)
+			SetupLoadedEditorAssemblies (599ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (18ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (43ms)
+				ProcessInitializeOnLoadAttributes (457ms)
+				ProcessInitializeOnLoadMethodAttributes (78ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.41 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.31 ms.
+Unloading 6439 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7591.
+Memory consumption went from 358.1 MB to 356.0 MB.
+Total: 6.247709 ms (FindLiveObjects: 0.245709 ms CreateObjectMapping: 0.068166 ms MarkObjects: 5.470917 ms  DeleteObjects: 0.462167 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 198.085617 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Ares/AresBond/AresBond.asset
+  artifactKey: Guid(df34d156608534324a4cbeb31bea002d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Ares/AresBond/AresBond.asset using Guid(df34d156608534324a4cbeb31bea002d) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: '051a3a28f8709bf684d3ed4a1f751c0c') in 0.036977 seconds 
+Number of asset objects unloaded after import = 21
+========================================================================
+Received Import Request.
+  Time since last request: 14.241674 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Thanatos/Foresight/Foresight.asset
+  artifactKey: Guid(70c0c4656e0cf4bffa5a05b4d5ce1e94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Thanatos/Foresight/Foresight.asset using Guid(70c0c4656e0cf4bffa5a05b4d5ce1e94) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: '8d6ee8f8cf619e8228ae120d17c222a2') in 0.003986 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 7.127596 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Thanatos/RerollSkills/RerollSkills.asset
+  artifactKey: Guid(8c9c04ebe2f844447a61ef519a8c9ff9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Thanatos/RerollSkills/RerollSkills.asset using Guid(8c9c04ebe2f844447a61ef519a8c9ff9) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: '1d482e4a78e5e2a5ff864a15ac0f71c8') in 0.002722 seconds 
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 7.025464 seconds.
+  path: Assets/07_GameData/MetaUpgrades/New/Sins/Envy/Envy.asset
+  artifactKey: Guid(9bb792305063941d6aa68e965c5a0d0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/07_GameData/MetaUpgrades/New/Sins/Envy/Envy.asset using Guid(9bb792305063941d6aa68e965c5a0d0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.GameResources.GameAssets
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+GameEngine.SingletonScriptableObject`1<Game.GameResources.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
+MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31)
+
+(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:31 
+
+(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 31)
+
+ -> (artifact id: '989e09719be4ccec7a01a7f15c05f0cc') in 0.002960 seconds 
+Number of asset objects unloaded after import = 4

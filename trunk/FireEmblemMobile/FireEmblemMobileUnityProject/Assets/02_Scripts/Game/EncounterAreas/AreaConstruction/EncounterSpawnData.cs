@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameResources;
 using UnityEngine;
 [Serializable]
@@ -48,7 +49,12 @@ public class EncounterSpawnData
         foreach (var encounterData in battleNodeDatas)
         {
             // Debug.Log("add: " + encounterData);
-            BattleEncounterChances.Add(encounterData, encounterData.appearanceChance);
+            if(((BattleEncounterNodeData)encounterData).battleType==BattleType.Elite)
+                BattleEncounterChances.Add(encounterData, encounterData.appearanceChance*Player.Instance.Modifiers.EliteBattleRate);
+            else
+            {
+                BattleEncounterChances.Add(encounterData, encounterData.appearanceChance);
+            }
             // StartEncounterChances.Add(encounterData, encounterData.appearanceChance);
         }
      

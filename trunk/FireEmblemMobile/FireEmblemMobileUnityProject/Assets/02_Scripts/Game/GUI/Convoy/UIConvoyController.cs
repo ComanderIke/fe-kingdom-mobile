@@ -181,7 +181,14 @@ public class UIConvoyController:MonoBehaviour
         this.convoy = Player.Instance.Party.Convoy;
         this.context = context;
         typeFilter = filter;
-       
+        for (int i = 0; i < DropAreas.Count; i++)
+        {
+            DropAreas[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < convoy.MaxSize; i++)
+        {
+            DropAreas[i].gameObject.SetActive(true);
+        }
         canvas.enabled = true;
         if(!charView.IsVisible())
             charView.Show(Player.Instance.Party.ActiveUnit);

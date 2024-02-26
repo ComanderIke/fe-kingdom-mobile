@@ -13,8 +13,9 @@ public class Smithy
 
 
     public List<EquipableItem> shopItems = new List<EquipableItem>();
-    public static float PriceRate { get; set; }
+    public static float PriceRate = 1.0f;
     public static int MaxUpgradeLevel { get; set; }
+    public static int GemStoneMergeAmount = 4;
 
     public void AddItem(EquipableItem item)
     {
@@ -23,7 +24,7 @@ public class Smithy
 
     public int GetGoldUpgradeCost(Weapon equippedWeapon)
     {
-        return upgradeGoldCost[equippedWeapon.weaponLevel - 1];
+        return (int)(upgradeGoldCost[equippedWeapon.weaponLevel - 1]*PriceRate);
     }
 
     public int GetStoneUpgradeCost(Weapon equippedWeapon)

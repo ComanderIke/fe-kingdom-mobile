@@ -24,7 +24,7 @@ public class CombineGemUI : MonoBehaviour
     [SerializeField] Image smallIcon;
     [SerializeField] private Button combineButton;
 
-    [SerializeField] private int combineCount = 3;
+  
 private List<SelectableItemController> instantiatedItems;
     private StockedItem selected;
     
@@ -66,14 +66,14 @@ private List<SelectableItemController> instantiatedItems;
             smallIcon.sprite = selected.item.Sprite;
             if (gem.HasUpgrade())
             {
-                requiredText.text = "Required " + count + "/" + combineCount;
+                requiredText.text = "Required " + count + "/" + Smithy.GemStoneMergeAmount;
             }
             else
             {
                 requiredText.text = "Maxed Out";
             }
 
-            if (count >= combineCount&& gem.HasUpgrade() )
+            if (count >= Smithy.GemStoneMergeAmount&& gem.HasUpgrade() )
             {
                 combineButton.interactable = true;
             }
@@ -89,7 +89,7 @@ private List<SelectableItemController> instantiatedItems;
     }
     public void CombineClicked()
     {
-        for (int i = 0; i < combineCount; i++)
+        for (int i = 0; i < Smithy.GemStoneMergeAmount; i++)
         {
             Player.Instance.Party.RemoveItem(selected.item);
         }

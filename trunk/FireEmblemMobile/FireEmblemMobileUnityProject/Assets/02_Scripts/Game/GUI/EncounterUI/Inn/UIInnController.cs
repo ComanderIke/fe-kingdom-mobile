@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Players;
@@ -5,6 +6,7 @@ using Game.WorldMapStuff.Model;
 using LostGrace;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Game.GUI.EncounterUI.Inn
 {
@@ -72,6 +74,12 @@ namespace Game.GUI.EncounterUI.Inn
         public void Show(InnEncounterNode node, Party party)
         {
             // Debug.Log("Showing inn ui screen");
+            innItemSmall3.gameObject.SetActive(false);
+            innItemSmall4.gameObject.SetActive(false);
+            if(FoodSlots>=1)
+                innItemSmall3.gameObject.SetActive(true);
+            if(FoodSlots>=2)
+                innItemSmall4.gameObject.SetActive(true);
             npcFaceController.Show("Welcome how about a nice drink, some grilled meat and a warm bed after?");
             canvas.enabled = true;
             this.node = node;
@@ -96,8 +104,18 @@ namespace Game.GUI.EncounterUI.Inn
         }
         public void Consume(Recipe item)
         {
-            foreach(var unit in Player.Instance.Party.members)
-                unit.Heal((int)((unit.MaxHp/100f)*item.heal));
+            if (item == restItem)
+            {
+                foreach(var unit in Player.Instance.Party.members)
+                    unit.Heal((int)(((unit.MaxHp/100f)*item.heal)*Player.Instance.Modifiers.RestHealRate));
+
+            }
+            else
+            {
+                foreach(var unit in Player.Instance.Party.members)
+                    unit.Heal((int)(((unit.MaxHp/100f)*item.heal)*Player.Instance.Modifiers.FoodHealRate));
+
+            }
             if (item.bonuses != 0)
             {
                 if (item.bonusType == Recipe.InnBonusType.Exp)

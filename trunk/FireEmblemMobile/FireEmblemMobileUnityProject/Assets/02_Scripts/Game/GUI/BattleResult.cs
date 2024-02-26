@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameResources;
 using UnityEngine;
@@ -99,13 +100,13 @@ namespace LostGrace
 
         public int GetTotalGold()
         {
-            return GetGoldFromEnemies() + GetGoldFromEliteEnemies() + GetGoldFromTurnCount();
+            return GetGoldFromEnemies() + GetGoldFromEliteEnemies() + GetGoldFromTurnCount()+ GetVictoryGold();
         }
 
 
         public int GetVictoryGold()
         {
-            return battleMap.victoryGold==0?config.VictoryGold:battleMap.victoryGold;
+            return (battleMap.victoryGold==0?config.VictoryGold:battleMap.victoryGold)+Player.Instance.Modifiers.BattleGoldReward;
         }
 
         public int GetVictoryGrace()

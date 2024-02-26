@@ -18,13 +18,15 @@ public class MiscellaneousMetaUpgradeMixin : MetaUpgradeMixin
             {
                 case MiscellaneousType.DayBonuses: break;
                 case MiscellaneousType.NightMaluses: break;
-                case MiscellaneousType.BattleGoldReward: break;
+                case MiscellaneousType.BattleGoldReward:
+                    Player.Instance.Modifiers.BattleGoldReward = valuePair.Value;break;
                 case MiscellaneousType.CriticalHitIncrease: break;
                 case MiscellaneousType.DamageDoneIncrease: break;
                 case MiscellaneousType.DamageReceivedIncrease: break;
                 case MiscellaneousType.GemstoneMaxSouls: break;
                 case MiscellaneousType.MaxStats: break;
-                case MiscellaneousType.GemStoneMergeAmount: break;
+                case MiscellaneousType.GemStoneMergeAmount:
+                    Smithy.GemStoneMergeAmount = valuePair.Value; break;
                 case MiscellaneousType.GoldBonusPerTurn:
                     Player.Instance.Modifiers.GoldBonusPerTurn = valuePair.Value;break;
             }

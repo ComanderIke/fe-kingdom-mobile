@@ -60,6 +60,8 @@ public class UISmithyController : MonoBehaviour
         this.party = party;
         this.smithy = node.smithy;
         this.selectedWeapon = party.ActiveUnit.equippedWeapon;
+        specialSmithingButton.gameObject.SetActive(Player.Instance.Flags.SpecialUpgradeUnlocked);
+            
         UpdateUI();
         party.onActiveUnitChanged -= ActiveUnitChanged;
         party.onActiveUnitChanged += ActiveUnitChanged;

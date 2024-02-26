@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Gems;
+using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameResources;
 using UnityEngine;
@@ -58,7 +59,18 @@ namespace Game.WorldMapStuff.Model
             }
         }
 
-        public int MaxItems { get; set; }
+        private int maxSize = 6;
+
+        public int MaxSize
+        {
+            get
+            {
+                return maxSize + MaxItemsIncrease;
+            }
+        }
+        
+        
+        public int MaxItemsIncrease { get; set; }
         public static Dictionary<ItemBP, int> StartItems { get; set; }
 
 
@@ -71,6 +83,11 @@ namespace Game.WorldMapStuff.Model
                     Debug.Log("TODO Filter for Storage and Convoy Items");
                     items.Add(new StockedItem(keyValuePair.Key.Create(), keyValuePair.Value));
                 }
+
+            if (Player.Instance.Flags.StartingRelic)
+            {
+                items.Add(new StockedItem(GameBPData.Instance.GetRandomRelic(1),1));
+            }
            
         }
         public override string ToString()
@@ -86,6 +103,8 @@ namespace Game.WorldMapStuff.Model
         public void AddItem(Item item)
         {
             MyDebug.LogLogic("Add Item to Convoy: "+item);
+            
+                
             bool instock = false;
             
             foreach (var stockedItem in Items)
@@ -108,6 +127,11 @@ namespace Game.WorldMapStuff.Model
         {
             MyDebug.LogLogic("Add Stocked Item to Convoy: "+item);
             
+            if (Items.Count >= MaxSize)
+            {
+                MyDebug.LogLogic("Convoy is full Item: "+item+" lost.");
+                return;
+            }
             Items.Add(item);
             //convoyUpdated?.Invoke();
             UpdateStockCounts();

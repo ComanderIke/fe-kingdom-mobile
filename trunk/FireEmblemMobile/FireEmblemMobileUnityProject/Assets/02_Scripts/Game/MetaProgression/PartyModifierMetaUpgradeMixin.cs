@@ -22,10 +22,10 @@ public class PartyModifierMetaUpgradeMixin : MetaUpgradeMixin
                 Player.Instance.Party.MaxSize = value[level];
                 break;
             case PartyModifierType.ConvoySize:
-                Player.Instance.Party.Convoy.MaxItems = value[level];
+                Player.Instance.Party.Convoy.MaxItemsIncrease = value[level];
                 break;
             case PartyModifierType.StorageSize:
-                Player.Instance.Party.Storage.MaxItems = value[level];
+                Player.Instance.Party.Storage.MaxItemsIncrease = value[level];
                 break;
             
         }

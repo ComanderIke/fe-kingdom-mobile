@@ -299,10 +299,10 @@ namespace Game.GameActors.Players
         }
         public void AddFlameExp(int exp)
         {
-            flameExp += exp;
-            if (flameExp >= 100)
+            flameExp += exp*Modifiers.FlameLevelRate;
+            while (flameExp >= 100)
             {
-                flameExp = 0;
+                flameExp -=100;
                 flameLevel++;
                 FlameLevelChanged?.Invoke(flameLevel);
             }
