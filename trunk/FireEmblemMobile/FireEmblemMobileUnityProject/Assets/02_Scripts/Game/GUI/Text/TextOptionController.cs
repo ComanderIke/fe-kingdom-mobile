@@ -66,6 +66,7 @@ public class TextOptionController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI receiveResourceText;
     [SerializeField] private Image receiveResImage;
     [SerializeField] private Sprite goldSprite;
+    [SerializeField] private Sprite supplySprite;
     [SerializeField] private Sprite graceSprite;
     [SerializeField] private Sprite hpSprite;
     [SerializeField] private Sprite damageSprite;
@@ -223,6 +224,9 @@ public class TextOptionController : MonoBehaviour
        {
            case ResourceType.Gold:
                return goldSprite; break;
+           case ResourceType.Supplies:
+               return supplySprite;
+               break;
            case ResourceType.Grace:
                return graceSprite; break;
            case ResourceType.Exp:

@@ -15,6 +15,7 @@ namespace Game.GameActors.Players
     {
         [SerializeField] public List<UnitData> humanData;
         [SerializeField] public int money;
+        [SerializeField] public int supplies;
         [SerializeField] public ConvoyData convoy;
         [SerializeField] public string currentEncounterNodeId;
         [SerializeField] public List<string> movedEncounterIds;
@@ -62,6 +63,7 @@ namespace Game.GameActors.Players
             convoy = new ConvoyData(party.Convoy);
             storage = new ConvoyData(party.Storage);
             money = party.Money;
+            supplies = party.Supplies;
             areaIndex = party.AreaIndex;
             this.maxSize = party.MaxSize;
             this.morality = party.Morality.GetCurrentMoralityValue();

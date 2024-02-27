@@ -22,6 +22,8 @@ public class ItemModifierMetaUpgradeMixin : MetaUpgradeMixin
             {
                 case ResourceType.Gold:
                     Party.StartGold = valuePair.Value; break;
+                case ResourceType.Supplies:
+                    Party.StartSupplies = valuePair.Value; break;
             }
         }
         foreach (KeyValuePair<ItemBP, int> valuePair in startItems[level])

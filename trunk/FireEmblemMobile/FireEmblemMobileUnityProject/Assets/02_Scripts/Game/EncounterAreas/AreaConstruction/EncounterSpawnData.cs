@@ -49,8 +49,18 @@ public class EncounterSpawnData
         foreach (var encounterData in battleNodeDatas)
         {
             // Debug.Log("add: " + encounterData);
-            if(((BattleEncounterNodeData)encounterData).battleType==BattleType.Elite)
-                BattleEncounterChances.Add(encounterData, encounterData.appearanceChance*Player.Instance.Modifiers.EliteBattleRate);
+            if (encounterData is BattleEncounterNodeData battleEncounterNodeData)
+            {
+
+                if ((battleEncounterNodeData).battleType == BattleType.Elite)
+                    BattleEncounterChances.Add(encounterData,
+                        encounterData.appearanceChance * Player.Instance.Modifiers.EliteBattleRate);
+                else
+                {
+                    BattleEncounterChances.Add(encounterData, encounterData.appearanceChance);
+                }
+               
+            }
             else
             {
                 BattleEncounterChances.Add(encounterData, encounterData.appearanceChance);

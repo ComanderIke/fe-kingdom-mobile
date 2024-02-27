@@ -3,6 +3,7 @@
     public enum ResourceType
     {
         Gold,
+        Supplies,
         Grace,
         Exp,
         Morality,

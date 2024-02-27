@@ -501,6 +501,11 @@ public class UIEventController : MonoBehaviour
                     {
                         return false;
                     } break;
+                case ResourceType.Supplies:
+                    if (party.Supplies<res.Amount)
+                    {
+                        return false;
+                    } break;
                 case ResourceType.Grace:
                     if (party.CollectedGrace<res.Amount)
                     {
@@ -549,6 +554,8 @@ public class UIEventController : MonoBehaviour
             switch (req.ResourceType)
             {
                 case ResourceType.Gold: Player.Instance.Party.AddGold(-req.Amount);break;
+                case ResourceType.Supplies: Player.Instance.Party.AddSupplies(- req.Amount);
+                    break;
                 case ResourceType.Grace: Player.Instance.Party.AddGrace(- req.Amount);break;
                 case ResourceType.Morality: break;
                 case ResourceType.HP_Percent:
@@ -723,6 +730,9 @@ public class UIEventController : MonoBehaviour
                         break;
                     case ResourceType.Grace:
                         Player.Instance.Party.AddGrace(resource.Amount);
+                        break;
+                    case ResourceType.Supplies:
+                        Player.Instance.Party.AddSupplies(resource.Amount);
                         break;
                     case ResourceType.Morality:
                         Player.Instance.Party.Morality.AddMorality(resource.Amount);

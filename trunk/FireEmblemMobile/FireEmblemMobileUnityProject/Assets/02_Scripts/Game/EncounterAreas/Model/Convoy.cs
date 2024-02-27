@@ -83,8 +83,8 @@ namespace Game.WorldMapStuff.Model
                     Debug.Log("TODO Filter for Storage and Convoy Items");
                     items.Add(new StockedItem(keyValuePair.Key.Create(), keyValuePair.Value));
                 }
-
-            if (Player.Instance.Flags.StartingRelic)
+          
+            if (Player.Instance!=null&&Player.Instance.Flags.StartingRelic)
             {
                 items.Add(new StockedItem(GameBPData.Instance.GetRandomRelic(1),1));
             }

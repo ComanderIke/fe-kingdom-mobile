@@ -140,7 +140,7 @@ public class SkillSystem : IEngineSystem
         var skillPool = skPool==null?new List<SkillBp>(config.CommonSkillPool):skPool;
         skillPool.AddRange(config.GetClassSkillPool(unit.rpgClass));
        
-        List<SkillBp> tierSkillPool = GetSkillRarityPool(skPool);
+        List<SkillBp> tierSkillPool = GetSkillRarityPool(skillPool);
         
         
         //Debug.Log("SKILLPOOL SIZE: "+skillPool.Count);

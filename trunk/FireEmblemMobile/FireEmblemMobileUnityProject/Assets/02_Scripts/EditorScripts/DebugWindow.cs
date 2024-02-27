@@ -111,6 +111,14 @@ namespace __2___Scripts.External.Editor
                 {
                     Player.Instance.Party.AddGold(-50);
                 }
+                if (GUILayout.Button("+50 Supplies"))
+                {
+                    Player.Instance.Party.AddSupplies(50);
+                }
+                if (GUILayout.Button("-50 Supplies"))
+                {
+                    Player.Instance.Party.AddSupplies(-50);
+                }
                 if (GUILayout.Button("+50 Grace (Player)"))
                 {
                     Player.Instance.Grace+=50;

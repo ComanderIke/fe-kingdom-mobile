@@ -13,6 +13,7 @@ public class EncounterUIController : MonoBehaviour
 {
     [FormerlySerializedAs("Gold")] public UIRessourceAmount goldAmount;
     public UIRessourceAmount graceAmount;
+    public UIRessourceAmount suppliesAmount;
     public UIInnController UIInnController;
     public UISmithyController UISmithyController;
     public UIChurchController UIChurchController;
@@ -26,6 +27,7 @@ public class EncounterUIController : MonoBehaviour
     {
         this.party = party;
         party.onGoldChanged += GoldChanged;
+        party.onSuppliesChanged += SuppliesChanged;
         party.onGraceChanged += GraceChanged;
         GoldChanged(party.Money);
         GraceChanged(party.CollectedGrace);
@@ -45,6 +47,10 @@ public class EncounterUIController : MonoBehaviour
     void GoldChanged(int gold)
     {
         goldAmount.Amount = gold;
+    }
+    void SuppliesChanged(int supplies)
+    {
+        suppliesAmount.Amount = supplies;
     }
     void GraceChanged(int grace)
     {

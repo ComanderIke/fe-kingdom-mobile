@@ -20,6 +20,7 @@ namespace Game.WorldMapStuff.Model
     {
 
         public event Action<int> onGoldChanged;
+        public event Action<int> onSuppliesChanged;
         public event Action<int> onGraceChanged;
         [field:NonSerialized] public List<Unit> members;
         [field:NonSerialized] public List<Unit> deadMembers;
@@ -29,6 +30,8 @@ namespace Game.WorldMapStuff.Model
         public static Action<Party> PartyDied;
         [SerializeField] int maxSize = 4;
         [SerializeField] private int money = default;
+        
+        [SerializeField] private int supplies = default;
         [SerializeField] private int collectedGrace = default;
 
         public Morality Morality;
@@ -80,6 +83,19 @@ namespace Game.WorldMapStuff.Model
                 onGoldChanged?.Invoke(money);
             }
         }
+        public int Supplies
+        {
+            get { return supplies; }
+            set
+            {
+                if (value == supplies)
+                    return;
+                supplies = value;
+                if (supplies <= 0)
+                    supplies = 0;
+                onSuppliesChanged?.Invoke(supplies);
+            }
+        }
 
         public int CollectedGrace
         {
@@ -103,6 +119,7 @@ namespace Game.WorldMapStuff.Model
             Storage = new Convoy();
             EncounterComponent = new EncounterPosition();
             money = StartGold;
+            supplies = StartSupplies;
             Morality = new Morality();
             VisitedEvents = new List<LGEventDialogSO>();
             VisitedMaps = new List<BattleMap>();
@@ -123,6 +140,7 @@ namespace Game.WorldMapStuff.Model
         }
 
         public static int StartGold = 100;
+        public static int StartSupplies = 100;
         
 
 
@@ -260,6 +278,11 @@ namespace Game.WorldMapStuff.Model
 
             Money += gold;
         }
+        public void AddSupplies(int supplies)
+        {
+
+            Supplies += supplies;
+        }
 
         public void AddGrace(int grace)
         {
@@ -292,6 +315,7 @@ namespace Game.WorldMapStuff.Model
         {
             Debug.Log("Load Party Data");
             money = playerDataPartyData.money;
+            supplies = playerDataPartyData.supplies;
             members = new List<Unit>();
             maxSize = playerDataPartyData.maxSize;
             collectedGrace = playerDataPartyData.collectedGrace;
@@ -347,6 +371,8 @@ namespace Game.WorldMapStuff.Model
             {
                 case ResourceType.Gold:
                     return CanAfford(amount);
+                case ResourceType.Supplies:
+                    return Supplies>=amount;
                 case ResourceType.Grace:
                     return CollectedGrace>= amount;
                 case ResourceType.Morality:
