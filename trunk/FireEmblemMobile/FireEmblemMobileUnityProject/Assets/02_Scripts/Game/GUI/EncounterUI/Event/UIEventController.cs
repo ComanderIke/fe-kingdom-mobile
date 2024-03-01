@@ -11,7 +11,11 @@ using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.GameResources;
+using Game.Grid;
+using Game.GUI;
+using Game.Manager;
 using Game.Mechanics;
+using Game.Mechanics.Battle;
 using Game.States;
 using Game.Systems;
 using Game.WorldMapStuff.Controller;
@@ -42,6 +46,8 @@ public class UIEventController : MonoBehaviour
     private LGEventDialogSO randomEvent;
     private LGEventDialogSO currentNode;
     private LGDialogChoiceData current;
+    public IAttackPreviewUI attackPreviewUI;
+    
     
     public void Show(EventEncounterNode node, Party party)
     {
@@ -86,6 +92,36 @@ public class UIEventController : MonoBehaviour
         }
     }
 
+    private void UpdateAttackPreviewUI(BattlePreview battlePreview)
+    {
+        if (battlePreview.Attacker is Unit attacker)
+        {
+            if (battlePreview.Defender is Unit defender)
+                attackPreviewUI.Show(battlePreview, attacker, defender, "Attack");
+            else if (battlePreview.TargetObject != null &&
+                     battlePreview.TargetObject is Destroyable dest)
+            {
+         
+                attackPreviewUI.Show(battlePreview, attacker,"Attack", dest.Sprite);
+            }
+
+        }
+    }
+    private void ShowAttackPreviewUI(BattlePreview battlePreview)
+    {
+        if (battlePreview.Attacker is Unit attacker)
+        {
+            if (battlePreview.Defender is Unit defender)
+                attackPreviewUI.Show(battlePreview, attacker, defender, "Attack");
+            else if (battlePreview.TargetObject != null &&
+                     battlePreview.TargetObject is Destroyable dest)
+            {
+         
+                attackPreviewUI.Show(battlePreview, attacker,"Attack", dest.Sprite);
+            }
+
+        }
+    }
     private void OnDestroy()
     {
         party.onActiveUnitChanged -= ActiveUnitChanged;
@@ -206,8 +242,13 @@ public class UIEventController : MonoBehaviour
             
          
             GameObject prefab = textOptionPrefab;
-            if (textOption.NextDialogue is LGFightEventDialogSO)
+            if (textOption.NextDialogue is LGFightEventDialogSO fightEvent)
+            {
                 prefab = fightOptionPrefab;
+                battlePreview =  ServiceProvider.Instance.GetSystem<BattleSystem>().GetBattlePreview(party.ActiveUnit, fightEvent.Enemy.Create(Guid.NewGuid()), new GridPosition(0,0), false);
+                ShowAttackPreviewUI(battlePreview);
+            }
+              
             localTextOptionStates.Add(new TextOptionVisualData(textOption,textOptionType,statText, prefab, index, delayIndex));
             index++;
             delayIndex++;
@@ -349,10 +390,12 @@ public class UIEventController : MonoBehaviour
         return chance;
     }
 
-
+    private BattlePreview battlePreview;
     void ActiveUnitChanged()
     {
         UpdateUICharacterRelated();
+        if(battlePreview!=null)
+            UpdateAttackPreviewUI(battlePreview);
     }
     void Hide()
     {

@@ -64,7 +64,8 @@ namespace Game.GUI
             this.battlePreview = battlePreview;
             this.gameObject.SetActive(true);
             UpdateValues();
-            turnCount.SetActive(false);
+            if(turnCount!=null)
+                turnCount.SetActive(false);
          
 
         }

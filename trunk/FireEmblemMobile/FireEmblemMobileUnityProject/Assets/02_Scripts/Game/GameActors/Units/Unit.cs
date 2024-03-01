@@ -598,6 +598,8 @@ namespace Game.GameActors.Units
             Debug.Log("Faction: "+Faction);
             Debug.Log("IsEnemy: "+unit);
             Debug.Log("unit.Faction.Id: "+unit);
+            if (Faction == null)
+                return ((Unit)unit).Party != Party;
             return Faction.Id != unit.Faction.Id;
         }
 
