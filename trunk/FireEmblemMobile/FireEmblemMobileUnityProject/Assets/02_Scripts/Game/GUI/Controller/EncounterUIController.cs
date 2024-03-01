@@ -31,7 +31,7 @@ public class EncounterUIController : MonoBehaviour
         party.onGraceChanged += GraceChanged;
         GoldChanged(party.Money);
         GraceChanged(party.CollectedGrace);
-
+        SuppliesChanged(party.Supplies);
         MoralityBar.Show(party.Morality);
     }
 
@@ -41,6 +41,7 @@ public class EncounterUIController : MonoBehaviour
         {
             party.onGoldChanged -= GoldChanged;
             party.onGraceChanged -= GraceChanged;
+            party.onSuppliesChanged -= SuppliesChanged;
         }
     }
 

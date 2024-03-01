@@ -118,6 +118,7 @@ public class ColumnManager : MonoBehaviour, IDataPersistance
                     var go = Instantiate(LineRendererPrefab, columns[i].children[j].gameObject.transform);
                     Road road = go.GetComponent<Road>();
                     road.SetStartNode(columns[i].children[j]);
+                    road.moveCost = Random.Range(10, 51);
                     road.end = columns[i].children[j].children[k];
                     UpdateLineRenderer(go.GetComponent<LineRenderer>(),
                         columns[i].children[j].gameObject.transform.position, columns[i].children[j].children[k].gameObject.transform.position);

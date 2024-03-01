@@ -19,6 +19,7 @@ namespace __2___Scripts.Game.Areas
         [SerializeField] GameObject moveCostUI;
         private ArrowAnimation instantiatedArrow;
         private NodeMoveCostController instantiatedMoveCost;
+        public int moveCost = 0;
    
         public void Start()
         {
@@ -74,7 +75,7 @@ namespace __2___Scripts.Game.Areas
                     var difference = (endPos - startPos);
                     moveCostGo.transform.position = startPos + difference * .5f;
                     instantiatedMoveCost = moveCostGo.GetComponent<NodeMoveCostController>();
-                    instantiatedMoveCost.Show(""+UnityEngine.Random.Range(10,51));
+                    instantiatedMoveCost.Show(""+moveCost);
                 }
                 else
                 {
