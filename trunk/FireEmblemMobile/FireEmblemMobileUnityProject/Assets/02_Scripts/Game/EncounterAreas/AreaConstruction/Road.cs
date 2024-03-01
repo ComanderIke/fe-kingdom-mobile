@@ -16,7 +16,9 @@ namespace __2___Scripts.Game.Areas
         [HideInInspector]
         public EncounterNode end;
         [SerializeField] GameObject ConnectionArrowPrefab;
+        [SerializeField] GameObject moveCostUI;
         private ArrowAnimation instantiatedArrow;
+        private NodeMoveCostController instantiatedMoveCost;
    
         public void Start()
         {
@@ -27,6 +29,8 @@ namespace __2___Scripts.Game.Areas
         {
             if(instantiatedArrow!=null)
                 instantiatedArrow.SetActive(true, end is BattleEncounterNode);
+            if(instantiatedMoveCost!=null)
+                instantiatedMoveCost.Select();
          
             
         }
@@ -34,6 +38,8 @@ namespace __2___Scripts.Game.Areas
         {
             if(instantiatedArrow!=null)
                 instantiatedArrow.SetActive(false);
+            if(instantiatedMoveCost!=null)
+                instantiatedMoveCost.Deselect();
       
         }
         public void SetMoveable(bool moveable)
@@ -51,21 +57,31 @@ namespace __2___Scripts.Game.Areas
                 
                 if (moveable)
                 {
-                    var go = Instantiate(ConnectionArrowPrefab, line.gameObject.transform);
+                    // var go = Instantiate(ConnectionArrowPrefab, line.gameObject.transform);
+                    // var startPos = start.gameObject.transform.position;
+                    // var endPos = end.gameObject.transform.position;
+                    // Vector3 normalized = (endPos - startPos).normalized;
+                    // go.transform.position = startPos + normalized * .7f;
+                    //
+                    // go.transform.right = endPos - go.transform.position;
+                    // go.GetComponent<ArrowAnimation>().SetTargetPosition(startPos + normalized * 1f);
+                    // instantiatedArrow = go.GetComponent<ArrowAnimation>();
+                    line.material = standard;
+                    
+                    var moveCostGo= Instantiate(moveCostUI, line.gameObject.transform);
                     var startPos = start.gameObject.transform.position;
                     var endPos = end.gameObject.transform.position;
-                    Vector3 normalized = (endPos - startPos).normalized;
-                    go.transform.position = startPos + normalized * .7f;
-
-                    go.transform.right = endPos - go.transform.position;
-                    go.GetComponent<ArrowAnimation>().SetTargetPosition(startPos + normalized * 1f);
-                    instantiatedArrow = go.GetComponent<ArrowAnimation>();
-                    line.material = standard;
+                    var difference = (endPos - startPos);
+                    moveCostGo.transform.position = startPos + difference * .5f;
+                    instantiatedMoveCost = moveCostGo.GetComponent<NodeMoveCostController>();
+                    instantiatedMoveCost.Show(""+UnityEngine.Random.Range(10,51));
                 }
                 else
                 {
                     if(instantiatedArrow!=null)
                         Destroy(instantiatedArrow.gameObject);
+                    if(instantiatedMoveCost!=null)
+                        Destroy(instantiatedMoveCost.gameObject);
                     //instantiatedArrow.gameObject.SetActive(false);
                 }
             }
