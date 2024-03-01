@@ -508,5 +508,22 @@ namespace Game.WorldMapStuff.Model
         {
             return VisitedMaps.Contains(battleMap);
         }
+
+        public void SupplyCheck()
+        {
+            if (Supplies < 0)
+            {
+                foreach (var member in members)
+                {
+                    int dmg = member.MaxHp / 5;
+                    if(member.Hp>dmg)
+                        member.Hp -= dmg;
+                    else
+                    {
+                        member.Hp = 1;
+                    }
+                }
+            }
+        }
     }
 }

@@ -637,6 +637,8 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
         activeUnitGroundGO.FadeOut();
         SetAllEncountersNotMovable();
         Player.Instance.Party.AddSupplies(-Player.Instance.Party.EncounterComponent.EncounterNode.GetRoad(node).moveCost);
+        Player.Instance.Party.SupplyCheck();
+       
         // foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
         // {
         //         road.NodeDeselected();
