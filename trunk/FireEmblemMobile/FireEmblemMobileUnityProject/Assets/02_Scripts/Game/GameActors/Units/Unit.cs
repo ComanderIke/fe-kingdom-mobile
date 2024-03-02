@@ -117,7 +117,12 @@ namespace Game.GameActors.Units
 
         [field:NonSerialized]public Party Party { get; set; }
         [HideInInspector][SerializeField]
-        public int MaxHp { get; set; }
+        public int MaxHp {
+            get
+            {
+                return stats.CombinedAttributes().MaxHp;
+            }  
+        }
         public Stats Stats
         {
             get => stats;
@@ -160,7 +165,7 @@ namespace Game.GameActors.Units
             GameTransformManager = new GameTransformManager();
             StatusEffectManager = new StatusEffectManager(this);
             AIComponent = new AIComponent(aiBehaviour, this);
-            MaxHp = stats.CombinedAttributes().MaxHp;
+           
             tags = new List<UnitTags>();
             hp = MaxHp;
             Stats.AttackRanges.Clear();
@@ -221,7 +226,7 @@ namespace Game.GameActors.Units
         [field:NonSerialized] public Faction Faction { get; set; }
         [field:NonSerialized] public Faction OriginalFaction { get; set; }
         public List<int> AttackRanges => stats.AttackRanges;
-        public int MovementRange => stats.Mov;
+        public int MovementRange => stats.GetMovement();
         public int Hp
         {
             get => hp;

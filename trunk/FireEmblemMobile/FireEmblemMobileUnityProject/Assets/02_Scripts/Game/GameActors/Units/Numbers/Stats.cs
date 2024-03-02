@@ -70,7 +70,7 @@ namespace Game.GameActors.Units.Numbers
 
 
         public Attributes BonusGrowths { get; set; }
-  
+        public int BonusMovement { get; set; }
 
 
         public StatsData GetSaveData()
@@ -109,7 +109,7 @@ namespace Game.GameActors.Units.Numbers
             stats.BonusStatsFromEquips = new CombatStats(BonusStatsFromEquips);
             stats.BonusStatsFromWeapon = new CombatStats(BonusStatsFromWeapon);
             stats.BonusStatsFromBlessings = new CombatStats(BonusStatsFromBlessings);
-            
+            stats.BonusMovement = BonusMovement;
 
             return stats;
         }
@@ -331,6 +331,10 @@ namespace Game.GameActors.Units.Numbers
 
         public event Action onStatsUpdated;
 
-      
+
+        public int GetMovement()
+        {
+            return Mov + BonusMovement;
+        }
     }
 }
