@@ -9,7 +9,7 @@ public class RewardItem
 {
     public float chance = 1.0f;
     public int count = 1;
-    public ItemBP item;
+    public List<ItemBP> items;
 
 }
 [CreateAssetMenu(menuName = "GameData/BattleMap", fileName="BattleMap1")]

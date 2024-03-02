@@ -13,13 +13,14 @@ namespace Game.WorldMapStuff.Model
         }
         
         public BattleMap BattleMap { get; set; }
+        public BattleType BattleType { get; set; }
         public string PartyID { get; set; }
         public Party Party{ get; set; }
         public string EnemyPartyID { get; set; }
 
         public bool TutorialBattle1 { get; set; }
 
-        public bool IsBoss { get; set; }
+       
         // public LocationData LocationData { get; set; }
 
      
@@ -30,9 +31,9 @@ namespace Game.WorldMapStuff.Model
         public void Reset()
         {
             BattleOutCome = BattleOutcome.None;
+            BattleType = BattleType.Normal;
             BattleMap = null;
             UnitsGoingIntoBattle = new List<Unit>();
-            IsBoss = false;
         }
     }
 }

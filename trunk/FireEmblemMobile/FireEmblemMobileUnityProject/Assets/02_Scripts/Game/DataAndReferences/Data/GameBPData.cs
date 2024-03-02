@@ -82,6 +82,8 @@ namespace Game.GameResources
         [SerializeField] BattleMap[] eliteBattleEncounterMapsArea1;
         [SerializeField] BattleMap[] eliteBattleEncounterMapsArea2;
         [SerializeField] BattleMap[] allBattleMaps;
+        [FormerlySerializedAs("ItemDropProfile")] [SerializeField] public ItemDropProfile normalBattleItemDropProfile;
+        [FormerlySerializedAs("ItemDropProfile")] [SerializeField] public ItemDropProfile eliteBattleItemDropProfile;
    
         
         public BlessingBP[]  GetBlessingPool(int tier)

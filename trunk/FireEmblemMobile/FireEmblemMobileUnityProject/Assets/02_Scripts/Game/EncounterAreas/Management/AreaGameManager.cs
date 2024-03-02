@@ -183,7 +183,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
                 },delayBeforeLoadingNewScene);
                 return;
             }
-            if (SceneTransferData.Instance.IsBoss)
+            if (SceneTransferData.Instance.BattleType==BattleType.Boss)
             {
                 AreaCompleted();
            
@@ -208,7 +208,7 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
                         },delayBeforeLoadingNewScene);
                         return;
                     }
-                    if (SceneTransferData.Instance.IsBoss)
+                    if (SceneTransferData.Instance.BattleType == BattleType.Boss)
                     {
                         AreaCompleted();
            
