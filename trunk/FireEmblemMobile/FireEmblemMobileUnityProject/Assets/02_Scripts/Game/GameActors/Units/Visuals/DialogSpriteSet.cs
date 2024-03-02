@@ -12,5 +12,7 @@ namespace Game.GameActors.Units
         [field:SerializeField]public Sprite MouthOpen { get; set; }
         [field:SerializeField] public Sprite EyesClosed { get; set; }
         [field:SerializeField] public Sprite EyesOpen { get; set; }
+
+       
     }
 }

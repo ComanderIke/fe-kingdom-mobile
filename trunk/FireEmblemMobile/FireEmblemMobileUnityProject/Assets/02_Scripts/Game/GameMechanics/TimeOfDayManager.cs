@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Effects;
 using Game.GameActors.Players;
 using Game.GameResources;
+using TMPro;
 using UnityEngine;
 
 namespace LostGrace
@@ -14,6 +15,7 @@ namespace LostGrace
         [SerializeField] private int timeStep = 6;
         [SerializeField] private UIDebugTimeSlider timeSlider;
         [SerializeField] private float hour;
+        [SerializeField] private TextMeshProUGUI timeText;
         public TimeCircleUI circleUI;
          private TimeOfDayBonuses nightBonuses;
          private TimeOfDayBonuses dayBonuses;
@@ -52,6 +54,7 @@ namespace LostGrace
                 hour = 0;
             this.hour = hour;
             lightController.UpdateHour(hour);
+            timeText.text = hour + ":00";
             if(circleUI!=null)
                 circleUI.Rotate(hour);
         }

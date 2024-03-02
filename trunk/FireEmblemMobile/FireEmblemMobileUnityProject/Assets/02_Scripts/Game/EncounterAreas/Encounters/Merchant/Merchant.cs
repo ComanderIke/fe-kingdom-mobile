@@ -10,7 +10,7 @@ public class Merchant
     public Sprite merchantFace;
     public string merchantName;
 
-    public Merchant(Sprite merchantFace, string merchantName)
+    public Merchant(Sprite merchantFace, string merchantName, List<ShopItemBp> items)
     {
         if (PriceRateSelling == 0)
             PriceRateSelling = .5f;
@@ -18,6 +18,19 @@ public class Merchant
             PriceRateBuying = 1.0f;
         this.merchantFace = merchantFace;
         this.merchantName = merchantName;
+        
+        if (items == null || items.Count == 0)
+        {
+            GenerateItems();
+           
+        }
+        else
+        {
+            foreach (var item in items)
+            {
+                AddItem(new StockedItem(item.item.Create(), item.stock));
+            }
+        }
     }
     public float priceMultiplier = 1.0f;
     public static float PriceRateSelling { get; set; }
@@ -93,12 +106,37 @@ public class Merchant
         {
             if(i==0)
                 AddItem(new StockedItem(GameBPData.Instance.GetItemByName("Health Potion"), Random.Range(1,4)));
-            else if(i==1||i==6)
-                AddItem(GameBPData.Instance.GetRandomMerchantItemSingularStock());
+            else if (i == 1 || i == 6)
+            {
+                StockedItem item = null;
+                while (item==null||HasItem(item.item))
+                {
+                    item = GameBPData.Instance.GetRandomMerchantItemSingularStock();
+                }
+                AddItem(item);
+            }
             else
             {
-                AddItem(GameBPData.Instance.GetRandomMerchantItemMultipleStock());
+                StockedItem item = null;
+                while (item==null||HasItem(item.item))
+                {
+                    item = GameBPData.Instance.GetRandomMerchantItemMultipleStock();
+                }
+                AddItem(item);
             }
         }
+    }
+
+   
+
+    bool HasItem(Item item)
+    {
+        foreach (var shopItem in shopItems)
+        {
+            if (shopItem.item.Equals(item))
+                return true;
+        }
+
+        return false;
     }
 }

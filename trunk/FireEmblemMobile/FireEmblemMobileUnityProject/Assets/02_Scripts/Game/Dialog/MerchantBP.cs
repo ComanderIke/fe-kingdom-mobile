@@ -16,18 +16,10 @@ public class MerchantBP:ScriptableObject
     [SerializeField] private string merchantName;
     public Merchant Create()
     {
-        var merchant = new Merchant(merchantFace, merchantName);
+        var merchant = new Merchant(merchantFace, merchantName, items);
         
             
-        foreach (var item in items)
-        {
-            merchant.AddItem(new StockedItem(item.item.Create(), item.stock));
-        }
-        if (items == null || items.Count == 0)
-        {
-            merchant.GenerateItems();
-           
-        }
+       
 
         
 
