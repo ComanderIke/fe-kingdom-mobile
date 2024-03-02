@@ -608,6 +608,10 @@ public class UIEventController : MonoBehaviour
     }
     public void OptionClicked(TextOptionController textOptionController)
     {
+        if (Player.Instance.Flags.EventBonds)
+        {
+            Player.Instance.Party.ActiveUnit.Bonds.Increase(GameBPData.Instance.GetGod("Hermes"),10);
+        }
         if (CheckAttributeRequirementsSuccess(textOptionController.Option))
         {
             

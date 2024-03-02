@@ -2,20 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Effects;
+using Game.GameActors.Players;
+using Game.GameResources;
 using UnityEngine;
 
 namespace LostGrace
 {
-    [Serializable]
-    public struct TimeOfDayBonuses
-    {
-        public int curseResistance;
-        public int enemylevelsPerArea;
-        // public int enemyCritical;
-        public string other;
-    }
-   
-  
     public class TimeOfDayManager : MonoBehaviour
     {
         [SerializeField] private DynamicAmbientLight lightController;
@@ -23,11 +15,14 @@ namespace LostGrace
         [SerializeField] private UIDebugTimeSlider timeSlider;
         [SerializeField] private float hour;
         public TimeCircleUI circleUI;
-        [SerializeField] private TimeOfDayBonuses nightBonuses;
-        [SerializeField] private TimeOfDayBonuses dayBonuses;
+         private TimeOfDayBonuses nightBonuses;
+         private TimeOfDayBonuses dayBonuses;
       
         void Start()
         {
+            nightBonuses = Player.Instance.Modifiers.NightBonuses;
+            dayBonuses = Player.Instance.Modifiers.DayBonuses;
+            
             lightController.UpdateHour(hour);
         }
 

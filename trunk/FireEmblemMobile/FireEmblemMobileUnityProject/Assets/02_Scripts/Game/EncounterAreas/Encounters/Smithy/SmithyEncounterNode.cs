@@ -55,6 +55,11 @@ public class SmithyEncounterNode : EncounterNode
     public override void Activate(Party party)
     {
         base.Activate(party);
+        if(Player.Instance.Flags.SmithingBonds)
+            foreach (var member in party.members)
+            {
+                member.Bonds.Increase(GameBPData.Instance.GetGod("Hephaestus"),10);
+            }
         GameObject.FindObjectOfType<UISmithyController>().Show(this,party);
         MyDebug.LogLogic("Visiting Smithy");
     }

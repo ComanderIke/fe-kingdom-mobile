@@ -1,3 +1,7 @@
+using Game.GameResources;
+using LostGrace;
+using UnityEngine;
+
 namespace Game.GameActors.Players
 {
     public class Modifiers
@@ -24,6 +28,33 @@ namespace Game.GameActors.Players
             RareMerchants = 1.0f;
             GoldBonusPerTurn = 0;
             FlameLevelRate = 1.0f;
+            SkillActivation = 1.0f;
+            BonusHeal = 0;
+            GemStoneEffect = 0;
+            SupportBonus = 0;
+            ThanatosAppearRate = 1.0f;
+        }
+
+        private TimeOfDayBonuses dayBonuses;
+        public TimeOfDayBonuses DayBonuses
+        {
+            get
+            {
+                if (dayBonuses == null)
+                    dayBonuses = ScriptableObject.Instantiate(GameBPData.Instance.DayBonuses);
+                return dayBonuses;
+            }
+        }
+
+        private TimeOfDayBonuses nightBonuses;
+        public TimeOfDayBonuses NightBonuses
+        {
+            get
+            {
+                if (nightBonuses == null)
+                    nightBonuses = ScriptableObject.Instantiate(GameBPData.Instance.NightBonuses);
+                return nightBonuses;
+            }
         }
         public float ExperienceGain { get; set; }
         public float GoldGain { get; set; }
@@ -47,5 +78,12 @@ namespace Game.GameActors.Players
         public float RareMerchants { get; set; }
         public int GoldBonusPerTurn { get; set; }
         public int BattleGoldReward { get; set; }
+        public float SkillActivation { get; set; }
+        public int BonusHeal { get; set; }
+        public float GemStoneEffect { get; set; }
+        public int SupportBonus { get; set; }
+        public int FireDamage { get; set; }
+        public int CombatSkillCost { get; set; }
+        public float ThanatosAppearRate { get; set; }
     }
 }

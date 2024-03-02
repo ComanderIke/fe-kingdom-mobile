@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c365e0321c4b1fa3b810f9a3461d02, type: 3}
+  m_Name: ScorchingFlames
+  m_EditorClassIdentifier: 
+  label: Scorching Flames
+  maxLevel: 1
+  costToLevel: 90010000
+  costType: 0
+  Description: Increase the damage of Hestias Blessing and synergy effects by your
+    current flame level.
+  icon: {fileID: 21300000, guid: 84b874b79cf6eca4fa5fca4f887da8b2, type: 3}
+  requiredFlameLevel: 01000000
+  toggle: 0
+  mixins:
+  - {fileID: 11400000, guid: a9b4261d7709a45229ddafbd543c0fbd, type: 2}

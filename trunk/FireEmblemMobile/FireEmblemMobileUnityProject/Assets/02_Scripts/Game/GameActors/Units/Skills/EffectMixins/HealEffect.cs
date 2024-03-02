@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.GameActors.Players;
 using Game.GameActors.Units.Numbers;
 using Game.Grid;
 using LostGrace;
@@ -33,6 +34,7 @@ namespace Game.GameActors.Units.Skills
 
         public int GetHealAmount(Unit caster, Unit target, int level)
         {
+            int bonusHeal = Player.Instance.Modifiers.BonusHeal;
             if(!healAlsoEnemies)
                 if (!target.Faction.IsOpponentFaction(caster.Faction))
                     return 0;
@@ -41,8 +43,8 @@ namespace Game.GameActors.Units.Skills
             if (percentage)
                 return (int)(target.MaxHp*heal[level]);
             if(level<scalingcoeefficient.Length)
-                return (int)(heal[level]+(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) * scalingcoeefficient[level]));
-            return (int)(heal[level]);
+                return (int)(heal[level]+(caster.Stats.CombinedAttributes().GetAttributeStat(scalingType) * scalingcoeefficient[level]))+bonusHeal;
+            return (int)(heal[level])+bonusHeal;
         }
 
         public override void Deactivate(Unit user, Unit caster, int skillLevel)

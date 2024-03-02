@@ -511,7 +511,7 @@ namespace Game.WorldMapStuff.Model
 
         public void SupplyCheck()
         {
-            if (Supplies < 0)
+            if (Supplies == 0)
             {
                 foreach (var member in members)
                 {

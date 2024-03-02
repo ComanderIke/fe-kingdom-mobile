@@ -73,6 +73,19 @@ public class ModifierMetaUpgradeMixin: MetaUpgradeMixin
             case ModifierType.LegendarySkillRarity:
                 Player.Instance.Modifiers.LegendarySkillRarity = percentage[level];
                 break;
+            case ModifierType.SkillActivation:
+                Player.Instance.Modifiers.SkillActivation = percentage[level];
+                break;
+            case ModifierType.BonusHeal:
+                Player.Instance.Modifiers.BonusHeal = (int)percentage[level];
+                break;
+            case ModifierType.GemStoneEffect:
+                Player.Instance.Modifiers.GemStoneEffect = percentage[level];
+                break;
+            case ModifierType.ThanatosAppearRate:
+                Player.Instance.Modifiers.ThanatosAppearRate = percentage[level];
+                break;
+          
             
         }
     }
@@ -113,6 +126,10 @@ public enum ModifierType
     EliteBattlesRate,
     RareSkillRarity,
     EpicSkillRarity,
-    LegendarySkillRarity
+    LegendarySkillRarity,
+    SkillActivation,
+    BonusHeal,
+    GemStoneEffect,
+    ThanatosAppearRate,
     
 }

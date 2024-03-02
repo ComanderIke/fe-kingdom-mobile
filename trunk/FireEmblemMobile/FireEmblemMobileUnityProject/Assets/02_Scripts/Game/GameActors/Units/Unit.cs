@@ -11,6 +11,7 @@ using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
 using Game.GameActors.Units.Skills;
 using Game.GameInput;
+using Game.GameResources;
 using Game.Grid;
 using Game.Manager;
 using Game.Mechanics;
@@ -274,6 +275,21 @@ namespace Game.GameActors.Units
         {
             Debug.Log("Die: " + name);
             KilledBy = damageSource;
+            if (IsBoss&&Player.Instance.Flags.BossKillBonds)
+            {
+                if (Player.Instance.Party.members.Contains(KilledBy))
+                {
+                    KilledBy.Bonds.Increase(GameBPData.Instance.GetGod("Ares"),50);
+                }
+            }
+            else if (Player.Instance.Flags.KillBonds)
+            {
+                if (Player.Instance.Party.members.Contains(KilledBy))
+                {
+                    KilledBy.Bonds.Increase(GameBPData.Instance.GetGod("Ares"),1);
+                }
+            }
+            
             UnitDied?.Invoke(this);
             Party?.RemoveMember(this);
             Faction?.RemoveUnit(this);

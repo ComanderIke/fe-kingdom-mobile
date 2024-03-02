@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4c365e0321c4b1fa3b810f9a3461d02, type: 3}
+  m_Name: StartWeaponUpgrade
+  m_EditorClassIdentifier: 
+  label: Free Upgrade
+  maxLevel: 1
+  costToLevel: 64000000
+  costType: 0
+  Description: The first weapon upgrade each run is free.
+  icon: {fileID: 21300000, guid: 4f5e98e977849e14ba0411bebdb94313, type: 3}
+  requiredFlameLevel: 01000000
+  toggle: 0
+  mixins:
+  - {fileID: 11400000, guid: 2ce8b9cdcd835495cb745f8676a4fe1e, type: 2}

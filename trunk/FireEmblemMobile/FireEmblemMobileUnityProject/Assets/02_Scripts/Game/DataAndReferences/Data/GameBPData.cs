@@ -102,6 +102,8 @@ namespace Game.GameResources
         [field:SerializeField] public Sprite DefaultMerchantSprite { get; set; }
         [field:SerializeField] public string DefaultMerchantName { get; set; }
         [field:SerializeField]  public BattleMap TutorialMap { get; set; }
+        [field:SerializeField]public  TimeOfDayBonuses NightBonuses { get; set; }
+        [field:SerializeField]public TimeOfDayBonuses DayBonuses { get; set; }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()

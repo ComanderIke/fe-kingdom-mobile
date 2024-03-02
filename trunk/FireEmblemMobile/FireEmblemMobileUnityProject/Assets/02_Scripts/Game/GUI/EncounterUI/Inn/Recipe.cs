@@ -22,5 +22,7 @@ namespace Game.GUI.EncounterUI.Inn
             Permanent,
             RefreshSkills,
         }
+
+        public bool IsLiquor;
     }
 }
