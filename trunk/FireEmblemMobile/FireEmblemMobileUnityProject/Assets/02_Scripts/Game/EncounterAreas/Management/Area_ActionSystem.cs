@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections;
-using Game.GameActors.Players;
-using Game.Systems;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
-using Game.WorldMapStuff.Serialization;
-using GameEngine;
-using LostGrace;
-using UnityEngine;
+﻿using Game.EncounterAreas.Encounters;
+using Game.EncounterAreas.Serialization;
+using Game.SerializedData;
 
-namespace Game.WorldMapStuff.Systems
+namespace Game.EncounterAreas.Management
 {
     public class Area_ActionSystem
     {

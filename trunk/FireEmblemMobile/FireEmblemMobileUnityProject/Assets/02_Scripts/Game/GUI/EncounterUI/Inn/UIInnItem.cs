@@ -1,5 +1,5 @@
 ﻿using System;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using Game.GameActors.Units.Numbers;
 using TMPro;
 using UnityEngine;

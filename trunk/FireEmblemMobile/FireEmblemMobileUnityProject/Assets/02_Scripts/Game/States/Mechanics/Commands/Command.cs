@@ -1,4 +1,4 @@
-﻿namespace Game.Mechanics.Commands
+﻿namespace Game.States.Mechanics.Commands
 {
     public abstract class Command
     {

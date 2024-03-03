@@ -1,31 +1,33 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraShake : MonoBehaviour
+namespace Game.Utility
 {
-    public IEnumerator Shake(float duration, float magnitude)
+    public class CameraShake : MonoBehaviour
     {
-        Vector3 originalPose = transform.localPosition;
-        float startmagnitude = magnitude;
-        float elapsed = 0.0f;
-        while (elapsed < duration)
+        public IEnumerator Shake(float duration, float magnitude)
         {
-            magnitude = Mathf.SmoothStep(startmagnitude ,0,elapsed / duration);
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
+            Vector3 originalPose = transform.localPosition;
+            float startmagnitude = magnitude;
+            float elapsed = 0.0f;
+            while (elapsed < duration)
+            {
+                magnitude = Mathf.SmoothStep(startmagnitude ,0,elapsed / duration);
+                float x = Random.Range(-1f, 1f) * magnitude;
+                float y = Random.Range(-1f, 1f) * magnitude;
             
-            transform.localPosition = new Vector3(x,y, originalPose.z);
-            elapsed += Time.deltaTime;
-            yield return null;
+                transform.localPosition = new Vector3(x,y, originalPose.z);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.localPosition = originalPose;
         }
 
-        transform.localPosition = originalPose;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
         
+        }
     }
 }

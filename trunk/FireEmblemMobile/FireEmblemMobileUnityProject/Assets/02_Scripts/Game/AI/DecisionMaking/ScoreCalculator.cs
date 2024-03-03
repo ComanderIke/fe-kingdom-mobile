@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.GameInput;
+using Game.AI.Goals;
+using Game.GameActors.Grid;
+using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units.Interfaces;
 using Game.Grid.GridPathFinding;
-using Game.Mechanics;
+using Game.States.Mechanics;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.DecisionMaking
 {
     public class ScoreCalculator
     {

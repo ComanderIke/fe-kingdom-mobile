@@ -1,12 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.GameActors.Units.OnGameObject;
-using Game.Manager;
-using GameEngine;
-using UnityEngine;
-
-namespace Game.Mechanics
+﻿namespace Game.Systems
 {
     // public class FogOfWarSystem : MonoBehaviour, IEngineSystem
     // {

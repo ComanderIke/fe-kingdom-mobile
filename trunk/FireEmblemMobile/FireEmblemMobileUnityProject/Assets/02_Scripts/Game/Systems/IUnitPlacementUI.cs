@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.EncounterAreas.Encounters.Battle;
 using Game.GameActors.Units;
-using Game.Grid;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace Game.GUI
+namespace Game.Systems
 {
     public abstract class IUnitPlacementUI:MonoBehaviour
     {

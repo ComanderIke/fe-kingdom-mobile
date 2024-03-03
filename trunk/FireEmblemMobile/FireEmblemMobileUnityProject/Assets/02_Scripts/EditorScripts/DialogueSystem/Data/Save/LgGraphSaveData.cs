@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using __2___Scripts.External.Editor.Utility;
-using _02_Scripts.Game.GUI.Utility;
+using Game.GUI.Utility;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 

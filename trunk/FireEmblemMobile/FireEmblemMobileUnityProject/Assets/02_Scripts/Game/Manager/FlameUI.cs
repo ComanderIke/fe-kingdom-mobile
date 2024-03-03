@@ -1,11 +1,10 @@
-using System;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace LostGrace
+namespace Game.Manager
 {
     public class FlameUI : MonoBehaviour
     {

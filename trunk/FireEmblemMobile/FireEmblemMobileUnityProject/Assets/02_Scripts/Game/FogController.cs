@@ -2,7 +2,7 @@
 using UnityEngine;
 
 //[ExecuteInEditMode]
-namespace Effects
+namespace Game
 {
     public class FogController : MonoBehaviour
     {

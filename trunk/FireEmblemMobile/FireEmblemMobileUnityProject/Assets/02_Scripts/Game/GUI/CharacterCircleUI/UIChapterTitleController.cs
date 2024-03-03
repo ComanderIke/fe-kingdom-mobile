@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.EncounterAreas.AreaConstruction;
+using Game.EncounterAreas.Management;
 using TMPro;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI.CharacterCircleUI
 {
     public class UIChapterTitleController : MonoBehaviour
     {

@@ -1,20 +1,23 @@
-﻿using Game.GameActors.Items.Weapons;
+﻿using Game.GameActors.Items.Relics;
 
-public class QuestReward
+namespace Game.EncounterAreas.Encounters.Inn
 {
-    public QuestRewardType RewardType;
-    public int rewardAmount;
-    public EquipableItemBP RewardItemBp;
-
-    public QuestReward(QuestRewardType rewardType, int rewardAmount, EquipableItemBP rewardItemBp)
+    public class QuestReward
     {
-        RewardType = rewardType;
-        this.rewardAmount = rewardAmount;
-        this.RewardItemBp = rewardItemBp;
+        public QuestRewardType RewardType;
+        public int rewardAmount;
+        public EquipableItemBP RewardItemBp;
+
+        public QuestReward(QuestRewardType rewardType, int rewardAmount, EquipableItemBP rewardItemBp)
+        {
+            RewardType = rewardType;
+            this.rewardAmount = rewardAmount;
+            this.RewardItemBp = rewardItemBp;
+        }
+    }public enum QuestRewardType
+    {
+        Gold,
+        Exp,
+        Item
     }
-}public enum QuestRewardType
-{
-    Gold,
-    Exp,
-    Item
 }

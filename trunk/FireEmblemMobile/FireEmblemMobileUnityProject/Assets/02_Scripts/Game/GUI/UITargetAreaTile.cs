@@ -1,8 +1,8 @@
-﻿using _02_Scripts.Game.GameActors.Items.Consumables;
+﻿using Game.GameActors.Items.Consumables;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UITargetAreaTile : MonoBehaviour
     {

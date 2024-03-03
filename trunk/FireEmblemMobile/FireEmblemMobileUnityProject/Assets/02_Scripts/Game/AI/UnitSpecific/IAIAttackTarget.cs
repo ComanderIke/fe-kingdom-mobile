@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.Mechanics;
+using Game.GameActors.InteractableGridObjects;
+using Game.States.Mechanics;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.UnitSpecific
 {
     public class AIAttackTarget
     {

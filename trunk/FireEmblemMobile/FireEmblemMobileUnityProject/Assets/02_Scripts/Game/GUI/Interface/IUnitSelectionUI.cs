@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Game.GameActors.Units;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Interface
 {
     public abstract class IUnitSelectionUI: MonoBehaviour
     {

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Game.GameResources;
+using Game.Campaigns;
+using Game.DataAndReferences.Data;
 using Game.GUI;
-using Game.WorldMapStuff.UI;
 using UnityEngine;
 using UnityEngine.UI;
 

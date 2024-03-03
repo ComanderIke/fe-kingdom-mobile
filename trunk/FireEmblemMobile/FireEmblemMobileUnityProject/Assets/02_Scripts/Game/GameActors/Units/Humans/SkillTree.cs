@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class SkillTree
+namespace Game.GameActors.Units.Humans
 {
-    public string name="TestSkillTree";
-    public int currentDepth = 0;
-    [SerializeField] public List<SkillTreeEntry> skillEntries;
-
-    public void Init()
+    [Serializable]
+    public class SkillTree
     {
-        foreach (var skillEntry in skillEntries)
+        public string name="TestSkillTree";
+        public int currentDepth = 0;
+        [SerializeField] public List<SkillTreeEntry> skillEntries;
+
+        public void Init()
         {
-            skillEntry.tree = this;
-        }
+            foreach (var skillEntry in skillEntries)
+            {
+                skillEntry.tree = this;
+            }
      
+        }
     }
 }

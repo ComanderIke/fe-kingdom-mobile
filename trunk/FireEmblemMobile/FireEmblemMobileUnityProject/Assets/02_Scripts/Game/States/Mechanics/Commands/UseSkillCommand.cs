@@ -1,13 +1,12 @@
-﻿using Game.AI;
-using Game.GameActors.Players;
+﻿using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using Game.GameInput;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Active;
+using Game.Grid;
 using Game.Manager;
-using Game.Map;
 using UnityEngine;
 
-namespace Game.Mechanics.Commands
+namespace Game.States.Mechanics.Commands
 {
     public class UseSkillCommand : Command
     {

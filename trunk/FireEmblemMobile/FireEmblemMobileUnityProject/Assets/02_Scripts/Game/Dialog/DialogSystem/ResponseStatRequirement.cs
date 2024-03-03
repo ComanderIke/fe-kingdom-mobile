@@ -1,7 +1,7 @@
 ﻿using System;
 using Game.GameActors.Units.Numbers;
 
-namespace __2___Scripts.External.Editor.Data.Save
+namespace Game.Dialog.DialogSystem
 {
     [Serializable]
     public class ResponseStatRequirement

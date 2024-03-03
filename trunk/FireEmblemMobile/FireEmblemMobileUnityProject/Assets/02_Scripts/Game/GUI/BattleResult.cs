@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.DataAndReferences.Data;
+using Game.EncounterAreas.Encounters.Battle;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.GameResources;
-using Game.WorldMapStuff.Model;
+using Game.GUI.EncounterUI.Merchant;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace LostGrace
+namespace Game.GUI
 {
     [Serializable]
     public class BattleResult

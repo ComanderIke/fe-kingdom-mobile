@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Game.GameActors.Units;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI.EncounterUI.Church
 {
     public class ShrineController : MonoBehaviour
     {

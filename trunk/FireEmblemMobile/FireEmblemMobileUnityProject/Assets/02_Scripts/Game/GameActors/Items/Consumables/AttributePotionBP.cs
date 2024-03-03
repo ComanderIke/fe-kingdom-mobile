@@ -2,7 +2,7 @@
 using Game.GameActors.Units.Numbers;
 using UnityEngine;
 
-namespace Game.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Consumables
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Items/Consumables/AttributePotion", fileName = "AttributePotion")]

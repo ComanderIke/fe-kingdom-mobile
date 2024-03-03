@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Game.Grid;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.DecisionMaking
 {
     public class TileVisualizer:MonoBehaviour
     {

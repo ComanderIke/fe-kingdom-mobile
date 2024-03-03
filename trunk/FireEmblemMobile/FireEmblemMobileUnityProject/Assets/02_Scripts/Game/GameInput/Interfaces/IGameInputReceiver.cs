@@ -1,7 +1,7 @@
-﻿using Game.GameActors.Players;
-using Game.GameActors.Units;
+﻿using Game.GameActors.Grid;
+using Game.GameActors.Units.Interfaces;
 
-namespace Game.GameInput
+namespace Game.GameInput.Interfaces
 {
     public interface IGameInputReceiver
     {

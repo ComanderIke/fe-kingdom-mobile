@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _02_Scripts.Game.Dialog.DialogSystem;
-using _02_Scripts.Game.GameActors.Items.Consumables;
+using Game.Campaigns;
+using Game.EncounterAreas.AreaConstruction;
+using Game.EncounterAreas.Encounters.Battle;
+using Game.EncounterAreas.Encounters.Church;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Consumables;
 using Game.GameActors.Items.Gems;
 using Game.GameActors.Items.Weapons;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
 using Game.GameActors.Units.CharStateEffects;
-using Game.GameActors.Units.Humans;
-using Game.GameActors.Units.Monsters;
-using Game.GameActors.Units.Skills;
-using Game.Map;
-using Game.WorldMapStuff.Model;
-using Game.WorldMapStuff.UI;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameMechanics;
+using Game.GUI;
+using Game.GUI.EncounterUI.Merchant;
+using Game.MetaProgression;
+using Game.Systems;
 using GameEngine;
-using LostGrace;
-using MoreMountains.Tools;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.Data
 {
     [CreateAssetMenu(fileName = "GameData", menuName = "GameData/Config/GameData")]
     public class GameBPData : SingletonScriptableObject<GameBPData> , IBlessingData   {

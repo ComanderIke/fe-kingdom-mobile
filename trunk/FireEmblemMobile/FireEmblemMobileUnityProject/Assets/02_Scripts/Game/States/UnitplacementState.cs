@@ -1,22 +1,21 @@
 ﻿using System.Collections.Generic;
-using Audio;
 using Game.AI;
-using Game.GameActors.Players;
+using Game.Audio;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
 using Game.GameInput;
-using Game.GameResources;
+using Game.GameInput.CameraInput;
 using Game.Grid;
 using Game.GUI;
 using Game.Manager;
 using Game.Map;
-using Game.Mechanics;
-using Game.WorldMapStuff.Model;
+using Game.Systems;
+using Game.Utility;
 using GameCamera;
 using GameEngine;
 using GameEngine.GameStates;
 using GameEngine.Input;
 using GameEngine.Tools;
-using Menu;
 using UnityEngine;
 using Utility;
 

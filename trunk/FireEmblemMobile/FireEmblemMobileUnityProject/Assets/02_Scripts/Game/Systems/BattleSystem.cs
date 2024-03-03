@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Runtime.InteropServices;
-using Game.AI;
-using Game.GameActors.Players;
+using Game.AI.DecisionMaking;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Humans;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Base;
 using Game.GameActors.Units.Skills.Passive;
-using Game.GameInput;
 using Game.Grid;
-using Game.GUI;
 using Game.Manager;
-using Game.Mechanics.Battle;
 using Game.States;
+using Game.States.Mechanics;
+using Game.States.Mechanics.Battle;
+using Game.Utility;
 using GameEngine;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-namespace Game.Mechanics
+namespace Game.Systems
 {
     public class BattleSystem : IEngineSystem, ICombatInformation
     {

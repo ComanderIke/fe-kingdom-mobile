@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
-using _02_Scripts.Game.GUI.Utility;
-using Game.GameActors.Items;
-using Game.WorldMapStuff.Model;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
+using Game.GUI.Controller;
+using Game.GUI.Utility;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.SerializedData
 {
     [System.Serializable]
     public class PlayerData

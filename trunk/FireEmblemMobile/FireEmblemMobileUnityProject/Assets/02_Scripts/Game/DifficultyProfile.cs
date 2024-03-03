@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using _02_Scripts.Game.Dialog.DialogSystem;
-using _02_Scripts.Game.GUI.Utility;
+using Game.Dialog.DialogSystem;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
+using Game.GUI;
+using Game.GUI.Utility;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game
 {
     [CreateAssetMenu(menuName = "GameConfig/DifficultyProfile", fileName = "DifficultyProfile")]
     public class DifficultyProfile : ScriptableObject

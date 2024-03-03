@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Game.GameMechanics;
 using TMPro;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UITimeOfDayTooltip : MonoBehaviour
     {

@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
+﻿using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GameActors.Units.Skills.Passive
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/OnBind", fileName = "OnBindMixin")]
     public class OnBindPassiveSkillMixin : PassiveSkillMixin

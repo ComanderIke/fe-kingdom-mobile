@@ -1,11 +1,7 @@
 ﻿using Game.GameActors.Units;
-using Game.GameActors.Units.Humans;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Utility;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     public class TopUi : MonoBehaviour
     { 

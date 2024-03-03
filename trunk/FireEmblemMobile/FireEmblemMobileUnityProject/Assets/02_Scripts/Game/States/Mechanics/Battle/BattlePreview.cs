@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.GameInput;
+using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units.Interfaces;
 using UnityEngine;
 
-namespace Game.Mechanics.Battle
+namespace Game.States.Mechanics.Battle
 {
     [CreateAssetMenu(menuName =  "Debug/BattlePreview", fileName="battlePreview")]
     public class BattlePreview : ScriptableObject

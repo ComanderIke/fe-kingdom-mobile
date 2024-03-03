@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace _02_Scripts.Game.GUI.Utility
+namespace Game.GUI.Utility
 {
    public class SerializableDictionary
 {

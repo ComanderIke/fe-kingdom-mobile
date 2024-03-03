@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using Game.GameActors.Units;
-using Game.GameInput;
+using Game.Systems;
 using UnityEngine;
 
-namespace Game.Mechanics.Battle
+namespace Game.States.Mechanics.Battle
 {
     [Serializable]
     public class BattlePreviewStats

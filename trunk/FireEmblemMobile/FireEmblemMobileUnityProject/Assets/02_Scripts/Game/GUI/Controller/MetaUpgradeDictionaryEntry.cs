@@ -1,7 +1,11 @@
 ﻿using System;
+using Game.MetaProgression;
 
-[Serializable]
-public class MetaUpgradeDictionaryEntry {
-    public string key;
-    public MetaUpgradeBP val;
+namespace Game.GUI.Controller
+{
+    [Serializable]
+    public class MetaUpgradeDictionaryEntry {
+        public string key;
+        public MetaUpgradeBP val;
+    }
 }

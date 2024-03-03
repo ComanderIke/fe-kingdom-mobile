@@ -1,5 +1,8 @@
-﻿public enum FactionId
+﻿namespace Game.GameActors.Factions
 {
-    PLAYER,
-    ENEMY
+    public enum FactionId
+    {
+        PLAYER,
+        ENEMY
+    }
 }

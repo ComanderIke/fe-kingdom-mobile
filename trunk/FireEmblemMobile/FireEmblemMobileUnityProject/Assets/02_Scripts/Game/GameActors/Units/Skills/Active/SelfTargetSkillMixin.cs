@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using LostGrace;
+﻿using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Active
 {
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Active/SelfTarget", fileName = "SelfTargetSkillMixin")]

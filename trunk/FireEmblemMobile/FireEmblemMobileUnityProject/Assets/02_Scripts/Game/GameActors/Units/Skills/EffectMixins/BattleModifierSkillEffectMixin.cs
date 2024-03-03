@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using LostGrace;
-using MoreMountains.Tools;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/BattleModifier", fileName = "BattleModifierSkillEffect")]
     public class BattleModifierSkillEffectMixin : SelfTargetSkillEffectMixin

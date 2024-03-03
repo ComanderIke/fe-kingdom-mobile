@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using GameEngine.Tools;
 using UnityEngine;
 
-namespace GameEngine.Tools
+namespace Game.Utility
 {
     public class HitChecker : IHitChecker
     {

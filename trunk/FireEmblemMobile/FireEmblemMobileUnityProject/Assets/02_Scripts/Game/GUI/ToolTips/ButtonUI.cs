@@ -1,12 +1,15 @@
 ﻿using System;
 using UnityEngine;
 
-public class ButtonUI : MonoBehaviour
+namespace Game.GUI.ToolTips
 {
-    public event Action onClicked;
-
-    public void Clicked()
+    public class ButtonUI : MonoBehaviour
     {
-        onClicked?.Invoke();
+        public event Action onClicked;
+
+        public void Clicked()
+        {
+            onClicked?.Invoke();
+        }
     }
 }

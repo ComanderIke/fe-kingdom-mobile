@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
+using Game.EncounterAreas.Encounters;
+using Game.EncounterAreas.Encounters.Start;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameData/StartEncounterData", fileName = "StartEncounterData")]
-public class StartEncounterNodeData: EncounterNodeData
+namespace Game.EncounterAreas.EncounterData
 {
-    public override EncounterNode CreateNode(List<EncounterNode> parents,int depth, int childIndex)
+    [CreateAssetMenu(menuName = "GameData/StartEncounterData", fileName = "StartEncounterData")]
+    public class StartEncounterNodeData: EncounterNodeData
     {
-        return new StartEncounterNode();
+        public override EncounterNode CreateNode(List<EncounterNode> parents,int depth, int childIndex)
+        {
+            return new StartEncounterNode();
+        }
     }
 }

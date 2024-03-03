@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-
-namespace Effects
+namespace Game.Graphics.Lights
 {
 
     public class LightFlickering : MonoBehaviour

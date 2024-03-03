@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
-using Game.AI;
-using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using Game.Grid;
 using Game.Manager;
-using Game.Map;
 using UnityEngine;
 
-namespace Game.Mechanics.Commands
+namespace Game.States.Mechanics.Commands
 {
     internal class MoveCharacterCommand : Command
     {

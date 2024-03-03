@@ -2,22 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.AI;
+using Game.Dialog;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
-using Game.GameActors.Players;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
+using Game.GameActors.Units.Progression;
+using Game.GameActors.Units.RPGElements;
+using Game.GameActors.Units.UnitType;
+using Game.GameActors.Units.Visuals;
 using Game.GameInput;
-using Game.GameResources;
-using Game.Graphics;
 using Game.Grid;
 using Game.GUI;
-using Game.Mechanics;
-using Game.Mechanics.Battle;
-using Game.WorldMapStuff.Model;
-using LostGrace;
 using UnityEngine;
 using UnityEngine.Serialization;
 

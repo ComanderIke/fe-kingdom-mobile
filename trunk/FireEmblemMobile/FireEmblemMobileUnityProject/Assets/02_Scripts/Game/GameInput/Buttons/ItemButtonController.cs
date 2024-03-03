@@ -1,9 +1,9 @@
-﻿using Game.GUI;
+﻿using Game.GUI.EncounterUI.Merchant;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.GameInput
+namespace Game.GameInput.Buttons
 {
     public class ItemButtonController:MonoBehaviour
     {
@@ -26,7 +26,7 @@ namespace Game.GameInput
         public void Clicked()
         {
             Debug.Log("GameplayCommandSelectItem");
-            new GameplayCommands().SelectItem(item.item);
+            new GameplayCommands.GameplayCommands().SelectItem(item.item);
             //selectionUI.CloseItemsClicked();
         }
     }

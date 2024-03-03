@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using _02_Scripts.Game.GUI.Utility;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.Numbers;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using Game.GameInput;
-using Game.Mechanics.Battle;
-using LostGrace;
 using UnityEngine;
 using Random = System.Random;
 

@@ -1,11 +1,12 @@
 ﻿using System;
-using Game.GameActors.Players;
+using Game.GameActors.Factions;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
-using Game.GameResources;
+using Game.GameMechanics;
 using Game.GUI;
+using Game.GUI.Other;
 using Game.Manager;
-using LostGrace;
+using Game.Utility;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;

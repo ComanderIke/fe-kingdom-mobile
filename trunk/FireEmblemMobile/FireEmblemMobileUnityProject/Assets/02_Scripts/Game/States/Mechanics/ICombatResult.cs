@@ -1,7 +1,7 @@
-﻿using Game.AI;
+﻿using Game.AI.DecisionMaking;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.States.Mechanics
 {
     public interface ICombatResult
     {

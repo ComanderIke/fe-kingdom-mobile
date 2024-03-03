@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.Data
 {
     [CreateAssetMenu(menuName = "GameData/TextData", fileName = "TextData")]
     public class TextData : ScriptableObject

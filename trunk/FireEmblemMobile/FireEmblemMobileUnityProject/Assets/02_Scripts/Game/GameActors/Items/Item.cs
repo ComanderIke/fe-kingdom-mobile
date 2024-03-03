@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GUI.Interface;
 using UnityEngine;
 
 namespace Game.GameActors.Items

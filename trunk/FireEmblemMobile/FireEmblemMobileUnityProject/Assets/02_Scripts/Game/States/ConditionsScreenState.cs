@@ -1,10 +1,11 @@
 ﻿using Game.AI;
+using Game.EncounterAreas.Encounters.Battle;
 using Game.Grid;
 using Game.GUI;
 using Game.Manager;
+using Game.Systems;
 using GameEngine;
 using GameEngine.GameStates;
-using Menu;
 using UnityEngine;
 
 namespace Game.States

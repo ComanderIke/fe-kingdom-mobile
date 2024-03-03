@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.Numbers;
-using Game.Mechanics.Battle;
-using LostGrace;
+using Game.GameActors.Units.Skills.Base;
+using Game.States.Mechanics.Battle;
 using UnityEngine;
 
 namespace Game.GameActors.Units.CharStateEffects

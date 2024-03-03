@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Units.Numbers;
-using Game.Mechanics.Battle;
-using LostGrace;
-
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.EffectMixins;
+using Game.States.Mechanics.Battle;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Base
 {
     public enum BonusEffectType
     {

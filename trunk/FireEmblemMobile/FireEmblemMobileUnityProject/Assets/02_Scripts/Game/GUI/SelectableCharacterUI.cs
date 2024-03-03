@@ -1,11 +1,12 @@
 ﻿using System;
 using Game.GameActors.Units;
+using Game.GUI.Screens;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class SelectableCharacterUI : MonoBehaviour
     {

@@ -1,17 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
-using Game.GameResources;
-using Game.Systems;
+using Game.DataAndReferences.Data;
 using UnityEngine;
-using UnityEngine.Rendering;
 
-namespace LostGrace
+namespace Game.SerializedData
 {
     public interface IDataPersistance
     {

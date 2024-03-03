@@ -1,13 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Effects;
-using Game.GameActors.Players;
-using Game.GameResources;
+using Game.EncounterAreas.DayNightCycle;
+using Game.GameActors.Player;
+using Game.GUI;
+using Game.GUI.ToolTips;
+using Game.Utility;
 using TMPro;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GameMechanics
 {
     public class TimeOfDayManager : MonoBehaviour
     {

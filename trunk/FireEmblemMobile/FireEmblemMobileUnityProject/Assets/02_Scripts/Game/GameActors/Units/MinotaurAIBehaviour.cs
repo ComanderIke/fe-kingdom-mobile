@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
 using Game.GameActors.Units.CharStateEffects;
-using Game.Mechanics;
+using Game.GameActors.Units.Interfaces;
+using Game.Systems;
 using UnityEngine;
 
 namespace Game.GameActors.Units

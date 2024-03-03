@@ -1,11 +1,11 @@
 ﻿using System;
-using Game.AI;
+using Game.AI.DecisionMaking;
+using Game.GameActors.Factions;
 using Game.GameActors.Units;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.GameActors
+namespace Game.LevelDesign
 {
     [ExecuteInEditMode]
     public class UnitSpawner : MonoBehaviour

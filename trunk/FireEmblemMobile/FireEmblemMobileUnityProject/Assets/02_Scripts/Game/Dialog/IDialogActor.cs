@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
-public interface IDialogActor
+namespace Game.Dialog
 {
-    public string Name { get; }
-    public Sprite FaceSprite { get; }
+    public interface IDialogActor
+    {
+        public string Name { get; }
+        public Sprite FaceSprite { get; }
+    }
 }

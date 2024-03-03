@@ -2,196 +2,200 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using __2___Scripts.Game.Areas;
-using Audio;
-using Effects;
-using Game.GameActors.Players;
+using Game.DataAndReferences.Data;
+using Game.EncounterAreas.AreaConstruction;
+using Game.EncounterAreas.Controller;
+using Game.EncounterAreas.Encounters;
+using Game.EncounterAreas.Encounters.Battle;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.GameResources;
+using Game.GameMechanics;
 using Game.GUI;
+using Game.GUI.CharacterScreen;
+using Game.GUI.Controller;
+using Game.GUI.Renderer;
 using Game.Manager;
-using Game.Mechanics;
+using Game.Menu;
+using Game.SerializedData;
 using Game.States;
 using Game.Systems;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
-using Game.WorldMapStuff.Systems;
+using Game.Utility;
 using GameCamera;
 using GameEngine;
-using LostGrace;
-using Menu;
 using MoreMountains.Tools;
-using TMPro;
 using UnityEngine;
 using IServiceProvider = Game.Manager.IServiceProvider;
 
-public class AreaGameManager : MonoBehaviour, IServiceProvider
+namespace Game.EncounterAreas.Management
 {
-    public static AreaGameManager Instance;
-    private List<IEngineSystem> Systems { get; set; }
-    public bool CampaingFinished { get; set; }
+    public class AreaGameManager : MonoBehaviour, IServiceProvider
+    {
+        public static AreaGameManager Instance;
+        private List<IEngineSystem> Systems { get; set; }
+        public bool CampaingFinished { get; set; }
 
-    public static event Action OnDemoCompleted;
+        public static event Action OnDemoCompleted;
 
-    public static event Action<int> OnAreaCompleted;
-    public static event Action<AreaData> OnAreaStarted;
-
-
-    [SerializeField] private ChooseReinforcementUI reinforcementUI;
-    private Area_ActionSystem actionSystem;
-    public EncounterUIController uiCOntroller;
-    public UIPartyCharacterCircleController uiPartyController;
-    private ActiveUnitGroundFX activeUnitGroundGO;
-    [SerializeField] private GameObject activeUnitGroundPrefab;
-    public UICharacterViewController uiCharacterView;
-    // Start is called before the first frame update
-    public Transform spawnParent;
+        public static event Action<int> OnAreaCompleted;
+        public static event Action<AreaData> OnAreaStarted;
 
 
-    [SerializeField]private float moveToNodeHoldTime = 1.5f;
+        [SerializeField] private ChooseReinforcementUI reinforcementUI;
+        private Area_ActionSystem actionSystem;
+        public EncounterUIController uiCOntroller;
+        public UIPartyCharacterCircleController uiPartyController;
+        private ActiveUnitGroundFX activeUnitGroundGO;
+        [SerializeField] private GameObject activeUnitGroundPrefab;
+        public UICharacterViewController uiCharacterView;
+        // Start is called before the first frame update
+        public Transform spawnParent;
+
+
+        [SerializeField]private float moveToNodeHoldTime = 1.5f;
     
-    public TimeOfDayManager timeOfDayManager;
-    [SerializeField] private bool startFreshSave = false;
-    [SerializeField] private float delayBeforeLoadingNewScene=2f;
-    private static bool startFreshSaveFirstTime;
-    private List<EncounterNodeClickController> nodeClickControllers;
-    void Awake()
-    {
-        CampaingFinished = false;
-        startReady = false;
-        MyDebug.LogTest("Subscribe SceneReady");
+        public TimeOfDayManager timeOfDayManager;
+        [SerializeField] private bool startFreshSave = false;
+        [SerializeField] private float delayBeforeLoadingNewScene=2f;
+        private static bool startFreshSaveFirstTime;
+        private List<EncounterNodeClickController> nodeClickControllers;
+        void Awake()
+        {
+            CampaingFinished = false;
+            startReady = false;
+            MyDebug.LogTest("Subscribe SceneReady");
         
 
-        Instance = this;
-        if (startFreshSave&&startFreshSaveFirstTime==false)//Just for Testing when starting from encounterArea
-        {
-            startFreshSaveFirstTime = true;
-            startFreshSave = false;
-            MyDebug.LogEngine("Started game from EncounterArea => creating new game savedata");
-            SaveGameManager.NewGame(0, "DebugEditorSave", GameConfig.Instance.ConfigProfile.chosenDifficulty.name);
-        }
-        else
-        {
-            MyDebug.LogPersistance("Load game Slot 0:");
-            SaveGameManager.Load(0); //Trigger load at start of scenes to trigger all persistance objects observers
-        }
-        
-        partyWasNotNullAtAwake = false;
-        if (Player.Instance.Party != null)
-        {
-            partyWasNotNullAtAwake = true;
-            MyDebug.LogLogic("Using existing party data");
-            Player.Instance.Party.Initialize();
-        }
-
-        partyWasNullOrEmptyAtAwake = false;
-        if (Player.Instance.Party == null || Player.Instance.Party.members.Count == 0)
-        {
-            partyWasNullOrEmptyAtAwake = true;
-            MyDebug.LogLogic("No existing party! Creating new party with default units");
-           
-            if(Player.Instance.Party==null)
-                Player.Instance.Party = new Party();
-            var demoUnits = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
-            Player.Instance.Party.members = demoUnits;
-            Player.Instance.Party.Initialize();
-            Player.Instance.Party.AreaIndex = GameObject.FindObjectOfType<DemoUnits>().StartAreaIndex;
-        }
-        if(Player.Instance.Party.AreaIndex>=2)
-            CampaingFinished = true;
-        SceneController.OnSceneReady -= SceneReady;
-        SceneController.OnSceneReady += SceneReady;
-
-    }
-
-    private bool areaStart = false;
-    private bool startReady = false;
-    private bool partyWasNotNullAtAwake = false;
-    private bool partyWasNullOrEmptyAtAwake = false;
-    private void Start()
-    {
-
-        if (CampaingFinished)
-            return;
-        cursor = FindObjectOfType<EncounterCursorController>();
-        actionSystem = new Area_ActionSystem();
-        nodeClickControllers = new List<EncounterNodeClickController>();
-       
-        if (partyWasNotNullAtAwake)
-        {
-            LoadEncounterAreaData(Player.Instance.Party, EncounterTree.Instance);
-        }
-        if (partyWasNullOrEmptyAtAwake){
-            Player.Instance.Party.EncounterComponent.EncounterNode = EncounterTree.Instance.startNode;
-            Player.Instance.Party.EncounterComponent.AddMovedEncounter(EncounterTree.Instance.startNode);
-        }
-           
-        AddSystems();
-        Player.Instance.Party.onMemberAdded -= MemberAdded;
-        Player.Instance.Party.onMemberAdded += MemberAdded;
-        SpawnPartyMembers();
-        uiCOntroller.Init(Player.Instance.Party);
-        ResetMoveOptions();
-        uiPartyController.Show(Player.Instance.Party);
-        timeOfDayManager.InitHour(6);
-        this.CallWithDelay(ShowMovedRoads,0.1f);//Some other scripts not started yet thtas why
-        ShowAllInactiveNodes();
-        if (!Player.Instance.Party.EncounterComponent.activatedEncounter)
-        {
-            Player.Instance.Party.EncounterComponent.EncounterNode.Activate(Player.Instance.Party);
-        }
-        else
-        {       
-            ShowMoveOptions();
-        }
-
-        FindObjectOfType<CameraSystem>().GetMixin<FocusCameraMixin>().SetTargets(Player.Instance.Party.EncounterComponent.EncounterNode.gameObject);
-        
-        MyDebug.LogLogic("Enter Area: "+ (Player.Instance.Party.AreaIndex+1));
-        // areaText.SetText("Area <size=120%>"+(Player.Instance.Party.AreaIndex+1));
-        startReady = true;
-    }
-
-    void MemberAdded(Unit unit)
-    {
-        SpawnPartyMembers();
-    }
-    void SceneReady()
-    {
-        MyDebug.LogTest("SCENE IS READY");
-        if (startReady)
-        {
-            if (areaStart)
+            Instance = this;
+            if (startFreshSave&&startFreshSaveFirstTime==false)//Just for Testing when starting from encounterArea
             {
-                OnAreaStarted?.Invoke(GameBPData.Instance.AreaDataList[Player.Instance.Party.AreaIndex]);
-                if (Player.Instance.Party.AreaIndex > 0)
-                {
-                    if(Player.Instance.Flags.HasPartyMemberAfterArea(Player.Instance.Party.AreaIndex))
-                        MonoUtility.DelayFunction(()=>ShowReinforcements(),3.9f);
-                }
-                    
+                startFreshSaveFirstTime = true;
+                startFreshSave = false;
+                MyDebug.LogEngine("Started game from EncounterArea => creating new game savedata");
+                SaveGameManager.NewGame(0, "DebugEditorSave", GameConfig.Instance.ConfigProfile.chosenDifficulty.name);
             }
+            else
+            {
+                MyDebug.LogPersistance("Load game Slot 0:");
+                SaveGameManager.Load(0); //Trigger load at start of scenes to trigger all persistance objects observers
+            }
+        
+            partyWasNotNullAtAwake = false;
+            if (Player.Instance.Party != null)
+            {
+                partyWasNotNullAtAwake = true;
+                MyDebug.LogLogic("Using existing party data");
+                Player.Instance.Party.Initialize();
+            }
+
+            partyWasNullOrEmptyAtAwake = false;
+            if (Player.Instance.Party == null || Player.Instance.Party.members.Count == 0)
+            {
+                partyWasNullOrEmptyAtAwake = true;
+                MyDebug.LogLogic("No existing party! Creating new party with default units");
+           
+                if(Player.Instance.Party==null)
+                    Player.Instance.Party = new Party();
+                var demoUnits = GameObject.FindObjectOfType<DemoUnits>().GetUnits();
+                Player.Instance.Party.members = demoUnits;
+                Player.Instance.Party.Initialize();
+                Player.Instance.Party.AreaIndex = GameObject.FindObjectOfType<DemoUnits>().StartAreaIndex;
+            }
+            if(Player.Instance.Party.AreaIndex>=2)
+                CampaingFinished = true;
+            SceneController.OnSceneReady -= SceneReady;
+            SceneController.OnSceneReady += SceneReady;
+
+        }
+
+        private bool areaStart = false;
+        private bool startReady = false;
+        private bool partyWasNotNullAtAwake = false;
+        private bool partyWasNullOrEmptyAtAwake = false;
+        private void Start()
+        {
+
             if (CampaingFinished)
-            {
-           
-                OnDemoCompleted?.Invoke();
-                MonoUtility.DelayFunction(() =>
-                {
-            
-                    GameSceneController.Instance.LoadSanctuaryFromCampaign();
-                },delayBeforeLoadingNewScene);
                 return;
-            }
-            if (SceneTransferData.Instance.BattleType==BattleType.Boss)
+            cursor = FindObjectOfType<EncounterCursorController>();
+            actionSystem = new Area_ActionSystem();
+            nodeClickControllers = new List<EncounterNodeClickController>();
+       
+            if (partyWasNotNullAtAwake)
             {
-                AreaCompleted();
-           
+                LoadEncounterAreaData(Player.Instance.Party, EncounterTree.Instance);
             }
+            if (partyWasNullOrEmptyAtAwake){
+                Player.Instance.Party.EncounterComponent.EncounterNode = EncounterTree.Instance.startNode;
+                Player.Instance.Party.EncounterComponent.AddMovedEncounter(EncounterTree.Instance.startNode);
+            }
+           
+            AddSystems();
+            Player.Instance.Party.onMemberAdded -= MemberAdded;
+            Player.Instance.Party.onMemberAdded += MemberAdded;
+            SpawnPartyMembers();
+            uiCOntroller.Init(Player.Instance.Party);
+            ResetMoveOptions();
+            uiPartyController.Show(Player.Instance.Party);
+            timeOfDayManager.InitHour(6);
+            this.CallWithDelay(ShowMovedRoads,0.1f);//Some other scripts not started yet thtas why
+            ShowAllInactiveNodes();
+            if (!Player.Instance.Party.EncounterComponent.activatedEncounter)
+            {
+                Player.Instance.Party.EncounterComponent.EncounterNode.Activate(Player.Instance.Party);
+            }
+            else
+            {       
+                ShowMoveOptions();
+            }
+
+            FindObjectOfType<CameraSystem>().GetMixin<FocusCameraMixin>().SetTargets(Player.Instance.Party.EncounterComponent.EncounterNode.gameObject);
+        
+            MyDebug.LogLogic("Enter Area: "+ (Player.Instance.Party.AreaIndex+1));
+            // areaText.SetText("Area <size=120%>"+(Player.Instance.Party.AreaIndex+1));
+            startReady = true;
         }
-        else
+
+        void MemberAdded(Unit unit)
         {
-            MyDebug.LogTest("START WAS NOT READY WHEN SCENE WAS READY!!!!!");
-            MyDebug.LogTODO("START WAS NOT READY WHEN SCENE WAS READY!!!!!");
+            SpawnPartyMembers();
+        }
+        void SceneReady()
+        {
+            MyDebug.LogTest("SCENE IS READY");
+            if (startReady)
+            {
+                if (areaStart)
+                {
+                    OnAreaStarted?.Invoke(GameBPData.Instance.AreaDataList[Player.Instance.Party.AreaIndex]);
+                    if (Player.Instance.Party.AreaIndex > 0)
+                    {
+                        if(Player.Instance.Flags.HasPartyMemberAfterArea(Player.Instance.Party.AreaIndex))
+                            MonoUtility.DelayFunction(()=>ShowReinforcements(),3.9f);
+                    }
+                    
+                }
+                if (CampaingFinished)
+                {
+           
+                    OnDemoCompleted?.Invoke();
+                    MonoUtility.DelayFunction(() =>
+                    {
+            
+                        GameSceneController.Instance.LoadSanctuaryFromCampaign();
+                    },delayBeforeLoadingNewScene);
+                    return;
+                }
+                if (SceneTransferData.Instance.BattleType==BattleType.Boss)
+                {
+                    AreaCompleted();
+           
+                }
+            }
+            else
+            {
+                MyDebug.LogTest("START WAS NOT READY WHEN SCENE WAS READY!!!!!");
+                MyDebug.LogTODO("START WAS NOT READY WHEN SCENE WAS READY!!!!!");
                 MonoUtility.DelayFunction(() =>
                 {
                     if(areaStart)
@@ -213,631 +217,632 @@ public class AreaGameManager : MonoBehaviour, IServiceProvider
            
                     }
                 },.05f);
+            }
+        
         }
-        
-    }
-    private void AreaCompleted()
-    {
-        
-        OnAreaCompleted?.Invoke(Player.Instance.Party.AreaIndex);
-        MyDebug.LogTODO("Wait for ContinueClickedOnLoadingScreen");
-        SceneTransferData.Instance.Reset();
-        Player.Instance.Party.AreaIndex++;
-        MyDebug.LogTest("AREAINDEX: "+ Player.Instance.Party.AreaIndex);
-        Player.Instance.Party.EncounterComponent.Reset();
-        MonoUtility.DelayFunction(() =>
+        private void AreaCompleted()
         {
+        
+            OnAreaCompleted?.Invoke(Player.Instance.Party.AreaIndex);
+            MyDebug.LogTODO("Wait for ContinueClickedOnLoadingScreen");
+            SceneTransferData.Instance.Reset();
+            Player.Instance.Party.AreaIndex++;
+            MyDebug.LogTest("AREAINDEX: "+ Player.Instance.Party.AreaIndex);
+            Player.Instance.Party.EncounterComponent.Reset();
+            MonoUtility.DelayFunction(() =>
+            {
             
-            ResetLoadArea();
-        },delayBeforeLoadingNewScene);
-    }
-
-    void ShowReinforcements()
-    {
-        Player.Instance.Party.MaxSize++;
-        var reinforcements= GenerateReinforcements();
-        if (reinforcements.Count == 0)
-            return;
-        reinforcementUI.Show(reinforcements[0],reinforcements.Count>1?reinforcements[1]:null, reinforcements.Count>2?reinforcements[2]:null);
-    }
-
-    List<Unit> GenerateReinforcements()
-    {
-        var list = new List<Unit>();
-        foreach (var unlockedCharId in Player.Instance.UnlockedCharacterIds)
-        {
-            if(!Player.Instance.Party.MembersContainsByBluePrintID(unlockedCharId))
-                list.Add(GameBPData.Instance.GetHumanFromBlueprint(unlockedCharId));
+                ResetLoadArea();
+            },delayBeforeLoadingNewScene);
         }
-        list.MMShuffle();
-        return list;
-    }
-    private void ResetLoadArea()
-    {
-        Player.Instance.Party.ResetFoodBuffs();
-        SaveGameManager.Save();
-        GridGameManager.Instance.CleanUp();
-        SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
-    }
+
+        void ShowReinforcements()
+        {
+            Player.Instance.Party.MaxSize++;
+            var reinforcements= GenerateReinforcements();
+            if (reinforcements.Count == 0)
+                return;
+            reinforcementUI.Show(reinforcements[0],reinforcements.Count>1?reinforcements[1]:null, reinforcements.Count>2?reinforcements[2]:null);
+        }
+
+        List<Unit> GenerateReinforcements()
+        {
+            var list = new List<Unit>();
+            foreach (var unlockedCharId in Player.Instance.UnlockedCharacterIds)
+            {
+                if(!Player.Instance.Party.MembersContainsByBluePrintID(unlockedCharId))
+                    list.Add(GameBPData.Instance.GetHumanFromBlueprint(unlockedCharId));
+            }
+            list.MMShuffle();
+            return list;
+        }
+        private void ResetLoadArea()
+        {
+            Player.Instance.Party.ResetFoodBuffs();
+            SaveGameManager.Save();
+            GridGameManager.Instance.CleanUp();
+            SceneController.LoadSceneAsync(Scenes.EncounterArea, false);
+        }
 
     
-    public void LoadEncounterAreaData(Party party, EncounterTree tree){
-        MyDebug.LogTest("EncounterNodeId: "+party.EncounterComponent.EncounterNodeId);
-        party.EncounterComponent.EncounterNode = tree.GetEncounterNodeById(party.EncounterComponent.EncounterNodeId);
-        if(party.EncounterComponent.EncounterNode!=null)
-            MyDebug.LogTest("EncounterNode: " +party.EncounterComponent.EncounterNode );
-        // for (int i = 0; i < party.EncounterComponent.MovedEncounterIds.Count; i++)
-        // {
-        //     party.EncounterComponent.AddMovedEncounter(tree.GetEncounterNodeById(party.EncounterComponent.MovedEncounterIds[i]));
-        // }
-    }
-    private void AddSystems()
-    {
-        Systems = new List<IEngineSystem>
-        {
-            new BattleSystem(),
-            new UnitProgressSystem(Player.Instance.Party),
-            new SkillSystem(GameBPData.Instance.SkillGenerationConfig,FindObjectsOfType<MonoBehaviour>().OfType<ISkillUIRenderer>().First()),
-        };
-        InjectDependencies();
-        foreach (var system in Systems)
-        {
-            system.Init();
-            system.Activate();
+        public void LoadEncounterAreaData(Party party, EncounterTree tree){
+            MyDebug.LogTest("EncounterNodeId: "+party.EncounterComponent.EncounterNodeId);
+            party.EncounterComponent.EncounterNode = tree.GetEncounterNodeById(party.EncounterComponent.EncounterNodeId);
+            if(party.EncounterComponent.EncounterNode!=null)
+                MyDebug.LogTest("EncounterNode: " +party.EncounterComponent.EncounterNode );
+            // for (int i = 0; i < party.EncounterComponent.MovedEncounterIds.Count; i++)
+            // {
+            //     party.EncounterComponent.AddMovedEncounter(tree.GetEncounterNodeById(party.EncounterComponent.MovedEncounterIds[i]));
+            // }
         }
-    }
+        private void AddSystems()
+        {
+            Systems = new List<IEngineSystem>
+            {
+                new BattleSystem(),
+                new UnitProgressSystem(Player.Instance.Party),
+                new SkillSystem(GameBPData.Instance.SkillGenerationConfig,FindObjectsOfType<MonoBehaviour>().OfType<ISkillUIRenderer>().First()),
+            };
+            InjectDependencies();
+            foreach (var system in Systems)
+            {
+                system.Init();
+                system.Activate();
+            }
+        }
 
-    private void InjectDependencies()
-    {
-        GetSystem<BattleSystem>().BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
-        GetSystem<BattleSystem>().BattleAnimation.Hide();
-        GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
-        GetSystem<UnitProgressSystem>().expRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IExpRenderer>().First();
-        var expBars = FindObjectsOfType<MonoBehaviour>().OfType<ExpBarController>();
-        foreach (var expBar in expBars)
+        private void InjectDependencies()
         {
-            if (expBar.CompareTag("MainExpBar"))
-                GetSystem<UnitProgressSystem>().ExpBarController = expBar;
-        }
+            GetSystem<BattleSystem>().BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
+            GetSystem<BattleSystem>().BattleAnimation.Hide();
+            GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();
+            GetSystem<UnitProgressSystem>().expRenderer = FindObjectsOfType<MonoBehaviour>().OfType<IExpRenderer>().First();
+            var expBars = FindObjectsOfType<MonoBehaviour>().OfType<ExpBarController>();
+            foreach (var expBar in expBars)
+            {
+                if (expBar.CompareTag("MainExpBar"))
+                    GetSystem<UnitProgressSystem>().ExpBarController = expBar;
+            }
        
-    }
-    private bool LoadedSaveData()
-    {
-        return SaveGameManager.currentSaveData != null && SaveGameManager.currentSaveData.playerData != null;
-    }
-
-    private GameObject partyGo;
-    private List<EncounterPlayerUnitController> partyGameObjects;
-
-    void DeletePartyMembersGO()
-    {
-        if(partyGo!=null)
-            GameObject.Destroy(partyGo);
-        activeUnitGroundGO = null;
-    }
-    void SpawnPartyMembers()
-    {
-        DeletePartyMembersGO();
-       //Debug.Log("Party Count: "+Player.Instance.Party.members.Count);
-        int cnt = 1;
-        if (Player.Instance.Party.EncounterComponent.EncounterNode == null)
+        }
+        private bool LoadedSaveData()
         {
-            Player.Instance.Party.EncounterComponent.EncounterNode = EncounterTree.Instance.startNode;
-            Player.Instance.Party.EncounterComponent.AddMovedEncounter(EncounterTree.Instance.startNode);
-            areaStart = true;
+            return SaveGameManager.currentSaveData != null && SaveGameManager.currentSaveData.playerData != null;
         }
 
-        partyGo = new GameObject("Partytest");
-        partyGo.transform.SetParent(spawnParent);
-        partyGo.transform.position = Player.Instance.Party.EncounterComponent.EncounterNode.gameObject.transform.position;
-        partyGameObjects = new List<EncounterPlayerUnitController>();
-        //Spawn ActiveUnit first
-        var activeUnit = Player.Instance.Party.members[Player.Instance.Party.ActiveUnitIndex];
-        var go = Instantiate(activeUnit.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
-        go.transform.localPosition = new Vector3(0,0,0);
-        var uc =  go.GetComponent<EncounterPlayerUnitController>();
-        uc.SetUnit(activeUnit);
-        ShowActiveUnit(go.transform.position);
-        uc.Show();
-        uc.onClicked -= UnitClicked;
-        uc.onClicked += UnitClicked;
-       // go.GetComponent<EncounterPlayerUnitController>().SetTarget(null);
-       // go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count);
-        activeMemberGo = go;
+        private GameObject partyGo;
+        private List<EncounterPlayerUnitController> partyGameObjects;
 
-        partyGameObjects.Add( go.GetComponent<EncounterPlayerUnitController>());
-        foreach (var member in Player.Instance.Party.members)
+        void DeletePartyMembersGO()
         {
-         
-            if (member == activeUnit)
-                continue;
+            if(partyGo!=null)
+                GameObject.Destroy(partyGo);
+            activeUnitGroundGO = null;
+        }
+        void SpawnPartyMembers()
+        {
+            DeletePartyMembersGO();
+            //Debug.Log("Party Count: "+Player.Instance.Party.members.Count);
+            int cnt = 1;
+            if (Player.Instance.Party.EncounterComponent.EncounterNode == null)
+            {
+                Player.Instance.Party.EncounterComponent.EncounterNode = EncounterTree.Instance.startNode;
+                Player.Instance.Party.EncounterComponent.AddMovedEncounter(EncounterTree.Instance.startNode);
+                areaStart = true;
+            }
 
-            go = Instantiate(member.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
+            partyGo = new GameObject("Partytest");
+            partyGo.transform.SetParent(spawnParent);
+            partyGo.transform.position = Player.Instance.Party.EncounterComponent.EncounterNode.gameObject.transform.position;
+            partyGameObjects = new List<EncounterPlayerUnitController>();
+            //Spawn ActiveUnit first
+            var activeUnit = Player.Instance.Party.members[Player.Instance.Party.ActiveUnitIndex];
+            var go = Instantiate(activeUnit.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
             go.transform.localPosition = new Vector3(0,0,0);
-            uc =  go.GetComponent<EncounterPlayerUnitController>();
-            uc.Hide();
-            uc.SetUnit(member);
+            var uc =  go.GetComponent<EncounterPlayerUnitController>();
+            uc.SetUnit(activeUnit);
+            ShowActiveUnit(go.transform.position);
+            uc.Show();
             uc.onClicked -= UnitClicked;
             uc.onClicked += UnitClicked;
-          //  go.GetComponent<EncounterPlayerUnitController>().SetTarget(activeMemberGo.transform);
-           // go.GetComponent<EncounterPlayerUnitController>().SetOffsetCount(cnt);
-            //go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count-cnt);
-            cnt++;
-            partyGameObjects.Add(go.GetComponent<EncounterPlayerUnitController>());
-        }
-        Player.Instance.Party.GameObject = partyGo;
-        Player.Instance.Party.onActiveUnitChanged-=UpdatePartyGameObjects;
-        Player.Instance.Party.onActiveUnitChanged+=UpdatePartyGameObjects;
-        ShowActiveUnitGroundFX();
+            // go.GetComponent<EncounterPlayerUnitController>().SetTarget(null);
+            // go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count);
+            activeMemberGo = go;
+
+            partyGameObjects.Add( go.GetComponent<EncounterPlayerUnitController>());
+            foreach (var member in Player.Instance.Party.members)
+            {
+         
+                if (member == activeUnit)
+                    continue;
+
+                go = Instantiate(member.visuals.Prefabs.EncounterAnimatedSprite, partyGo.transform, false);
+                go.transform.localPosition = new Vector3(0,0,0);
+                uc =  go.GetComponent<EncounterPlayerUnitController>();
+                uc.Hide();
+                uc.SetUnit(member);
+                uc.onClicked -= UnitClicked;
+                uc.onClicked += UnitClicked;
+                //  go.GetComponent<EncounterPlayerUnitController>().SetTarget(activeMemberGo.transform);
+                // go.GetComponent<EncounterPlayerUnitController>().SetOffsetCount(cnt);
+                //go.GetComponent<EncounterPlayerUnitController>().SetSortOrder(Player.Instance.Party.members.Count-cnt);
+                cnt++;
+                partyGameObjects.Add(go.GetComponent<EncounterPlayerUnitController>());
+            }
+            Player.Instance.Party.GameObject = partyGo;
+            Player.Instance.Party.onActiveUnitChanged-=UpdatePartyGameObjects;
+            Player.Instance.Party.onActiveUnitChanged+=UpdatePartyGameObjects;
+            ShowActiveUnitGroundFX();
         
-    }
+        }
 
     
 
-    private void UnitClicked(EncounterPlayerUnitController clickedUnitController)
-    {
+        private void UnitClicked(EncounterPlayerUnitController clickedUnitController)
+        {
        
-        MovementHint();
-    }
-    private GameObject activeMemberGo;
-    public void UpdatePartyGameObjects()
-    {
-
-        var activeUnit = Player.Instance.Party.members[Player.Instance.Party.ActiveUnitIndex];
-        int cnt = 1;
-
-        foreach (var unitController in partyGameObjects)
-        {
-            if (unitController.unit.Equals(activeUnit))
-            {
-                activeMemberGo = unitController.gameObject;
-            }
+            MovementHint();
         }
-
-        foreach (var member in Player.Instance.Party.members)
+        private GameObject activeMemberGo;
+        public void UpdatePartyGameObjects()
         {
-            if (member.Equals(activeUnit))
+
+            var activeUnit = Player.Instance.Party.members[Player.Instance.Party.ActiveUnitIndex];
+            int cnt = 1;
+
+            foreach (var unitController in partyGameObjects)
             {
-                foreach (var unitController in partyGameObjects)
+                if (unitController.unit.Equals(activeUnit))
                 {
-                    if (unitController.unit == member)
+                    activeMemberGo = unitController.gameObject;
+                }
+            }
+
+            foreach (var member in Player.Instance.Party.members)
+            {
+                if (member.Equals(activeUnit))
+                {
+                    foreach (var unitController in partyGameObjects)
                     {
-                        //unitController.transform.localPosition = new Vector3(0,0,0);
-                        ShowActiveUnit(unitController.transform.position);
-                        unitController.Show();
-                        //unitController.SetTarget(null);
-                       // unitController.SetSortOrder(Player.Instance.Party.members.Count);
+                        if (unitController.unit == member)
+                        {
+                            //unitController.transform.localPosition = new Vector3(0,0,0);
+                            ShowActiveUnit(unitController.transform.position);
+                            unitController.Show();
+                            //unitController.SetTarget(null);
+                            // unitController.SetSortOrder(Player.Instance.Party.members.Count);
+                        }
+                    }
+               
+                }
+                else
+                {
+                    foreach (var unitController in partyGameObjects)
+                    {
+                        if (unitController.unit.Equals(member))
+                        {
+                            //unitController.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
+                            unitController.Hide();
+                            // unitController.SetTarget(activeMemberGo.transform);
+                            //unitController.SetOffsetCount(cnt);
+                            //Debug.Log("SetOffset!");
+                            // unitController.SetSortOrder(Player.Instance.Party.members.Count-cnt);
+                        }
                     }
                 }
-               
+
+                cnt++;
+
             }
-            else
+            foreach (var member in Player.Instance.Party.deadMembers)
             {
                 foreach (var unitController in partyGameObjects)
                 {
                     if (unitController.unit.Equals(member))
                     {
-                        //unitController.transform.localPosition = new Vector3(-offsetBetweenCharacters*cnt,0,0);
                         unitController.Hide();
-                       // unitController.SetTarget(activeMemberGo.transform);
-                        //unitController.SetOffsetCount(cnt);
-                        //Debug.Log("SetOffset!");
-                       // unitController.SetSortOrder(Player.Instance.Party.members.Count-cnt);
                     }
                 }
             }
-
-            cnt++;
-
+            MonoUtility.InvokeNextFrame(()=>uiPartyController.Show(Player.Instance.Party));//Otherwise mouse click will go through UI
+            MyDebug.LogTest(gameObject);
+            uiCharacterView.UpdateUnit(Player.Instance.Party.ActiveUnit);
         }
-        foreach (var member in Player.Instance.Party.deadMembers)
-        {
-            foreach (var unitController in partyGameObjects)
-            {
-                if (unitController.unit.Equals(member))
-                {
-                    unitController.Hide();
-                }
-            }
-        }
-        MonoUtility.InvokeNextFrame(()=>uiPartyController.Show(Player.Instance.Party));//Otherwise mouse click will go through UI
-        MyDebug.LogTest(gameObject);
-        uiCharacterView.UpdateUnit(Player.Instance.Party.ActiveUnit);
-    }
    
-    private void ResetMoveOptions()
-    {
+        private void ResetMoveOptions()
+        {
        
 
-        EncounterTree.Instance.SetAllNodesMoveable(false);
-        // foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
-        // {
-        //     child.SetMoveable(false);
-        //
-        // }
-    }
+            EncounterTree.Instance.SetAllNodesMoveable(false);
+            // foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
+            // {
+            //     child.SetMoveable(false);
+            //
+            // }
+        }
 
-   // public GameObject activeUnitEffectPrefab;
-    private GameObject activeUnitEffect;
-    public void ShowActiveUnit(Vector3 position)
-    {
-        // if (activeUnitEffect == null)
-        // {
-        //     activeUnitEffect = Instantiate(activeUnitEffectPrefab, spawnParent, false);
-        //     
-        // }
-        // activeUnitEffect.transform.position = position;
-    }
-    public void ShowMoveOptions()
-    {
-        
-        foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
+        // public GameObject activeUnitEffectPrefab;
+        private GameObject activeUnitEffect;
+        public void ShowActiveUnit(Vector3 position)
         {
-            if (child != Player.Instance.Party.EncounterComponent.EncounterNode)
+            // if (activeUnitEffect == null)
+            // {
+            //     activeUnitEffect = Instantiate(activeUnitEffectPrefab, spawnParent, false);
+            //     
+            // }
+            // activeUnitEffect.transform.position = position;
+        }
+        public void ShowMoveOptions()
+        {
+        
+            foreach (var child in Player.Instance.Party.EncounterComponent.EncounterNode.children)
             {
-                child.SetMoveable(true);
-                child.SetActive(true);
-                foreach (var nestedChild in child.children)
+                if (child != Player.Instance.Party.EncounterComponent.EncounterNode)
                 {
-                    nestedChild.SetActive(true);
+                    child.SetMoveable(true);
+                    child.SetActive(true);
+                    foreach (var nestedChild in child.children)
+                    {
+                        nestedChild.SetActive(true);
+                    }
+                    foreach (var nestedRoad in child.roads)
+                    {
+                        nestedRoad.SetMovedVisual();
+                    }
                 }
-                foreach (var nestedRoad in child.roads)
-                {
-                    nestedRoad.SetMovedVisual();
-                }
-            }
 
 //            Debug.Log("Move Option: "+child+" "+child.gameObject.transform.position);
         
-        }
-        foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
-        {
-            road.SetMoveable(true);
+            }
+            foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
+            {
+                road.SetMoveable(true);
            
-        }
+            }
       
-    }
+        }
 
   
     
-    void Update()
-    {
-        if (CampaingFinished)
-            return;
-        if (Input.GetMouseButtonDown(1))
+        void Update()
         {
-            FindObjectOfType<CameraSystem>().GetMixin<FocusCameraMixin>().SetTargets(Player.Instance.Party.EncounterComponent.EncounterNode.gameObject);
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-           
-           
-            foreach (var clickController in nodeClickControllers)
+            if (CampaingFinished)
+                return;
+            if (Input.GetMouseButtonDown(1))
             {
+                FindObjectOfType<CameraSystem>().GetMixin<FocusCameraMixin>().SetTargets(Player.Instance.Party.EncounterComponent.EncounterNode.gameObject);
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+           
+           
+                foreach (var clickController in nodeClickControllers)
+                {
           
-                clickController.encounterNode.renderer.IncreaseScale(0);
-                clickController.encounterNode.renderer.AmplifyRotationSpeedMultiplier(0);
+                    clickController.encounterNode.renderer.IncreaseScale(0);
+                    clickController.encounterNode.renderer.AmplifyRotationSpeedMultiplier(0);
+                }
             }
-        }
 
-        if (!Input.GetMouseButton(0)&&!Input.GetMouseButtonDown(0))
-        {
-            cursor.DecreaseFill();
-        }
-    }
-
-    private EncounterCursorController cursor;
-    public void Deactivate()
-    {
-        
-        SceneController.OnSceneReady -= SceneReady;
-        Player.Instance.Party.onActiveUnitChanged-=UpdatePartyGameObjects;
-        Player.Instance.Party.onMemberAdded -= MemberAdded;
-        if (CampaingFinished)
-            return;
-        foreach (var system in Systems)
-        {
-            system.Deactivate();
-        }
-        
-    }
-    private void OnDestroy()
-    {
-        Deactivate();
-    }
-
-    private void SetAllEncountersNotMovable()
-    {
-        foreach (var column in EncounterTree.Instance.columns)
-        {
-            foreach (var node in column.children)
+            if (!Input.GetMouseButton(0)&&!Input.GetMouseButtonDown(0))
             {
-                node.SetMoveable(false);
+                cursor.DecreaseFill();
             }
         }
-    }
 
-    void MovementHint()
-    {
-        foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
+        private EncounterCursorController cursor;
+        public void Deactivate()
         {
-            road.end.Grow();
+        
+            SceneController.OnSceneReady -= SceneReady;
+            Player.Instance.Party.onActiveUnitChanged-=UpdatePartyGameObjects;
+            Player.Instance.Party.onMemberAdded -= MemberAdded;
+            if (CampaingFinished)
+                return;
+            foreach (var system in Systems)
+            {
+                system.Deactivate();
+            }
+        
         }
-    }
+        private void OnDestroy()
+        {
+            Deactivate();
+        }
 
-    public enum NodeType
-    {
-        Battle,
-        Heal,
-        Random,
-        Standard,
-        Boss,
-        Elite
-    }
-    public void NodeClicked(EncounterNode encounterNode)
-    {
-        MyDebug.LogInput("Node Clicked: "+encounterNode);
-      
-        cursor.Show();
-        cursor.SetPosition(encounterNode.gameObject.transform.position);
-        cursor.SetSprite(encounterNode.renderer.moveOptionSprite);
-       // cursor.SetColor(encounterNode.renderer.typeColor);
-        cursor.SetScale(1.0f);
-        if (encounterNode is BattleEncounterNode battleEncounterNode)
+        private void SetAllEncountersNotMovable()
         {
-            if(battleEncounterNode.BattleType==BattleType.Boss)
-                cursor.SetScale(1.8f);
+            foreach (var column in EncounterTree.Instance.columns)
+            {
+                foreach (var node in column.children)
+                {
+                    node.SetMoveable(false);
+                }
+            }
         }
-       
-        if (encounterNode== Player.Instance.Party.EncounterComponent.EncounterNode)
+
+        void MovementHint()
         {
-            MovementHint();
-            //FindObjectOfType<UICharacterViewController>().Show(Player.Instance.Party.ActiveUnit);
-            
-            return;
-        }
-        if (encounterNode.moveable)
-        {
- 
-            //ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), true, MoveClicked);
             foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
             {
-                if(road.end==encounterNode)
-                    road.NodeSelected();
-                else
-                    road.NodeDeselected();
+                road.end.Grow();
             }
-            // ResetMoveOptions();
-            // ShowMoveOptions();
         }
-        else
+
+        public enum NodeType
         {
+            Battle,
+            Heal,
+            Random,
+            Standard,
+            Boss,
+            Elite
+        }
+        public void NodeClicked(EncounterNode encounterNode)
+        {
+            MyDebug.LogInput("Node Clicked: "+encounterNode);
+      
+            cursor.Show();
+            cursor.SetPosition(encounterNode.gameObject.transform.position);
+            cursor.SetSprite(encounterNode.renderer.moveOptionSprite);
+            // cursor.SetColor(encounterNode.renderer.typeColor);
+            cursor.SetScale(1.0f);
+            if (encounterNode is BattleEncounterNode battleEncounterNode)
+            {
+                if(battleEncounterNode.BattleType==BattleType.Boss)
+                    cursor.SetScale(1.8f);
+            }
+       
+            if (encounterNode== Player.Instance.Party.EncounterComponent.EncounterNode)
+            {
+                MovementHint();
+                //FindObjectOfType<UICharacterViewController>().Show(Player.Instance.Party.ActiveUnit);
+            
+                return;
+            }
+            if (encounterNode.moveable)
+            {
+ 
+                //ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), true, MoveClicked);
+                foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
+                {
+                    if(road.end==encounterNode)
+                        road.NodeSelected();
+                    else
+                        road.NodeDeselected();
+                }
+                // ResetMoveOptions();
+                // ShowMoveOptions();
+            }
+            else
+            {
          
-            //ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), false, null);
+                //ToolTipSystem.ShowEncounter(encounterNode, encounterNode.gameObject.transform.position+new Vector3(2,0,0), false, null);
+            }
         }
-    }
 
-    void HideMoveOptions()
-    {
-        foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
+        void HideMoveOptions()
         {
-            road.SetMoveable(false);
+            foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
+            {
+                road.SetMoveable(false);
+            }
         }
-    }
 
-    public void MoveClicked(int nodeIndex)
-    {
-        MoveClicked(nodeClickControllers[nodeIndex].encounterNode);
-    }
-    public void MoveClicked(EncounterNode node)
-    {
-        HideMoveOptions();
-        MyDebug.LogTest(gameObject);
-        activeUnitGroundGO.FadeOut();
-        SetAllEncountersNotMovable();
-        Player.Instance.Party.AddSupplies(-Player.Instance.Party.EncounterComponent.EncounterNode.GetRoad(node).moveCost);
-        Player.Instance.Party.SupplyCheck();
+        public void MoveClicked(int nodeIndex)
+        {
+            MoveClicked(nodeClickControllers[nodeIndex].encounterNode);
+        }
+        public void MoveClicked(EncounterNode node)
+        {
+            HideMoveOptions();
+            MyDebug.LogTest(gameObject);
+            activeUnitGroundGO.FadeOut();
+            SetAllEncountersNotMovable();
+            Player.Instance.Party.AddSupplies(-Player.Instance.Party.EncounterComponent.EncounterNode.GetRoad(node).moveCost);
+            Player.Instance.Party.SupplyCheck();
        
-        // foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
-        // {
-        //         road.NodeDeselected();
-        // }
-        // SetAllEncountersNotMovable();
-        StartCoroutine(MovementAnimation(node));
+            // foreach (var road in Player.Instance.Party.EncounterComponent.EncounterNode.roads)
+            // {
+            //         road.NodeDeselected();
+            // }
+            // SetAllEncountersNotMovable();
+            StartCoroutine(MovementAnimation(node));
        
-        cursor.Hide();
+            cursor.Hide();
         
-        timeOfDayManager.ElapseTimeStep();
+            timeOfDayManager.ElapseTimeStep();
      
-    }
+        }
 
    
-    IEnumerator MovementAnimation(EncounterNode target)
-    {
-        Vector3 targetPos = target.gameObject.transform.position;
-        Vector3 startPos = partyGo.transform.position;
-        float distance = Vector3.Distance(targetPos, startPos);
-        float time = 0;
-        float speed = 3;
-        actionSystem.Move(target);
-        // Debug.Log("Reset Moveoptions!");
-        ResetMoveOptions();
-        ShowMovedRoads();
+        IEnumerator MovementAnimation(EncounterNode target)
+        {
+            Vector3 targetPos = target.gameObject.transform.position;
+            Vector3 startPos = partyGo.transform.position;
+            float distance = Vector3.Distance(targetPos, startPos);
+            float time = 0;
+            float speed = 3;
+            actionSystem.Move(target);
+            // Debug.Log("Reset Moveoptions!");
+            ResetMoveOptions();
+            ShowMovedRoads();
        
-        while ( partyGo.transform.position!=targetPos)
-        {
-            time += Time.deltaTime *speed/distance;
-            partyGo.transform.position = Vector3.Lerp(startPos, targetPos, time);
-            yield return null;
-
-        }
-
-        ShowActiveUnitGroundFX();
-        ShowInactiveNodes();
- 
-        this.CallWithDelay(()=>target.Activate(Player.Instance.Party), 1.0f);
-       
-        
-    }
-
- 
-    private void ShowActiveUnitGroundFX()
-    {
-        
-        if (activeUnitGroundGO == null)
-        {
-            activeUnitGroundGO = Instantiate(activeUnitGroundPrefab, partyGo.transform, false)
-                .GetComponent<ActiveUnitGroundFX>();
-        }
-        else
-        {
-           
-            activeUnitGroundGO.FadeIn();
-        }
-        
-    }
-
-    private void ShowAllInactiveNodes()
-    {
-        for (int i = 0; i <= Player.Instance.Party.EncounterComponent.EncounterNode.depth; i++)
-        {
-
-
-            foreach (var child in EncounterTree.Instance.columns[i].children)
+            while ( partyGo.transform.position!=targetPos)
             {
-                if (!Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(child.GetId()))
-                    child.renderer.SetInactive();
+                time += Time.deltaTime *speed/distance;
+                partyGo.transform.position = Vector3.Lerp(startPos, targetPos, time);
+                yield return null;
+
+            }
+
+            ShowActiveUnitGroundFX();
+            ShowInactiveNodes();
+ 
+            this.CallWithDelay(()=>target.Activate(Player.Instance.Party), 1.0f);
+       
+        
+        }
+
+ 
+        private void ShowActiveUnitGroundFX()
+        {
+        
+            if (activeUnitGroundGO == null)
+            {
+                activeUnitGroundGO = Instantiate(activeUnitGroundPrefab, partyGo.transform, false)
+                    .GetComponent<ActiveUnitGroundFX>();
+            }
+            else
+            {
+           
+                activeUnitGroundGO.FadeIn();
+            }
+        
+        }
+
+        private void ShowAllInactiveNodes()
+        {
+            for (int i = 0; i <= Player.Instance.Party.EncounterComponent.EncounterNode.depth; i++)
+            {
+
+
+                foreach (var child in EncounterTree.Instance.columns[i].children)
+                {
+                    if (!Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(child.GetId()))
+                        child.renderer.SetInactive();
+                }
             }
         }
-    }
 
-    void ShowInactiveNodes()
-    {
-
-         var currentNode = Player.Instance.Party.EncounterComponent.EncounterNode;
-        
-        // var lastNode =
-        //     Player.Instance.Party.EncounterComponent.MovedEncounters[
-        //         Player.Instance.Party.EncounterComponent.MovedEncounters.Count - 2];
-        // foreach (var child in lastNode.children)
-        // {
-        //     if(child!=currentNode&& !(child is StartEncounterNode))
-        //         child.renderer.SetInactive();
-        // }
-        var parentId = Player.Instance.Party.EncounterComponent.MovedEncounterIds[Player.Instance.Party.EncounterComponent.MovedEncounterIds.Count-2];
-        // Debug.Log("Parent ID Node: "+parentId);
-        // Debug.Log("CurrentNode: "+currentNode.gameObject.name);
-        foreach (var child in EncounterTree.Instance.columns[currentNode.depth-1].children)
+        void ShowInactiveNodes()
         {
-            if (child.GetId() == parentId)
+
+            var currentNode = Player.Instance.Party.EncounterComponent.EncounterNode;
+        
+            // var lastNode =
+            //     Player.Instance.Party.EncounterComponent.MovedEncounters[
+            //         Player.Instance.Party.EncounterComponent.MovedEncounters.Count - 2];
+            // foreach (var child in lastNode.children)
+            // {
+            //     if(child!=currentNode&& !(child is StartEncounterNode))
+            //         child.renderer.SetInactive();
+            // }
+            var parentId = Player.Instance.Party.EncounterComponent.MovedEncounterIds[Player.Instance.Party.EncounterComponent.MovedEncounterIds.Count-2];
+            // Debug.Log("Parent ID Node: "+parentId);
+            // Debug.Log("CurrentNode: "+currentNode.gameObject.name);
+            foreach (var child in EncounterTree.Instance.columns[currentNode.depth-1].children)
             {
-                foreach (var road in child.roads)
+                if (child.GetId() == parentId)
                 {
-                    if (road.end != currentNode)
+                    foreach (var road in child.roads)
                     {
-                        // Debug.Log("Set Missed: "+road.end.gameObject.name);
+                        if (road.end != currentNode)
+                        {
+                            // Debug.Log("Set Missed: "+road.end.gameObject.name);
+                            road.SetMissedVisual();
+                        }
+                    }
+                }
+            }
+            // Debug.Log("Show Inactive Nodes of: "+currentNode);
+            foreach (var child in EncounterTree.Instance.columns[currentNode.depth].children)
+            {
+                if (!Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(child.GetId()))
+                {
+                    child.renderer.SetInactive();
+                    foreach (var nestedchild in child.children)
+                    {
+                        nestedchild.renderer.SetInactive();
+                    }
+                    foreach (var road in child.roads)
+                    {
                         road.SetMissedVisual();
                     }
                 }
             }
         }
-        // Debug.Log("Show Inactive Nodes of: "+currentNode);
-        foreach (var child in EncounterTree.Instance.columns[currentNode.depth].children)
+        EncounterNode GetEncounterNodeById(string id)
         {
-            if (!Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(child.GetId()))
+            return EncounterTree.Instance.GetEncounterNodeById(id);
+        }
+        private void ShowMovedRoads()
+        {
+        
+            for( int i= Player.Instance.Party.EncounterComponent.MovedEncounterIds.Count-2; i >=0; i--)
             {
-                child.renderer.SetInactive();
-                foreach (var nestedchild in child.children)
+                var node = EncounterTree.Instance.GetEncounterNodeById(Player.Instance.Party.EncounterComponent
+                    .MovedEncounterIds[i]);
+                var nextNode=EncounterTree.Instance.GetEncounterNodeById(Player.Instance.Party.EncounterComponent
+                    .MovedEncounterIds[i+1]);
+                Road road = node.GetRoad(nextNode);
+                if (road==null||road.gameObject == null)
                 {
-                    nestedchild.renderer.SetInactive();
+                    //  Player.Instance.Party.EncounterComponent.RemoveMovedEncounterAt(i);
                 }
-                foreach (var road in child.roads)
+                else
                 {
-                    road.SetMissedVisual();
+                    road.SetMovedVisual();
                 }
+
             }
         }
-    }
-    EncounterNode GetEncounterNodeById(string id)
-    {
-        return EncounterTree.Instance.GetEncounterNodeById(id);
-    }
-    private void ShowMovedRoads()
-    {
-        
-        for( int i= Player.Instance.Party.EncounterComponent.MovedEncounterIds.Count-2; i >=0; i--)
+
+        public void Continue()
         {
-            var node = EncounterTree.Instance.GetEncounterNodeById(Player.Instance.Party.EncounterComponent
-                .MovedEncounterIds[i]);
-            var nextNode=EncounterTree.Instance.GetEncounterNodeById(Player.Instance.Party.EncounterComponent
-                .MovedEncounterIds[i+1]);
-            Road road = node.GetRoad(nextNode);
-            if (road==null||road.gameObject == null)
-            {
-              //  Player.Instance.Party.EncounterComponent.RemoveMovedEncounterAt(i);
-            }
-            else
-            {
-                road.SetMovedVisual();
-            }
-
+            // Debug.Log("AutoSaving!");
+            // SaveGameManager.Save();// new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
+            Player.Instance.Party.EncounterTick();
+            SetAllEncountersNotMovable();
+        
+            ShowMoveOptions();
+        
         }
-    }
 
-    public void Continue()
-    {
-        // Debug.Log("AutoSaving!");
-        // SaveGameManager.Save();// new SaveData(Player.Instance, Campaign.Instance, EncounterTree.Instance));
-        Player.Instance.Party.EncounterTick();
-         SetAllEncountersNotMovable();
+
+        public T GetSystem<T>()
+        {
+            foreach (var s in Systems.OfType<T>())
+                return (T) Convert.ChangeType(s, typeof(T));
+            return default;
+        }
+
+        public Coroutine StartChildCoroutine(IEnumerator coroutine)
+        {
+            return StartCoroutine(coroutine);
+        }
+
+        public void StopChildCoroutine(Coroutine coroutine)
+        {
+            StopCoroutine(coroutine);
+        }
+
+
+        public void NodeHolding(EncounterNode encounterNode, float holdTime)
+        {
+            if (!encounterNode.moveable)
+                return;
         
-         ShowMoveOptions();
-        
-    }
-
-
-    public T GetSystem<T>()
-    {
-        foreach (var s in Systems.OfType<T>())
-            return (T) Convert.ChangeType(s, typeof(T));
-        return default;
-    }
-
-    public Coroutine StartChildCoroutine(IEnumerator coroutine)
-    {
-        return StartCoroutine(coroutine);
-    }
-
-    public void StopChildCoroutine(Coroutine coroutine)
-    {
-        StopCoroutine(coroutine);
-    }
-
-
-    public void NodeHolding(EncounterNode encounterNode, float holdTime)
-    {
-        if (!encounterNode.moveable)
-            return;
-        
-        //cursor.SetScale(1.0f+holdTime);
-        cursor.SetFill(1-holdTime/moveToNodeHoldTime);
+            //cursor.SetScale(1.0f+holdTime);
+            cursor.SetFill(1-holdTime/moveToNodeHoldTime);
     
-        encounterNode.renderer.IncreaseScale(holdTime/2.5f);
-        encounterNode.renderer.AmplifyRotationSpeedMultiplier(holdTime*200);
-        if (holdTime >= moveToNodeHoldTime)
-        {
-            MoveClicked(encounterNode);
+            encounterNode.renderer.IncreaseScale(holdTime/2.5f);
+            encounterNode.renderer.AmplifyRotationSpeedMultiplier(holdTime*200);
+            if (holdTime >= moveToNodeHoldTime)
+            {
+                MoveClicked(encounterNode);
+            }
         }
-    }
 
-    public void SubscribeNodeClickController(EncounterNodeClickController encounterNodeClickController)
-    {
-        nodeClickControllers.Add(encounterNodeClickController);
-    }
+        public void SubscribeNodeClickController(EncounterNodeClickController encounterNodeClickController)
+        {
+            nodeClickControllers.Add(encounterNodeClickController);
+        }
 
-    public void CleanUp()
-    {
-        MyDebug.LogTODO("TODO here and in gridgamemanager cleanup happens multiple times from ondestroy/ondisable and cleanup");
-        Deactivate();
+        public void CleanUp()
+        {
+            MyDebug.LogTODO("TODO here and in gridgamemanager cleanup happens multiple times from ondestroy/ondisable and cleanup");
+            Deactivate();
+        }
     }
 }

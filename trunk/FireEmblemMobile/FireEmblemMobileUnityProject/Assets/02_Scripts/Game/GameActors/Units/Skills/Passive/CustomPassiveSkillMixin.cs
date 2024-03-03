@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.UnitState;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive

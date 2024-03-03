@@ -1,13 +1,15 @@
 ﻿using System;
 using Game.GameActors.Items;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using Game.GameInput;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameInput.Buttons;
+using Game.GameInput.GameplayCommands;
+using Game.GameInput.Interfaces;
 using Game.Manager;
 using GameEngine;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.Systems
 {
     public class UnitSelectionSystem : MonoBehaviour, IEngineSystem
     {

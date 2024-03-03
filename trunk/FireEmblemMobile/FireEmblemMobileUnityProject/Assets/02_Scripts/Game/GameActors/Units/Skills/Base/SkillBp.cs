@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using _02_Scripts.Game.GUI.Utility;
+using Game.GameActors.Units.Skills.EffectMixins;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Base
 {
     [Serializable]
     [CreateAssetMenu(fileName = "Skill", menuName = "GameData/Skills/Skill")]

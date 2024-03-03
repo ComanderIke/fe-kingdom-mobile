@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Grid;
+using Game.Grid.Tiles;
 using Game.Manager;
 using Game.Map;
 using GameEngine;

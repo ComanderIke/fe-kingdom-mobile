@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Game.Mechanics;
 using UnityEngine;
-using Unused.Dialogs;
 
 namespace Game.Dialog
 {

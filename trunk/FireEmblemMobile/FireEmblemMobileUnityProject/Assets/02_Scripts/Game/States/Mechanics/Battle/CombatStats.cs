@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Game.Mechanics.Battle
+namespace Game.States.Mechanics.Battle
 {
     [Serializable]
     public class CombatStats

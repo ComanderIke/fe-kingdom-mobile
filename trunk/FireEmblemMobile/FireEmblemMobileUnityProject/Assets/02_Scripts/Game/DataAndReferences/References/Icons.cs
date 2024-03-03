@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = System.Random;
 
-namespace Game.Graphics
+namespace Game.DataAndReferences.References
 {
     [Serializable]
     public class Icons

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using __2___Scripts.External.Editor.Elements;
 using Game.GameActors.Items;
 
-namespace _02_Scripts.Game.Dialog.DialogSystem
+namespace Game.Dialog.DialogSystem
 {
     public class LGRandomOutcomeEventDialogSO :LGEventDialogSO
     {

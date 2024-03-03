@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameMechanics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UISynergy : MonoBehaviour
     {

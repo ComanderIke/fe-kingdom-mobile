@@ -1,28 +1,31 @@
 ﻿using MoreMountains.Feedbacks;
 using UnityEngine;
 
-public class HitFeedbackController : MonoBehaviour
+namespace Game.Graphics.BattleAnimations
 {
-    private DamagedState state = DamagedState.Damage;
-    [SerializeField] private MMF_Player hitFeedback;
-    [SerializeField] private MMF_Player strongHitFeedback;
-    [SerializeField] private MMF_Player noDmgFeedback;
-    public void SetState(DamagedState state)
+    public class HitFeedbackController : MonoBehaviour
     {
-        this.state = state;
-    }
-
-    public void PlayHitFeedback()
-    {
-        switch (state)
+        private DamagedState state = DamagedState.Damage;
+        [SerializeField] private MMF_Player hitFeedback;
+        [SerializeField] private MMF_Player strongHitFeedback;
+        [SerializeField] private MMF_Player noDmgFeedback;
+        public void SetState(DamagedState state)
         {
-            case DamagedState.Damage:
-                hitFeedback.PlayFeedbacks();break;
-            case DamagedState.NoDamage:
-                noDmgFeedback.PlayFeedbacks();break;
-            case DamagedState.HighDmg:
-                strongHitFeedback.PlayFeedbacks();break;
+            this.state = state;
+        }
+
+        public void PlayHitFeedback()
+        {
+            switch (state)
+            {
+                case DamagedState.Damage:
+                    hitFeedback.PlayFeedbacks();break;
+                case DamagedState.NoDamage:
+                    noDmgFeedback.PlayFeedbacks();break;
+                case DamagedState.HighDmg:
+                    strongHitFeedback.PlayFeedbacks();break;
             
+            }
         }
     }
 }

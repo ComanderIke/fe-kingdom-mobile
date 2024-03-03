@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.SerializedData;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.Utility
 {
     public class DebugSaveGame : MonoBehaviour
     {

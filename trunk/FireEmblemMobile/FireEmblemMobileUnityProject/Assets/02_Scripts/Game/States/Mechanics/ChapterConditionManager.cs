@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.GameInput;
-using Game.Grid;
+﻿using Game.EncounterAreas.Encounters.Battle;
 using Game.Manager;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.States.Mechanics
 {
     public class ChapterConditionManager:ConditionManager
     {

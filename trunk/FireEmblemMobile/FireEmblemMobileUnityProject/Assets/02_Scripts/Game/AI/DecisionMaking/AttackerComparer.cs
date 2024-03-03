@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Game.GameActors.Units;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units.Interfaces;
 
-namespace Game.AI
+namespace Game.AI.DecisionMaking
 {
     public class AttackerComparer : IComparer<IAIAgent>
     {

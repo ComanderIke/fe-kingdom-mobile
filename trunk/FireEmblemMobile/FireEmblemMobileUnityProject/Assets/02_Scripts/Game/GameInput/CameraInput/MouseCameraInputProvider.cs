@@ -1,8 +1,8 @@
-﻿using LostGrace;
-using Pathfinding;
+﻿using Game.Utility;
+using GameEngine.Input;
 using UnityEngine;
 
-namespace GameEngine.Input
+namespace Game.GameInput.CameraInput
 {
     public class MouseCameraInputProvider : ICameraInputProvider
     {

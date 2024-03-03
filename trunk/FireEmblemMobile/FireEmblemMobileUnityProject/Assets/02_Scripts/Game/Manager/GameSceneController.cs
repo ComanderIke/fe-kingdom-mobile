@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.GUI;
-using Game.Manager;
-using Game.Systems;
-using Game.WorldMapStuff.Model;
-using LostGrace;
-using Menu;
+using Game.EncounterAreas.Controller;
+using Game.EncounterAreas.Encounters.Battle;
+using Game.EncounterAreas.Management;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
+using Game.Menu;
+using Game.SerializedData;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace Game.WorldMapStuff.Controller
+namespace Game.Manager
 {
     public class GameSceneController
     {

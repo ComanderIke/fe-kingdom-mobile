@@ -1,47 +1,48 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleSuccessRenderer : MonoBehaviour, IBattleSuccessRenderer
+namespace Game.GUI.Renderer
 {
-
-    private Canvas canvas;
-    [SerializeField] private float minTimeShown = 1.0f;
-    private bool shown = false;
-    private float time = 0;
-    void Start()
+    public class BattleSuccessRenderer : MonoBehaviour, IBattleSuccessRenderer
     {
-        canvas = GetComponent<Canvas>();
-    }
 
-    public void Show()
-    {
-        canvas.enabled = true;
-        shown = true;
-    }
-
-    private void Update()
-    {
-        if (shown)
+        private Canvas canvas;
+        [SerializeField] private float minTimeShown = 1.0f;
+        private bool shown = false;
+        private float time = 0;
+        void Start()
         {
-            time += Time.deltaTime;
-            if (time >= minTimeShown)
+            canvas = GetComponent<Canvas>();
+        }
+
+        public void Show()
+        {
+            canvas.enabled = true;
+            shown = true;
+        }
+
+        private void Update()
+        {
+            if (shown)
             {
-                if(Input.GetMouseButtonDown(0))
-                    Hide();
+                time += Time.deltaTime;
+                if (time >= minTimeShown)
+                {
+                    if(Input.GetMouseButtonDown(0))
+                        Hide();
+                }
             }
         }
-    }
 
-    public void Hide()
-    {
-        if (gameObject == null)
-            return;
-        shown = false;
-        canvas.enabled = false;
-        OnFinished?.Invoke();
-    }
+        public void Hide()
+        {
+            if (gameObject == null)
+                return;
+            shown = false;
+            canvas.enabled = false;
+            OnFinished?.Invoke();
+        }
 
-    public event Action OnFinished;
+        public event Action OnFinished;
+    }
 }

@@ -1,17 +1,13 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Serialization;
-using __2___Scripts.Game.Utility;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.WorldMapStuff.Model;
+using Game.GameMechanics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UIRemoveCurseArea : MonoBehaviour
     {

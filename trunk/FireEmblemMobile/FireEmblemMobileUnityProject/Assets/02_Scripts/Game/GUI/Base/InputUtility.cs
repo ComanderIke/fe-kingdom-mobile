@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI.Base
 {
     public class InputUtility
     {

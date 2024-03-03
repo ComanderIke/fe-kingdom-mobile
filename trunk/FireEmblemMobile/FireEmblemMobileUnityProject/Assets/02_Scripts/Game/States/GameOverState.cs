@@ -1,13 +1,9 @@
-﻿using Game.GUI;
-using Game.Manager;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
+﻿using Game.Manager;
 using GameEngine;
 using GameEngine.GameStates;
-using Menu;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.States
 {
     public class GameOverState : GameState<NextStateTrigger>
     {

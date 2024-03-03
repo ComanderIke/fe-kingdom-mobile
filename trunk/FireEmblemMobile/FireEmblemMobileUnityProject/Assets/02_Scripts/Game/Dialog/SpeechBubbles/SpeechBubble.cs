@@ -1,8 +1,9 @@
 ﻿using System.Collections;
+using Game.Dialog.Animation;
 using TMPro;
 using UnityEngine;
 
-namespace Unused.Dialogs
+namespace Game.Dialog.SpeechBubbles
 {
     public class SpeechBubble : MonoBehaviour
     {

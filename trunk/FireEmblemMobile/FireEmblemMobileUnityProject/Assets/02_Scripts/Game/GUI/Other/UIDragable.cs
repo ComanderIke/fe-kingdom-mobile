@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Game.GameActors.Items;
-using Game.GameActors.Units;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     [ExecuteInEditMode]
     public class UIDragable : MonoBehaviour, IInitializePotentialDragHandler, IDragHandler, IBeginDragHandler, IEndDragHandler

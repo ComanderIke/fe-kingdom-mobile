@@ -1,4 +1,4 @@
-﻿using Game.GameResources;
+﻿using Game.DataAndReferences.References;
 using TMPro;
 using UnityEngine;
 

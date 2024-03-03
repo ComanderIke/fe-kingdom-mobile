@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Game.GameActors.Units;
+using Game.GameActors.Units.UnitType;
 using UnityEngine;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.Data
 {
     [System.Serializable]
     public class UnitData

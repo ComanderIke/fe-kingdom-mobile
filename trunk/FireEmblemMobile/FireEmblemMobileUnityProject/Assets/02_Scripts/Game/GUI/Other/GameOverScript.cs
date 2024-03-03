@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using Game.GUI.Renderer;
+using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     public class GameOverScript : MonoBehaviour, IGameOverRenderer
     {

@@ -1,9 +1,9 @@
 ﻿using Game.GameActors.Units;
-using Game.GameInput;
+using Game.GameInput.Interfaces;
+using Game.Systems;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace Utility
+namespace Game.LevelDesign
 {
     [ExecuteInEditMode]
     public class StartPosition : MonoBehaviour, IMyDropHandler {

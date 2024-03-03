@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Game.AI;
-using Game.GameActors.Players;
+using Game.AI.DecisionMaking;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Humans;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Base;
 using Game.GameActors.Units.Skills.Passive;
-using Game.GameInput;
 using Game.Grid;
+using Game.Grid.Tiles;
 using Game.Manager;
-using Game.Map;
-using Game.Mechanics.Battle;
-using MoreMountains.Feedbacks;
+using Game.States.Mechanics.Battle;
+using Game.Systems;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.States.Mechanics
 {
     public struct AttackData
     {

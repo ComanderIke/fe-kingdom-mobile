@@ -1,4 +1,4 @@
-﻿namespace __2___Scripts.External.Editor.Elements
+﻿namespace Game.Dialog.DialogSystem
 {
     public enum DialogType
     {

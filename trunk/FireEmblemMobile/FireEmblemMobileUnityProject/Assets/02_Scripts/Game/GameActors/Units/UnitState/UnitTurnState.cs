@@ -1,8 +1,6 @@
-﻿using System;
-using Game.Manager;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.UnitState
 {
     [System.Serializable]
     public class UnitTurnState

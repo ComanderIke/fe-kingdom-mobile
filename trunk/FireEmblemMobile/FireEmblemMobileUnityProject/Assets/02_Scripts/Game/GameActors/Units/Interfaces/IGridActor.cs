@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.GameActors.Grid;
+using Game.GameActors.Units.Components;
 using Game.GameActors.Units.OnGameObject;
-using Game.Grid;
-using UnityEngine;
+using Game.GameActors.Units.UnitState;
+using Game.GameActors.Units.UnitType;
+using Game.Grid.Tiles;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Interfaces
 {
     public interface IGridActor : IGridObject
     {

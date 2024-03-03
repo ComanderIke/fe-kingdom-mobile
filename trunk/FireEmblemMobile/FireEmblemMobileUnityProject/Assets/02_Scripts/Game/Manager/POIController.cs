@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
+using Game.Utility;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace LostGrace
+namespace Game.Manager
 {
     public class POIController : MonoBehaviour
     {

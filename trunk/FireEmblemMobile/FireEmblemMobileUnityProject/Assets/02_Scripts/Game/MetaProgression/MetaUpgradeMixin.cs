@@ -1,10 +1,13 @@
 using System.Collections.Generic;
-using LostGrace;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-public abstract class MetaUpgradeMixin : ScriptableObject
+namespace Game.MetaProgression
 {
-    public abstract void Activate(int level);
+    public abstract class MetaUpgradeMixin : ScriptableObject
+    {
+        public abstract void Activate(int level);
 
-    public abstract IEnumerable<EffectDescription> GetEffectDescriptions(int level);
+        public abstract IEnumerable<EffectDescription> GetEffectDescriptions(int level);
+    }
 }

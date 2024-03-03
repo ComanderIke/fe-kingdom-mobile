@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using Game.GameActors.Units.Skills.Active;
 using Game.GameActors.Units.Skills.Passive;
-using Game.Mechanics;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Base
 {
     [System.Serializable]
     public class SynergieEffects

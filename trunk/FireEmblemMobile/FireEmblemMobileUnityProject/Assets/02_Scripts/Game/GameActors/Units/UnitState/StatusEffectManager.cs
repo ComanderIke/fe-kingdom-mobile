@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.CharStateEffects;
-using Game.GameResources;
 using UnityEngine;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.UnitState
 {
     public class StatusEffectManager
     {

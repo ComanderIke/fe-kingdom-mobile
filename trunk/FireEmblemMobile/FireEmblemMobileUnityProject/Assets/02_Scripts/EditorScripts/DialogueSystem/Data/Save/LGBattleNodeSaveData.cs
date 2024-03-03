@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.EncounterAreas.Encounters.Battle;
 using Game.GameActors.Units;
 using UnityEngine;
 

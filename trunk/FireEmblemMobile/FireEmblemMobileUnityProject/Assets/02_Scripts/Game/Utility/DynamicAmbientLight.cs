@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-
-namespace Effects
+namespace Game.Utility
 {
     public class DynamicAmbientLight : MonoBehaviour
     {

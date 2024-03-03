@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using __2___Scripts.External.Editor.Data.Save;
-using __2___Scripts.External.Editor.Elements;
 using _02_Scripts.EditorScripts.DialogueSystem.Elements;
+using Game.Dialog;
+using Game.Dialog.DialogSystem;
 using UnityEditor.UIElements;
 using UnityEngine;
 

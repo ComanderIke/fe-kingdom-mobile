@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Grid;
+using Game.Grid.Tiles;
 
 namespace Game.GameActors.Units.Skills.Passive
 {

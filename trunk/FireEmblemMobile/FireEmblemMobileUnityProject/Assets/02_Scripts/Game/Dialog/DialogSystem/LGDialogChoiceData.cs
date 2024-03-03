@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using __2___Scripts.External.Editor.Data.Save;
 using Game.GameActors.Items;
 using Game.GameActors.Units;
-using LostGrace;
+using Game.GameMechanics;
 using UnityEngine;
 
-namespace _02_Scripts.Game.Dialog.DialogSystem
+namespace Game.Dialog.DialogSystem
 {
     [Serializable]
     public class LGDialogChoiceData

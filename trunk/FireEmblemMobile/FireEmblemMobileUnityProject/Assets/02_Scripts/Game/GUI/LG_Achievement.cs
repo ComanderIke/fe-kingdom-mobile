@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     [CreateAssetMenu(menuName = "GameData/Achievment")]
     public class LG_Achievement : ScriptableObject

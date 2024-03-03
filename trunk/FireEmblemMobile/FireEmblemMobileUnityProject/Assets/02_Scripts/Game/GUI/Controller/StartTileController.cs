@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class StartTileController : MonoBehaviour
+namespace Game.GUI.Controller
 {
+    public class StartTileController : MonoBehaviour
+    {
     
+    }
 }

@@ -1,35 +1,35 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class SelectCursorController : MonoBehaviour
+namespace Game.GUI.Controller
 {
-    public static SelectCursorController Instance;
-    public GameObject selected;
+    [ExecuteInEditMode]
+    public class SelectCursorController : MonoBehaviour
+    {
+        public static SelectCursorController Instance;
+        public GameObject selected;
 
-    void Start()
-    {
-        Instance = this;
-    }
-    public void Show(GameObject selectedMetaSkill)
-    {
-        gameObject.SetActive(true);
-        selected = selectedMetaSkill;
-        transform.position = selected.transform.position;
-    }
-
-    private void OnEnable()
-    {
-        if (selected != null)
+        void Start()
         {
+            Instance = this;
+        }
+        public void Show(GameObject selectedMetaSkill)
+        {
+            gameObject.SetActive(true);
+            selected = selectedMetaSkill;
             transform.position = selected.transform.position;
         }
-    }
 
-    public void Hide()
-    {
-        gameObject.SetActive(false);
+        private void OnEnable()
+        {
+            if (selected != null)
+            {
+                transform.position = selected.transform.position;
+            }
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

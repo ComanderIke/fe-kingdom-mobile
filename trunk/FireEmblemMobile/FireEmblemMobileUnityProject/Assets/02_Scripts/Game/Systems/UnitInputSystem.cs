@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
+using Game.GameInput.Interfaces;
+using Game.GameInput.Raycasts;
+using Game.GameInput.UnitInput;
+using Game.LevelDesign;
 using Game.Manager;
 using GameCamera;
 using GameEngine;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Utility;
 
-namespace Game.GameInput
+namespace Game.Systems
 {
     public class UnitInputSystem : IEngineSystem, IDragAble, IUnitTouchInputReceiver
     {

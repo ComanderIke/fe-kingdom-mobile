@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Menu
+namespace Game.Menu
 {
     public class SaveManager
     {

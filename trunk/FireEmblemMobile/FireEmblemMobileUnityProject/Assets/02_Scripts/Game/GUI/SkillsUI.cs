@@ -1,12 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
 using Game.Manager;
+using Game.Systems;
+using Game.Utility;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class SkillsUI : MonoBehaviour
     {

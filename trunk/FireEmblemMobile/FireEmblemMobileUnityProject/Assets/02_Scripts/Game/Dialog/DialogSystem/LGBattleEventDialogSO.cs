@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using __2___Scripts.External.Editor.Elements;
+using Game.EncounterAreas.Encounters.Battle;
 using Game.GameActors.Items;
-using Game.GameActors.Units;
 using UnityEngine;
 
-namespace _02_Scripts.Game.Dialog.DialogSystem
+namespace Game.Dialog.DialogSystem
 {
     public class LGBattleEventDialogSO :LGEventDialogSO
     {

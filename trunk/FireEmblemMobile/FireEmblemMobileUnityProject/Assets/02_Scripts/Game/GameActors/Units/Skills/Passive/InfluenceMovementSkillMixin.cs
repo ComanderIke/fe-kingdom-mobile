@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using _02_Scripts.Game.GUI.Utility;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.UnitState;
 using Game.Grid;
-using LostGrace;
+using Game.GUI.Utility;
+using Game.Map;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive

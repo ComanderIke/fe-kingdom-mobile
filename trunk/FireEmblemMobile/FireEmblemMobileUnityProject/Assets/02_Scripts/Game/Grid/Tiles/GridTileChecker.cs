@@ -1,8 +1,7 @@
-﻿using Game.GameActors.Units;
-using Game.Mechanics;
-using UnityEngine;
+﻿using Game.GameActors.Units.Interfaces;
+using Game.States.Mechanics;
 
-namespace Game.Grid
+namespace Game.Grid.Tiles
 {
     public class GridTileChecker : ITileChecker
     {

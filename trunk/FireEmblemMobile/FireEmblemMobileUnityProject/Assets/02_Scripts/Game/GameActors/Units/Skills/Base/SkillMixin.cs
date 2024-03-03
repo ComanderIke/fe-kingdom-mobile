@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using _02_Scripts.Game.GUI.Utility;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.EffectMixins;
 using Game.GameActors.Units.Skills.Passive;
-using Game.Grid;
-using LostGrace;
+using Game.GameMechanics;
+using Game.Grid.Tiles;
+using Game.GUI.Utility;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Base
 {
     public abstract class SkillMixin : ScriptableObject
     {

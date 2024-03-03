@@ -1,9 +1,10 @@
 ﻿using System.Collections;
+using Game.GUI.Interface;
+using Game.Utility;
 using UnityEngine;
 using UnityEngine.UI;
-using Utility;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     public class StatsBarOnMap : IStatBar
     {

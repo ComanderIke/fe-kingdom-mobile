@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Game.GameActors.Items.Consumables;
-using Game.GameActors.Players;
+﻿using System.Collections.Generic;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
-using Game.GameResources;
 using GameEngine;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game
 {
     [CreateAssetMenu(menuName = "GameConfig/Config", fileName = "GameConfig")]
     public class GameConfig : SingletonScriptableObject<GameConfig>

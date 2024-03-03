@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Game.GameActors.Units;
-using Game.GameActors.Units.OnGameObject;
+using Game.GameActors.Units.Interfaces;
+using Game.Graphics.Interfaces;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
-namespace Game.Graphics
+namespace Game.GameActors.Units.Visuals
 {
     [CreateAssetMenu(menuName = "Unit/UnitEffectVisual", fileName = "unitEffectVisual")]
     [Serializable]

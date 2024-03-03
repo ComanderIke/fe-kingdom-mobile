@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using Game.DataAndReferences.Data;
 using Game.GameActors.Units;
-using Game.GameResources;
-using LostGrace;
+using Game.GUI;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.SerializedData
 {
     [System.Serializable]
     public class BondData

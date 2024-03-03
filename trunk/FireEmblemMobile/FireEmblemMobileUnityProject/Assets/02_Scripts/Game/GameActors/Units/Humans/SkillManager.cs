@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.GameActors.Players;
 using Game.GameActors.Units.Skills;
-using LostGrace;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameMechanics;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = System.Random;
@@ -25,7 +25,7 @@ namespace Game.GameActors.Units.Humans
 
         public void AddStartSkills()
         {
-            if (Player.Instance.Flags.StartingSkill)
+            if (Player.Player.Instance.Flags.StartingSkill)
             {
                 if (uniqueStartSkill != null)
                 {

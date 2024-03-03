@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
+using Game.EncounterAreas.Encounters;
 using UnityEngine;
 
-public abstract class EncounterNodeData: ScriptableObject
+namespace Game.EncounterAreas.EncounterData
 {
-    public string label;
-    public GameObject prefab;
-    public float appearanceChance;
-    public int minAppearanceCountPerArea = 0;
-    public int maxAppearanceCountPerArea = 99;
-    public string description;
-    public Sprite sprite;
+    public abstract class EncounterNodeData: ScriptableObject
+    {
+        public string label;
+        public GameObject prefab;
+        public float appearanceChance;
+        public int minAppearanceCountPerArea = 0;
+        public int maxAppearanceCountPerArea = 99;
+        public string description;
+        public Sprite sprite;
 
-    public abstract EncounterNode CreateNode(List<EncounterNode> parents,int depth, int childIndex);
+        public abstract EncounterNode CreateNode(List<EncounterNode> parents,int depth, int childIndex);
    
     
+    }
 }

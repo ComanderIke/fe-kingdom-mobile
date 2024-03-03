@@ -1,4 +1,4 @@
-﻿namespace Game.GameActors.Units
+﻿namespace Game.GameActors.Units.UnitState
 {
     public interface ITurnStateListener
     {

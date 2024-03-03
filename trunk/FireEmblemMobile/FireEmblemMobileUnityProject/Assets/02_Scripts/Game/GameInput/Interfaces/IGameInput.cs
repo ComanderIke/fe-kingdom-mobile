@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Items;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using Game.Grid;
 
-namespace Game.GameInput
+namespace Game.GameInput.Interfaces
 {
     public interface IGameInput
     {

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Game.GUI.Controller;
+using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class BottomUIBase : MonoBehaviour
     {

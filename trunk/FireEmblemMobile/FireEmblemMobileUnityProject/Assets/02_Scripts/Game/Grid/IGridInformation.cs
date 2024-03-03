@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.Grid;
+using Game.GameActors.Grid;
+using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units.Interfaces;
+using Game.Grid.Tiles;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.Grid
 {
     public interface IGridInformation
     {

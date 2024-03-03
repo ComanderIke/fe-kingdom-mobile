@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units;
+using Game.GameActors.Units.Visuals;
+using Game.GameMechanics;
+using Game.MetaProgression;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace LostGrace
+namespace Game.GUI
 {
     [CreateAssetMenu(menuName = "GameData/God", fileName = "God")]
     public class God :ScriptableObject

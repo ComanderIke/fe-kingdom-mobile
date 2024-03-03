@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Security.Cryptography;
+using Game.GameActors.Factions;
+using Game.GameActors.Grid;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Numbers;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.OnGameObject;
-using Game.Grid;
 using Game.Map;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.GameActors.InteractableGridObjects
 {
     public interface IAttackableTarget
     {

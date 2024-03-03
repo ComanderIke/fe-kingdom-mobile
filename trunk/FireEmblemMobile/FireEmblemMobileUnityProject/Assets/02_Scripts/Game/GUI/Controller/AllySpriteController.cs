@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Controller
 {
     public class AllySpriteController : MonoBehaviour
     {

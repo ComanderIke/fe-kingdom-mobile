@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Game.GameActors.Units;
-using Game.GameActors.Units.OnGameObject;
-using Game.GameInput;
+﻿using Game.GameActors.Units;
+using Game.GUI.Interface;
 using Game.GUI.Text;
-using Game.Mechanics.Battle;
-using LostGrace;
-using TMPro;
+using Game.States.Mechanics.Battle;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     public class AttackPreviewUI : IAttackPreviewUI
     {

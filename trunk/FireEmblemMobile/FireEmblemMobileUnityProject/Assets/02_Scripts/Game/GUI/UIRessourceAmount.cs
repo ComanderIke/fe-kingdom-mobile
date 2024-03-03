@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Game.GUI;
-using TMPro;
+using Game.GUI.Controller;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Serialization;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UIRessourceAmount : MonoBehaviour
     {

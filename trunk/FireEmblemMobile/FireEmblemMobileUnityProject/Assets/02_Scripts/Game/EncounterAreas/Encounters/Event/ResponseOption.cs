@@ -1,53 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.EncounterAreas.Encounters.Battle;
 using Game.GameActors.Units;
-using Game.GameInput;
-using UnityEngine;
-using UnityEngine.Rendering;
 
-public enum EventSceneType
+namespace Game.EncounterAreas.Encounters.Event
 {
-    Normal,
-    Memory,
-    Fight,
-    Merchant
-}
-[System.Serializable]
-public class EventFightData
-{
-    public BattleMap battleMap;
-    public UnitBP EnemyToFight;
-    public bool lethalfight;
-}
-
-[Serializable]
-public class ResponseOption
-{
-    public string Text;
-    public int StatRequirement;
-    public int StatIndex;
-    public Reward reward;
-    
-    public EventFightData fightData;
-    public EventSceneType type;
-   
-    public bool statcheck;
-    public List<EventOutcome> outcomes;
-
-    public ResponseOption(string text,int statRequirement, int statIndex, Reward reward)
+    public enum EventSceneType
     {
-        this.Text = text;
-        this.StatIndex = statIndex;
-        this.StatRequirement = statRequirement;
-        this.reward = reward;
+        Normal,
+        Memory,
+        Fight,
+        Merchant
+    }
+    [System.Serializable]
+    public class EventFightData
+    {
+        public BattleMap battleMap;
+        public UnitBP EnemyToFight;
+        public bool lethalfight;
     }
 
+    [Serializable]
+    public class ResponseOption
+    {
+        public string Text;
+        public int StatRequirement;
+        public int StatIndex;
+        public Reward reward;
     
-}
+        public EventFightData fightData;
+        public EventSceneType type;
+   
+        public bool statcheck;
+        public List<EventOutcome> outcomes;
 
-[Serializable]
-public class EventOutcome
-{
-    public int nextSceneIndex=-1;
+        public ResponseOption(string text,int statRequirement, int statIndex, Reward reward)
+        {
+            this.Text = text;
+            this.StatIndex = statIndex;
+            this.StatRequirement = statRequirement;
+            this.reward = reward;
+        }
+
+    
+    }
+
+    [Serializable]
+    public class EventOutcome
+    {
+        public int nextSceneIndex=-1;
+    }
 }

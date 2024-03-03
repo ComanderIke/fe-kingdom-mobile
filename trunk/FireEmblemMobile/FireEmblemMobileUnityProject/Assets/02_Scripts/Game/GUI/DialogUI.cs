@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class DialogUI : MonoBehaviour
     {

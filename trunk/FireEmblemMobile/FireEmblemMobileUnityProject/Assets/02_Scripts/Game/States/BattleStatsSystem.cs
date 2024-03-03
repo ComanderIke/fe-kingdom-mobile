@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.GameActors.Factions;
 using Game.GameActors.Units;
 using Game.Manager;
-using Game.WorldMapStuff.Model;
 using GameEngine;
 
-namespace Game.Mechanics
+namespace Game.States
 {
     public class UnitBattleStats
     {

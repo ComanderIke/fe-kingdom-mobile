@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Game.GameActors.Units
+﻿namespace Game.GameActors.Units.RPGElements
 {
     [System.Serializable]
     public enum RpgClass 

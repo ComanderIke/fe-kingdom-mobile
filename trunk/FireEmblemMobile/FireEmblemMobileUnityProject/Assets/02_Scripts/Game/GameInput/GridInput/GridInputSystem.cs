@@ -1,12 +1,13 @@
 ﻿using System;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
+using Game.GameActors.Grid;
+using Game.GameActors.Units.Interfaces;
+using Game.GameInput.Interfaces;
+using Game.Grid;
 using Game.Manager;
-using Game.Map;
 using GameEngine;
 using UnityEngine;
 
-namespace Game.GameInput
+namespace Game.GameInput.GridInput
 {
     public class GridInputSystem : IEngineSystem, IUnitInputReceiver, IGridInputReceiver
     {

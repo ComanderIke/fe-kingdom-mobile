@@ -1,29 +1,32 @@
 ﻿using System;
-using Game.GameResources;
-using Game.Systems;
+using Game.DataAndReferences.Data;
+using Game.MetaProgression;
 using UnityEngine;
 
-[Serializable]
-public class MetaUpgradeSaveData
+namespace Game.GUI.Controller
 {
-    [SerializeField] private string blueprintName;
-    [SerializeField] private int level;
-
-    public MetaUpgradeSaveData(MetaUpgrade upg)
+    [Serializable]
+    public class MetaUpgradeSaveData
     {
-        SaveData(upg);
-    }
+        [SerializeField] private string blueprintName;
+        [SerializeField] private int level;
 
-    void SaveData(MetaUpgrade upg)
-    {
-        level = upg.level;
-        blueprintName = upg.blueprint.name;
-    }
+        public MetaUpgradeSaveData(MetaUpgrade upg)
+        {
+            SaveData(upg);
+        }
 
-    public MetaUpgrade Load()
-    {
-        MetaUpgrade ret = new MetaUpgrade(GameBPData.Instance.GetMetaUpgradeBlueprints(blueprintName));
-        ret.level = level;
-        return ret;
+        void SaveData(MetaUpgrade upg)
+        {
+            level = upg.level;
+            blueprintName = upg.blueprint.name;
+        }
+
+        public MetaUpgrade Load()
+        {
+            MetaUpgrade ret = new MetaUpgrade(GameBPData.Instance.GetMetaUpgradeBlueprints(blueprintName));
+            ret.level = level;
+            return ret;
+        }
     }
 }

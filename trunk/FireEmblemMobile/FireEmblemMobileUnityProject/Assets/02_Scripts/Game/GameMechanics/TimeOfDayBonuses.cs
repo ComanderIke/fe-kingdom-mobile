@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GameMechanics
 {
     [CreateAssetMenu(menuName = "GameData/TimeOfDayBonuses")]
     public class TimeOfDayBonuses :ScriptableObject

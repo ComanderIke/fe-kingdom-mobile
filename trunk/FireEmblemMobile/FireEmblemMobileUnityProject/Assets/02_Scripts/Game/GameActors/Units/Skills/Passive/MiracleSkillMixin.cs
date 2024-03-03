@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using Game.GameActors.Units.Skills.Passive;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
-using Random = System.Random;
 
-namespace LostGrace
+namespace Game.GameActors.Units.Skills.Passive
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/Miracle", fileName = "MiracleMixin")]
     public class MiracleSkillMixin : ChanceBasedPassiveSkillMixin

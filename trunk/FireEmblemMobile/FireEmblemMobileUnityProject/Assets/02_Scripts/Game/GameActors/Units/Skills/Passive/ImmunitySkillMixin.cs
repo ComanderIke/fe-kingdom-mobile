@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Mechanics.Battle;
-using LostGrace;
+using Game.GameActors.Units.Skills.Base;
+using Game.States.Mechanics.Battle;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive

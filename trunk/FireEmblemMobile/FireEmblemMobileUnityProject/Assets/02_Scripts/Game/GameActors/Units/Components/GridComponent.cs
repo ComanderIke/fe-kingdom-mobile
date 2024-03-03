@@ -1,8 +1,8 @@
 ﻿using System;
 using Game.Grid;
-using UnityEngine;
+using Game.Grid.Tiles;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Components
 {
     public class GridComponent
     {

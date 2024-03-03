@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _02_Scripts.Game.Dialog.DialogSystem;
-using Game.GameActors.Players;
-using Game.GameActors.Units.Skills;
-using LostGrace;
+using Game.Dialog.DialogSystem;
+using Game.GameActors.Player;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.Data
 {
     [Serializable]
     public class EventData:IEventData

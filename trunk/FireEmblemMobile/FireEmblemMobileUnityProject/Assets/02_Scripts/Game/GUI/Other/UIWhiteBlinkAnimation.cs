@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using Utility;
+﻿using Game.Utility;
+using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     public class UIWhiteBlinkAnimation : MonoBehaviour
     {

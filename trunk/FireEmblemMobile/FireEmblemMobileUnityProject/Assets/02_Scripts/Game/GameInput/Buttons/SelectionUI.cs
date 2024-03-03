@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.Manager;
-using Game.Mechanics;
-using TMPro;
+using Game.GameActors.Units.Interfaces;
+using Game.GameInput.Interfaces;
+using Game.GUI.Convoy;
+using Game.States;
+using Game.Systems;
+using Game.Utility;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Game.GameInput
+namespace Game.GameInput.Buttons
 {
     public class SelectionUI : ISelectionUI
     {
@@ -87,8 +88,8 @@ namespace Game.GameInput
         
         public void WaitClicked()
         {
-            new GameplayCommands().Wait(selectedCharacter);
-            new GameplayCommands().ExecuteInputActions(null);
+            new GameplayCommands.GameplayCommands().Wait(selectedCharacter);
+            new GameplayCommands.GameplayCommands().ExecuteInputActions(null);
             NoCharacterSelectedState(selectedCharacter);
         }
 

@@ -1,7 +1,10 @@
-﻿public enum UpgradeState
+﻿namespace Game.GUI.Controller
 {
-    Learned,
-    NotLearned,
-    Maxed,
-    Locked
+    public enum UpgradeState
+    {
+        Learned,
+        NotLearned,
+        Maxed,
+        Locked
+    }
 }

@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using Game.GUI;
 using UnityEngine;
 
-public class ToMenuButtonController : MonoBehaviour
+namespace Game.Menu
 {
-    // Start is called before the first frame update
-    void Awake()
+    public class ToMenuButtonController : MonoBehaviour
     {
-        gameObject.SetActive(MainMenuController.Instance != null);
-    }
+        // Start is called before the first frame update
+        void Awake()
+        {
+            gameObject.SetActive(MainMenuController.Instance != null);
+        }
 
-    public void OnClick()
-    {
-        MainMenuController.Instance.Show();
+        public void OnClick()
+        {
+            MainMenuController.Instance.Show();
+        }
     }
 }

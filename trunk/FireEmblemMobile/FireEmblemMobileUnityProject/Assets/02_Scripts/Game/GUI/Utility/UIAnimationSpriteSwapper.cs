@@ -1,8 +1,8 @@
-﻿using Game.GameActors.Units;
+﻿using Game.GameActors.Units.Visuals;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI.Utility
 {
     [ExecuteInEditMode]
     public class UIAnimationSpriteSwapper : MonoBehaviour

@@ -1,5 +1,4 @@
 ﻿using System;
-using _02_Scripts.Game.GameActors.Items.Consumables;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Skills;
 using UnityEngine;

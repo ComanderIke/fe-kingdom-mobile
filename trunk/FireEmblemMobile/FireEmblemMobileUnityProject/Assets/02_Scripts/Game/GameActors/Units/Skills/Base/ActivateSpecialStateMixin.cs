@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Base
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/SpecialState", fileName = "SpecialStateEffect")]
     public class ActivateSpecialStateMixin : SelfTargetSkillEffectMixin

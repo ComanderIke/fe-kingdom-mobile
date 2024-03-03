@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.References
 {
     [Serializable]
     public class Prefabs

@@ -1,8 +1,7 @@
 ﻿using System;
-using Game.Graphics;
-using Game.Grid;
+using Game.Grid.Tiles;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.References
 {
     [Serializable]
     public class TileResources

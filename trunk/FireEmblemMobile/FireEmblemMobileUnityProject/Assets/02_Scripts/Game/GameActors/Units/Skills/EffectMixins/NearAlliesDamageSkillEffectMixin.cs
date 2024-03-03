@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units.Numbers;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using Game.Grid;
 using Game.Manager;
-using Game.Map;
-using Game.Mechanics;
-using LostGrace;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/NearAlliesDamage", fileName = "NearAlliesDmgEffect")]
     public class NearAlliesDamageSkillEffectMixin : UnitTargetSkillEffectMixin

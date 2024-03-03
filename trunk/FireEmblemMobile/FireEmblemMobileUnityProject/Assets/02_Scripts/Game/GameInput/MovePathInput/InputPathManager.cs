@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.Graphics;
+using Game.GameActors.Grid;
+using Game.GameActors.Units.Interfaces;
+using Game.Graphics.Interfaces;
 using Game.Grid;
 using Game.Grid.GridPathFinding;
+using Game.Grid.Tiles;
 using Game.Manager;
-using Game.Map;
-using Game.Mechanics;
+using Game.States.Mechanics;
 using UnityEngine;
 
-namespace Game.GameInput
+namespace Game.GameInput.MovePathInput
 {
     public class InputPathManager
     {

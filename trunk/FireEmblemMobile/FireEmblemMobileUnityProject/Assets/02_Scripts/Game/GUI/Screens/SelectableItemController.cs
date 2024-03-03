@@ -1,50 +1,54 @@
 ﻿using System;
-using Game.GameActors.Items;
 using Game.GameActors.Items.Gems;
+using Game.GUI.Buttons;
+using Game.GUI.EncounterUI.Merchant;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectableItemController : UIButtonController
+namespace Game.GUI.Screens
 {
-    [HideInInspector]
-    public StockedItem item;
+    public class SelectableItemController : UIButtonController
+    {
+        [HideInInspector]
+        public StockedItem item;
 
-    [SerializeField] private Image sockelIcon;
-    public TextMeshProUGUI stockCount;
-    public event Action<SelectableItemController> onClicked;
+        [SerializeField] private Image sockelIcon;
+        public TextMeshProUGUI stockCount;
+        public event Action<SelectableItemController> onClicked;
     
-    public void SetValues(StockedItem item)
-    {
-        this.item = item;
-        image.sprite = item.item.Sprite;
-      
-        UpdateUI();
-    }
-
-    protected override void UpdateUI()
-    {
-        sockelIcon.enabled = false;
-        if (item.item is Gem gem)
+        public void SetValues(StockedItem item)
         {
-            if (gem.IsInserted())
-            {
-                sockelIcon.enabled = true;
-            }
+            this.item = item;
+            image.sprite = item.item.Sprite;
+      
+            UpdateUI();
         }
-        stockCount.text = "" + item.stock + "x";
-        stockCount.gameObject.SetActive(item.stock > 1);
-        base.UpdateUI();
-    }
+
+        protected override void UpdateUI()
+        {
+            sockelIcon.enabled = false;
+            if (item.item is Gem gem)
+            {
+                if (gem.IsInserted())
+                {
+                    sockelIcon.enabled = true;
+                }
+            }
+            stockCount.text = "" + item.stock + "x";
+            stockCount.gameObject.SetActive(item.stock > 1);
+            base.UpdateUI();
+        }
 
 
-    public void Clicked()
-    {
-        onClicked?.Invoke(this);
-    }
+        public void Clicked()
+        {
+            onClicked?.Invoke(this);
+        }
 
-    public StockedItem GetItem()
-    {
-        return item;
+        public StockedItem GetItem()
+        {
+            return item;
+        }
     }
 }

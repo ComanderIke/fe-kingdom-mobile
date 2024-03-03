@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Game.Grid;
-using Game.Manager;
-using Game.Mechanics;
+using Game.Grid.Tiles;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using Object = UnityEngine.Object;
 
-namespace Game.Graphics
+namespace Game.Graphics.Grid
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Tile/TileEffectVisuals", fileName =  "TileEffectVisual")]

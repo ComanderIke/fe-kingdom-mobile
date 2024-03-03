@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using Game.GameActors.Units;
+using Game.DataAndReferences.Data;
 using Game.GameActors.Units.Humans;
-using Game.GameActors.Units.Skills;
-using Game.GameResources;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.SerializedData
 {
     [System.Serializable]
     public class SkillData

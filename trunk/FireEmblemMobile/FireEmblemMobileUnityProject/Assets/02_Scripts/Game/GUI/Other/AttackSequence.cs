@@ -1,4 +1,4 @@
-﻿namespace Game.GUI
+﻿namespace Game.GUI.Other
 {
     public class AttackSequence
     {

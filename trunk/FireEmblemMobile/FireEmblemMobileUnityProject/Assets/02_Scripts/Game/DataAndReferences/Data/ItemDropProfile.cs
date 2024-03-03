@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
+using Game.EncounterAreas.Encounters.Battle;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.Data
 {
     [CreateAssetMenu(menuName = "GameData/Profiles/ItemDropRates")]
     public class ItemDropProfile : ScriptableObject

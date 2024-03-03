@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
+using Game.Grid;
 using Game.Manager;
-using Game.Map;
-using LostGrace;
+using Game.Systems;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Summon", fileName = "SummonSkillEffect")]
     public class SummonSkillEffectMixin : SelfTargetSkillEffectMixin

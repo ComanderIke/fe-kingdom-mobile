@@ -1,8 +1,8 @@
+using Game.DataAndReferences.Data;
 using Game.GameActors.Items.Weapons;
-using Game.GameResources;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.SerializedData
 {
     [System.Serializable]
     public class RelicData

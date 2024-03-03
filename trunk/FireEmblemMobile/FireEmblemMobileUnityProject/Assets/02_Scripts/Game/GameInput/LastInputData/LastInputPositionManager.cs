@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using UnityEngine;
 
-namespace Game.GameInput
+namespace Game.GameInput.LastInputData
 {
     public class LastInputPositionManager
     {

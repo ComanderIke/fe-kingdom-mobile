@@ -1,4 +1,6 @@
-﻿namespace Game.Grid
+﻿using Game.GameActors.Factions;
+
+namespace Game.Grid.Tiles
 {
     public interface ITileRenderer
     {

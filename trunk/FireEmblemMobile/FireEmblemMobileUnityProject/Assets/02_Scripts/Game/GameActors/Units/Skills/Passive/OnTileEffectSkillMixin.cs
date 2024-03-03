@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.UnitState;
 using Game.Grid;
-using LostGrace;
+using Game.Grid.Tiles;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive

@@ -1,7 +1,6 @@
 using System;
-using UnityEngine;
 
-namespace Game.WorldMapStuff.Model
+namespace Game.EncounterAreas.Model
 {
     [System.Serializable]
     public class Morality

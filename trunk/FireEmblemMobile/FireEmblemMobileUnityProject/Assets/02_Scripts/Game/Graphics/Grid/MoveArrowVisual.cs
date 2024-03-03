@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameInput;
+using Game.DataAndReferences.References;
+using Game.Graphics.Interfaces;
 using Game.Manager;
-using Game.Mechanics;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using Object = UnityEngine.Object;
 
-namespace Game.Graphics
+namespace Game.Graphics.Grid
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/MoveArrow", fileName =  "MoveArrow")]

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using Game.Grid;
+using Game.GameActors.Units.Skills.Enums;
+using Game.Grid.Tiles;
 using UnityEngine;
 
-namespace _02_Scripts.Game.GameActors.Items.Consumables
+namespace Game.GameActors.Items.Consumables
 {
     public interface IPosTargeted
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LostGrace
+namespace Game.GameActors.Units.Skills.Base
 {
     [Serializable]
     public class EffectDescription:IEquatable<EffectDescription>

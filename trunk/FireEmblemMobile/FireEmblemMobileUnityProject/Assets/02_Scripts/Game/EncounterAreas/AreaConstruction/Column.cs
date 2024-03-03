@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
+using Game.EncounterAreas.Encounters;
 
-public class Column
+namespace Game.EncounterAreas.AreaConstruction
 {
-    public List<EncounterNode> children;
-    public int index;
-    public bool battle = false;
-
-    public Column()
+    public class Column
     {
-        children = new List<EncounterNode>();
+        public List<EncounterNode> children;
+        public int index;
+        public bool battle = false;
+
+        public Column()
+        {
+            children = new List<EncounterNode>();
+        }
     }
 }

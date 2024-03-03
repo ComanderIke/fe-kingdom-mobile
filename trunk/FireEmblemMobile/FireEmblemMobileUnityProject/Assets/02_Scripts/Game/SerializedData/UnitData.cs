@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.DataAndReferences.Data;
 using Game.GameActors.Items;
 using Game.GameActors.Units;
-using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Numbers;
-using Game.GameActors.Units.Skills;
-using Game.GameResources;
+using Game.GameActors.Units.Progression;
+using Game.GameActors.Units.Skills.EffectMixins;
+using Game.GameActors.Units.UnitState;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.GameActors.Players
+namespace Game.SerializedData
 {
     [System.Serializable]
     public class UnitData

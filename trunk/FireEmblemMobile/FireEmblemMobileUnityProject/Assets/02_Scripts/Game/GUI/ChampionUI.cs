@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using Game.GameActors.Units;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class ChampionUI : MonoBehaviour
     {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using Game.EncounterAreas.AreaConstruction;
+using Game.EncounterAreas.Encounters;
 
-namespace Game.WorldMapStuff.Model
+namespace Game.EncounterAreas.Model
 {
     public class EncounterPosition
     {

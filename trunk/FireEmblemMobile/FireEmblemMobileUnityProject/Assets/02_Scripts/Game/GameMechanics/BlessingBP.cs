@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
+using Game.GUI;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace LostGrace
+namespace Game.GameMechanics
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Blessing", fileName = "Blessing")]
     public class BlessingBP : SkillBp

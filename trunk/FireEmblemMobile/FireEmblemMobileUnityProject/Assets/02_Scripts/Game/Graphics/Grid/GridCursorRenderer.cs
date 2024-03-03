@@ -1,9 +1,8 @@
-﻿using System;
-using __2___Scripts.Game.Utility;
-using Game.GameActors.Units.Skills;
+﻿using Game.GameActors.Units.Skills.Enums;
+using Game.Utility;
 using UnityEngine;
 
-namespace Game.Map
+namespace Game.Graphics.Grid
 {
     public class GridCursorRenderer : MonoBehaviour
     {

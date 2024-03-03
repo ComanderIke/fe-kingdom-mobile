@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Game.GameActors.Units;
-using Game.GameInput;
-using Game.GUI.Text;
 using Game.Manager;
-using Game.States;
-using Game.WorldMapStuff.Model;
 using GameEngine;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.Systems
 {
     public class TurnSystem : IEngineSystem
     {

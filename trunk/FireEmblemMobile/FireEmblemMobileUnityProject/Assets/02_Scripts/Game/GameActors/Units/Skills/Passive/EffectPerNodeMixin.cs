@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using Game.GameActors.Units.Skills.Passive;
+using Game.EncounterAreas.Encounters;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.Skills.Enums;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GameActors.Units.Skills.Passive
 {
     public enum PerNodeEffect
     {

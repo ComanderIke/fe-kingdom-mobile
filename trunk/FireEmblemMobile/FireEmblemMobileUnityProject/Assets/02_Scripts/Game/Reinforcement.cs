@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game
 {
     [ExecuteInEditMode]
     public class Reinforcement : MonoBehaviour

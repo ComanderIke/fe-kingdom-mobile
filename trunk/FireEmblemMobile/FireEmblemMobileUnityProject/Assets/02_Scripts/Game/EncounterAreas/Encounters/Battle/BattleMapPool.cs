@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameData/BattleMapPool", fileName="BattleMapPool1")]
-public class BattleMapPool: ScriptableObject
+namespace Game.EncounterAreas.Encounters.Battle
 {
-    public List<BattleMap> battleMaps;
-
-    public BattleMap GetRandomMap()
+    [CreateAssetMenu(menuName = "GameData/BattleMapPool", fileName="BattleMapPool1")]
+    public class BattleMapPool: ScriptableObject
     {
-        return battleMaps[Random.Range(0, battleMaps.Count)];
+        public List<BattleMap> battleMaps;
+
+        public BattleMap GetRandomMap()
+        {
+            return battleMaps[Random.Range(0, battleMaps.Count)];
+        }
     }
 }

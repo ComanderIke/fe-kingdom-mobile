@@ -1,19 +1,21 @@
 ﻿using UnityEngine;
 
-
-public class GUIUtility
+namespace Game.GUI.Utility
 {
-    public static void ClearChildren(Transform parent)
+    public class GUIUtility
     {
-        var children=parent.GetComponentsInChildren<Transform>();
-        if (children.Length != 0)
+        public static void ClearChildren(Transform parent)
         {
-            for (int i = children.Length - 1; i >= 0; i--)
+            var children=parent.GetComponentsInChildren<Transform>();
+            if (children.Length != 0)
             {
-                if(children[i]!=parent)
-                    GameObject.Destroy(children[i].gameObject);
-            }
+                for (int i = children.Length - 1; i >= 0; i--)
+                {
+                    if(children[i]!=parent)
+                        GameObject.Destroy(children[i].gameObject);
+                }
             
+            }
         }
     }
 }

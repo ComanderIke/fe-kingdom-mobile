@@ -1,4 +1,4 @@
-﻿namespace Game.Mechanics
+﻿namespace Game.Systems
 {
     public enum DamageType
     {

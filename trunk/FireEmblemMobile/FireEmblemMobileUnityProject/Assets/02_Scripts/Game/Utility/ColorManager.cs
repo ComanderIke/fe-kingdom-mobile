@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Game.GameActors.Factions;
 using GameEngine;
 using UnityEngine;
 
-namespace Utility
+namespace Game.Utility
 {
     [CreateAssetMenu(fileName ="ColorManager", menuName = "GameData/Config/Colors")]
     public class ColorManager : SingletonScriptableObject<ColorManager> {

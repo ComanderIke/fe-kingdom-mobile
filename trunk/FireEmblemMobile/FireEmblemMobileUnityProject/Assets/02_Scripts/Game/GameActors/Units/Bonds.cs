@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Players;
-using LostGrace;
+using Game.GUI;
 
 namespace Game.GameActors.Units
 {
@@ -62,7 +61,7 @@ namespace Game.GameActors.Units
         {
             if(!Experiences.ContainsKey(god))
                 Experiences.Add(god, new BondExperience());
-            Experiences[god].AddExp((int)(expAdded*god.BondExpRate*Player.Instance.Modifiers.BondExpGain));
+            Experiences[god].AddExp((int)(expAdded*god.BondExpRate*Player.Player.Instance.Modifiers.BondExpGain));
         }
     }
     

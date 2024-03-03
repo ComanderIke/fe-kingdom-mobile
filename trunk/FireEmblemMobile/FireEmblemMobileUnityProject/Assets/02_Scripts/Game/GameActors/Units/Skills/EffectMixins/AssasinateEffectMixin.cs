@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units.Numbers;
-using Game.Grid;
-using Game.Mechanics;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
+using Game.Systems;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Assasinate", fileName = "AssasinateSkillEffect")]
     public class AssasinateEffectMixin : UnitTargetSkillEffectMixin

@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using Game.GameActors.Units;
+﻿using Game.GameActors.Units.Interfaces;
 using Game.Grid.GridPathFinding;
 
-namespace Game.Mechanics
+namespace Game.States.Mechanics
 {
     public interface IPathFinder
     {

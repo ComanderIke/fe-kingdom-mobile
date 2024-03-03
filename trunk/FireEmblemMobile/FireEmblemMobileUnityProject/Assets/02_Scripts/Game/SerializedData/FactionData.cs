@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.WorldMapStuff.Model;
-using UnityEngine;
-
-namespace Game.GameActors.Players
+﻿namespace Game.SerializedData
 {
     [System.Serializable]
     public class FactionData

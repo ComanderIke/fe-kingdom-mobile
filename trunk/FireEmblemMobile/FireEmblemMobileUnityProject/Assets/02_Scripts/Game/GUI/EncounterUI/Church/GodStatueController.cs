@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI.EncounterUI.Church
 {
     public class GodStatueController : MonoBehaviour
     {

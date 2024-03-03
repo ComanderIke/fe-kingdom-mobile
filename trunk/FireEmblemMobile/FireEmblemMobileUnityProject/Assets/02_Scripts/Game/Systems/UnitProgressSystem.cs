@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Game.AI;
-using Game.GameActors.Players;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Factions;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.Numbers;
-using Game.GameActors.Units.Skills;
-using Game.GameInput;
-using Game.GUI;
+using Game.GameActors.Units.Skills.Base;
+using Game.GUI.Controller;
+using Game.GUI.Renderer;
 using Game.Manager;
-using Game.States;
-using Game.WorldMapStuff.Model;
 using GameEngine;
-using LostGrace;
 using UnityEngine;
-using UnityEngine.Playables;
-using UnityEngine.PlayerLoop;
 using Utility;
 
-namespace Game.Mechanics
+namespace Game.Systems
 {
     public interface IExpRenderer
     {

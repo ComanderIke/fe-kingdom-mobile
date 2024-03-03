@@ -1,4 +1,4 @@
-namespace Game.GameActors.Players
+namespace Game.GameActors.Player
 {
     public class PlayerFlags
     {

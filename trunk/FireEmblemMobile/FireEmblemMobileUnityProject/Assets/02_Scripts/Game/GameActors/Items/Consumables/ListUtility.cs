@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Consumables
 {
     public static class ListUtility
     {

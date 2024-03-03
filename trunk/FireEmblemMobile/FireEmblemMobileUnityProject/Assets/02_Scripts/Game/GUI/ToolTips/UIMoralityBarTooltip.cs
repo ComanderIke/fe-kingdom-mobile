@@ -1,12 +1,14 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class UIMoralityBarTooltip:MonoBehaviour
+namespace Game.GUI.ToolTips
 {
-    [SerializeField]private TextMeshProUGUI text;
-    public void Show(float morality)
+    public class UIMoralityBarTooltip:MonoBehaviour
     {
-        text.text = "" + morality;
+        [SerializeField]private TextMeshProUGUI text;
+        public void Show(float morality)
+        {
+            text.text = "" + morality;
+        }
     }
 }

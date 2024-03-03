@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using Game.GUI.Controller;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class GoddessUI : MonoBehaviour
     {

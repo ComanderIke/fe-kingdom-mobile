@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using MoreMountains.Feedbacks;
+using Game.GameActors.Units.Skills.Base;
+using Game.Utility;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class SkillActivationRenderer : MonoBehaviour
     {

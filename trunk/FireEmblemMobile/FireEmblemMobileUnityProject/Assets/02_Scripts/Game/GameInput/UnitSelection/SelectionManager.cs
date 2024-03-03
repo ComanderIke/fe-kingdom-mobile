@@ -1,12 +1,11 @@
-﻿using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.GUI;
+﻿using Game.GameActors.Grid;
+using Game.GameActors.Units.Interfaces;
+using Game.GameInput.Interfaces;
 using Game.Manager;
-using Game.Mechanics;
+using Game.Systems;
 using UnityEngine;
-using Vector2 = System.Numerics.Vector2;
 
-namespace Game.GameInput
+namespace Game.GameInput.UnitSelection
 {
     public class SelectionManager : ISelectionDataProvider
     {

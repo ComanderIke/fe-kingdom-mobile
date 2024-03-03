@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace __2___Scripts.Game.Utility
+namespace Game.Utility
 {
     public static class UIClickChecker
     {

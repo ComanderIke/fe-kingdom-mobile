@@ -1,12 +1,11 @@
 ﻿using System;
 using Game.GameActors.Units;
-using Game.GameActors.Units.OnGameObject;
-using Game.GameInput;
+using Game.GameInput.Interfaces;
+using Game.GameInput.UnitInput;
+using Game.LevelDesign;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using Utility;
 
-namespace Game.States
+namespace Game.Systems
 {
     public class UnitPlacementInputSystem : IUnitTouchInputReceiver
     {

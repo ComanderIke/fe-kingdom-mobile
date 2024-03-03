@@ -1,20 +1,24 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.GameActors.Factions;
+using Game.GameActors.Grid;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using Game.GameActors.Units.Skills.Passive;
-using Game.GameResources;
-using Game.Grid;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Enums;
 using Game.Grid.GridPathFinding;
+using Game.Grid.Tiles;
 using Game.Manager;
-using Game.Mechanics;
+using Game.Map;
+using Game.States;
+using Game.States.Mechanics;
+using Game.Systems;
 using GameEngine;
 using UnityEngine;
-using EffectType = _02_Scripts.Game.GameActors.Items.Consumables.EffectType;
+using EffectType = Game.GameActors.Items.Consumables.EffectType;
 
-namespace Game.Map
+namespace Game.Grid
 {
     [Serializable]
     [RequireComponent(typeof(GridBuilder))]

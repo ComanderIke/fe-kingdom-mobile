@@ -1,7 +1,7 @@
-﻿using UnityEngine.EventSystems;
-using Utility;
+﻿using Game.GameInput.UnitInput;
+using Game.LevelDesign;
 
-namespace Game.GameInput
+namespace Game.Systems
 {
     public interface IUnitTouchInputReceiver
     {

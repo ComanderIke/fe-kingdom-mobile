@@ -1,59 +1,61 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.GameResources;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
-using Menu;
+using Game.DataAndReferences.Data;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
+using Game.Manager;
 using UnityEngine;
 
-public enum BattleType
+namespace Game.EncounterAreas.Encounters.Battle
 {
-    Normal, Elite, Boss, Final
-}
-public class BattleEncounterNode : EncounterNode
-{
-    private Scenes levelindex;
-    public BattleMap BattleMap;
-    public BattleType BattleType;
-
-    public BattleEncounterNode(Scenes levelIndex, BattleMap battleMap, BattleType battleType,List<EncounterNode> parents,int depth, int childIndex,string label, string description, Sprite sprite) : base(parents,depth, childIndex, label, description, sprite)
+    public enum BattleType
     {
-        this.levelindex = levelIndex;
-        this.BattleMap = battleMap;
-        this.BattleType = battleType;
+        Normal, Elite, Boss, Final
     }
-
-    public override void Init()
+    public class BattleEncounterNode : EncounterNode
     {
-        MyDebug.LogTest("INIT BATTLE ENCOUNTER NODE");
-        if (Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(base.GetId()))
+        private Scenes levelindex;
+        public BattleMap BattleMap;
+        public BattleType BattleType;
+
+        public BattleEncounterNode(Scenes levelIndex, BattleMap battleMap, BattleType battleType,List<EncounterNode> parents,int depth, int childIndex,string label, string description, Sprite sprite) : base(parents,depth, childIndex, label, description, sprite)
         {
-            MyDebug.LogTest("NOT VISITED");
-            gameObject.GetComponent<BattleEncounterController>().HideSprite();
+            this.levelindex = levelIndex;
+            this.BattleMap = battleMap;
+            this.BattleType = battleType;
         }
-            
-    }
-    public override void Activate(Party party)
-    {
-        MyDebug.LogLogic("Visiting Battle" );
-        base.Activate(party);
-        //TODO Continue should be called after the battle has ended.
-        Continue();
-        base.gameObject.GetComponent<BattleEncounterController>().Activate();
-        if (BattleMap == null)
+
+        public override void Init()
         {
-            BattleMap = GameBPData.Instance.GetRandomMap(BattleType);
-            int cnt = 0;
-            while (party.HasVisitedMap(BattleMap)&& cnt<100)
+            MyDebug.LogTest("INIT BATTLE ENCOUNTER NODE");
+            if (Player.Instance.Party.EncounterComponent.MovedEncounterIds.Contains(base.GetId()))
             {
-                BattleMap = GameBPData.Instance.GetRandomMap(BattleType);;
-                cnt++;
+                MyDebug.LogTest("NOT VISITED");
+                gameObject.GetComponent<BattleEncounterController>().HideSprite();
             }
+            
         }
+        public override void Activate(Party party)
+        {
+            MyDebug.LogLogic("Visiting Battle" );
+            base.Activate(party);
+            //TODO Continue should be called after the battle has ended.
+            Continue();
+            base.gameObject.GetComponent<BattleEncounterController>().Activate();
+            if (BattleMap == null)
+            {
+                BattleMap = GameBPData.Instance.GetRandomMap(BattleType);
+                int cnt = 0;
+                while (party.HasVisitedMap(BattleMap)&& cnt<100)
+                {
+                    BattleMap = GameBPData.Instance.GetRandomMap(BattleType);;
+                    cnt++;
+                }
+            }
        
 
-        MyDebug.LogTest("Visited BattleMap: " + BattleMap.name);
-        party.VisitedMaps.Add(BattleMap);
-        GameSceneController.Instance.LoadBattleLevel(levelindex, BattleMap, BattleType); //, this);
+            MyDebug.LogTest("Visited BattleMap: " + BattleMap.name);
+            party.VisitedMaps.Add(BattleMap);
+            GameSceneController.Instance.LoadBattleLevel(levelindex, BattleMap, BattleType); //, this);
+        }
     }
 }

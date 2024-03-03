@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
+﻿using System.Collections.Generic;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.Skills.EffectMixins;
+using Game.GUI;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GameMechanics
 {
 
     public class Blessing : Skill

@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
+using Game.DataAndReferences.Data;
 using Game.GameActors.Items;
-using Game.GameActors.Players;
-using Game.GameResources;
-using Game.Manager;
-using Game.Map;
-using Game.WorldMapStuff.Model;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
+using Game.GUI.ToolTips;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/CreateItemEffect", fileName = "CreateItemEffect")]
     public class CreateItemEffectMixin : SelfTargetSkillEffectMixin
@@ -36,7 +34,7 @@ namespace Game.GameActors.Units.Skills
                 // }
                 else
                 {
-                    Player.Instance.Party.AddItem(potion);
+                    Player.Player.Instance.Party.AddItem(potion);
                 }
                 
                 

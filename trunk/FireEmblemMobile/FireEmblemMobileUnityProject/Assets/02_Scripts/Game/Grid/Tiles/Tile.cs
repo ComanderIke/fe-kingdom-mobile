@@ -1,13 +1,11 @@
-﻿using System.Xml.Schema;
-using _02_Scripts.Game.GameActors.Items.Consumables;
-using Game.GameActors.Players;
+﻿using Game.GameActors.Factions;
+using Game.GameActors.Grid;
+using Game.GameActors.Items.Consumables;
 using Game.GameActors.Units;
-using Game.Graphics;
 using Game.Map;
-using LostGrace;
 using UnityEngine;
 
-namespace Game.Grid
+namespace Game.Grid.Tiles
 {
     public class Tile
     {

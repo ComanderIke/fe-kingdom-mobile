@@ -2,7 +2,6 @@
 using Game.Manager;
 using GameEngine;
 using GameEngine.GameStates;
-using Menu;
 using UnityEngine;
 
 namespace Game.States

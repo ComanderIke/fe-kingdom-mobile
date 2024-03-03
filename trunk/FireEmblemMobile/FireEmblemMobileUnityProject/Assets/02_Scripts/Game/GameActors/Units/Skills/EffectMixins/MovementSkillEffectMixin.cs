@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units.CharStateEffects;
-using Game.GameInput;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using Game.Grid;
 using Game.Manager;
-using Game.Map;
-using Game.Mechanics;
-using LostGrace;
+using Game.States;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Movement", fileName = "MovementSkillEffect")]
     public class MovementSkillEffectMixin : UnitTargetSkillEffectMixin

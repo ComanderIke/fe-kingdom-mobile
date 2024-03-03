@@ -1,6 +1,6 @@
-﻿using _02_Scripts.Game.Dialog.DialogSystem;
+﻿using Game.Dialog.DialogSystem;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.Data
 {
     public interface IEventData
     {

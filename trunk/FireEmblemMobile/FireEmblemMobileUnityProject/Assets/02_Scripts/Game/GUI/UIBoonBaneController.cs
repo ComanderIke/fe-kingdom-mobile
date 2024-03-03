@@ -1,14 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using Game.GameActors.Units.Numbers;
-using Pathfinding;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = System.Random;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UIBoonBaneController : MonoBehaviour
     {

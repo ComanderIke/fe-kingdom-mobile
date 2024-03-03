@@ -1,4 +1,7 @@
-﻿public interface IWinRenderer
+﻿namespace Game.Graphics.Interfaces
 {
-    void Show();
+    public interface IWinRenderer
+    {
+        void Show();
+    }
 }

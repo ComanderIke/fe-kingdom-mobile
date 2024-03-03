@@ -1,8 +1,9 @@
-﻿
-    using System;
-    using System.Collections;
-    using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
+namespace Game.Utility
+{
     public static class MonoBehaviourExtensions
     {
         public static void CallWithDelay(this MonoBehaviour mono, Action action,float delay)
@@ -16,3 +17,4 @@
             action();
         }
     }
+}

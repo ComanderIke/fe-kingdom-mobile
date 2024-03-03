@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units.Skills;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 using UnityEngine.Rendering.LookDev;
 

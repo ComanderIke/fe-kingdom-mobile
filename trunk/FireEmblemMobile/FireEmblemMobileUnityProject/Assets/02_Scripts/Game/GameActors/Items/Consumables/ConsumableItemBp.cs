@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Humans;
-using Game.GameActors.Units.Skills;
-using Game.WorldMapStuff.Model;
+using Game.GameActors.Units.Skills.Base;
 
-namespace Game.GameActors.Items
+namespace Game.GameActors.Items.Consumables
 {
     [Serializable]
     public abstract class ConsumableItemBp:ItemBP{

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Units;
-using Game.GameInput;
+using Game.GameActors.Units.Interfaces;
 using Game.Grid.GridPathFinding;
-using Game.Map;
+using Game.States.Mechanics;
 using GameEngine;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.Systems
 {
     public class MoveSystem : IEngineSystem
     {

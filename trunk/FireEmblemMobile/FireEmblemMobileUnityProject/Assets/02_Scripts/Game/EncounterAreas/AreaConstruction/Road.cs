@@ -1,8 +1,9 @@
-﻿using __2___Scripts.Game.Utility;
-using LostGrace;
+﻿using Game.EncounterAreas.Encounters;
+using Game.EncounterAreas.Encounters.Battle;
+using Game.Utility;
 using UnityEngine;
 
-namespace __2___Scripts.Game.Areas
+namespace Game.EncounterAreas.AreaConstruction
 {
     public class Road : MonoBehaviour
     {

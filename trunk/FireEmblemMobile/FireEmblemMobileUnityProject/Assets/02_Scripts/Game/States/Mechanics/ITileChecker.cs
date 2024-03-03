@@ -1,8 +1,6 @@
-﻿using System.CodeDom.Compiler;
-using Game.GameActors.Units;
-using UnityEngine;
+﻿using Game.GameActors.Units.Interfaces;
 
-namespace Game.Mechanics
+namespace Game.States.Mechanics
 {
     public interface ITileChecker
     {

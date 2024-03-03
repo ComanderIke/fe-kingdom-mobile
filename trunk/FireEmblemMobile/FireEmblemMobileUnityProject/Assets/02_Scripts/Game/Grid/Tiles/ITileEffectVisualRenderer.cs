@@ -1,4 +1,4 @@
-﻿namespace Game.Grid
+﻿namespace Game.Grid.Tiles
 {
     public interface ITileEffectVisualRenderer
     {

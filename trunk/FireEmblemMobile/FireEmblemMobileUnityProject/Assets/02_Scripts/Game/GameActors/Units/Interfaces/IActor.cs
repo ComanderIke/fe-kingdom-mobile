@@ -1,4 +1,6 @@
-﻿namespace Game.GameActors.Units
+﻿using Game.GameActors.Units.UnitState;
+
+namespace Game.GameActors.Units.Interfaces
 {
     public interface IActor
     {

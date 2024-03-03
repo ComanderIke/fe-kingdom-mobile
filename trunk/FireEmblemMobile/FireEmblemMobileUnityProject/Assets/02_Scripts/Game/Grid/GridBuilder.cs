@@ -1,9 +1,11 @@
 ﻿using System;
-using Game.GameResources;
-using Game.Graphics;
+using Game.DataAndReferences.References;
+using Game.Graphics.Grid;
+using Game.Grid.Tiles;
 using Game.Manager;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Tile = Game.Grid.Tiles.Tile;
 
 namespace Game.Grid
 {

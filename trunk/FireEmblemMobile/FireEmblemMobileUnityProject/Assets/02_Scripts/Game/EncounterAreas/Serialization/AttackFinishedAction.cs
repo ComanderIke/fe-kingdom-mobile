@@ -1,12 +1,8 @@
-﻿using System.Linq;
-using System.Runtime.CompilerServices;
-using Game.GameActors.Players;
-using Game.Systems;
-using Game.WorldMapStuff.Model;
-using Game.WorldMapStuff.Systems;
-using UnityEngine;
+﻿using Game.EncounterAreas.Encounters.Battle;
+using Game.EncounterAreas.Model;
+using Game.SerializedData;
 
-namespace Game.WorldMapStuff.Serialization
+namespace Game.EncounterAreas.Serialization
 {
     public class AttackFinishedAction:SerializedAction
     {

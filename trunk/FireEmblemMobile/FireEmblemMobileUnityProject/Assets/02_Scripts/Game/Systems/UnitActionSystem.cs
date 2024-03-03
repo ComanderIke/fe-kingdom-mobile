@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
-using Game.GameInput;
+using Game.GameActors.Units.Interfaces;
+using Game.GameInput.GameplayCommands;
 using Game.Grid;
 using Game.Manager;
-using Game.Map;
-using Game.Mechanics.Battle;
-using Game.Mechanics.Commands;
+using Game.States.Mechanics.Battle;
+using Game.States.Mechanics.Commands;
 using GameEngine;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.Systems
 {
     public class UnitActionSystem : MonoBehaviour, IEngineSystem
     {

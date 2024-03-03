@@ -1,10 +1,9 @@
-﻿using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.GameInput;
-using Game.Mechanics;
+﻿using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units.Interfaces;
+using Game.States.Mechanics;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.DecisionMaking
 {
     public interface ICombatInformation
     {

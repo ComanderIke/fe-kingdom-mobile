@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.GameActors.Units.OnGameObject;
+using Game.GameActors.Factions;
+using Game.GameActors.Grid;
+using Game.GameActors.Units.Interfaces;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.DecisionMaking
 {
     public class AIRenderer : MonoBehaviour
     {

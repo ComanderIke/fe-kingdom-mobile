@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using Game.GameActors.Units;
-using UnityEngine;
+﻿using UnityEngine;
 
-[System.Serializable]
-public class Line
+namespace Game.Dialog
 {
-    public string sentence;
-    [SerializeField] DialogActor actor;
-    public bool left = true;
-    public IDialogActor Actor => actor;
+    [System.Serializable]
+    public class Line
+    {
+        public string sentence;
+        [SerializeField] DialogActor actor;
+        public bool left = true;
+        public IDialogActor Actor => actor;
+    }
 }

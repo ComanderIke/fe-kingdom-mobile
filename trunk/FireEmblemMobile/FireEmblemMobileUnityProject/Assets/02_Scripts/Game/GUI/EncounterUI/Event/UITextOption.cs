@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
-public class UITextOption : MonoBehaviour
+namespace Game.GUI.EncounterUI.Event
 {
-    //[SerializeField] private Animator animator;
+    public class UITextOption : MonoBehaviour
+    {
+        //[SerializeField] private Animator animator;
     
+    }
 }

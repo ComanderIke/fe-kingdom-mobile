@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
-using Game.GUI;
+using Game.GUI.Controller;
+using Game.Menu;
+using Game.SerializedData;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class SelectFileUI : UIMenu
     {

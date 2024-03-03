@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using GameEngine.Tools;
+using UnityEngine;
 
-namespace GameEngine.Tools
+namespace Game.Utility
 {
     public class WorldPosDragPerformer : IDragPerformer
     {

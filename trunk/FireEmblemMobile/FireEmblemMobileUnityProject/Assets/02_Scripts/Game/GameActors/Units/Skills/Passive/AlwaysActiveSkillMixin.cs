@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Units.Numbers;
-using Game.GameActors.Units.Skills.Passive;
-using Game.Grid;
-using Game.Mechanics.Battle;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Passive
 {
     public enum EffectOrigin
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Dialog;
+using Game.GUI;
 using GameEngine;
 using GameEngine.GameStates;
-using LostGrace;
 using UnityEngine;
 
 namespace Game.Manager

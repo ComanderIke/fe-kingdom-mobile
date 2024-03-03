@@ -1,20 +1,15 @@
 ﻿using System;
-using Audio;
-using Game.AI;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.GameInput;
-using Game.GameResources;
-using Game.Graphics;
-using Game.GUI;
+using Game.AI.DecisionMaking;
+using Game.Audio;
+using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units.Interfaces;
 using Game.Manager;
-using Game.States;
+using Game.Systems;
 using GameEngine;
 using GameEngine.GameStates;
-using UnityEditor;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.States
 {
     public class BattleState : GameState<NextStateTrigger>
     {

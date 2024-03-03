@@ -1,7 +1,6 @@
-﻿using Game.GameActors.Items.Weapons;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     public class AmuletSlot:EquipmentSlot
     {

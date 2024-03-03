@@ -4,16 +4,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UseItemDialogController : OKCancelDialogController
+namespace Game.GUI.Controller
 {
-    [SerializeField] private TextMeshProUGUI itemName;
-    [SerializeField] private Image itemIcon;
-    public void Show(Item item, Action action)
+    public class UseItemDialogController : OKCancelDialogController
     {
-        itemIcon.sprite = item.Sprite;
-        itemName.text = item.Name;
-        base.Show(item.Description, action);
+        [SerializeField] private TextMeshProUGUI itemName;
+        [SerializeField] private Image itemIcon;
+        public void Show(Item item, Action action)
+        {
+            itemIcon.sprite = item.Sprite;
+            itemName.text = item.Name;
+            base.Show(item.Description, action);
 
      
+        }
     }
 }

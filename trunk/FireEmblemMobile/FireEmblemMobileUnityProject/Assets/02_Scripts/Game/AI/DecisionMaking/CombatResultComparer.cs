@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Game.Mechanics;
+﻿using System.Collections.Generic;
+using Game.States.Mechanics;
 
-namespace Game.AI
+namespace Game.AI.DecisionMaking
 {
     public enum AttackResult
     {

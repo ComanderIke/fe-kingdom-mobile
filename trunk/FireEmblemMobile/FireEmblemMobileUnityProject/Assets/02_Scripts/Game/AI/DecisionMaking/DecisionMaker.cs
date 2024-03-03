@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Game.GameActors.Players;
+using Game.AI.UnitSpecific;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using Game.GameInput;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using Game.Grid;
-using Game.Map;
-using Game.Mechanics;
+using Game.Grid.Tiles;
+using Game.States.Mechanics;
+using Game.Systems;
 using UnityEngine;
 
-
-namespace Game.AI
+namespace Game.AI.DecisionMaking
 {
     public class DecisionMaker
     {

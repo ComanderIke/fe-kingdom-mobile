@@ -1,9 +1,8 @@
-﻿using System;
-using Game.GameActors.Units;
-using Game.Mechanics.Battle;
+﻿using Game.GameActors.Units;
+using Game.States.Mechanics.Battle;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Interface
 {
     public abstract class IAttackPreviewUI : MonoBehaviour
     {

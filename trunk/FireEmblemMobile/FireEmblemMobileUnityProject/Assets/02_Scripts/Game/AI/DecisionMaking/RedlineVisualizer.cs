@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Game.Grid.GridPathFinding;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.DecisionMaking
 {
     public class RedlineVisualizer : MonoBehaviour
     {

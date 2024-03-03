@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
-using Game.GameActors.Players;
+using Game.EncounterAreas.Encounters.Battle;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
+using Game.GUI;
+using Game.GUI.Renderer;
 using Game.Manager;
-using Game.Mechanics;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
+using Game.Systems;
 using GameEngine;
 using GameEngine.GameStates;
-using LostGrace;
 using UnityEngine;
 
 namespace Game.States

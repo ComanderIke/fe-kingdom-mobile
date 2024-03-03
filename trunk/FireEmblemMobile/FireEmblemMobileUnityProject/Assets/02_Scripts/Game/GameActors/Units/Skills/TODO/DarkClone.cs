@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills.Special
+namespace Game.GameActors.Units.Skills.TODO
 {
     [Serializable]
 

@@ -1,29 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-public interface DayNightInterface
-{
-    void SetParameter(float time);
 
-}
-[ExecuteInEditMode]
-public class DayNightCycle : MonoBehaviour
+namespace Game.Graphics.Environment
 {
-    [Range(0,1)]
-    public float time;
-
-    public DayNightInterface[] dayNightInfluencers;
-    public bool day;
-    // Start is called before the first frame update
-    void OnEnable()
+    public interface DayNightInterface
     {
-        dayNightInfluencers = GetComponentsInChildren<DayNightInterface>();
+        void SetParameter(float time);
+
     }
-
-    // Update is called once per frame
-    void Update()
+    [ExecuteInEditMode]
+    public class DayNightCycle : MonoBehaviour
     {
-        foreach (var influencer in dayNightInfluencers)
-            influencer.SetParameter(time);
+        [Range(0,1)]
+        public float time;
+
+        public DayNightInterface[] dayNightInfluencers;
+        public bool day;
+        // Start is called before the first frame update
+        void OnEnable()
+        {
+            dayNightInfluencers = GetComponentsInChildren<DayNightInterface>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            foreach (var influencer in dayNightInfluencers)
+                influencer.SetParameter(time);
+        }
     }
 }

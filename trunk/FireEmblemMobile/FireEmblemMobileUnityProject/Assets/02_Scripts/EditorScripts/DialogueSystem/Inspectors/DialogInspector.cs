@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _02_Scripts.EditorScripts.Utility;
 using _02_Scripts.Game.Dialog.DialogSystem;
+using Game.Dialog.DialogSystem;
 using UnityEditor;
 
 namespace __2___Scripts.External.Editor.Inspectors

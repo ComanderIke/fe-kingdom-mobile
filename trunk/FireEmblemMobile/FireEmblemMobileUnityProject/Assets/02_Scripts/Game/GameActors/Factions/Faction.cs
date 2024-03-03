@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.EncounterAreas.Model;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
 using Game.Manager;
-using Game.WorldMapStuff.Model;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.GameActors.Factions
 {
     [Serializable]
     //[CreateAssetMenu(fileName="Faction", menuName = "GameData/Faction")]

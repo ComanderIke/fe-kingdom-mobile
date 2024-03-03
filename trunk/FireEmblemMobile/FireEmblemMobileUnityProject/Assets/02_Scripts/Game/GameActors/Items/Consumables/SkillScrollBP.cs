@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Items;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace Game.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Consumables
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Items/Consumables/SkillScroll", fileName = "SkillScroll")]

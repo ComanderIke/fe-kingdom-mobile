@@ -1,8 +1,8 @@
-﻿using Game.GameActors.Players;
-using Game.GameActors.Units;
+﻿using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units.Interfaces;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.UnitSpecific
 {
     public struct AIUnitAction
     {

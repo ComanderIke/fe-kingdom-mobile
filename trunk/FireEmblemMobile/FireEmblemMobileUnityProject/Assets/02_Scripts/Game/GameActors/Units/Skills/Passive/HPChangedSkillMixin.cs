@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Units.Skills.Passive;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.Skills.EffectMixins;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Passive
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/HpChanged", fileName = "HPChangedSkillMixin")]

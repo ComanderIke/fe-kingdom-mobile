@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
+using Game.GUI.Controller;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class BottomUIRight : BottomUIBase
     {

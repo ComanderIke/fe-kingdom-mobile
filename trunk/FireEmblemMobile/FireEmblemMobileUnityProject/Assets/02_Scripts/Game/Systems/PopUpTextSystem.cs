@@ -1,19 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Game.AI;
-using Game.GameActors.Players;
+using Game.GameActors.Factions;
 using Game.GameActors.Units;
-using Game.GameInput;
-using Game.GUI;
 using Game.GUI.PopUpText;
-using Game.Manager;
-using Game.States;
+using Game.GUI.Renderer;
+using Game.Utility;
 using GameEngine;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using Utility;
 
-namespace Game.Mechanics
+namespace Game.Systems
 {
     public class PopUpTextSystem : IEngineSystem
     {

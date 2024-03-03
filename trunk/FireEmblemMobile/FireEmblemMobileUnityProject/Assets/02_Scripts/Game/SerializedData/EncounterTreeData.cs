@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using Game.EncounterAreas.AreaConstruction;
+using Game.EncounterAreas.Encounters;
+using Game.EncounterAreas.Encounters.Event;
 using UnityEngine;
 
-namespace Game.Systems
+namespace Game.SerializedData
 {
     [System.Serializable]
     public class EncounterTreeData

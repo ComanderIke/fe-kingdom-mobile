@@ -1,9 +1,8 @@
-﻿using System.Numerics;
-using Game.GameResources;
-using Game.Systems;
-using Game.WorldMapStuff.UI;
+﻿using Game.DataAndReferences.Data;
+using Game.EncounterAreas.Model;
+using Game.SerializedData;
 
-namespace Game.WorldMapStuff.Model
+namespace Game.Campaigns
 {
     public class Campaign
     {

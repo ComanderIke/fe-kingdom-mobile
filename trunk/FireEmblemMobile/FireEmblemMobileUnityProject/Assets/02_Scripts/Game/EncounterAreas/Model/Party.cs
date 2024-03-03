@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using _02_Scripts.Game.Dialog.DialogSystem;
+using Game.DataAndReferences.Data;
+using Game.Dialog.DialogSystem;
+using Game.EncounterAreas.Encounters.Battle;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Gems;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Numbers;
-using Game.GameActors.Units.OnGameObject;
-using Game.GameResources;
-using LostGrace;
+using Game.GUI;
+using Game.GUI.EncounterUI.Merchant;
+using Game.SerializedData;
 using UnityEngine;
 
-namespace Game.WorldMapStuff.Model
+namespace Game.EncounterAreas.Model
 {
     [System.Serializable]
     public class Party

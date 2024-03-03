@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Graphics
+namespace Game.DataAndReferences.References
 {
     [CreateAssetMenu(menuName = "GameData/SpriteSet/MoveArrowSpriteSet", fileName =  "MoveArrowSpriteSet")]
     public class MoveArrowSprites: ScriptableObject

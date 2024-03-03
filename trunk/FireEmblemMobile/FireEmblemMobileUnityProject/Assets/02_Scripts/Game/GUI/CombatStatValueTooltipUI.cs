@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
-using Game.Mechanics;
-using Game.Mechanics.Battle;
+using Game.States.Mechanics.Battle;
+using Game.Systems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class CombatStatValueTooltipUI : MonoBehaviour
     {

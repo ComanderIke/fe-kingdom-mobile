@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Systems;
 
-[Serializable]
-public class MetaUpgradeManagerSaveData
+namespace Game.GUI.Controller
 {
-    public List<MetaUpgradeSaveData> metaUpgrades;
-
-    public MetaUpgradeManagerSaveData(MetaUpgradeManager manager)
+    [Serializable]
+    public class MetaUpgradeManagerSaveData
     {
-        metaUpgrades = new List<MetaUpgradeSaveData>();
-        SaveData(manager);
-    }
+        public List<MetaUpgradeSaveData> metaUpgrades;
 
-    void SaveData(MetaUpgradeManager manager)
-    {
-        if (manager == null)
-            return;
-        if (manager.GetUpgrades() == null)
-            return;
-        foreach (var upg in manager.GetUpgrades())
+        public MetaUpgradeManagerSaveData(MetaUpgradeManager manager)
         {
-            metaUpgrades.Add(new MetaUpgradeSaveData(upg));
+            metaUpgrades = new List<MetaUpgradeSaveData>();
+            SaveData(manager);
         }
-    }
+
+        void SaveData(MetaUpgradeManager manager)
+        {
+            if (manager == null)
+                return;
+            if (manager.GetUpgrades() == null)
+                return;
+            foreach (var upg in manager.GetUpgrades())
+            {
+                metaUpgrades.Add(new MetaUpgradeSaveData(upg));
+            }
+        }
     
+    }
 }

@@ -1,10 +1,13 @@
-﻿using Game.WorldMapStuff.Model;
+﻿using Game.EncounterAreas.Model;
 using UnityEngine;
 
-public class MiniGameController : MonoBehaviour
+namespace Game.Dialog
 {
-    public void Show(MiniGame miniGame, Party instanceParty)
+    public class MiniGameController : MonoBehaviour
     {
-        throw new System.NotImplementedException();
+        public void Show(MiniGame miniGame, Party instanceParty)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

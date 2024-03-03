@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
@@ -6,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class AttributeValueTooltipUI : MonoBehaviour
     {

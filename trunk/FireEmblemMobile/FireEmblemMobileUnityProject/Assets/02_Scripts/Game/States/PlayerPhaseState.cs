@@ -1,18 +1,18 @@
-﻿using Game.AI;
-using Game.GameActors.Units;
-using Game.GameInput;
+﻿using Game.GameActors.Units;
+using Game.GameInput.CameraInput;
+using Game.GameInput.GridInput;
+using Game.GameInput.InputReceivers;
+using Game.Grid;
 using Game.Manager;
-using Game.Map;
-using Game.States;
+using Game.States.Mechanics;
+using Game.Systems;
+using Game.Utility;
 using GameCamera;
 using GameEngine;
 using GameEngine.GameStates;
-using GameEngine.Input;
-using GameEngine.Tools;
-using LostGrace;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.States
 {
     public enum PPStateTrigger
     {

@@ -1,14 +1,16 @@
-﻿using Game.GameActors.Items.Weapons;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
+﻿using Game.GameActors.Factions;
+using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units.Components;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
-using Game.Grid;
-using Game.Mechanics;
-using Game.Mechanics.Battle;
-using UnityEngine;
+using Game.GameActors.Units.Progression;
+using Game.GameActors.Units.UnitState;
+using Game.GameActors.Units.Visuals;
+using Game.Graphics.BattleAnimations;
+using Game.Grid.Tiles;
 
-namespace Game.GameInput
+namespace Game.GameActors.Units.Interfaces
 {
     public interface IBattleActor:IAttackableTarget
     {

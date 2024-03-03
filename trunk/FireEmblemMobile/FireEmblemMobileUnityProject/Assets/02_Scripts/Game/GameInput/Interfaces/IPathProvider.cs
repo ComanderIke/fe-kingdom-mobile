@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using Game.Grid.GridPathFinding;
 
-namespace Game.GameInput
+namespace Game.GameInput.Interfaces
 {
     public interface IPathProvider 
     {

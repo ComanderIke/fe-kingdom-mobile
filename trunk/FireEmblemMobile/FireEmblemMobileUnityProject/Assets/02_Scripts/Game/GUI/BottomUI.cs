@@ -1,14 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Game.GameActors.Units;
-using Game.GameInput;
-using Game.Manager;
-using Game.Mechanics;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Interfaces;
+using Game.GameInput.GameplayCommands;
+using Game.GUI.Controller;
 using Game.States;
+using Game.Systems;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class BottomUI : MonoBehaviour
     {

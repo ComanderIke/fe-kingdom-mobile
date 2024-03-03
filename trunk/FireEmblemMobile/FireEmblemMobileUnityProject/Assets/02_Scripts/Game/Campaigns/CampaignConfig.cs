@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using Game.Grid;
-using Game.Systems;
-using Game.WorldMapStuff.Model;
+﻿using Game.EncounterAreas.Model;
 using UnityEngine;
 
-namespace Game.WorldMapStuff.UI
+namespace Game.Campaigns
 {
     [CreateAssetMenu(fileName = "campaignConfig", menuName = "GameData/CampaignConfig")]
     public class CampaignConfig:ScriptableObject

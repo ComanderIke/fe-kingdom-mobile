@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Game.Utility;
 using UnityEngine;
-using Utility;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     public class ScreenParticleSystem : MonoBehaviour
     {

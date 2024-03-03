@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Visuals
 {
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Units/BossSpriteSet", fileName = "BossspriteSet")]

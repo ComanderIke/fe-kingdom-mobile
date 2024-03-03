@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Net;
+using Game.EncounterAreas.Model;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
 using Game.Manager;
-using Game.Mechanics;
-using Game.WorldMapStuff.Model;
+using Game.Systems;
 using UnityEngine;
 
-namespace Game.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Consumables
 {
     public class SkillScroll : ConsumableItem
     {

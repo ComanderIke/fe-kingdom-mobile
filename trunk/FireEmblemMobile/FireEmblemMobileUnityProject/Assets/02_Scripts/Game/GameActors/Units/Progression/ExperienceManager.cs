@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.GUI;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Progression
 {
     [System.Serializable]
     public class ExperienceManager
@@ -62,7 +59,7 @@ namespace Game.GameActors.Units
                 return false;
             if (exp > MAX_EXP)
                 exp = MAX_EXP;
-            int sumExp = (int)(exp * Player.Instance.Modifiers.ExperienceGain);
+            int sumExp = (int)(exp * Player.Player.Instance.Modifiers.ExperienceGain);
             foreach (var multiplier in ExpMultipliers)
             {
                 sumExp += (int)(exp*multiplier);

@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
+using Game.GUI.EncounterUI.Church;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UIPrayArea : MonoBehaviour
     {

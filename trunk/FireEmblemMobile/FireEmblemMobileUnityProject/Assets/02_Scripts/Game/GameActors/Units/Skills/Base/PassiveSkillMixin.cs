@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using LostGrace;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Base
 {
    
 

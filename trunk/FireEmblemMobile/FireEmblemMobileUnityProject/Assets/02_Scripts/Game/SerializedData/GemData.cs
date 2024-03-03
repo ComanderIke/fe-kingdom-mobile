@@ -1,9 +1,9 @@
 using System;
+using Game.DataAndReferences.Data;
 using Game.GameActors.Items.Gems;
-using Game.GameResources;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.SerializedData
 {
     [System.Serializable]
     public class GemData

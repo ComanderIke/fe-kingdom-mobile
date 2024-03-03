@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units.Numbers;
-using Game.States;
+using Game.GUI.Renderer;
+using Game.Utility;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Utility;
 
-namespace Game.GUI
+namespace Game.GUI.Controller
 {
     public class LevelUpScreenController : MonoBehaviour, ILevelUpRenderer
     {

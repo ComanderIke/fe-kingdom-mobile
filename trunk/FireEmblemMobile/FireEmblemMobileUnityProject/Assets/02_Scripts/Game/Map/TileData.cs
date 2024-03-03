@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.GameActors.Units.UnitType;
 using Game.Grid;
 using UnityEngine;
 using UnityEngine.Tilemaps;

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.DataAndReferences.Data;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Gems;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.GameResources;
+using Game.GUI.EncounterUI.Merchant;
 using UnityEngine;
 
-namespace Game.WorldMapStuff.Model
+namespace Game.EncounterAreas.Model
 {
     [Serializable]
     public class Convoy

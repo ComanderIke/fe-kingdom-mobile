@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.EncounterAreas.Encounters.Battle;
 using Game.GameActors.Items;
-using Game.GameActors.Players;
 using Game.GameActors.Units;
 using UnityEngine;
 

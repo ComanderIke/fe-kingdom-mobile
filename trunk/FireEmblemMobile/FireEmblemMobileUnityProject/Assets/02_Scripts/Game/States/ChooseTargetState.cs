@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using _02_Scripts.Game.GameActors.Items.Consumables;
+using Game.DataAndReferences.References;
+using Game.GameActors.Grid;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Items;
-using Game.GameActors.Players;
+using Game.GameActors.Items.Consumables;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using Game.GameInput;
-using Game.GameResources;
-using Game.GUI;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameInput.GameplayCommands;
+using Game.GameInput.GridInput;
+using Game.GameInput.Interfaces;
+using Game.Grid;
+using Game.Interfaces;
 using Game.Manager;
-using Game.Map;
-using Game.States;
+using Game.Systems;
+using Game.Utility;
 using GameEngine.GameStates;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.States
 {
     public class ChooseTargetState: GameState<PPStateTrigger>, IGameInputReceiver, IUnitInputReceiver
     {

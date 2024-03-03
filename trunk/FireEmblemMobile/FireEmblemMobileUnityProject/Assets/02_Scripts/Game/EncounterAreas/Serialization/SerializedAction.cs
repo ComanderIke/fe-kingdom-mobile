@@ -1,7 +1,6 @@
-﻿using Game.Systems;
-using UnityEngine;
+﻿using Game.SerializedData;
 
-namespace Game.WorldMapStuff
+namespace Game.EncounterAreas.Serialization
 {
     public abstract class SerializedAction
     {

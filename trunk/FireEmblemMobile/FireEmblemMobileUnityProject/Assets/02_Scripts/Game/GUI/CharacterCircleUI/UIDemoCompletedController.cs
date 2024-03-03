@@ -1,7 +1,7 @@
-using TMPro;
+using Game.EncounterAreas.Management;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI.CharacterCircleUI
 {
     public class UIDemoCompletedController : MonoBehaviour
     {

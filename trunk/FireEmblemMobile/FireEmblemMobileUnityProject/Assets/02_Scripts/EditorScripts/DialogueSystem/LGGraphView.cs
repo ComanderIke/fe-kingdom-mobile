@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using __2___Scripts.External.Editor.Data.Save;
-using __2___Scripts.External.Editor.Elements;
 using __2___Scripts.External.Editor.Utility;
 using _02_Scripts.EditorScripts.DialogueSystem.Data.Error;
 using _02_Scripts.EditorScripts.DialogueSystem.Elements;
-using _02_Scripts.Game.GUI.Utility;
+using Game.Dialog.DialogSystem;
+using Game.GUI.Utility;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.Graphs;
@@ -13,6 +13,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using Edge = UnityEditor.Experimental.GraphView.Edge;
+using TextUtility = Game.Dialog.DialogSystem.TextUtility;
 
 namespace __2___Scripts.External.Editor
 {
@@ -446,7 +447,7 @@ namespace __2___Scripts.External.Editor
             groupTitleChanged = (group, newTitle) =>
             {
                 DialogGroup dialogGroup = (DialogGroup)group;
-                dialogGroup.title = newTitle.RemoveWhitespaces().RemoveSpecialCharacters();
+                dialogGroup.title = TextUtility.RemoveSpecialCharacters(TextUtility.RemoveWhitespaces(newTitle));
                 if (string.IsNullOrEmpty(dialogGroup.title))
                 {
                     if (!string.IsNullOrEmpty(dialogGroup.oldTitle))

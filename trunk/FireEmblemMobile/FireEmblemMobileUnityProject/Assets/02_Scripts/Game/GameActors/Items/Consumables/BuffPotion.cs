@@ -1,9 +1,9 @@
-﻿using Game.GameActors.Units;
+﻿using Game.EncounterAreas.Model;
+using Game.GameActors.Units;
 using Game.GameActors.Units.CharStateEffects;
-using Game.WorldMapStuff.Model;
 using UnityEngine;
 
-namespace Game.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Consumables
 {
     public class BuffPotion : ConsumableItem, IEquipableCombatItem
     {

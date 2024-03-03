@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections;
-using Game.GameActors.Units;
-using Game.GameInput;
-using Game.GUI.PopUpText;
-using Game.Manager;
-using Game.Mechanics;
+using Game.GameActors.Units.Interfaces;
+using Game.Graphics.Interfaces;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Renderer
 {
     public class BattleRenderer : MonoBehaviour, IBattleRenderer
     {

@@ -1,8 +1,7 @@
-﻿using Game.Graphics;
-using GameEngine;
+﻿using GameEngine;
 using UnityEngine;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.References
 {
     [CreateAssetMenu(fileName = "GameAssets",menuName ="GameData/Config/GameAssets" )]
     public class GameAssets : SingletonScriptableObject<GameAssets>

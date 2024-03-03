@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using _02_Scripts.Game.GameActors.Items.Consumables;
+using Game.GameActors.Items.Consumables;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.Skills.EffectMixins;
+using Game.Grid;
 using Game.Manager;
-using Game.Map;
-using LostGrace;
+using Game.Utility;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Active
 {
 
     public enum SingleTargetType

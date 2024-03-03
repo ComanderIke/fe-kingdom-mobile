@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using LostGrace;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
 namespace Game.GameActors.Units.CharStateEffects

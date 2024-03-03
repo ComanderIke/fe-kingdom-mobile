@@ -1,10 +1,9 @@
 ﻿using System;
+using Game.EncounterAreas.Model;
 using Game.GameActors.Units;
-using Game.WorldMapStuff.Model;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
-namespace Game.GameActors.Items
+namespace Game.GameActors.Items.Consumables
 {
     [Serializable]
     public abstract class ConsumableItem:Item{

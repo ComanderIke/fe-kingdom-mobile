@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using _02_Scripts.Game.GameActors.Items.Consumables;
+using Game.GameActors.Items.Consumables;
+using Game.Utility;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Base
 {
    [Serializable]
     public class ActiveSkillMixin : SkillMixin

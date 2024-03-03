@@ -1,9 +1,6 @@
-﻿using System;
-using MoreMountains.Tools;
-using UnityEngine;
-using UnityEngine.Rendering;
+﻿using UnityEngine;
 
-namespace LostGrace
+namespace Game.Utility.UI
 {
     public class UIInteractionBlockerOnEnable : MonoBehaviour
     {

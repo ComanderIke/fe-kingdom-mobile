@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class TextFieldPopUp : MonoBehaviour
     {

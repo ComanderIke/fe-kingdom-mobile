@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Tag", fileName = "TagEffect")]
     public class AddTagEffectMixin : UnitTargetSkillEffectMixin

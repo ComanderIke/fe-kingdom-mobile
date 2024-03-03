@@ -1,7 +1,7 @@
 ﻿using System;
 using Game.GameActors.Items;
 
-namespace _02_Scripts.Game.Dialog.DialogSystem
+namespace Game.Dialog.DialogSystem
 {
     [Serializable]
     public class ResourceEntry

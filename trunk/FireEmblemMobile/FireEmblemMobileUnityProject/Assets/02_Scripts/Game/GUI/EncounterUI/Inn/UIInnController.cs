@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.GameResources;
-using Game.WorldMapStuff.Model;
-using LostGrace;
+using Game.DataAndReferences.Data;
+using Game.EncounterAreas.Encounters.Inn;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
+using Game.GameMechanics;
+using Game.GUI.CharacterScreen;
+using Game.GUI.Screens;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;

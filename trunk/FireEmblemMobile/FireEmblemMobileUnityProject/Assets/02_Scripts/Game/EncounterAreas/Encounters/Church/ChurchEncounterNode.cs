@@ -1,26 +1,28 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Items.Weapons;
-using Game.GameActors.Players;
-using Game.GameResources;
-using Game.WorldMapStuff.Model;
+using Game.DataAndReferences.Data;
+using Game.EncounterAreas.Model;
+using Game.GUI.EncounterUI.Church;
 using UnityEngine;
 
-public class ChurchEncounterNode : EncounterNode
+namespace Game.EncounterAreas.Encounters.Church
 {
-    public Church church;
-   
-    public ChurchEncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite sprite) : base(parents, depth, childIndex, label, description, sprite)
+    public class ChurchEncounterNode : EncounterNode
     {
-        church = new Church(GameBPData.Instance);
+        public Church church;
+   
+        public ChurchEncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite sprite) : base(parents, depth, childIndex, label, description, sprite)
+        {
+            church = new Church(GameBPData.Instance);
         
-        //church.AddItem(new ShopItem(GameData.Instance.GetRandomStaff()));
+            //church.AddItem(new ShopItem(GameData.Instance.GetRandomStaff()));
        
-    }
+        }
    
-    public override void Activate(Party party)
-    {
-        base.Activate(party);
-        GameObject.FindObjectOfType<UIChurchController>().Show(this,party);
+        public override void Activate(Party party)
+        {
+            base.Activate(party);
+            GameObject.FindObjectOfType<UIChurchController>().Show(this,party);
         
+        }
     }
 }

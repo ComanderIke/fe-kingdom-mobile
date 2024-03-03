@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Game.States
+﻿namespace Game.Interfaces
 {
     public interface IAnimation
     {

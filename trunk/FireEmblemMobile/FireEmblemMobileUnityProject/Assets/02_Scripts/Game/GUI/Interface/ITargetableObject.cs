@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
-public interface ITargetableObject
+namespace Game.GUI.Interface
 {
-    string GetName();
-    string GetDescription();
-    Sprite GetIcon();
+    public interface ITargetableObject
+    {
+        string GetName();
+        string GetDescription();
+        Sprite GetIcon();
+    }
 }

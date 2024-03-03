@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections;
-using Game.GameActors.Units;
-using Game.States;
-using LostGrace;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.UI;
-using Utility;
 
-namespace Game.GUI
+namespace Game.GUI.Controller
 {
     public class ExpBarController : MonoBehaviour
     {

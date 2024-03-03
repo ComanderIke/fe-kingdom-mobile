@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.AI;
-using Game.GameActors.Players;
+using Game.AI.DecisionMaking;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using Game.Manager;
-using Game.Mechanics;
-using Game.WorldMapStuff.Model;
+using Game.States.Mechanics;
+using Game.Systems;
 using UnityEditor;
 using UnityEngine;
 

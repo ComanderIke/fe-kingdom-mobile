@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Advertisements;
 
-namespace LostGrace
+namespace Game.GUI.CharacterCircleUI
 {
     public class ErrorScreenUI : MonoBehaviour
     {

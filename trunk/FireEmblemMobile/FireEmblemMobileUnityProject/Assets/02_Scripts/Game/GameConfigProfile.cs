@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using _02_Scripts.Game.Dialog.DialogSystem;
+using Game.Dialog.DialogSystem;
 using Game.GameActors.Items;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game
 {
     [CreateAssetMenu(menuName = "GameConfig/Profile", fileName = "GameConfigProfile")]
     public class GameConfigProfile:ScriptableObject

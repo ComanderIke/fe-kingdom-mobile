@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.DecisionMaking
 {
     public class UnitComparer : IComparer<IAIAgent>
     {

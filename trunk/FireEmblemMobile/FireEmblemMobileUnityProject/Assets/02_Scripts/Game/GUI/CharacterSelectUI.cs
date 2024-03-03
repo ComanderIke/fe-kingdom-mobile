@@ -1,15 +1,16 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.EncounterAreas.Controller;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.WorldMapStuff.Model;
+using Game.GUI.CharacterScreen;
+using Game.GUI.Controller;
+using Game.Menu;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class CharacterSelectUI : UIMenu
     {

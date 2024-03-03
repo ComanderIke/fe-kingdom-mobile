@@ -1,12 +1,13 @@
-﻿using Game.Manager;
-using Game.Mechanics;
-using Game.States;
+﻿using Game.AI;
+using Game.Manager;
+using Game.States.Mechanics;
+using Game.Systems;
 using GameCamera;
 using GameEngine;
 using GameEngine.GameStates;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.States
 {
     public class AIState : GameState<NextStateTrigger>
     {

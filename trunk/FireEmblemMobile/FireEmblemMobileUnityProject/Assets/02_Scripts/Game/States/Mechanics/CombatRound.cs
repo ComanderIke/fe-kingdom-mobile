@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Game.Mechanics.Battle;
+using Game.States.Mechanics.Battle;
 
-namespace Game.Mechanics
+namespace Game.States.Mechanics
 {
     public class CombatRound
     {

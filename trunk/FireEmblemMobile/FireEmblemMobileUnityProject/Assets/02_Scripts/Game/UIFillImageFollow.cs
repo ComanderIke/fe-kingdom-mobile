@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game
 {
     public class UIFillImageFollow : MonoBehaviour
     {

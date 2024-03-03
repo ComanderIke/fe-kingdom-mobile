@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Units;
-using Game.GameInput;
-using Game.Grid;
-using Game.Mechanics;
+using Game.GameActors.Units.Visuals;
+using Game.Graphics.Interfaces;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace Game.Graphics
+namespace Game.DataAndReferences.References
 {
     [Serializable]
     public struct InnSprites

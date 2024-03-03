@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.EncounterAreas
 {
     public class NodeMoveCostController : MonoBehaviour
     {

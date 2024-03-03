@@ -1,7 +1,7 @@
 ﻿using Game.GameActors.Units.Numbers;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     [CreateAssetMenu(menuName = "GameData/UI/CharacterUIInfo", fileName="characterUIInfo")]
     public class CharacterUIInfo : ScriptableObject

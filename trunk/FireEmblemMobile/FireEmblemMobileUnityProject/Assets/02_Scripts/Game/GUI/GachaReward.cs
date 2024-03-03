@@ -1,4 +1,4 @@
-﻿namespace LostGrace
+﻿namespace Game.GUI
 {
     public class GachaReward
     {

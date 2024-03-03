@@ -1,4 +1,4 @@
-﻿namespace Game.GameActors.Items
+﻿namespace Game.GameActors.Items.Consumables
 {
     public enum ItemTarget
     {

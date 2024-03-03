@@ -1,4 +1,4 @@
-﻿namespace Game.WorldMapStuff.Model
+﻿namespace Game.EncounterAreas.Model
 {
     public enum Scenes
     {

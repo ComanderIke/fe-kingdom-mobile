@@ -1,21 +1,26 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using __2___Scripts.Game.Utility;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Items;
-using Game.GameActors.Players;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using Game.GameInput;
-using Game.GUI;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Progression;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameInput.GameplayCommands;
+using Game.GUI.Controller;
+using Game.GUI.EncounterUI.Merchant;
+using Game.GUI.Other;
+using Game.GUI.Screens;
+using Game.GUI.ToolTips;
 using Game.Manager;
-using Game.Mechanics;
+using Game.States;
+using Game.Systems;
+using Game.Utility;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class BottomUICharacterSelected : BottomUIBase
     {

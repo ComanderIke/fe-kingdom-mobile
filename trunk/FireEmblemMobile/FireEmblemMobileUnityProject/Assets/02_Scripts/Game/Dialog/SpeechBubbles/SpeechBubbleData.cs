@@ -1,4 +1,4 @@
-﻿namespace Unused.Dialogs
+﻿namespace Game.Dialog.SpeechBubbles
 {
     public struct SpeechBubbleData
     {

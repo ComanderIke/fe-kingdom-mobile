@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using Game.GameActors.Units;
-using Game.Mechanics;
-using Game.Mechanics.Battle;
+using Game.GUI.ToolTips;
+using Game.States.Mechanics.Battle;
+using Game.Systems;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI.Other
 {
     public class UIBattleStatsBottom : MonoBehaviour
     {

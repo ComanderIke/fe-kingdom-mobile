@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameResources;
+using Game.DataAndReferences.Data;
+using Game.GUI.EncounterUI.Merchant;
 using UnityEngine;
 
-namespace Game.WorldMapStuff.Model
+namespace Game.EncounterAreas.Model
 {
     [Serializable]
     public class ConvoyData

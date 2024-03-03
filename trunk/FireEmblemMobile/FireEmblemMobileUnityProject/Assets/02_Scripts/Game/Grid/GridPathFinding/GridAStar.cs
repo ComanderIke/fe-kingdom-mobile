@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using Game.Map;
-using Game.Mechanics;
+using Game.States.Mechanics;
 using UnityEngine;
 
 namespace Game.Grid.GridPathFinding

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Players;
 using Game.GameActors.Units.Numbers;
-using Game.Grid;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Heal", fileName = "HealEffect")]
     public class HealEffect : UnitTargetSkillEffectMixin
@@ -34,7 +33,7 @@ namespace Game.GameActors.Units.Skills
 
         public int GetHealAmount(Unit caster, Unit target, int level)
         {
-            int bonusHeal = Player.Instance.Modifiers.BonusHeal;
+            int bonusHeal = Player.Player.Instance.Modifiers.BonusHeal;
             if(!healAlsoEnemies)
                 if (!target.Faction.IsOpponentFaction(caster.Faction))
                     return 0;

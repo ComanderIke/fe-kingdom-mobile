@@ -1,8 +1,8 @@
-﻿using Game.GameActors.Units;
-using Game.GameActors.Units.OnGameObject;
-using Game.Grid;
+﻿using Game.GameActors.Factions;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Interfaces;
 
-namespace Game.GameActors.Players
+namespace Game.GameActors.Grid
 {
     public interface IGridObject
     {

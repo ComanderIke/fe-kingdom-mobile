@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Graphics
+namespace Game.Graphics.Interfaces
 {
     public interface IMovePathVisual
     {

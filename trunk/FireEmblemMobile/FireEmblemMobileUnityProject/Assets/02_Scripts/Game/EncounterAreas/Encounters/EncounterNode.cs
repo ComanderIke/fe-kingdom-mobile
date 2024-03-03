@@ -1,148 +1,151 @@
 ﻿using System.Collections.Generic;
-using __2___Scripts.Game.Areas;
-using Game.GameActors.Players;
-using Game.WorldMapStuff.Model;
-using LostGrace;
+using Game.EncounterAreas.AreaConstruction;
+using Game.EncounterAreas.Encounters.NodeVisuals;
+using Game.EncounterAreas.Management;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
 using UnityEngine;
 
-
-public abstract class EncounterNode
+namespace Game.EncounterAreas.Encounters
 {
-    public List<EncounterNode> parents;
-    public List<EncounterNode> children;
-
-    public List<Road> roads;
-    public GameObject gameObject
+    public abstract class EncounterNode
     {
-        get;
-        private set;
-    }
+        public List<EncounterNode> parents;
+        public List<EncounterNode> children;
 
-    public void SetGameObject(GameObject gameObject)
-    {
-        this.gameObject = gameObject;
-        renderer = gameObject.GetComponentInChildren<NodeRenderer>();
-        Init();
-    }
-    public NodeRenderer renderer;
+        public List<Road> roads;
+        public GameObject gameObject
+        {
+            get;
+            private set;
+        }
 
-    public bool moveable
-    {
-        get;
-        private set;
-    }
+        public void SetGameObject(GameObject gameObject)
+        {
+            this.gameObject = gameObject;
+            renderer = gameObject.GetComponentInChildren<NodeRenderer>();
+            Init();
+        }
+        public NodeRenderer renderer;
 
-    public int prefabIdx=-1;
+        public bool moveable
+        {
+            get;
+            private set;
+        }
 
-    public int depth = 0;
+        public int prefabIdx=-1;
 
-    public int childIndex = 0;
+        public int depth = 0;
 
-    public Sprite sprite;
+        public int childIndex = 0;
 
-    public string description;
+        public Sprite sprite;
 
-    public string label;
-    //public Column column;
+        public string description;
+
+        public string label;
+        //public Column column;
  
 
-    protected EncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite icon)
-    {
-        children = new List<EncounterNode>();
-        this.parents = new List<EncounterNode>();
-        roads = new List<Road>();
-        if(parents!=null)
-            this.parents.AddRange(parents);
-        this.depth = depth;
-        this.childIndex = childIndex;
-        this.sprite = icon;
-        this.description = description;
-        this.label = label;
-    }
+        protected EncounterNode(List<EncounterNode> parents,int depth, int childIndex, string label, string description, Sprite icon)
+        {
+            children = new List<EncounterNode>();
+            this.parents = new List<EncounterNode>();
+            roads = new List<Road>();
+            if(parents!=null)
+                this.parents.AddRange(parents);
+            this.depth = depth;
+            this.childIndex = childIndex;
+            this.sprite = icon;
+            this.description = description;
+            this.label = label;
+        }
 
-    public void AddParent(EncounterNode parent)
-    {
-        if (!parents.Contains(parent))
+        public void AddParent(EncounterNode parent)
         {
-            parents.Add(parent);
-            parent.children.Add(this);
+            if (!parents.Contains(parent))
+            {
+                parents.Add(parent);
+                parent.children.Add(this);
+            }
         }
-    }
-    public void AddChild(EncounterNode min)
-    {
-        if (!children.Contains(min))
+        public void AddChild(EncounterNode min)
         {
-            children.Add(min);
-            min.parents.Add(this);
+            if (!children.Contains(min))
+            {
+                children.Add(min);
+                min.parents.Add(this);
+            }
         }
-    }
-    public override string ToString()
-    {
-        return ""+this.GetType();
-    }
-    public void Continue()
-    {
-        Player.Instance.Party.EncounterComponent.activatedEncounter = true;
-        Player.Instance.CurrentEventDialogID = "";
+        public override string ToString()
+        {
+            return ""+this.GetType();
+        }
+        public void Continue()
+        {
+            Player.Instance.Party.EncounterComponent.activatedEncounter = true;
+            Player.Instance.CurrentEventDialogID = "";
      
-        GameObject.FindObjectOfType<AreaGameManager>().Continue();
-    }
+            GameObject.FindObjectOfType<AreaGameManager>().Continue();
+        }
 
-    public virtual void Activate(Party party)
-    {
-        Player.Instance.Party.EncounterComponent.activatedEncounter = false;
-    }
+        public virtual void Activate(Party party)
+        {
+            Player.Instance.Party.EncounterComponent.activatedEncounter = false;
+        }
     
 
-    public Road GetRoad(EncounterNode node)
-    {
-        foreach (var road in roads)
+        public Road GetRoad(EncounterNode node)
         {
-            if (road.end == node)
-                return road;
+            foreach (var road in roads)
+            {
+                if (road.end == node)
+                    return road;
+            }
+
+            return null;
         }
 
-        return null;
-    }
-
-    public void SetActive(bool b)
-    {
-        if(b)
-            renderer.SetActive();
-        else
+        public void SetActive(bool b)
         {
-            renderer.SetInactive();
+            if(b)
+                renderer.SetActive();
+            else
+            {
+                renderer.SetInactive();
+            }
         }
-    }
-    public void SetMoveable(bool b)
-    {
-        moveable = b;
-        if (moveable)
+        public void SetMoveable(bool b)
         {
-            renderer.MovableAnimation();
+            moveable = b;
+            if (moveable)
+            {
+                renderer.MovableAnimation();
+            }
+            else
+            {
+                for (int i = 0; i < roads.Count; i++)
+                    roads[i].SetMoveable(b);
+                renderer.Reset();
+            }
         }
-        else
+
+        public virtual void Init()
         {
-            for (int i = 0; i < roads.Count; i++)
-                roads[i].SetMoveable(b);
-            renderer.Reset();
+            Debug.Log("Init Node: "+label);
         }
-    }
 
-    public virtual void Init()
-    {
-        Debug.Log("Init Node: "+label);
-    }
+        public void Grow()
+        {
+            renderer.GrowAnimation();
+        }
 
-    public void Grow()
-    {
-        renderer.GrowAnimation();
-    }
-
-    public string GetId()
-    {
-        return depth + "_" + childIndex;
-    }
+        public string GetId()
+        {
+            return depth + "_" + childIndex;
+        }
 
     
+    }
 }

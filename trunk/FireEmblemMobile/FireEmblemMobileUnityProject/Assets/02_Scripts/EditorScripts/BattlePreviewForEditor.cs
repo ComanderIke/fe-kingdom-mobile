@@ -1,7 +1,7 @@
 ﻿using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
-using Game.Mechanics;
-using Game.Mechanics.Battle;
+using Game.States.Mechanics.Battle;
+using Game.Systems;
 using UnityEngine;
 
 namespace _02_Scripts.EditorScripts

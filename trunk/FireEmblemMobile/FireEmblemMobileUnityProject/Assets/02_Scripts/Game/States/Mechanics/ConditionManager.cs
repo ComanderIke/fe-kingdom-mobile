@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.GameInput;
-
-namespace Game.Mechanics
+﻿namespace Game.States.Mechanics
 {
     public abstract class ConditionManager
     {

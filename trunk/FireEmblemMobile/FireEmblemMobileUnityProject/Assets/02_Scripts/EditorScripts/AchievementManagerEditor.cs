@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 using CustomEditorTools;
+using Game.AchievementSystem;
 
 [CustomEditor(typeof(AchievementManager))]
 public class AchievementManagerEditor : Editor

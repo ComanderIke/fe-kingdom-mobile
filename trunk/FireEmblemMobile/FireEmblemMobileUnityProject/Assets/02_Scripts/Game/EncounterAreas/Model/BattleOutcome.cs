@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.WorldMapStuff.Model
+namespace Game.EncounterAreas.Model
 {
     [Serializable]
     public enum BattleOutcome

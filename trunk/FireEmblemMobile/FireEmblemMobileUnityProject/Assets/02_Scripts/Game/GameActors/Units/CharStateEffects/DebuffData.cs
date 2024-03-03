@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using LostGrace;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
 namespace Game.GameActors.Units.CharStateEffects

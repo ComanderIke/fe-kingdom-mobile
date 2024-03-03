@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Units.Numbers;
-using Game.Mechanics;
-using LostGrace;
-using TMPro;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Steal", fileName = "StealEffect")]
     public class StealEffectMixin : UnitTargetSkillEffectMixin

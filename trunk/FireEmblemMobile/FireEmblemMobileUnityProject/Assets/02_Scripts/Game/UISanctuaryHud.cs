@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
+using Game.GUI;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game
 {
     public class UISanctuaryHud : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _02_Scripts.Game.GUI.Controller
+namespace Game.GUI.Controller
 {
     public class EncounterPlayerUnitClickController : MonoBehaviour
     {

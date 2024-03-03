@@ -1,12 +1,8 @@
-﻿using System.Net;
-using Game.GameActors.Players;
+﻿using Game.EncounterAreas.Model;
 using Game.GameActors.Units;
-using Game.Manager;
-using Game.Mechanics;
-using Game.WorldMapStuff.Model;
 using UnityEngine;
 
-namespace Game.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Consumables
 {
     public class ResurrectScroll : ConsumableItem, IEquipableCombatItem
     {
@@ -16,8 +12,8 @@ namespace Game.GameActors.Items.Weapons
 
         public override void Use(Unit character, Party convoy)
         {
-            Unit unitToRevive =Player.Instance.Party.deadMembers[ Player.Instance.Party.deadMembers.Count-1];
-            Player.Instance.Party.ReviveCharacter(unitToRevive);
+            Unit unitToRevive =Player.Player.Instance.Party.deadMembers[ Player.Player.Instance.Party.deadMembers.Count-1];
+            Player.Player.Instance.Party.ReviveCharacter(unitToRevive);
             base.Use(character, convoy);
         }
     }

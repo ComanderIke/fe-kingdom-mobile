@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units;
-using Game.Mechanics;
+using Game.States.Mechanics;
 using UnityEngine;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.Data
 {
     [Serializable]
     public class StatusEffectData

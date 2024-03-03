@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Utility
+namespace Game.Utility
 {
     public class FPS : MonoBehaviour
     {

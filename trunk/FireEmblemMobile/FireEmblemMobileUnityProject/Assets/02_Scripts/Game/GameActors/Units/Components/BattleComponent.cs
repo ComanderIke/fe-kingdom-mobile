@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Items.Weapons;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Base;
 using Game.GameActors.Units.Skills.Passive;
-using Game.GameInput;
-using Game.Mechanics;
-using Game.Mechanics.Battle;
+using Game.GameActors.Units.UnitType;
+using Game.States.Mechanics.Battle;
 using UnityEngine;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Components
 {
     public interface IEncounterEventListener
     {

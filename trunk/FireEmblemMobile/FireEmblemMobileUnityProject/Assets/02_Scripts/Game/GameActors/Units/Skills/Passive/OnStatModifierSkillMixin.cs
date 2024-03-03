@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units.CharStateEffects;
-using LostGrace;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive

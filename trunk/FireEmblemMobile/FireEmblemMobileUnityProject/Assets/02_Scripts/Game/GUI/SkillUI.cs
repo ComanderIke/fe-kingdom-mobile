@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Linq;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-using Game.GameInput;
-using Game.Manager;
-using Game.Mechanics;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameMechanics;
+using Game.GUI.ToolTips;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class SkillUI : MonoBehaviour
     {

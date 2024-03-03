@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Effects;
+using Game.GameMechanics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UIDebugTimeSlider : MonoBehaviour
     {

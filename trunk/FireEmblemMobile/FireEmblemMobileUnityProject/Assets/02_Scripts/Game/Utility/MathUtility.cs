@@ -1,4 +1,4 @@
-﻿namespace Utility
+﻿namespace Game.Utility
 {
     public class MathUtility
     {

@@ -1,47 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using Game.GameActors.Units;
-using LostGrace;
 using TMPro;
 using UnityEngine;
 
-public class SkillTreeUI : MonoBehaviour
+namespace Game.GUI.Skills
 {
-    // Start is called before the first frame update
-    public SkillTreeRenderer[] skillTreeRenderer;
-    public TextMeshProUGUI skillPoints;
-    public Canvas canvas;
-    private Unit u;
-    [SerializeField] private SkillUpgradeDetailPanel detailPanel;
-    [SerializeField] private SkillSelectCursor cursor;
-    public void Show(Unit u)
+    public class SkillTreeUI : MonoBehaviour
     {
-        UpdateUI(u);
+        // Start is called before the first frame update
+        public SkillTreeRenderer[] skillTreeRenderer;
+        public TextMeshProUGUI skillPoints;
+        public Canvas canvas;
+        private Unit u;
+        [SerializeField] private SkillUpgradeDetailPanel detailPanel;
+        [SerializeField] private SkillSelectCursor cursor;
+        public void Show(Unit u)
+        {
+            UpdateUI(u);
 
-        canvas.enabled = true;
-    }
+            canvas.enabled = true;
+        }
 
-    public void Hide()
-    {
-        canvas.enabled = false;
-    }
+        public void Hide()
+        {
+            canvas.enabled = false;
+        }
 
-    void UpdateUI(Unit u)
-    {
-        this.u = u;
+        void UpdateUI(Unit u)
+        {
+            this.u = u;
      
       
-    }
-    public void LearnSkillClicked(SkillTreeEntryUI clickedSkillTreeEntry)
-    {
-        // u.SkillManager.LearnSkillEntry((clickedSkillTreeEntry.skillEntry));
-        // UpdateUI(u);
-    }
+        }
+        public void LearnSkillClicked(SkillTreeEntryUI clickedSkillTreeEntry)
+        {
+            // u.SkillManager.LearnSkillEntry((clickedSkillTreeEntry.skillEntry));
+            // UpdateUI(u);
+        }
 
-    public void SkillSelected(SkillTreeEntryUI skillTreeEntryUI)
-    {
-        Debug.Log("Show Cursor and DetailPanel");
-        cursor.Show(skillTreeEntryUI.gameObject);
-        detailPanel.Show(skillTreeEntryUI, u);
+        public void SkillSelected(SkillTreeEntryUI skillTreeEntryUI)
+        {
+            Debug.Log("Show Cursor and DetailPanel");
+            cursor.Show(skillTreeEntryUI.gameObject);
+            detailPanel.Show(skillTreeEntryUI, u);
+        }
     }
 }

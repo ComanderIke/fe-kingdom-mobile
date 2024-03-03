@@ -1,4 +1,6 @@
-﻿namespace Game.GameInput
+﻿using Game.GUI.EncounterUI.Merchant;
+
+namespace Game.GameInput.Interfaces
 {
     public interface IItemClickedReceiver
     {

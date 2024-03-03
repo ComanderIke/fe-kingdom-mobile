@@ -1,4 +1,4 @@
-﻿namespace Game.Grid
+﻿namespace Game.Map
 {
     public enum TerrainType
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Visuals
 {
     [Serializable]
     public class UnitPrefabs

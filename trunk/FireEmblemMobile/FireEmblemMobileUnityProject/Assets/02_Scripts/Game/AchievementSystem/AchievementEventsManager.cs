@@ -1,9 +1,13 @@
+using Game.EncounterAreas.Encounters;
+using Game.EncounterAreas.Encounters.Church;
+using Game.EncounterAreas.Encounters.Inn;
+using Game.EncounterAreas.Encounters.Merchant;
+using Game.EncounterAreas.Encounters.Smithy;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Factions;
 using Game.GameActors.Units;
-using Game.WorldMapStuff.Model;
-using UnityEngine;
-using UnityEngine.UI;
 
-namespace LostGrace.AchievementSystem
+namespace Game.AchievementSystem
 {
     public class AchievementEventsManager
     {

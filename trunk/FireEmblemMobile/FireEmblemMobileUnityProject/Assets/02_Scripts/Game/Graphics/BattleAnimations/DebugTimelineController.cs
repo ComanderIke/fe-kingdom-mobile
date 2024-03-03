@@ -1,33 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class DebugTimelineController : MonoBehaviour
+namespace Game.Graphics.BattleAnimations
 {
-    private bool paused = false;
-    public PlayableDirector timeline;
-    
-    void Update()
+    public class DebugTimelineController : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        private bool paused = false;
+        public PlayableDirector timeline;
+    
+        void Update()
         {
-            timeline.Stop();
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            timeline.Play();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            paused = !paused;
-            if (paused)
+            if (Input.GetKeyDown(KeyCode.S))
             {
-                timeline.Pause();
+                timeline.Stop();
             }
-            else
+            if (Input.GetKeyDown(KeyCode.W))
             {
-                timeline.Resume();
+                timeline.Play();
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                paused = !paused;
+                if (paused)
+                {
+                    timeline.Pause();
+                }
+                else
+                {
+                    timeline.Resume();
+                }
             }
         }
     }

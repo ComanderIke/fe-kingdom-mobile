@@ -1,14 +1,10 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
-using _02_Scripts.Game.GameActors.Items.Consumables;
-using Game.GameActors.Units.Skills;
-using Game.Manager;
-using Game.Map;
+using Game.GameActors.Items.Consumables;
+using Game.GameActors.Units.Skills.Enums;
+using Game.Utility;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
 
     public class UIAreaTypePreview : MonoBehaviour

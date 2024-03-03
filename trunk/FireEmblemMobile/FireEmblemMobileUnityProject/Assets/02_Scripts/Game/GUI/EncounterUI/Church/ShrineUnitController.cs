@@ -1,11 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units;
+using Game.GUI.Utility;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI.EncounterUI.Church
 {
     public class QueueEntry
     {

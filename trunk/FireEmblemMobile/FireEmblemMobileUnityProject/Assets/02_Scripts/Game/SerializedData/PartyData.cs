@@ -1,14 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Game.GameActors.Items;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Humans;
-using Game.GameActors.Units.Monsters;
-using Game.Systems;
-using Game.WorldMapStuff.Model;
+using Game.EncounterAreas.Model;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.SerializedData
 {
     [System.Serializable]
     public class PartyData

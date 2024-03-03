@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
-using _02_Scripts.Game.GUI.Utility;
-using Game.GameActors.Players;
+using Game.GameActors.Units.Skills.Active;
 using Game.Manager;
-using Game.Mechanics;
-using LostGrace;
+using Game.Systems;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Base
 {
     [CreateAssetMenu(menuName = "GameData/Skills/CombatSkillMixin", fileName = "CombatMixin")]
     public class CombatSkillMixin:SkillMixin
@@ -26,7 +24,7 @@ namespace Game.GameActors.Units.Skills
         }
         public int GetHpCost(int level)
         {
-            return hpCostPerLevel[level]+ Player.Instance.Modifiers.CombatSkillCost;
+            return hpCostPerLevel[level]+ Player.Player.Instance.Modifiers.CombatSkillCost;
         }
         //[SerializeField]private EffectDescription[] effectDescriptionsPerLevel;
 

@@ -1,13 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Febucci.UI;
-using Game.WorldMapStuff.Model;
+using Game.EncounterAreas.Model;
+using Game.GUI.ToolTips;
+using Game.Utility;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UIMoralityBar : MonoBehaviour
     {

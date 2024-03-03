@@ -3,12 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Game.AI;
-using Game.GameActors.Players;
+using Game.GameActors.Grid;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
+using Game.Grid.Tiles;
 using Game.Manager;
 using Game.Map;
-using Game.Mechanics;
+using Game.States.Mechanics;
 using UnityEngine;
 
 namespace Game.Grid

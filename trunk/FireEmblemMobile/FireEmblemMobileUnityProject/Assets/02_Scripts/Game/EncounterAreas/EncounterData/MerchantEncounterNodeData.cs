@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
+using Game.EncounterAreas.Encounters;
+using Game.EncounterAreas.Encounters.Merchant;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameData/MerchantEncounterData", fileName = "MerchantEncounterData")]
-public class MerchantEncounterNodeData: EncounterNodeData
+namespace Game.EncounterAreas.EncounterData
 {
-    public override EncounterNode CreateNode(List<EncounterNode> parents,int depth, int childIndex)
+    [CreateAssetMenu(menuName = "GameData/MerchantEncounterData", fileName = "MerchantEncounterData")]
+    public class MerchantEncounterNodeData: EncounterNodeData
     {
-        return new MerchantEncounterNode(parents, depth, childIndex,  label,description, sprite);
+        public override EncounterNode CreateNode(List<EncounterNode> parents,int depth, int childIndex)
+        {
+            return new MerchantEncounterNode(parents, depth, childIndex,  label,description, sprite);
+        }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.Items.Relics;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Skills;
-using Game.Mechanics;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.UnitType;
+using Game.Systems;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons

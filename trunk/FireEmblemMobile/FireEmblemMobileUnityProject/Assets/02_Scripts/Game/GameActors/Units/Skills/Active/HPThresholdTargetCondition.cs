@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Active
 {
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/TargetConditions/HpThreshold", fileName = "HpThreshold")]

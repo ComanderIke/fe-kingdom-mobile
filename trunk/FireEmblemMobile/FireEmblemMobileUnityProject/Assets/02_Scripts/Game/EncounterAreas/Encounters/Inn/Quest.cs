@@ -1,11 +1,14 @@
-﻿public class Quest
+﻿namespace Game.EncounterAreas.Encounters.Inn
 {
-    public string description;
-    public QuestReward Reward;
-
-    public Quest(string description, QuestReward reward)
+    public class Quest
     {
-        this.description = description;
-        Reward = reward;
+        public string description;
+        public QuestReward Reward;
+
+        public Quest(string description, QuestReward reward)
+        {
+            this.description = description;
+            Reward = reward;
+        }
     }
 }

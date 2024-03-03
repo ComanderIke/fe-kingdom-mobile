@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
-using Audio;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
-using LostGrace;
-using Menu;
+﻿using System.Collections;
+using Game.Audio;
+using Game.GUI.Controller;
+using Game.Manager;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.Menu
 {
     public class MainMenuController : UIMenu
     {

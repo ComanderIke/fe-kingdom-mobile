@@ -1,4 +1,4 @@
-﻿namespace Game.GameInput
+﻿namespace Game.GameInput.Interfaces
 {
     public interface IMyDropHandler
     {

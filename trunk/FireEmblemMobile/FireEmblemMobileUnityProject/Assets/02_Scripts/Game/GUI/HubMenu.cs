@@ -1,20 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+using Game.DataAndReferences.Data;
 using Game.Dialog;
-using Game.GameActors.Players;
-using Game.GameResources;
+using Game.EncounterAreas.Model;
+using Game.GUI.Controller;
 using Game.Menu;
-using Game.Systems;
-using Game.WorldMapStuff.Model;
-using Game.WorldMapStuff.UI;
-using Menu;
+using Game.SerializedData;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class HubMenu : UIMenu
     {

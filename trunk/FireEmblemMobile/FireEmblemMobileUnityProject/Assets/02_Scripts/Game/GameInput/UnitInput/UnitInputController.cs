@@ -1,12 +1,12 @@
-﻿using System;
-using __2___Scripts.Game.Utility;
-using Game.GameActors.Units;
+﻿using Game.GameActors.Units;
 using Game.GameActors.Units.OnGameObject;
+using Game.GameInput.Interfaces;
+using Game.Systems;
+using Game.Utility;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-namespace Game.GameInput
+namespace Game.GameInput.UnitInput
 {
     public class UnitInputController : MonoBehaviour, IMyDropHandler//, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
     {

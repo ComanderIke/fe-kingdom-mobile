@@ -1,9 +1,10 @@
 ﻿using System;
-using Game.GameActors.Players;
-using Game.GameInput;
-using Game.Mechanics.Battle;
+using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units.Interfaces;
+using Game.States.Mechanics;
+using Game.States.Mechanics.Battle;
 
-namespace Game.Mechanics
+namespace Game.States
 {
     public interface IBattleAnimation
     {

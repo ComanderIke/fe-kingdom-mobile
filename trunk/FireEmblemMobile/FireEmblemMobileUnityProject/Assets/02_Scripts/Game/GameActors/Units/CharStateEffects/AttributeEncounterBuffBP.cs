@@ -1,14 +1,15 @@
-﻿using Game.GameActors.Units.CharStateEffects;
-using Game.GameActors.Units.Numbers;
+﻿using Game.GameActors.Units.Numbers;
 using UnityEngine;
 
-
-public class AttributeEncounterBuffBP : EncounterBasedBuffBP
+namespace Game.GameActors.Units.CharStateEffects
 {
-    [SerializeField] private int value;
-    [SerializeField] private AttributeType attributeType;
-    public override EncounterBasedBuff Create()
+    public class AttributeEncounterBuffBP : EncounterBasedBuffBP
     {
-        return new AttributeEncounterBuff(duration,value,attributeType);
+        [SerializeField] private int value;
+        [SerializeField] private AttributeType attributeType;
+        public override EncounterBasedBuff Create()
+        {
+            return new AttributeEncounterBuff(duration,value,attributeType);
+        }
     }
 }

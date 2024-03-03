@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UIUnitSwapper : MonoBehaviour
     {

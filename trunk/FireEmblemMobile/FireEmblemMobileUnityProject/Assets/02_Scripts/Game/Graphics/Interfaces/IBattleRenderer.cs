@@ -1,6 +1,6 @@
-﻿using Game.GameInput;
+﻿using Game.GameActors.Units.Interfaces;
 
-namespace Game.Mechanics
+namespace Game.Graphics.Interfaces
 {
     public interface IBattleRenderer
     {

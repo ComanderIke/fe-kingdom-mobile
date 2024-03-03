@@ -1,10 +1,10 @@
-﻿using System;
-using Game.GameActors.Units;
+﻿using Game.GameActors.Units;
+using Game.GUI.Controller;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class ResultMVPPanelUI : MonoBehaviour
     {

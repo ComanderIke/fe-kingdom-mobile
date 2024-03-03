@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Game.GameActors.Units.OnGameObject;
-using Game.GameResources;
-using Game.Graphics;
-using Game.GUI;
+using Game.Graphics.Interfaces;
+using Game.GUI.Other;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Visuals
 {
   [Serializable]
     public class UnitVisual

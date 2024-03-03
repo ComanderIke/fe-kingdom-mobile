@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.GameActors.Players;
-using Game.Mechanics.Battle;
-using LostGrace;
+using Game.GUI;
+using Game.SerializedData;
+using Game.States.Mechanics.Battle;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Numbers
@@ -126,7 +126,7 @@ namespace Game.GameActors.Units.Numbers
         }
         public Attributes CombinedGrowths()
         {
-            return BaseGrowths + BonusGrowths+ ((int)Player.Instance.Modifiers.GrowthIncrease);
+            return BaseGrowths + BonusGrowths+ ((int)Player.Player.Instance.Modifiers.GrowthIncrease);
         }
         public Attributes CombinedAttributes()
         {

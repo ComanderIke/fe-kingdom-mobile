@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Factions;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Interfaces;
+using Game.Grid;
 using Game.Manager;
-using Game.Map;
-using Game.Mechanics;
 using Game.States;
 using GameEngine;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.Systems
 {
     public class ReinforcementSystem : IEngineSystem
     {

@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-[CreateAssetMenu(menuName = "GameData/Event", fileName = "Event1")]
-public class RandomEvent :ScriptableObject
+namespace Game.EncounterAreas.Encounters.Event
 {
-    public string headline;
-    public List<EventScene> scenes;
+    [Serializable]
+    [CreateAssetMenu(menuName = "GameData/Event", fileName = "Event1")]
+    public class RandomEvent :ScriptableObject
+    {
+        public string headline;
+        public List<EventScene> scenes;
    
 
-    public RandomEvent(List<EventScene> scenes)
-    {
-        this.scenes = scenes;
-    }
+        public RandomEvent(List<EventScene> scenes)
+        {
+            this.scenes = scenes;
+        }
   
+    }
 }

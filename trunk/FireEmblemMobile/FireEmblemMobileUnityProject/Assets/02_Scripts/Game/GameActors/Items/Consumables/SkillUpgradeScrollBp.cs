@@ -1,9 +1,7 @@
 ﻿using System;
-using Game.GameActors.Items;
-using Game.GameActors.Items.Weapons;
 using UnityEngine;
 
-namespace _02_Scripts.Game.GameActors.Items.Consumables
+namespace Game.GameActors.Items.Consumables
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Items/Consumables/SkillUpgradeScroll", fileName = "SkillUpgradeScroll")]

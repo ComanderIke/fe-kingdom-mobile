@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using _02_Scripts.Game.Dialog.DialogSystem;
-using Game.GameActors.Items;
-using Game.Systems;
-using Game.WorldMapStuff.Model;
-using GameEngine;
-using LostGrace;
-using Unity.IO.LowLevel.Unsafe;
-using UnityEditor;
+using Game.Dialog.DialogSystem;
+using Game.EncounterAreas.Model;
+using Game.GUI.Controller;
+using Game.MetaProgression;
+using Game.SerializedData;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.GameActors.Player
 {
     [System.Serializable]
     public class Player : MonoBehaviour, IDataPersistance

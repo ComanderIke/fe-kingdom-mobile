@@ -1,9 +1,8 @@
 ﻿using System;
-using Game.Graphics;
-using Game.Grid;
+using Game.Graphics.Grid;
 using UnityEngine;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.References
 {
     [Serializable]
     public class GridResources

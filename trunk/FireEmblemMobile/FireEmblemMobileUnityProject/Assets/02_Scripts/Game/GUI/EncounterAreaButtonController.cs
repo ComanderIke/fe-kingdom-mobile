@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.EncounterAreas.Model;
 using Game.Manager;
-using Game.WorldMapStuff.Model;
-using Menu;
+using Game.Menu;
+using Game.SerializedData;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class EncounterAreaButtonController : MonoBehaviour
     {

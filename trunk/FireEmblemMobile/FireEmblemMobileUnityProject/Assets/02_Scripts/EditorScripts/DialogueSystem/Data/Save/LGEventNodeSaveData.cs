@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using _02_Scripts.Game.Dialog.DialogSystem;
+using Game.Dialog;
+using Game.Dialog.DialogSystem;
 using Game.GameActors.Items;
 using UnityEngine;
 

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Game.GameActors.Players;
+using Game.AI.DecisionMaking;
+using Game.AI.Goals;
 using Game.GameActors.Units;
-using Game.Grid;
+using Game.GameActors.Units.Interfaces;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.UnitSpecific
 {
     public class AIComponent
     {

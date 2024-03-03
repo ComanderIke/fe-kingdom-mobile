@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ArmorKnightBP
   m_EditorClassIdentifier: 
   equippedWeaponBp: {fileID: 11400000, guid: 27fd3d36673542546a88f62a5ca45b0b, type: 2}
-  EquippedRelic1: {fileID: 11400000, guid: 647852495d9c59d4ea6316a815ed33ec, type: 2}
+  EquippedRelic1: {fileID: 0}
   Name: ArmorKnight
   isEnemy: 0
   isBoss: 0
@@ -61,10 +61,13 @@ MonoBehaviour:
     Mov: 2
   moveType: {fileID: 11400000, guid: 8ac0c8542b09d2e41b8cd5b26a5ebc20, type: 2}
   SkillManager:
+    uniqueStartSkill: {fileID: 0}
     startSkills: []
     startBlessing: {fileID: 0}
     maxSkillCount: 0
+    maxSkillPoints: 0
     skillPoints: 1
+    nextCastIsFree: 0
   rpgClass: 7
   bluePrintID: ArmorKnight
   dialogActor: {fileID: 0}
@@ -81,6 +84,7 @@ MonoBehaviour:
         type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
+    AttackDelay: 0
   audio: {fileID: 0}
   experienceManager:
     level: 1
@@ -90,5 +94,7 @@ MonoBehaviour:
   <ChronikComponent>k__BackingField:
     <BodySprite>k__BackingField: {fileID: 0}
     <FaceSprite>k__BackingField: {fileID: 0}
+    <AlternateBodySprite>k__BackingField: {fileID: 0}
+    <AlternateFaceSprite>k__BackingField: {fileID: 0}
     <Name>k__BackingField: 
     <Description>k__BackingField: 

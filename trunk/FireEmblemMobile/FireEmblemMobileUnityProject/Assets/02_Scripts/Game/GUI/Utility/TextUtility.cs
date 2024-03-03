@@ -1,4 +1,4 @@
-﻿namespace LostGrace.Utility
+﻿namespace Game.GUI.Utility
 {
     public static class TextUtility
 {

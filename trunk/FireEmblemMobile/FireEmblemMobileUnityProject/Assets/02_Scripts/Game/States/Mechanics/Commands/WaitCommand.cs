@@ -1,10 +1,11 @@
-﻿using System;
-using Game.GameActors.Units;
+﻿using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
+using Game.Grid;
 using Game.Manager;
-using Game.Map;
+using Game.Systems;
 using UnityEngine;
 
-namespace Game.Mechanics.Commands
+namespace Game.States.Mechanics.Commands
 {
     public class WaitCommand : Command
     {
@@ -18,7 +19,7 @@ namespace Game.Mechanics.Commands
         public override void Execute()
         {
             MyDebug.LogLogic("Execute Wait Command!");
-            var gridSystem = GridGameManager.Instance.GetSystem<Map.GridSystem>();
+            var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             var unitSelectionManager = GridGameManager.Instance.GetSystem<UnitSelectionSystem>();
             if (unit != null && !unit.TurnStateManager.IsWaiting)
             {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Players;
 using Game.GameActors.Units.Numbers;
-using LostGrace;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.Skills.EffectMixins;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive
@@ -37,7 +37,7 @@ namespace Game.GameActors.Units.Skills.Passive
             }
 
             chance += unit.BonusSkillProcChance;
-            chance += (Player.Instance.Modifiers.SkillActivation-1);
+            chance += (Player.Player.Instance.Modifiers.SkillActivation-1);
             return chance;
         }
         public override List<EffectDescription> GetEffectDescription(Unit unit, int level)

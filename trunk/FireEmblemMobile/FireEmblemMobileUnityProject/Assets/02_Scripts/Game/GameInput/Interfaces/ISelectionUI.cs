@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.GameInput
+namespace Game.GameInput.Interfaces
 {
     public abstract class ISelectionUI : MonoBehaviour
     {

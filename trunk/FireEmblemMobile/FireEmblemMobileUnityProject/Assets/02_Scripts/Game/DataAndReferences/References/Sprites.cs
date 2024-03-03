@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.GameResources
+namespace Game.DataAndReferences.References
 {
     [System.Serializable]
     public class Sprites

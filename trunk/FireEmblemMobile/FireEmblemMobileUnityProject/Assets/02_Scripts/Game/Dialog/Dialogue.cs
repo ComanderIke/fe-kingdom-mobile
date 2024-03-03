@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using Game.Dialog;
+﻿using Game.GUI.Controller;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unused.Dialogs
+namespace Game.Dialog
 {
 	
 	[System.Serializable]

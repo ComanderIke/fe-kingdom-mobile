@@ -5,7 +5,7 @@ using System.Linq;
 using GameEngine;
 using UnityEngine;
 
-namespace Audio
+namespace Game.Audio
 {
     public class AudioSystem : MonoBehaviour, IEngineSystem
     {

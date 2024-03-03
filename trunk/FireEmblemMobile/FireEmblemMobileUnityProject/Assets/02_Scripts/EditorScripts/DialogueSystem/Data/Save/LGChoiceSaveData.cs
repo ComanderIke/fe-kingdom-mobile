@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using _02_Scripts.Game.Dialog.DialogSystem;
+using Game.Dialog.DialogSystem;
 using Game.GameActors.Items;
 using Game.GameActors.Units;
-using LostGrace;
+using Game.GameMechanics;
 using UnityEngine;
 
 namespace __2___Scripts.External.Editor.Data.Save

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Game.GameActors.Players;
+using Game.GameActors.Factions;
 using UnityEngine;
 
 namespace Game.Manager

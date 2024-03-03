@@ -1,9 +1,9 @@
 ﻿using Game.Grid;
+using Game.Grid.Tiles;
 using Game.Manager;
-using Game.Map;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Active
 {
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Skills/TargetConditions/OverrideTargetCondition", fileName = "OverrideTargetCondition")]

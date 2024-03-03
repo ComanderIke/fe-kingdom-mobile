@@ -1,24 +1,28 @@
 ﻿using System;
+using Game.EncounterAreas.Encounters.Event;
 using UnityEngine;
 
-public abstract class DialogEvent : ScriptableObject
+namespace Game.Dialog
 {
-    public abstract void Action();
-    public abstract Reward GetReward();
-
-    public Action OnComplete;
-
-}
-
-public class NullDialogEvent : DialogEvent
-{
-    public override void Action()
+    public abstract class DialogEvent : ScriptableObject
     {
-        
+        public abstract void Action();
+        public abstract Reward GetReward();
+
+        public Action OnComplete;
+
     }
 
-    public override Reward GetReward()
+    public class NullDialogEvent : DialogEvent
     {
-        return null;
+        public override void Action()
+        {
+        
+        }
+
+        public override Reward GetReward()
+        {
+            return null;
+        }
     }
 }

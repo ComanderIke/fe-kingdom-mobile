@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Items;
-using Game.GameActors.Players;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameInput.Interfaces;
 using Game.Grid;
-using Game.Mechanics;
-using UnityEngine;
-using Object = UnityEngine.Object;
+using Game.Systems;
 
-namespace Game.GameInput
+namespace Game.GameInput.GameplayCommands
 {
     public class GameplayCommands : IGameInput
     {

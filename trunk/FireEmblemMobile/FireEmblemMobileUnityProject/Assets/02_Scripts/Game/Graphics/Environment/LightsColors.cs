@@ -1,30 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-
-public class LightsColors : MonoBehaviour, DayNightInterface
+namespace Game.Graphics.Environment
 {
-    public Gradient Gradient;
-
-    public UnityEngine.Rendering.Universal.Light2D []lights;
-    // Start is called before the first frame update
-    void Start()
+    public class LightsColors : MonoBehaviour, DayNightInterface
     {
-        
-    }
+        public Gradient Gradient;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void SetParameter(float time)
-    {
-        foreach (var light in lights)
+        public UnityEngine.Rendering.Universal.Light2D []lights;
+        // Start is called before the first frame update
+        void Start()
         {
-            light.color = Gradient.Evaluate(time);
+        
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+        
+        }
+
+        public void SetParameter(float time)
+        {
+            foreach (var light in lights)
+            {
+                light.color = Gradient.Evaluate(time);
+            }
         }
     }
 }

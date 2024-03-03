@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Game.GameActors.Factions;
 using UnityEngine;
 
-namespace Game.Grid
+namespace Game.Grid.Tiles
 {
     public class SpriteTileRenderer : ITileRenderer
     {

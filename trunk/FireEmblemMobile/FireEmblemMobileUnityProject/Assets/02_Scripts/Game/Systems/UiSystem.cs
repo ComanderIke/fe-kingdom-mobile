@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.GameActors.Players;
+using Game.EncounterAreas.Controller;
+using Game.EncounterAreas.Encounters.Battle;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
-using Game.GameInput;
-using Game.GameResources;
+using Game.GameActors.Units.Interfaces;
+using Game.GameInput.Buttons;
+using Game.GameInput.GridInput;
 using Game.Grid;
+using Game.GUI;
+using Game.GUI.Interface;
+using Game.GUI.Other;
 using Game.Manager;
-using Game.Map;
-using Game.Mechanics;
-using Game.Mechanics.Battle;
+using Game.States.Mechanics.Battle;
 using GameEngine;
-using LostGrace;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using Utility;
 
-namespace Game.GUI
+namespace Game.Systems
 {
     public class UiSystem : MonoBehaviour, IEngineSystem
     {

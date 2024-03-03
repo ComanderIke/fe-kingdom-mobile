@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Grid.Tiles;
 
 namespace Game.Grid.GridPathFinding
 {

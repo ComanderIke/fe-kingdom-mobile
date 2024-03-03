@@ -1,14 +1,16 @@
 ﻿using System;
-using __2___Scripts.Game.Utility;
-using _02_Scripts.Game.GameActors.Items.Consumables;
-using Game.GameActors.Players;
+using Game.GameActors.Items.Consumables;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameMechanics;
+using Game.Utility;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     
     

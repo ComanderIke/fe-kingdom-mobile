@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
+using Game.Manager;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class CheatWinBattleButtonScript : MonoBehaviour
     {

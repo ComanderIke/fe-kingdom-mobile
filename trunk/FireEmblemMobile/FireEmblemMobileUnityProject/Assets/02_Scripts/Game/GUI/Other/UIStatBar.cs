@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Game.GUI.Interface;
 using MoreMountains.Tools;
 using TMPro;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     public class UIStatBar : IStatBar
     {

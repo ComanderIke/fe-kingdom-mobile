@@ -1,5 +1,4 @@
-﻿using Game.GameResources;
-using Game.Grid;
+﻿using Game.Grid;
 using Game.Map;
 using UnityEditor;
 using UnityEngine;

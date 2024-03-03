@@ -1,13 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Game.GameActors.Items;
 using Game.GameActors.Units;
+using Game.GUI.EncounterUI.Merchant;
+using Game.GUI.ToolTips;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UICombatItemSlot : MonoBehaviour
     {

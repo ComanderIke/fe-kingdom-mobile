@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using _02_Scripts.Game.GUI.Utility;
-using Game.Grid;
+﻿using Game.GUI.Utility;
+using Game.Map;
 using UnityEngine;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.UnitType
 {
     [CreateAssetMenu(menuName = "GameData/Unit/MoveType", fileName = "MoveType")]
     public class MoveType: EffectiveAgainstType

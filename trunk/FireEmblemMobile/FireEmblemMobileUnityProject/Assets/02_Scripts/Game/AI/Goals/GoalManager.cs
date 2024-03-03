@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Game.GameActors.Players;
+using Game.GameActors.Factions;
 using Game.GameActors.Units;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.Goals
 {
     public class GoalManager
     {

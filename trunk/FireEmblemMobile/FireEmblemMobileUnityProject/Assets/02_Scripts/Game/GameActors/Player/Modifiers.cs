@@ -1,8 +1,8 @@
-using Game.GameResources;
-using LostGrace;
+using Game.DataAndReferences.Data;
+using Game.GameMechanics;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.GameActors.Player
 {
     public class Modifiers
     {

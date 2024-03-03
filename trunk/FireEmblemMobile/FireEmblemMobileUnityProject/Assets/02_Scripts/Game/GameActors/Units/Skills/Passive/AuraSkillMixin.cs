@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.DataAndReferences.References;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.Numbers;
-using Game.GameResources;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.Skills.Enums;
+using Game.Grid;
 using Game.Manager;
 using Game.Map;
-using Game.Mechanics;
-using Game.Mechanics.Battle;
-using LostGrace;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Passive

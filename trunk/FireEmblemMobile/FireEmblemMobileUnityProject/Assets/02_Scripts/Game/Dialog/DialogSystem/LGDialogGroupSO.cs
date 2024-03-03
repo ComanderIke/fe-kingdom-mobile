@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _02_Scripts.Game.Dialog.DialogSystem
+namespace Game.Dialog.DialogSystem
 {
     public class LGDialogGroupSO:ScriptableObject
     {

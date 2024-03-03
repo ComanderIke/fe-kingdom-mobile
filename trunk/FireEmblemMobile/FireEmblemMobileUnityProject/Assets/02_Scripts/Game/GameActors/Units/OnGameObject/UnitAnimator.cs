@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.GameActors.Units.CharStateEffects;
-using Game.Mechanics;
-using LostGrace;
+using Game.Graphics.BattleAnimations;
+using Game.GUI.Utility;
+using Game.Systems;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;

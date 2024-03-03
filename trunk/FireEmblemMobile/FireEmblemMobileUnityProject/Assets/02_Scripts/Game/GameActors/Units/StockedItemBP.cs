@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.GameActors.Items;
+using Game.GUI.EncounterUI.Merchant;
 using UnityEngine;
 
 namespace Game.GameActors.Units

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using Game.Utility;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Utility;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     [Serializable]
     public class AttackPreviewStatBar : MonoBehaviour

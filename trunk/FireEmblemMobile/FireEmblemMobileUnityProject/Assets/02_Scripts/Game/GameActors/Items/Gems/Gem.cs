@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Gems

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using Game.Grid;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
+using Game.Grid.Tiles;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/SpawnObject", fileName = "SpawnObjectSkillEffect")]
     public class SpawnObjectEffectMixin : TileTargetSkillEffectMixin

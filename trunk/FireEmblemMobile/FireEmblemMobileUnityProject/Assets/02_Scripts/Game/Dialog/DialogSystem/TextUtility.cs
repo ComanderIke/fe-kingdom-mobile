@@ -1,111 +1,114 @@
 ﻿using System;
 using System.Text;
 
-public static class TextUtility
+namespace Game.Dialog.DialogSystem
 {
-    public static string FormatPercentage(float percentage)
+    public static class TextUtility
     {
-        return (percentage<=1?"":"+")+(percentage * 100 - 100).ToString("0") + "%";
-    }
-    public static bool IsWhitespace(this char character)
-    {
-        switch (character)
+        public static string FormatPercentage(float percentage)
         {
-            case '\u0020':
-            case '\u00A0':
-            case '\u1680':
-            case '\u2000':
-            case '\u2001':
-            case '\u2002':
-            case '\u2003':
-            case '\u2004':
-            case '\u2005':
-            case '\u2006':
-            case '\u2007':
-            case '\u2008':
-            case '\u2009':
-            case '\u200A':
-            case '\u202F':
-            case '\u205F':
-            case '\u3000':
-            case '\u2028':
-            case '\u2029':
-            case '\u0009':
-            case '\u000A':
-            case '\u000B':
-            case '\u000C':
-            case '\u000D':
-            case '\u0085':
+            return (percentage<=1?"":"+")+(percentage * 100 - 100).ToString("0") + "%";
+        }
+        public static bool IsWhitespace(this char character)
+        {
+            switch (character)
             {
-                return true;
-            }
+                case '\u0020':
+                case '\u00A0':
+                case '\u1680':
+                case '\u2000':
+                case '\u2001':
+                case '\u2002':
+                case '\u2003':
+                case '\u2004':
+                case '\u2005':
+                case '\u2006':
+                case '\u2007':
+                case '\u2008':
+                case '\u2009':
+                case '\u200A':
+                case '\u202F':
+                case '\u205F':
+                case '\u3000':
+                case '\u2028':
+                case '\u2029':
+                case '\u0009':
+                case '\u000A':
+                case '\u000B':
+                case '\u000C':
+                case '\u000D':
+                case '\u0085':
+                {
+                    return true;
+                }
  
-            default:
-            {
-                return false;
+                default:
+                {
+                    return false;
+                }
             }
         }
-    }
  
-    // While unnecessary for this project, I've used the method seen here: https://stackoverflow.com/a/37368176
-    // Benchmarks: https://stackoverflow.com/a/37347881
-    public static string RemoveWhitespaces(this string text)
-    {
-        int textLength = text.Length;
- 
-        char[] textCharacters = text.ToCharArray();
- 
-        int currentWhitespacelessTextLength = 0;
- 
-        for (int currentCharacterIndex = 0; currentCharacterIndex < textLength; ++currentCharacterIndex)
+        // While unnecessary for this project, I've used the method seen here: https://stackoverflow.com/a/37368176
+        // Benchmarks: https://stackoverflow.com/a/37347881
+        public static string RemoveWhitespaces(this string text)
         {
-            char currentTextCharacter = textCharacters[currentCharacterIndex];
+            int textLength = text.Length;
  
-            if (currentTextCharacter.IsWhitespace())
+            char[] textCharacters = text.ToCharArray();
+ 
+            int currentWhitespacelessTextLength = 0;
+ 
+            for (int currentCharacterIndex = 0; currentCharacterIndex < textLength; ++currentCharacterIndex)
             {
-                continue;
+                char currentTextCharacter = textCharacters[currentCharacterIndex];
+ 
+                if (currentTextCharacter.IsWhitespace())
+                {
+                    continue;
+                }
+ 
+                textCharacters[currentWhitespacelessTextLength++] = currentTextCharacter;
             }
  
-            textCharacters[currentWhitespacelessTextLength++] = currentTextCharacter;
+            return new string(textCharacters, 0, currentWhitespacelessTextLength);
         }
  
-        return new string(textCharacters, 0, currentWhitespacelessTextLength);
-    }
- 
-    // See here for alternatives: https://stackoverflow.com/questions/3210393/how-do-i-remove-all-non-alphanumeric-characters-from-a-string-except-dash
-    public static string RemoveSpecialCharacters(this string text)
-    {
-        int textLength = text.Length;
- 
-        char[] textCharacters = text.ToCharArray();
- 
-        int currentWhitespacelessTextLength = 0;
- 
-        for (int currentCharacterIndex = 0; currentCharacterIndex < textLength; ++currentCharacterIndex)
+        // See here for alternatives: https://stackoverflow.com/questions/3210393/how-do-i-remove-all-non-alphanumeric-characters-from-a-string-except-dash
+        public static string RemoveSpecialCharacters(this string text)
         {
-            char currentTextCharacter = textCharacters[currentCharacterIndex];
+            int textLength = text.Length;
  
-            if (!char.IsLetterOrDigit(currentTextCharacter) && !currentTextCharacter.IsWhitespace())
+            char[] textCharacters = text.ToCharArray();
+ 
+            int currentWhitespacelessTextLength = 0;
+ 
+            for (int currentCharacterIndex = 0; currentCharacterIndex < textLength; ++currentCharacterIndex)
             {
-                continue;
+                char currentTextCharacter = textCharacters[currentCharacterIndex];
+ 
+                if (!char.IsLetterOrDigit(currentTextCharacter) && !currentTextCharacter.IsWhitespace())
+                {
+                    continue;
+                }
+ 
+                textCharacters[currentWhitespacelessTextLength++] = currentTextCharacter;
             }
  
-            textCharacters[currentWhitespacelessTextLength++] = currentTextCharacter;
+            return new string(textCharacters, 0, currentWhitespacelessTextLength);
         }
- 
-        return new string(textCharacters, 0, currentWhitespacelessTextLength);
-    }
 
-    public static string EnumToString(this Enum entryKey)
-    {
-        string enumString=entryKey.ToString();
-        var bld = new StringBuilder();
-        for (var i = 0; i < enumString.Length; i++)
+        public static string EnumToString(this Enum entryKey)
         {
-            if ((char.IsUpper(enumString[i])||char.IsNumber(enumString[i]))&& i!=0)
-                bld.Append(" ");
-            bld.Append(enumString[i]);
+            string enumString=entryKey.ToString();
+            var bld = new StringBuilder();
+            for (var i = 0; i < enumString.Length; i++)
+            {
+                if ((char.IsUpper(enumString[i])||char.IsNumber(enumString[i]))&& i!=0)
+                    bld.Append(" ");
+                bld.Append(enumString[i]);
+            }
+            return bld.ToString();
         }
-        return bld.ToString();
     }
 }

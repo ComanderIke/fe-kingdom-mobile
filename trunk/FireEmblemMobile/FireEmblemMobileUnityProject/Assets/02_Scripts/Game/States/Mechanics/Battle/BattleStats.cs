@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Game.GameActors.Items.Weapons;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Humans;
-using Game.GameActors.Units.Monsters;
-using Game.GameActors.Units.Numbers;
+using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.Skills.Passive;
-using Game.GameInput;
-using Game.GUI.PopUpText;
-using LostGrace;
+using Game.Systems;
 using UnityEngine;
 
-namespace Game.Mechanics.Battle
+namespace Game.States.Mechanics.Battle
 {
     public class BonusAttackStats
     {

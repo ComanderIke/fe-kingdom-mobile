@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Controller
 {
     public class UIAnimatedCountingText :MonoBehaviour
     {

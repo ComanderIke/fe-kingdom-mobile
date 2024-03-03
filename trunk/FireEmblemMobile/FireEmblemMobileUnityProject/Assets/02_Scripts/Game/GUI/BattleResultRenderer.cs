@@ -1,17 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
-using Game.AI;
-using Game.GameActors.Players;
-using Game.GUI;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
+using Game.GUI.Controller;
+using Game.GUI.Convoy;
+using Game.GUI.EncounterUI.Merchant;
+using Game.Utility;
 using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     [ExecuteInEditMode]
     public class BattleResultRenderer : MonoBehaviour

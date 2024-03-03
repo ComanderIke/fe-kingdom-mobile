@@ -1,18 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Game.GameActors.Players;
 using Game.GameActors.Units;
-using Game.GameActors.Units.OnGameObject;
-using Game.GameInput;
-using MoreMountains.Feedbacks;
+using Game.GUI.Interface;
+using Game.GUI.Other;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Object = UnityEngine.Object;
 
-namespace Game.GUI
+namespace Game.GUI.Controller
 {
     public class CharacterUIController :  ICharacterUI
     {

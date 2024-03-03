@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Game.EncounterAreas.Management;
 
 namespace Game.Manager
 {

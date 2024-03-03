@@ -1,119 +1,122 @@
-using System.Collections;
 using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
-using Game.GameActors.Players;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.GUI;
-using Game.Manager;
-using Game.WorldMapStuff.Model;
+using Game.GUI.CharacterCircleUI;
+using Game.GUI.CharacterScreen;
+using Game.GUI.Controller;
+using Game.Utility;
 using UnityEngine;
 
-public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver, IParticleAttractorTransformProvider
+namespace Game.EncounterAreas.Controller
 {
-    public GameObject CircleCharacterUIPrefab;
-    public GameObject EmpySlotPrefab;
-    [SerializeField] private bool showEmptySlots = false;
-    private Dictionary<Unit, CharacterUIController>characterUIs;
-
-    private List<GameObject> characterUIgGameObjects;
-    public UICharacterViewController characterView;
-
-    private Party party;
-
-    public GameObject layout;
-    // Start is called before the first frame update
-    public void Show(Party party)
+    public class UIPartyCharacterCircleController : MonoBehaviour, IClickedReceiver, IParticleAttractorTransformProvider
     {
-        this.party = party;
-        DeleteGOs();
-        SpawnGOs();
-        foreach (var unit in party.members)
+        public GameObject CircleCharacterUIPrefab;
+        public GameObject EmpySlotPrefab;
+        [SerializeField] private bool showEmptySlots = false;
+        private Dictionary<Unit, CharacterUIController>characterUIs;
+
+        private List<GameObject> characterUIgGameObjects;
+        public UICharacterViewController characterView;
+
+        private Party party;
+
+        public GameObject layout;
+        // Start is called before the first frame update
+        public void Show(Party party)
         {
-            if (unit.Equals(party.ActiveUnit))
+            this.party = party;
+            DeleteGOs();
+            SpawnGOs();
+            foreach (var unit in party.members)
             {
-                characterUIs[unit].ShowActive(unit);
-                unit.visuals.UnitCharacterCircleUI = characterUIs[unit];
-            }
-            else
-            {
-                unit.visuals.UnitCharacterCircleUI = characterUIs[unit];
-                characterUIs[unit].Show(unit);
-            }
+                if (unit.Equals(party.ActiveUnit))
+                {
+                    characterUIs[unit].ShowActive(unit);
+                    unit.visuals.UnitCharacterCircleUI = characterUIs[unit];
+                }
+                else
+                {
+                    unit.visuals.UnitCharacterCircleUI = characterUIs[unit];
+                    characterUIs[unit].Show(unit);
+                }
 
            
+            }
+        
         }
-        
-    }
 
-    void DeleteGOs()
-    {
-        transform.DeleteAllChildren();
-        characterUIgGameObjects = new List<GameObject>();
-        characterUIs = new Dictionary<Unit, CharacterUIController>();
-    }
-    private void SpawnGOs()
-    {
-        
-        foreach (var unit in party.members)
+        void DeleteGOs()
         {
-            if (!characterUIs.ContainsKey(unit))
-            {
+            transform.DeleteAllChildren();
+            characterUIgGameObjects = new List<GameObject>();
+            characterUIs = new Dictionary<Unit, CharacterUIController>();
+        }
+        private void SpawnGOs()
+        {
         
-                var go = Instantiate(CircleCharacterUIPrefab, transform);
-                var uiController = go.GetComponent<CharacterUIController>();
-                uiController.parentController = this;
-               // uiController.Show(unit);
-                characterUIs.Add(unit,uiController);
-                characterUIgGameObjects.Add(go);
+            foreach (var unit in party.members)
+            {
+                if (!characterUIs.ContainsKey(unit))
+                {
+        
+                    var go = Instantiate(CircleCharacterUIPrefab, transform);
+                    var uiController = go.GetComponent<CharacterUIController>();
+                    uiController.parentController = this;
+                    // uiController.Show(unit);
+                    characterUIs.Add(unit,uiController);
+                    characterUIgGameObjects.Add(go);
+                }
+
             }
 
-        }
-
-        if (showEmptySlots)
-        {
-            for (int i = party.members.Count; i < Player.Instance.startPartyMemberCount; i++)
+            if (showEmptySlots)
             {
-                Instantiate(EmpySlotPrefab, transform);
+                for (int i = party.members.Count; i < Player.Instance.startPartyMemberCount; i++)
+                {
+                    Instantiate(EmpySlotPrefab, transform);
+                }
             }
         }
-    }
 
-    public void Clicked(Unit unit)
-    {
-        characterView.Show(unit);
-        Debug.Log(("Clicked!"));
-        for (int i = 0; i < party.members.Count; i++)
+        public void Clicked(Unit unit)
         {
-            if (party.members[i] == unit)
+            characterView.Show(unit);
+            Debug.Log(("Clicked!"));
+            for (int i = 0; i < party.members.Count; i++)
             {
-                party.ActiveUnitIndex = i;
-                // MonoUtility.InvokeNextFrame(()=>Show(party));//Otherwise mouse click will go through UI
+                if (party.members[i] == unit)
+                {
+                    party.ActiveUnitIndex = i;
+                    // MonoUtility.InvokeNextFrame(()=>Show(party));//Otherwise mouse click will go through UI
                 
                 
-                break;
+                    break;
+                }
             }
+            FindObjectOfType<EncounterUIController>()?.UpdateUIScreens();
+            layout.SetActive(false);
+            layout.SetActive(true);
         }
-        FindObjectOfType<EncounterUIController>()?.UpdateUIScreens();
-        layout.SetActive(false);
-        layout.SetActive(true);
-    }
 
-    // public void PlusClicked(Unit unit)
-    // {
-    //     characterView.Show(unit);
-    // }
+        // public void PlusClicked(Unit unit)
+        // {
+        //     characterView.Show(unit);
+        // }
 
-    public RectTransform GetUnitParticleAttractorTransform(Unit unit)
-    {
-        foreach (var u in party.members)
+        public RectTransform GetUnitParticleAttractorTransform(Unit unit)
         {
-            if (unit == u)
+            foreach (var u in party.members)
             {
-                return characterUIs[u].GetUnitParticleAttractorTransform();
+                if (unit == u)
+                {
+                    return characterUIs[u].GetUnitParticleAttractorTransform();
+                }
+
             }
 
+            return null;
         }
-
-        return null;
     }
 }

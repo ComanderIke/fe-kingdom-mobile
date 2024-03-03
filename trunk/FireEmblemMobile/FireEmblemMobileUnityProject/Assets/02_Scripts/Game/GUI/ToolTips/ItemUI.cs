@@ -3,20 +3,23 @@ using Game.GameActors.Items;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemUI : MonoBehaviour
+namespace Game.GUI.ToolTips
 {
-    public event Action<Item> onClicked;
-    private Item item;
-    [SerializeField] private Image itemIcon;
-
-    public void Clicked()
+    public class ItemUI : MonoBehaviour
     {
-        onClicked?.Invoke(item);
-    }
+        public event Action<Item> onClicked;
+        private Item item;
+        [SerializeField] private Image itemIcon;
 
-    public void SetItem(Item item)
-    {
-        this.item = item;
-        itemIcon.sprite = item.Sprite;
+        public void Clicked()
+        {
+            onClicked?.Invoke(item);
+        }
+
+        public void SetItem(Item item)
+        {
+            this.item = item;
+            itemIcon.sprite = item.Sprite;
+        }
     }
 }

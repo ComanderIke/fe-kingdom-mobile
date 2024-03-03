@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     public class UIUnitDragObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
     {

@@ -1,6 +1,6 @@
 ﻿using Game.AI;
-using Game.Mechanics;
 using Game.States;
+using Game.States.Mechanics;
 using GameEngine;
 using GameEngine.GameStates;
 using UnityEngine;

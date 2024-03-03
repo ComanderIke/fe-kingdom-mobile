@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Game.GameActors.Units.OnGameObject;
+using Game.GameActors.Units.Interfaces;
 using Game.Grid;
+using Game.Grid.Tiles;
+using Game.Map;
 using UnityEngine;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Components
 {
     public class GridActorComponent:GridComponent
     {

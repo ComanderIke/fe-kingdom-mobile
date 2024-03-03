@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Game.GameActors.Factions;
+using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.GameActors.Player
 {
     public class PlayerConfig : MonoBehaviour
     {

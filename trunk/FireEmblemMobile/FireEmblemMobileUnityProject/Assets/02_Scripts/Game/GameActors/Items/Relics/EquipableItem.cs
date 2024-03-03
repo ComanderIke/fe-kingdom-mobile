@@ -1,9 +1,8 @@
 ﻿using System;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace Game.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Relics
 {
     [Serializable]
     public abstract class EquipableItem : Item

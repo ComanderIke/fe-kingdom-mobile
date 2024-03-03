@@ -1,7 +1,6 @@
-﻿using Game.Graphics;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Visuals
 {
     [System.Serializable]
     [CreateAssetMenu(menuName = "GameData/Units/CharacterSpriteset", fileName = "SpriteSet")]

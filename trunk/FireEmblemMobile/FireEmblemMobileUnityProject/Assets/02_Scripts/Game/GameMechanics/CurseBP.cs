@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace LostGrace
+namespace Game.GameMechanics
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Curse", fileName = "Curse")]
     public class CurseBP : SkillBp

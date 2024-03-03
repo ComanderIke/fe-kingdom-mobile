@@ -1,8 +1,8 @@
-﻿using Game.GameActors.Players;
+﻿using Game.GameActors.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace LostGrace
+namespace Game.GUI
 {
     [CreateAssetMenu(menuName = "GameData/BattleRewardConfig", fileName="battleRewardConfig")]
     public class BattleRewardConfig : ScriptableObject

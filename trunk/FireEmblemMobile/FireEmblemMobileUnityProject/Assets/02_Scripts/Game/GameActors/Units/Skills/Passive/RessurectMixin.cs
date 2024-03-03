@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GameActors.Units.Skills.Passive
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Passive/Resurrect", fileName = "ResurrectMixin")]
     public class RessurectMixin : PassiveSkillMixin

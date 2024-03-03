@@ -1,7 +1,8 @@
 ﻿using Game.GameActors.Units;
+using Game.GUI.Controller;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     [ExecuteInEditMode]
     public abstract class ICharacterUI : MonoBehaviour

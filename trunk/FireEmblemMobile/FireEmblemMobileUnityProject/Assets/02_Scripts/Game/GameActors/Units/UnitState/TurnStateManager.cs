@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Game.GameActors.Units.Skills.Passive;
 using UnityEngine;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.UnitState
 {
     [System.Serializable]
     public class TurnStateManager

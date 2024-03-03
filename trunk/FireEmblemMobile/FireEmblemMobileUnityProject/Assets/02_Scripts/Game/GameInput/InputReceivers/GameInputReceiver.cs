@@ -1,21 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Game.GameActors.Players;
+using Game.DataAndReferences.References;
+using Game.GameActors.Grid;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
-using Game.GameResources;
+using Game.GameActors.Units.Components;
+using Game.GameActors.Units.Interfaces;
+using Game.GameInput.Interfaces;
+using Game.GameInput.LastInputData;
+using Game.GameInput.MovePathInput;
+using Game.GameInput.UnitSelection;
 using Game.Grid;
-using Game.Grid.GridPathFinding;
 using Game.Manager;
-using Game.Map;
-using Game.Mechanics;
 using UnityEngine;
 
-namespace Game.GameInput
+namespace Game.GameInput.InputReceivers
 {
     public class GameInputReceiver : IGameInputReceiver
     {
-        private GameplayCommands gameplayCommands;
+        private GameplayCommands.GameplayCommands gameplayCommands;
         private InputPathManager inputPathManager;
         private ISelectionDataProvider selectionDataProvider;
         private LastInputPositionManager lastInputPositionManager;
@@ -23,7 +26,7 @@ namespace Game.GameInput
 
         public GameInputReceiver(GridSystem gridSystem)
         {
-            gameplayCommands = new GameplayCommands();
+            gameplayCommands = new GameplayCommands.GameplayCommands();
             selectionDataProvider = new SelectionManager();
             lastInputPositionManager = new LastInputPositionManager();
 

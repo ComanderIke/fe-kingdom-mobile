@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.DataAndReferences.Data;
+using Game.EncounterAreas.Model;
 using Game.GameActors.Items;
 using Game.GameActors.Items.Weapons;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.GameResources;
+using Game.GUI.EncounterUI.Merchant;
 using Game.Manager;
-using Game.Mechanics;
-using Game.WorldMapStuff.Model;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;

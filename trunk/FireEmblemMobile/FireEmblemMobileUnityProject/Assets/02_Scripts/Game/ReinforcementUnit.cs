@@ -1,8 +1,9 @@
-using Game.AI;
+using Game.AI.DecisionMaking;
+using Game.GameActors.Factions;
 using Game.GameActors.Units;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game
 {
     public enum ReinforcementTrigger
     {

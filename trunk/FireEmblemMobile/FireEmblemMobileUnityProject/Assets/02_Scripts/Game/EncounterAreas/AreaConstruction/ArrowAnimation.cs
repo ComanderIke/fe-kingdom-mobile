@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.EncounterAreas.AreaConstruction
 {
     public class ArrowAnimation : MonoBehaviour
     {

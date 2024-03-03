@@ -1,9 +1,10 @@
 ﻿using System;
-using Game.GameActors.Units.Skills;
-using Game.Grid;
+using Game.GameActors.Units.Skills.Enums;
+using Game.Graphics.Grid;
+using Game.Grid.Tiles;
 using UnityEngine;
 
-namespace Game.Map
+namespace Game.Grid
 {
     public class GridCursor
     {

@@ -1,22 +1,25 @@
-﻿using System.Data;
-using Game.GameActors.Items;
-using Game.GameActors.Players;
+﻿using Game.EncounterAreas.Encounters.Event;
+using Game.GameActors.Player;
+using Game.GUI.EncounterUI.Merchant;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameData/MerchantEvent", fileName = "MerchantEvent")]
-public class MerchantEvent : DialogEvent
+namespace Game.Dialog
 {
+    [CreateAssetMenu(menuName = "GameData/MerchantEvent", fileName = "MerchantEvent")]
+    public class MerchantEvent : DialogEvent
+    {
   
-    [SerializeField] public MerchantBP merchant;
+        [SerializeField] public MerchantBP merchant;
 
-    public override void Action()
-    {
-        FindObjectOfType<UIMerchantController>().Show(merchant.Create(), Player.Instance.Party);
+        public override void Action()
+        {
+            FindObjectOfType<UIMerchantController>().Show(merchant.Create(), Player.Instance.Party);
 
-    }
+        }
 
-    public override Reward GetReward()
-    {
-        return null;
+        public override Reward GetReward()
+        {
+            return null;
+        }
     }
 }

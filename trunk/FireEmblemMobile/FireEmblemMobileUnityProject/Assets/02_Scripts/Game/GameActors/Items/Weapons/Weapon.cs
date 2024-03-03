@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.GameActors.Items.Relics;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
-using Game.Mechanics;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.UnitType;
+using Game.GUI.EncounterUI.Smithy;
+using Game.Systems;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Weapons

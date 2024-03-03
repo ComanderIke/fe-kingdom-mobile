@@ -1,10 +1,11 @@
-using System;
 using System.Linq;
-using Game.Grid;
+using Game.EncounterAreas.Encounters.Battle;
+using Game.GUI.Interface;
+using Game.Map;
 using TMPro;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Controller
 {
     [ExecuteInEditMode]
     public class UIObjectiveController : IObjectiveUI

@@ -1,7 +1,7 @@
-﻿using Game.Grid;
+﻿using Game.EncounterAreas.Encounters.Battle;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Interface
 {
     public abstract class IObjectiveUI : MonoBehaviour
     {

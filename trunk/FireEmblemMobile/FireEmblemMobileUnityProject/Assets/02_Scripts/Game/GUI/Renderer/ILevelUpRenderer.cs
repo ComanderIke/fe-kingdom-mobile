@@ -1,10 +1,8 @@
-﻿
-
-using System;
-using Game.States;
+﻿using System;
+using Game.Interfaces;
 using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Renderer
 {
     public interface ILevelUpRenderer : IAnimation
     {

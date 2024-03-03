@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Game.EncounterAreas.Management;
 using TMPro;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI.CharacterCircleUI
 {
     public class UIAreaCompletedController : MonoBehaviour
     {

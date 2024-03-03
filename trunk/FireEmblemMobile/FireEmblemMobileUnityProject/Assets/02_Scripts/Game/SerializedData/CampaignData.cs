@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.WorldMapStuff.Model;
-using Game.WorldMapStuff.UI;
+﻿using Game.Campaigns;
 
-namespace Game.Systems
+namespace Game.SerializedData
 {
     [System.Serializable]
     public class CampaignData

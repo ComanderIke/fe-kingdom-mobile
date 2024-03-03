@@ -2,21 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.AI;
+using Game.AI.DecisionMaking;
+using Game.AI.UnitSpecific;
+using Game.DataAndReferences.Data;
+using Game.Dialog;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Factions;
 using Game.GameActors.Items;
+using Game.GameActors.Items.Relics;
 using Game.GameActors.Items.Weapons;
-using Game.GameActors.Players;
 using Game.GameActors.Units.CharStateEffects;
+using Game.GameActors.Units.Components;
 using Game.GameActors.Units.Humans;
+using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.Numbers;
 using Game.GameActors.Units.OnGameObject;
+using Game.GameActors.Units.Progression;
+using Game.GameActors.Units.RPGElements;
 using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.Skills.EffectMixins;
+using Game.GameActors.Units.UnitState;
+using Game.GameActors.Units.UnitType;
+using Game.GameActors.Units.Visuals;
 using Game.GameInput;
-using Game.GameResources;
+using Game.GameMechanics;
+using Game.Graphics.BattleAnimations;
 using Game.Grid;
+using Game.Grid.Tiles;
+using Game.GUI;
 using Game.Manager;
-using Game.Mechanics;
-using Game.WorldMapStuff.Model;
-using LostGrace;
+using Game.Systems;
 using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -280,16 +296,16 @@ namespace Game.GameActors.Units
         {
             Debug.Log("Die: " + name);
             KilledBy = damageSource;
-            if (IsBoss&&Player.Instance.Flags.BossKillBonds)
+            if (IsBoss&&Player.Player.Instance.Flags.BossKillBonds)
             {
-                if (Player.Instance.Party.members.Contains(KilledBy))
+                if (Player.Player.Instance.Party.members.Contains(KilledBy))
                 {
                     KilledBy.Bonds.Increase(GameBPData.Instance.GetGod("Ares"),50);
                 }
             }
-            else if (Player.Instance.Flags.KillBonds)
+            else if (Player.Player.Instance.Flags.KillBonds)
             {
-                if (Player.Instance.Party.members.Contains(KilledBy))
+                if (Player.Player.Instance.Party.members.Contains(KilledBy))
                 {
                     KilledBy.Bonds.Increase(GameBPData.Instance.GetGod("Ares"),1);
                 }

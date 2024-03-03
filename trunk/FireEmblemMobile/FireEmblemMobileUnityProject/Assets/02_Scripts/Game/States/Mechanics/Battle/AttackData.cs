@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Game.GameActors.Units;
-using Game.GameInput;
+using Game.GameActors.Units.Interfaces;
 
-namespace Game.Mechanics.Battle
+namespace Game.States.Mechanics.Battle
 {
     public class AttackData
     {

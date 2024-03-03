@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using Game.GameMechanics;
+using Game.GUI.ToolTips;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UIBlessingButton : MonoBehaviour
     {

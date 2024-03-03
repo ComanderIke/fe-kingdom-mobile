@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
-using Game.Mechanics;
+using Game.States.Mechanics;
+using Game.Utility;
 using TMPro;
 using UnityEngine;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UIAttackOrder : MonoBehaviour
     {

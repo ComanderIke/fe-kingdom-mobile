@@ -1,33 +1,34 @@
 ﻿using System;
-using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
-
+using Game.GameActors.Units.Skills.Base;
+using Game.GUI.Skills;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-[System.Serializable]
-public class SkillTreeEntry
+namespace Game.GameActors.Units.Humans
 {
-    public int levelRequirement;
-
-    public int row;
-    // public int[] statRequirements;
-    //public Skill[] skillRequirements;
-    [SerializeField] private SkillBp skillBp;
-    public SkillState SkillState = SkillState.NotLearnable;
-    [NonSerialized]public SkillTree tree;
-
-    private Skill skill;
-    public Skill Skill
+    [System.Serializable]
+    public class SkillTreeEntry
     {
-        get
+        public int levelRequirement;
+
+        public int row;
+        // public int[] statRequirements;
+        //public Skill[] skillRequirements;
+        [SerializeField] private SkillBp skillBp;
+        public SkillState SkillState = SkillState.NotLearnable;
+        [NonSerialized]public SkillTree tree;
+
+        private Skill skill;
+        public Skill Skill
         {
-            if (skill == null&&skillBp!=null)
-                skill = skillBp.Create();
-            return skill;
+            get
+            {
+                if (skill == null&&skillBp!=null)
+                    skill = skillBp.Create();
+                return skill;
+            }
         }
+
+
+
     }
-
-
-
 }

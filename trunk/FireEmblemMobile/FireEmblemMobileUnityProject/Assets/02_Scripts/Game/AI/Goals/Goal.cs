@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.AI.DecisionMaking;
 using Game.GameActors.Units;
-using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.Goals
 {
     public class Goal
     {

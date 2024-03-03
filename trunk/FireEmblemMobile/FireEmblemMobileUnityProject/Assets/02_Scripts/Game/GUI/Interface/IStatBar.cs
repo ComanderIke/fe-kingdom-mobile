@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.GUI
+namespace Game.GUI.Interface
 {
     public abstract class IStatBar: MonoBehaviour
     {

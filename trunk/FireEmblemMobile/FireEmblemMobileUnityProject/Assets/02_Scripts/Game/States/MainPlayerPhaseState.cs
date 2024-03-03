@@ -1,20 +1,20 @@
 ﻿using System.Linq;
 using Game.GameActors.Items;
-using Game.GameActors.Items.Weapons;
-using Game.GameActors.Players;
+using Game.GameActors.Items.Consumables;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Humans;
-using Game.GameActors.Units.Skills;
-using Game.GameInput;
-using Game.GUI;
+using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Base;
+using Game.GameInput.GameplayCommands;
+using Game.GameInput.GridInput;
+using Game.Grid;
+using Game.Interfaces;
 using Game.Manager;
-using Game.Map;
-using Game.WorldMapStuff.Model;
+using Game.Systems;
 using GameEngine.GameStates;
-using LostGrace;
 using UnityEngine;
 
-namespace Game.Mechanics
+namespace Game.States
 {
     public class MainPlayerPhaseState: GameState<PPStateTrigger>{
         

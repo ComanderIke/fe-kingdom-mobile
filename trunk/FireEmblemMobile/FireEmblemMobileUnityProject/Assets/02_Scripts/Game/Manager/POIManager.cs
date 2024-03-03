@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using Audio;
+using Game.Audio;
+using Game.DataAndReferences.Data;
 using Game.Dialog;
-using Game.GameActors.Players;
-using Game.GameResources;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
-using Menu;
-using TMPro;
+using Game.EncounterAreas.Model;
+using Game.GameActors.Player;
+using Game.GUI;
+using Game.GUI.Controller;
+using Game.Menu;
+using Game.SerializedData;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.Manager
 {
     public class POIManager : UIMenu
     {

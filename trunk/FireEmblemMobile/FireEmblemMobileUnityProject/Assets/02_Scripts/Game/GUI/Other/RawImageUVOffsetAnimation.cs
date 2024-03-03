@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     [ExecuteInEditMode]
     public class RawImageUVOffsetAnimation : MonoBehaviour

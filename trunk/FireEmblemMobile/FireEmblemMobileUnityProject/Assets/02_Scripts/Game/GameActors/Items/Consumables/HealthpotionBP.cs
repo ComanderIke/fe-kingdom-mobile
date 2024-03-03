@@ -1,8 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace Game.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Consumables
 {
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Items/Consumables/HealthPotion", fileName = "HealthPotion")]

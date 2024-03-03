@@ -1,26 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using Game.GameActors.Players;
-using Game.GUI;
+using Game.EncounterAreas.Model;
 using Game.Manager;
-using Game.Systems;
-using Game.WorldMapStuff.Controller;
-using Game.WorldMapStuff.Model;
-using LostGrace;
-using Menu;
+using Game.Menu;
+using Game.SerializedData;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class MainMenuButtonController : MonoBehaviour
+namespace Game.GUI.Controller
 {
-
-
-    public void MainMenuClicked()
+    public class MainMenuButtonController : MonoBehaviour
     {
-        Debug.Log("MainMenu ClickedS!");
-        SaveGameManager.Save();
-        GridGameManager.Instance.CleanUp();
-        SceneController.LoadSceneAsync(Scenes.MainMenu, false);
+
+
+        public void MainMenuClicked()
+        {
+            Debug.Log("MainMenu ClickedS!");
+            SaveGameManager.Save();
+            GridGameManager.Instance.CleanUp();
+            SceneController.LoadSceneAsync(Scenes.MainMenu, false);
         
+        }
     }
 }

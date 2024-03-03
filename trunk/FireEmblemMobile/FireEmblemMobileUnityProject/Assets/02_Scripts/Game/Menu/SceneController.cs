@@ -2,15 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using Game.WorldMapStuff.Model;
-using LostGrace;
+using Game.EncounterAreas.Model;
+using Game.GUI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-namespace Menu
+namespace Game.Menu
 {
     public class SceneController : MonoBehaviour
     {

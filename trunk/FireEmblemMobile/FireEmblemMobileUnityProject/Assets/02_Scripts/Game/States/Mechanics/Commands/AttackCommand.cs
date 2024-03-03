@@ -1,12 +1,11 @@
-﻿using System;
-using Game.AI;
-using Game.GameActors.Players;
-using Game.GameInput;
+﻿using Game.AI.DecisionMaking;
+using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units.Interfaces;
 using Game.Manager;
-using GameEngine;
+using Game.Systems;
 using UnityEngine;
 
-namespace Game.Mechanics.Commands
+namespace Game.States.Mechanics.Commands
 {
     public class AttackCommand : Command
     {

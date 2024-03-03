@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
+using Game.Utility;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class MinotaurRageMeterUI : MonoBehaviour
     {

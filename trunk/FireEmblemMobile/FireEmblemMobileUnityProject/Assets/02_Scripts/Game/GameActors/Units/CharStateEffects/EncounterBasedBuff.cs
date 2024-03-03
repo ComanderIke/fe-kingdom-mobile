@@ -1,6 +1,4 @@
-﻿using LostGrace;
-
-namespace Game.GameActors.Units.CharStateEffects
+﻿namespace Game.GameActors.Units.CharStateEffects
 {
     public abstract class EncounterBasedBuff : ITemporaryEffect
     {

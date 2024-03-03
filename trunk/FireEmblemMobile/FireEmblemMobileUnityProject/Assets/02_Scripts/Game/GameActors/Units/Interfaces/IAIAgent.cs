@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using Game.AI;
-using Game.GameActors.Players;
-using Game.GameActors.Units.Humans;
+﻿using Game.AI.UnitSpecific;
+using Game.GameActors.Units.Components;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Interfaces
 {
     public interface IAIAgent :IGridActor
     {

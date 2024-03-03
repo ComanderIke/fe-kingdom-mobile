@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
+using Game.EncounterAreas.Encounters;
+using Game.EncounterAreas.Encounters.Church;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameData/ChurchEncounterData", fileName = "ChurchEncounterData")]
-public class ChurchEncounterNodeData: EncounterNodeData
+namespace Game.EncounterAreas.EncounterData
 {
-    public override EncounterNode CreateNode(List<EncounterNode> parents,int depth, int childIndex)
+    [CreateAssetMenu(menuName = "GameData/ChurchEncounterData", fileName = "ChurchEncounterData")]
+    public class ChurchEncounterNodeData: EncounterNodeData
     {
-        return new ChurchEncounterNode(parents, depth, childIndex, label,description, sprite);
+        public override EncounterNode CreateNode(List<EncounterNode> parents,int depth, int childIndex)
+        {
+            return new ChurchEncounterNode(parents, depth, childIndex, label,description, sprite);
+        }
     }
 }

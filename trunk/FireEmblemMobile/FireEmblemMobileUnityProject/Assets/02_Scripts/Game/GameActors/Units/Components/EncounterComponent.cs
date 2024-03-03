@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using LostGrace;
+using Game.GameActors.Units.Skills.Passive;
 
-namespace Game.GameActors.Units
+namespace Game.GameActors.Units.Components
 {
     public class EncounterComponent
     {

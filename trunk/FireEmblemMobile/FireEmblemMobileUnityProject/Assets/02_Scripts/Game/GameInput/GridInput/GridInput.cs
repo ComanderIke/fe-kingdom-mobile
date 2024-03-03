@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
-using Game.GameActors.Units.OnGameObject;
+using Game.GameInput.Interfaces;
+using Game.GameInput.Raycasts;
 using Game.Manager;
+using Game.Utility;
 using GameCamera;
-using LostGrace;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace Game.GameInput
+namespace Game.GameInput.GridInput
 {
     public class GridInput
     {

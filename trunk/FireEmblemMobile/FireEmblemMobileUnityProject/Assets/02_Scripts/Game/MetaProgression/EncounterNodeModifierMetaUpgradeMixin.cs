@@ -1,46 +1,51 @@
 using System.Collections.Generic;
-using _02_Scripts.Game.GUI.Utility;
-using Game.GameActors.Items;
+using Game.Dialog.DialogSystem;
+using Game.EncounterAreas.Encounters.Merchant;
+using Game.EncounterAreas.Encounters.Smithy;
+using Game.GameActors.Units.Skills.Base;
 using Game.GUI.EncounterUI.Inn;
-using LostGrace;
+using Game.GUI.Utility;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/EncounterNodeModifier", fileName = "MetaUpgrade1")]
-public class EncounterNodeModifierMetaUpgradeMixin : MetaUpgradeMixin
+namespace Game.MetaProgression
 {
-    public SerializableDictionary<EncounterNodeModifierType, int>[] modifiers;
-    public override void Activate(int level)
+    [CreateAssetMenu(menuName = "GameData/Upgrades/MetaUpgrade/EncounterNodeModifier", fileName = "MetaUpgrade1")]
+    public class EncounterNodeModifierMetaUpgradeMixin : MetaUpgradeMixin
     {
-        foreach (KeyValuePair<EncounterNodeModifierType, int> keyValuePair in modifiers[level])
+        public SerializableDictionary<EncounterNodeModifierType, int>[] modifiers;
+        public override void Activate(int level)
         {
-            switch (keyValuePair.Key)
+            foreach (KeyValuePair<EncounterNodeModifierType, int> keyValuePair in modifiers[level])
             {
-                case EncounterNodeModifierType.MerchantSlots:
-                    Merchant.SlotCount = keyValuePair.Value; break;
-                case EncounterNodeModifierType.FoodSlotsInn:
-                    UIInnController.FoodSlots = keyValuePair.Value;break;
-                case EncounterNodeModifierType.SmithingMaxUpgrade:
-                    Smithy.MaxUpgradeLevel = keyValuePair.Value;break;
+                switch (keyValuePair.Key)
+                {
+                    case EncounterNodeModifierType.MerchantSlots:
+                        Merchant.SlotCount = keyValuePair.Value; break;
+                    case EncounterNodeModifierType.FoodSlotsInn:
+                        UIInnController.FoodSlots = keyValuePair.Value;break;
+                    case EncounterNodeModifierType.SmithingMaxUpgrade:
+                        Smithy.MaxUpgradeLevel = keyValuePair.Value;break;
                 
+                }
             }
         }
-    }
 
-    public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
-    {
-        var list = new List<EffectDescription>();
-        foreach (var entry in modifiers[level])
+        public override IEnumerable<EffectDescription> GetEffectDescriptions(int level)
         {
-            list.Add(new EffectDescription(entry.Key.EnumToString()+":", "+"+entry.Value, "+"+entry.Value));
-        }
+            var list = new List<EffectDescription>();
+            foreach (var entry in modifiers[level])
+            {
+                list.Add(new EffectDescription(entry.Key.EnumToString()+":", "+"+entry.Value, "+"+entry.Value));
+            }
        
-        return list;
+            return list;
+        }
     }
-}
 
-public enum EncounterNodeModifierType
-{
-    MerchantSlots,
-    SmithingMaxUpgrade,
-    FoodSlotsInn
+    public enum EncounterNodeModifierType
+    {
+        MerchantSlots,
+        SmithingMaxUpgrade,
+        FoodSlotsInn
+    }
 }

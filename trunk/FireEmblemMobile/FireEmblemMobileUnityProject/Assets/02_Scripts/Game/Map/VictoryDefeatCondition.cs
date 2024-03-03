@@ -1,7 +1,7 @@
 ﻿using Game.Manager;
 using UnityEngine;
 
-namespace Game.Grid
+namespace Game.Map
 {
     [CreateAssetMenu(fileName = "VictoryDefeatCondition", menuName = "GameData/ChapterConditions", order = 0)]
     public class VictoryDefeatCondition : ScriptableObject

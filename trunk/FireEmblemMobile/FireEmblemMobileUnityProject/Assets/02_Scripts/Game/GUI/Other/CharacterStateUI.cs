@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using __2___Scripts.Game.Utility;
 using Game.GameActors.Units;
 using Game.GameActors.Units.CharStateEffects;
-using Game.GameResources;
-using LostGrace;
+using Game.GameActors.Units.UnitState;
+using Game.Utility;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.GUI
+namespace Game.GUI.Other
 {
     public class CharacterStateUI : MonoBehaviour
     {

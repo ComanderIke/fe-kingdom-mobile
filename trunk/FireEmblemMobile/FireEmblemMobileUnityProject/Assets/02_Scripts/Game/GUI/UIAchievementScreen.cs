@@ -1,15 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using __2___Scripts.Game.Utility;
-using Game.GameActors.Players;
-using Game.GameActors.Units;
-using Game.WorldMapStuff.Model;
-using TMPro;
+using Game.AchievementSystem;
+using Game.Menu;
+using Game.Utility;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UI;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class UIAchievementScreen : UIMenu
     {

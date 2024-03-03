@@ -1,6 +1,6 @@
-﻿using Game.GameActors.Units.Skills;
+﻿using Game.GameActors.Units.Skills.Base;
 
-namespace Game.Mechanics
+namespace Game.States
 {
     public interface ISkillClickedReceiver
     {

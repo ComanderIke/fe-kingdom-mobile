@@ -1,16 +1,13 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Game.GameActors.Players;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
-using Game.WorldMapStuff.Model;
+using Game.GUI.CharacterScreen;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
-namespace LostGrace
+namespace Game.GUI
 {
     public class CharacterSelector : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Grid
+namespace Game.Grid.Tiles
 {
     [CreateAssetMenu(menuName="GameData/Sprites/TileSprites", fileName="TileSprites")]
     public class TileSprites:ScriptableObject

@@ -1,8 +1,8 @@
 ﻿using System;
-using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using UnityEngine;
 
-namespace Game.Graphics
+namespace Game.Graphics.Interfaces
 {
     [Serializable]
     public abstract class IUnitEffectVisual : ScriptableObject

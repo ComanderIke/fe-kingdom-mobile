@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameActors.Factions;
 
 namespace Game.GUI.Text
 {

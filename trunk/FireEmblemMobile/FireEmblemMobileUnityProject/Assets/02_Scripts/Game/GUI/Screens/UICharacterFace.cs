@@ -1,102 +1,105 @@
 ﻿using System;
-using System.Collections;
 using Game.GameActors.Units;
-using Game.GUI;
+using Game.GUI.Controller;
+using Game.GUI.Other;
 using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UICharacterFace : MonoBehaviour
+namespace Game.GUI.Screens
 {
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private UIStatBar hpBar;
-  //  [SerializeField] private UIStatBar expBar;
-    [SerializeField] private Image faceImage;
-    [SerializeField] private MMF_Player feedbacks;
-    [SerializeField] private ExpBarController expBar = default;
-    [SerializeField] private Image blessingBackground;
-    [SerializeField] private GameObject selected;
-    private Unit unit;
-    public event Action<Unit> onClicked;
-
-    public void Clicked()
+    public class UICharacterFace : MonoBehaviour
     {
-        onClicked?.Invoke(unit);
-    }
-    public void Show(Unit unit)
-    {
+        [SerializeField] private TextMeshProUGUI nameText;
+        [SerializeField] private UIStatBar hpBar;
+        //  [SerializeField] private UIStatBar expBar;
+        [SerializeField] private Image faceImage;
+        [SerializeField] private MMF_Player feedbacks;
+        [SerializeField] private ExpBarController expBar = default;
+        [SerializeField] private Image blessingBackground;
+        [SerializeField] private GameObject selected;
+        private Unit unit;
+        public event Action<Unit> onClicked;
 
-        gameObject.SetActive(true);
-        if (unit != null)
+        public void Clicked()
         {
-            unit.HpValueChanged -= UpdateHpBar;
-            unit.ExperienceManager.ExpGained -= UpdateExpBar;
+            onClicked?.Invoke(unit);
+        }
+        public void Show(Unit unit)
+        {
+
+            gameObject.SetActive(true);
+            if (unit != null)
+            {
+                unit.HpValueChanged -= UpdateHpBar;
+                unit.ExperienceManager.ExpGained -= UpdateExpBar;
+            }
+
+            if(blessingBackground!=null)
+                blessingBackground.gameObject.SetActive(unit.Blessing!=null);
+            if(unit.Blessing!=null&& blessingBackground!=null)
+                blessingBackground.color = unit.Blessing.God.Color;
+            this.unit = unit;
+            unit.HpValueChanged += UpdateHpBar;
+        
+            unit.ExperienceManager.ExpGained += UpdateExpBar;
+            InitHpBar();
+            faceImage.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
+            nameText.SetText(unit.name);
         }
 
-        if(blessingBackground!=null)
-            blessingBackground.gameObject.SetActive(unit.Blessing!=null);
-        if(unit.Blessing!=null&& blessingBackground!=null)
-            blessingBackground.color = unit.Blessing.God.Color;
-        this.unit = unit;
-        unit.HpValueChanged += UpdateHpBar;
-        
-        unit.ExperienceManager.ExpGained += UpdateExpBar;
-        InitHpBar();
-        faceImage.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
-        nameText.SetText(unit.name);
-    }
-
-    private void OnDisable()
-    {
+        private void OnDisable()
+        {
        
-        if(unit!=null)
-            unit.HpValueChanged -= UpdateHpBar;
-    }
-    void InitHpBar()
-    {
-        // if (hpBar.currentValue > unit.Hp)
-        // {
-        //     feedbacks.PlayFeedbacks();
-        // }
-        //
-        hpBar.SetValue(unit.Hp, unit.MaxHp, false);
-        if(expBar!=null)
-            expBar.UpdateInstant(unit.ExperienceManager.Exp);
-    }
-
-    void UpdateHpBar()
-    {
-        if (hpBar.currentValue > unit.Hp)
-        {
-            Debug.Log(unit.name);
-            if(feedbacks!=null)
-                feedbacks.PlayFeedbacks();
+            if(unit!=null)
+                unit.HpValueChanged -= UpdateHpBar;
         }
+        void InitHpBar()
+        {
+            // if (hpBar.currentValue > unit.Hp)
+            // {
+            //     feedbacks.PlayFeedbacks();
+            // }
+            //
+            hpBar.SetValue(unit.Hp, unit.MaxHp, false);
+            if(expBar!=null)
+                expBar.UpdateInstant(unit.ExperienceManager.Exp);
+        }
+
+        void UpdateHpBar()
+        {
+            if (hpBar.currentValue > unit.Hp)
+            {
+                Debug.Log(unit.name);
+                if(feedbacks!=null)
+                    feedbacks.PlayFeedbacks();
+            }
         
-        hpBar.SetValue(unit.Hp, unit.MaxHp, true);
-    }
-    void UpdateExpBar(int expBefore, int expGained)
-    {
-        if (expBar == null)
-            return;
-        // if (expBar.currentValue > unit.ExperienceManager.Exp)
-        // {
-        //     feedbacks.PlayFeedbacks();
-        // }
-        Debug.Log("Unit: "+unit.name+" "+expBar.gameObject.name);
-        expBar.UpdateInstant(expBefore);
-        expBar.UpdateWithAnimatedTextOnly(expGained);
-    }
+            hpBar.SetValue(unit.Hp, unit.MaxHp, true);
+        }
+        void UpdateExpBar(int expBefore, int expGained)
+        {
+            if (expBar == null)
+                return;
+            // if (expBar.currentValue > unit.ExperienceManager.Exp)
+            // {
+            //     feedbacks.PlayFeedbacks();
+            // }
+            Debug.Log("Unit: "+unit.name+" "+expBar.gameObject.name);
+            expBar.UpdateInstant(expBefore);
+            expBar.UpdateWithAnimatedTextOnly(expGained);
+        }
 
 
-    public void Hide()
-    {
-       gameObject.SetActive(false);
-    }
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
 
-    public void Select()
-    {
-        selected.gameObject.SetActive(true);
+        public void Select()
+        {
+            selected.gameObject.SetActive(true);
+        }
     }
 }

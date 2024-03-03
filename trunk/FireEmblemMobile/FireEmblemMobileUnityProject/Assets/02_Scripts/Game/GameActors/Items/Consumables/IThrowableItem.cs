@@ -1,4 +1,4 @@
-﻿namespace _02_Scripts.Game.GameActors.Items.Consumables
+﻿namespace Game.GameActors.Items.Consumables
 {
     interface IThrowableItem
     {

@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Game.WorldMapStuff.Controller;
+using Game.GUI.Controller;
+using Game.Manager;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace LostGrace
+namespace Game.Grid
 {
     public class UIToSanctuaryButton : MonoBehaviour
     {

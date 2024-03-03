@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using Game.GameActors.Units.CharStateEffects;
-using LostGrace;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/ApplyBuff", fileName = "ApplyBuffSkillEffect")]
     public class ApplyBuffSkillEffectMixin : UnitTargetSkillEffectMixin

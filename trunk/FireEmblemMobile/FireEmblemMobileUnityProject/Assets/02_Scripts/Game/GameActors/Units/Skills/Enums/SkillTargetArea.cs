@@ -1,4 +1,4 @@
-﻿namespace Game.GameActors.Units.Skills
+﻿namespace Game.GameActors.Units.Skills.Enums
 {
     public enum SkillTargetArea
     {

@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using Game.GameActors.Players;
-using Game.Systems;
-using Game.WorldMapStuff.Model;
-using UnityEngine;
+﻿using Game.EncounterAreas.Encounters;
+using Game.GameActors.Player;
+using Game.SerializedData;
 
-namespace Game.WorldMapStuff.Serialization
+namespace Game.EncounterAreas.Serialization
 {
     public class MoveAction:SerializedAction
     {

@@ -1,9 +1,8 @@
-﻿using Game.GameActors.Units;
-using Game.GameActors.Units.Numbers;
-using Game.WorldMapStuff.Model;
+﻿using Game.EncounterAreas.Model;
+using Game.GameActors.Units;
 using UnityEngine;
 
-namespace Game.GameActors.Items.Weapons
+namespace Game.GameActors.Items.Consumables
 {
     public class Boots : ConsumableItem
     {

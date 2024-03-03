@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using Game.Systems;
+﻿using Game.SerializedData;
 using GameEngine;
-using LostGrace;
 using UnityEngine;
 
-namespace Game.WorldMapStuff
+namespace Game.EncounterAreas.Serialization
 {
     public class SerializedActionSystem : IEngineSystem
     {

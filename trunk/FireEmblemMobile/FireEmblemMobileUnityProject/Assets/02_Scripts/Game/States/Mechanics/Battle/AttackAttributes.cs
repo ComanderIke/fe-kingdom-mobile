@@ -1,4 +1,4 @@
-﻿namespace Game.Mechanics.Battle
+﻿namespace Game.States.Mechanics.Battle
 {
     public enum AttackAttributes
     {

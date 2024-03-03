@@ -2,7 +2,7 @@
 using Game.GameActors.Units.Numbers;
 using UnityEngine;
 
-namespace Game.GameActors.Players
+namespace Game.SerializedData
 {
     [System.Serializable]
     public class StatsData

@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using Game.GameActors.Units;
-using Game.GameActors.Units.Skills;
+using Game.GameActors.Units.Humans;
+using Game.GUI.Skills;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-
-namespace LostGrace
+namespace Game.GUI
 {
     public class SkillUpgradeDetailPanel : MonoBehaviour
     {

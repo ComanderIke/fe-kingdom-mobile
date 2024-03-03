@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using Game.Grid;
+using Game.Grid.Tiles;
 using Game.Manager;
-using Game.Map;
-using LostGrace;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.EffectMixins
 {
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/WarpEffectMixin", fileName = "WarpMixinEffect")]
     public class WarpMixinSkillEffect : TileTargetSkillEffectMixin

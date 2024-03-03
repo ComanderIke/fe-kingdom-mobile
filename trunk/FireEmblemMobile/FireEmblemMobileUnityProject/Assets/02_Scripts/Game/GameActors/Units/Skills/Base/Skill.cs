@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using _02_Scripts.Game.GUI.Utility;
-using Game.GameInput;
-using LostGrace;
+using Game.GameActors.Units.Skills.EffectMixins;
+using Game.GameMechanics;
+using Game.GUI;
+using Game.GUI.Interface;
+using Game.GUI.Utility;
 using UnityEngine;
 
-namespace Game.GameActors.Units.Skills
+namespace Game.GameActors.Units.Skills.Base
 {
     [System.Serializable]
     public class Skill:ITargetableObject

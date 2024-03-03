@@ -1,8 +1,11 @@
 ﻿using System;
 
-public interface IBattleSuccessRenderer
+namespace Game.GUI.Renderer
 {
-    public void Show();
-    void Hide();
-    event Action OnFinished;
+    public interface IBattleSuccessRenderer
+    {
+        public void Show();
+        void Hide();
+        event Action OnFinished;
+    }
 }

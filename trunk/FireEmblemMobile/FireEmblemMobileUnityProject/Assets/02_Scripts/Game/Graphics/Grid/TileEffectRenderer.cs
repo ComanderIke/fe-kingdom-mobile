@@ -1,66 +1,67 @@
-using System.Collections;
 using System.Collections.Generic;
-using Game.Graphics;
-using Game.Grid;
+using Game.Grid.Tiles;
 using UnityEngine;
 
-public class TileEffectRenderer : MonoBehaviour, ITileEffectVisualRenderer
+namespace Game.Graphics.Grid
 {
-    [SerializeField]
-    private TileEffectVisual attackable;
-    [SerializeField]
-    private TileEffectVisual swapable;
-
-
-    private Dictionary<Tile, TileEffectVisual> attackableVFXs;
-    private Dictionary<Tile, TileEffectVisual> swapAbleVFXs;
-
-    // Start is called before the first frame update
-
-    void Start()
+    public class TileEffectRenderer : MonoBehaviour, ITileEffectVisualRenderer
     {
-        attackableVFXs = new Dictionary<Tile, TileEffectVisual>();
-        swapAbleVFXs = new Dictionary<Tile, TileEffectVisual>();
-    }
-    public void ShowSwapable(Tile tile)
-    {
+        [SerializeField]
+        private TileEffectVisual attackable;
+        [SerializeField]
+        private TileEffectVisual swapable;
 
-        if (swapAbleVFXs.ContainsKey(tile))
+
+        private Dictionary<Tile, TileEffectVisual> attackableVFXs;
+        private Dictionary<Tile, TileEffectVisual> swapAbleVFXs;
+
+        // Start is called before the first frame update
+
+        void Start()
         {
-            swapAbleVFXs[tile].Show(tile);
+            attackableVFXs = new Dictionary<Tile, TileEffectVisual>();
+            swapAbleVFXs = new Dictionary<Tile, TileEffectVisual>();
         }
-        else
+        public void ShowSwapable(Tile tile)
         {
-            swapAbleVFXs.Add(tile, ScriptableObject.Instantiate(swapable));
-            swapAbleVFXs[tile].Show(tile);
-        }
+
+            if (swapAbleVFXs.ContainsKey(tile))
+            {
+                swapAbleVFXs[tile].Show(tile);
+            }
+            else
+            {
+                swapAbleVFXs.Add(tile, ScriptableObject.Instantiate(swapable));
+                swapAbleVFXs[tile].Show(tile);
+            }
         
-    }
-
-    public void ShowAttackable(Tile tile)
-    {
-
-        if (attackableVFXs.ContainsKey(tile))
-        {
-            attackableVFXs[tile].Show(tile);
-        }
-        else
-        {
-            attackableVFXs.Add(tile, ScriptableObject.Instantiate(attackable));
-            attackableVFXs[tile].Show(tile);
-        }
-    }
-
-    public void Hide(Tile tile)
-    {
-        if (swapAbleVFXs.ContainsKey(tile))
-        {
-            swapAbleVFXs[tile].Hide();
         }
 
-        if (attackableVFXs.ContainsKey(tile))
+        public void ShowAttackable(Tile tile)
         {
-            attackableVFXs[tile].Hide();
+
+            if (attackableVFXs.ContainsKey(tile))
+            {
+                attackableVFXs[tile].Show(tile);
+            }
+            else
+            {
+                attackableVFXs.Add(tile, ScriptableObject.Instantiate(attackable));
+                attackableVFXs[tile].Show(tile);
+            }
+        }
+
+        public void Hide(Tile tile)
+        {
+            if (swapAbleVFXs.ContainsKey(tile))
+            {
+                swapAbleVFXs[tile].Hide();
+            }
+
+            if (attackableVFXs.ContainsKey(tile))
+            {
+                attackableVFXs[tile].Hide();
+            }
         }
     }
 }

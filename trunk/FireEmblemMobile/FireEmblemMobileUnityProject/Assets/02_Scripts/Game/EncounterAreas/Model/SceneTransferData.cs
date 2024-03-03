@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.EncounterAreas.Encounters.Battle;
 using Game.GameActors.Units;
 
-namespace Game.WorldMapStuff.Model
+namespace Game.EncounterAreas.Model
 {
     public class SceneTransferData
     {
