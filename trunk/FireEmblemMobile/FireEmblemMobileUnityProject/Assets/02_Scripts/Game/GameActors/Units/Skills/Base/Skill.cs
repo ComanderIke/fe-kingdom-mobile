@@ -193,5 +193,25 @@ namespace Game.GameActors.Units.Skills
                 return passiveMixins[0].synergies;
             return new SerializableDictionary<BlessingBP, SynergieEffects>();
         }
+
+        public bool CanCast(Unit unit)
+        {
+            if (FirstActiveMixin != null)
+            {
+                if (FirstActiveMixin.costIsSkillPoints)
+                {
+                    return unit.SkillManager.SkillPoints >= FirstActiveMixin.GetHpCost(level);
+                }
+                else
+                {
+                    return unit.Hp > FirstActiveMixin.GetHpCost(level);
+                }
+            }
+            else if (CombatSkillMixin != null)
+            {
+                return unit.Hp > CombatSkillMixin.GetHpCost(level);
+            }
+            return true;
+        }
     }
 }

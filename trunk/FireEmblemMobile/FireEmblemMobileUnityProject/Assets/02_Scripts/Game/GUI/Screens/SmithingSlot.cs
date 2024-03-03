@@ -1,5 +1,6 @@
 ﻿using Game.GameActors.Items.Weapons;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills;
 using LostGrace;
 using TMPro;
 using UnityEngine;
@@ -44,10 +45,10 @@ public class SmithingSlot : MonoBehaviour
             if (skill != null)
             {
                 // Debug.Log("TODO");
-                bool canAffordHPCost = skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
+                bool canAffordHPCost = skill.CanCast(unit);
                 bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
 
-                skillUI.SetSkill(skill, true, false, canAffordHPCost, hasUses);
+                skillUI.SetSkill(skill, false, false, canAffordHPCost, hasUses);
             }
             else
             {
@@ -129,5 +130,29 @@ public class SmithingSlot : MonoBehaviour
     public void Highlight()
     {
         Debug.Log("Highlight Slot somehow");
+    }
+
+    public bool HasSkill(Skill skill)
+    {
+        if (equipable == null)
+            return false;
+        if (equipable.Skill == null)
+            return false;
+        return equipable.Skill.Equals(skill);
+    }
+
+    public void SelectSkill()
+    {
+        if (equipable.Skill!=null)
+        {
+            skillUI.Select();
+        }
+    }
+    public void DeselectSkill()
+    {
+        if (equipable.Skill!=null)
+        {
+            skillUI.Deselect();
+        }
     }
 }

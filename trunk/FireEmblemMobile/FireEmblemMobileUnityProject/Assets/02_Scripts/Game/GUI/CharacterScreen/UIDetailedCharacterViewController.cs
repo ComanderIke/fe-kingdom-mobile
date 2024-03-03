@@ -35,6 +35,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
     [SerializeField] private Material SelectedBorderMaterial;
     [SerializeField] private Material defaultMateril;
     [SerializeField] private GameObject invisibleButton;
+    [SerializeField] private TextMeshProUGUI skillPoints;
     public void SkillTreeClicked()
     {
         skillTreeUI.Show(unit);
@@ -131,6 +132,7 @@ public class UIDetailedCharacterViewController : UICharacterViewController
 
         }
         base.UpdateUI(unit);
+        skillPoints.text = ""+unit.SkillManager.SkillPoints;
         Lv.SetText("Lv. "+unit.ExperienceManager.Level);
         if(blessingEffect!=null)
             blessingEffect.gameObject.SetActive(unit.Blessing!=null);

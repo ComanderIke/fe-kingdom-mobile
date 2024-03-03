@@ -49,6 +49,8 @@ namespace LostGrace
             bool canAffordHPCost =
                 skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) ||
                 skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
+            if (!skill.IsActive() && !skill.IsCombat())
+                canAffordHPCost = true;
             bool hasUses = skill.FirstActiveMixin != null && skill.FirstActiveMixin.Uses > 0 ||
                            skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses > 0;
             bool hasSynergy = false;

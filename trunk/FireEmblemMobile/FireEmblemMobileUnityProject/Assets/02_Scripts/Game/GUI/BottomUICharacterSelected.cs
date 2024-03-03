@@ -19,6 +19,7 @@ namespace LostGrace
 {
     public class BottomUICharacterSelected : BottomUIBase
     {
+        [SerializeField] private TextMeshProUGUI skillPoints;
         [SerializeField] UseItemDialogController useItemDialogController;
         [SerializeField] UseSkillDialogController useSkillDialogController;
         [SerializeField] private Image faceSprite;
@@ -125,6 +126,7 @@ namespace LostGrace
             nameText.text = unit.Name;
             lvl.text = "" + unit.ExperienceManager.Level;
             exp.text = unit.ExperienceManager.Exp + "/" + ExperienceManager.MAX_EXP;
+            skillPoints.text = ""+unit.SkillManager.SkillPoints;
             //weaponType.text = unit.equippedWeapon.WeaponType.WeaponName;
             //weaponTypeIcon.sprite = unit.equippedWeapon.WeaponType.Icon;
             //move.text = "Mov " + unit.MovementRange;
@@ -157,11 +159,10 @@ namespace LostGrace
                     prefab = combatSkillprefab;
                 var go =Instantiate(prefab, skillContainer);
                 var skillUI =  go.GetComponent<SkillUI>();
-                bool canAffordHPCost = skill.FirstActiveMixin != null && unit.Hp > skill.FirstActiveMixin.GetHpCost(skill.level) || 
-                                       skill.CombatSkillMixin != null && unit.Hp > skill.CombatSkillMixin.GetHpCost(skill.level);
+                bool canAffordHPCost= skill.CanCast(unit);
                 bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
             
-                skillUI.SetSkill(skill, true, unit.Blessing!=null, canAffordHPCost, hasUses);
+                skillUI.SetSkill(skill, false, unit.Blessing!=null, canAffordHPCost, hasUses);
                 // if (skill.CombatSkillMixin != null&& skill.CombatSkillMixin.Selected)
                 // {
                 //     SelectSkill(skillUI);
@@ -200,6 +201,8 @@ namespace LostGrace
                 return;
             if (weapon.Skill!=null && weapon.Skill.activeMixins.Count > 0)
             {
+                if (!weapon.Skill.CanCast(unit))
+                    return;
                 if (ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedSkill == null)
                 {
                     new GameplayCommands().SelectSkill(weapon.Skill);
@@ -214,7 +217,7 @@ namespace LostGrace
         }
         public void RelicClicked()
         {
-            ToolTipSystem.Show(unit.EquippedRelic, weaponSlot.transform.position);
+            //ToolTipSystem.Show(unit.EquippedRelic, weaponSlot.transform.position);
             var relic = unit.EquippedRelic;
             if (!interactableForPlayer)
                 return;
@@ -222,6 +225,8 @@ namespace LostGrace
                 return;
             if (relic.Skill!=null && relic.Skill.activeMixins.Count > 0)
             {
+                if (!relic.Skill.CanCast(unit))
+                    return;
                 if (ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedSkill == null)
                 {
                     new GameplayCommands().SelectSkill(relic.Skill);
@@ -328,6 +333,14 @@ namespace LostGrace
         {
             if (!interactableForPlayer)
                 return;
+            if (RelicSlot1.HasSkill(skill))
+            {
+                RelicSlot1.DeselectSkill();
+            }
+            if (weaponSlot.HasSkill(skill))
+            {
+                weaponSlot.DeselectSkill();
+            }
             foreach (var skillUI in instantiatedSkills)
             {
                 if (skillUI.Skill.Equals(skill))
@@ -340,6 +353,14 @@ namespace LostGrace
         {
             if (!interactableForPlayer)
                 return;
+            if (RelicSlot1.HasSkill(skill))
+            {
+                RelicSlot1.SelectSkill();
+            }
+            if (weaponSlot.HasSkill(skill))
+            {
+                weaponSlot.SelectSkill();
+            }
             foreach (var skillUI in instantiatedSkills)
             {
                 if (skillUI.Skill.Equals(skill))

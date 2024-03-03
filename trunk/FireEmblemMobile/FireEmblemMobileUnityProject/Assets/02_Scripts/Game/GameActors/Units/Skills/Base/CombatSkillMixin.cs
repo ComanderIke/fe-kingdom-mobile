@@ -68,7 +68,8 @@ namespace Game.GameActors.Units.Skills
         {
             if (!activated)
                 return;
-            unit.BattleComponent.BattleStats.SetPreventDoubleAttacks(false);
+            if(unit!=null)
+                unit.BattleComponent.BattleStats.SetPreventDoubleAttacks(false);
             Deactivate(skill.owner);
         }
 
