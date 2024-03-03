@@ -44,7 +44,8 @@ namespace Game.Graphics.Environment
         private List<Rect> activeSpawnZones;
         private void OnDrawGizmos()
         {
-           
+            if (activeSpawnZones == null)
+                activeSpawnZones = new List<Rect>();
             Gizmos.color = Color.magenta;
             if (SpawnZoneTop != null)
             {

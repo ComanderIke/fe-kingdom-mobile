@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Graphics.Environment
 {
-    [ExecuteInEditMode]
+    //[ExecuteInEditMode]
     public class SunShaftAutoMover : MonoBehaviour
     {
         public float moveSpeed;
@@ -15,6 +15,7 @@ namespace Game.Graphics.Environment
         public GameObject leftGO;
         public GameObject rightGO;
         public Vector3 startPos;
+        public bool stopMove;
    
         // Start is called before the first frame update
         void Start()
@@ -44,6 +45,8 @@ namespace Game.Graphics.Environment
             if(!calculated)
                 CalculateEdges();
 
+            if (stopMove)
+                return;
             transform.position += Time.deltaTime * moveSpeed * Vector3.right;
             if (time >= 1)
             {
@@ -75,9 +78,9 @@ namespace Game.Graphics.Environment
 
         private void OnDrawGizmos()
         {
-            // Gizmos.DrawCube(new Vector3(transform.position.x,transform.position.y,0), new Vector3(1f,1f,1f));
-            // Gizmos.DrawCube(new Vector3(rightEdge,transform.position.y,0), new Vector3(0.1f,2f,0.1f));
-            // Gizmos.DrawCube(new Vector3(leftEdge,transform.position.y,0), new Vector3(0.1f,2f,0.1f));
+            Gizmos.DrawCube(new Vector3(transform.position.x,transform.position.y,0), new Vector3(1f,1f,1f));
+            Gizmos.DrawCube(new Vector3(rightEdge,transform.position.y,0), new Vector3(0.1f,2f,0.1f));
+            Gizmos.DrawCube(new Vector3(leftEdge,transform.position.y,0), new Vector3(0.1f,2f,0.1f));
         }
 
         private bool calculated = false;
