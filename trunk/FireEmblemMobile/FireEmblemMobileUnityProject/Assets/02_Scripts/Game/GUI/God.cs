@@ -11,6 +11,8 @@ namespace LostGrace
         public string Name;
         public DialogSpriteSet DialogSpriteSet;
         public DialogSpriteSet AlternateSpriteSet;
+        [ColorUsage(true,true)]
+        public Color bodyOutlineColor;
         public Color Color;
         public Color TooltipColor;
         public Color TooltipFrameColor;

@@ -141,7 +141,8 @@ public class ChooseTargetUI : MonoBehaviour, IChooseTargetUI, IClickedReceiver
 
     public void Clicked(Unit unit)
     {
-        throw new System.NotImplementedException();
+        MyDebug.LogTODO("WHAT TO DO HERE?");
+        //throw new System.NotImplementedException();
     }
 
     public void PlusClicked(Unit unit)

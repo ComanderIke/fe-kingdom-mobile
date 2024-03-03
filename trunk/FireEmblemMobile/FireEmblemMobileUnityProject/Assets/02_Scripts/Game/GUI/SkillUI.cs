@@ -165,6 +165,16 @@ namespace LostGrace
             selectableVfx.gameObject.SetActive(false);
             selectedVfx.gameObject.SetActive(false);
         }
+
+        public void TooltipClicked()
+        {
+            // MyDebug.LogTest("TOOLTIP CLICKED");
+            // if (showTooltips)
+            // {
+                ToolTipSystem.Show(Skill,blessed, transform.position);
+            //     return;
+            // }
+        }
         public void Clicked()
         {
             
@@ -178,14 +188,14 @@ namespace LostGrace
            
             if (Skill.activeMixins.Count > 0)
             {
-                ToolTipSystem.Show(Skill,blessed, transform.position);
+               // ToolTipSystem.Show(Skill,blessed, transform.position);
                 if (!canAffordHpCost||!hasUses)
                     return;
                 OnClicked?.Invoke(this);
             }
             else if (Skill.CombatSkillMixin!=null)
             {
-                ToolTipSystem.Show(Skill,blessed, transform.position);
+                //ToolTipSystem.Show(Skill,blessed, transform.position);
                 if (!canAffordHpCost||!hasUses)
                     return;
                 

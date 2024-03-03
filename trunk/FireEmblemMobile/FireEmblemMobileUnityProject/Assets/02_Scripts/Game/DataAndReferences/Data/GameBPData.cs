@@ -82,6 +82,8 @@ namespace Game.GameResources
         [SerializeField] BattleMap[] eliteBattleEncounterMapsArea1;
         [SerializeField] BattleMap[] eliteBattleEncounterMapsArea2;
         [SerializeField] BattleMap[] allBattleMaps;
+        [FormerlySerializedAs("ItemDropProfile")] [SerializeField] public ItemDropProfile normalBattleItemDropProfile;
+        [FormerlySerializedAs("ItemDropProfile")] [SerializeField] public ItemDropProfile eliteBattleItemDropProfile;
    
         
         public BlessingBP[]  GetBlessingPool(int tier)
@@ -102,6 +104,8 @@ namespace Game.GameResources
         [field:SerializeField] public Sprite DefaultMerchantSprite { get; set; }
         [field:SerializeField] public string DefaultMerchantName { get; set; }
         [field:SerializeField]  public BattleMap TutorialMap { get; set; }
+        [field:SerializeField]public  TimeOfDayBonuses NightBonuses { get; set; }
+        [field:SerializeField]public TimeOfDayBonuses DayBonuses { get; set; }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void FirstInitialize()

@@ -18,7 +18,16 @@ public class InnEncounterNode : EncounterNode
     {
         MyDebug.LogLogic("Visiting Inn");
         base.Activate(party);
-      
+        if (Player.Instance.Flags.InnSupplies)
+        {
+            party.AddSupplies(50);
+        }
+        if (Player.Instance.Flags.InnBonds)
+        {
+            foreach(var unit in party.members)
+                unit.Bonds.Increase(GameBPData.Instance.GetGod("Hestia"),10);
+
+        }
         GameObject.FindObjectOfType<UIInnController>().Show(this, party);
        
     }

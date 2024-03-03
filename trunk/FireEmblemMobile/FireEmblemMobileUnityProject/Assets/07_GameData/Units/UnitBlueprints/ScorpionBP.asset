@@ -61,10 +61,13 @@ MonoBehaviour:
     Mov: 3
   moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
   SkillManager:
+    uniqueStartSkill: {fileID: 11400000, guid: 1f2d3517f042c3d459386ddf55dd9bb5, type: 2}
     startSkills: []
     startBlessing: {fileID: 0}
     maxSkillCount: 0
+    maxSkillPoints: 0
     skillPoints: 1
+    nextCastIsFree: 0
   rpgClass: 4
   bluePrintID: Scorpion
   dialogActor: {fileID: 0}
@@ -81,6 +84,7 @@ MonoBehaviour:
         type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
+    AttackDelay: 0
   audio: {fileID: 0}
   experienceManager:
     level: 1
@@ -90,5 +94,7 @@ MonoBehaviour:
   <ChronikComponent>k__BackingField:
     <BodySprite>k__BackingField: {fileID: 0}
     <FaceSprite>k__BackingField: {fileID: 0}
+    <AlternateBodySprite>k__BackingField: {fileID: 0}
+    <AlternateFaceSprite>k__BackingField: {fileID: 0}
     <Name>k__BackingField: 
     <Description>k__BackingField: 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.GameActors.Players;
 using Game.GameActors.Units;
 using Game.GameResources;
+using Game.WorldMapStuff.Model;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -130,13 +131,67 @@ namespace LostGrace
         public IEnumerable<StockedItem> GenerateItemBonuses()
         {
             itemBonuses = new List<StockedItem>();
-            foreach (var rewardItem in battleMap.victoryItems)
+            if(battleMap.victoryItems!=null)
+                foreach (var rewardItem in battleMap.victoryItems)
+                {
+                    foreach (var item in rewardItem.items)
+                    {
+                        if(Random.value< rewardItem.chance)
+                            itemBonuses.Add(new StockedItem(item.Create(), rewardItem.count));
+                    }
+                   
+                }
+
+            if (SceneTransferData.Instance.BattleType == BattleType.Elite)
             {
-                if(Random.value< rewardItem.chance)
-                    itemBonuses.Add(new StockedItem(rewardItem.item.Create(), rewardItem.count));
+                foreach (var rewardItem in GameBPData.Instance.eliteBattleItemDropProfile.GetRelicDrops())
+                {
+                    RngItemDrops(rewardItem, (Player.Instance.Modifiers.RelicDropRate-1));
+                }
+                foreach (var rewardItem in GameBPData.Instance.eliteBattleItemDropProfile.GetGemDrops())
+                {
+                    RngItemDrops(rewardItem, (Player.Instance.Modifiers.GemstoneDropRate-1));
+                }
+                foreach (var rewardItem in GameBPData.Instance.eliteBattleItemDropProfile.GetSmithingMaterialDrops())
+                {
+                    RngItemDrops(rewardItem, 0);
+                }
+                foreach (var rewardItem in GameBPData.Instance.eliteBattleItemDropProfile.GetOtherDrops())
+                {
+                    RngItemDrops(rewardItem, 0);
+                }
             }
+            else if (SceneTransferData.Instance.BattleType == BattleType.Normal|| SceneTransferData.Instance.BattleType == BattleType.Final)
+            {
+               
+                foreach (var rewardItem in GameBPData.Instance.normalBattleItemDropProfile.GetRelicDrops())
+                {
+                    RngItemDrops(rewardItem, (Player.Instance.Modifiers.RelicDropRate-1));
+                }
+                foreach (var rewardItem in GameBPData.Instance.normalBattleItemDropProfile.GetGemDrops())
+                {
+                    RngItemDrops(rewardItem, (Player.Instance.Modifiers.GemstoneDropRate-1));
+                }
+                foreach (var rewardItem in GameBPData.Instance.normalBattleItemDropProfile.GetSmithingMaterialDrops())
+                {
+                    RngItemDrops(rewardItem, 0);
+                }
+                foreach (var rewardItem in GameBPData.Instance.normalBattleItemDropProfile.GetOtherDrops())
+                {
+                    RngItemDrops(rewardItem, 0);
+                }
+            }
+            
                 
             return itemBonuses;
+        }
+
+        private void RngItemDrops(RewardItem rewardItem, float bonusChance=0)
+        {
+            if (Random.value > rewardItem.chance + bonusChance)
+                return;
+            itemBonuses.Add(new StockedItem(rewardItem.items[Random.Range(0, rewardItem.items.Count)].Create(), rewardItem.count));
+            
         }
 
         public int GetMaxTurnCount()

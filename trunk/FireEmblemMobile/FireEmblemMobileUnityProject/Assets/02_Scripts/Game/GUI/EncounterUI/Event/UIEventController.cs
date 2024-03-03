@@ -608,6 +608,10 @@ public class UIEventController : MonoBehaviour
     }
     public void OptionClicked(TextOptionController textOptionController)
     {
+        if (Player.Instance.Flags.EventBonds)
+        {
+            Player.Instance.Party.ActiveUnit.Bonds.Increase(GameBPData.Instance.GetGod("Hermes"),10);
+        }
         if (CheckAttributeRequirementsSuccess(textOptionController.Option))
         {
             
@@ -703,7 +707,7 @@ public class UIEventController : MonoBehaviour
         var battleDialogSO = ((LGBattleEventDialogSO)current.NextDialogue);
         var enemyData = battleDialogSO.battleMap;
         Player.Instance.CurrentEventDialogID=(battleDialogSO.name);
-        GameSceneController.Instance.LoadBattleLevel(Scenes.Battle1, enemyData);
+        GameSceneController.Instance.LoadBattleLevel(Scenes.Battle1, enemyData, BattleType.Normal);
         //Get Enemy Army Data/Layout and Map Prefab from Node
         //better: use BattleEncounterNodeData create one specifically for this event and add save and load to node Editor (same way as unitbp for enemytoFight)
         // Then start the battle scene and put data into saveGame so that on return UIEventNode is shown again at the right node...

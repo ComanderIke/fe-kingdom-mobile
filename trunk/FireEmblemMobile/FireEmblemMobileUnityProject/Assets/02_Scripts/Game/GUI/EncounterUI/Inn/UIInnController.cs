@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.Players;
+using Game.GameResources;
 using Game.WorldMapStuff.Model;
 using LostGrace;
 using TMPro;
@@ -112,8 +113,17 @@ namespace Game.GUI.EncounterUI.Inn
             }
             else
             {
-                foreach(var unit in Player.Instance.Party.members)
+                foreach (var unit in Player.Instance.Party.members)
+                {
                     unit.Heal((int)(((unit.MaxHp/100f)*item.heal)*Player.Instance.Modifiers.FoodHealRate));
+                    if(Player.Instance.Flags.InnBonds)
+                        unit.Bonds.Increase(GameBPData.Instance.GetGod("Hestia"),10);
+                    if(item.IsLiquor&&Player.Instance.Flags.LiquorBonds)
+                        unit.Bonds.Increase(GameBPData.Instance.GetGod("Ares"),10);
+                    
+                }
+                    
+                
 
             }
             if (item.bonuses != 0)
@@ -123,6 +133,7 @@ namespace Game.GUI.EncounterUI.Inn
                     foreach (var member in party.members)
                     {
                         member.ExperienceManager.AddExp(item.bonuses);
+                       
                     }
                 }
                 else if (item.bonusType == Recipe.InnBonusType.Permanent)

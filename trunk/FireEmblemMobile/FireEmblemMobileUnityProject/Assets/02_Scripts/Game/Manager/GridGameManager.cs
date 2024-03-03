@@ -42,7 +42,6 @@ namespace Game.Manager
         {
             Instance = this;
             MyDebug.LogEngine("Awake " +gameObject.name);
-            MyDebug.LogTest("BOSS AWAKE: "+SceneTransferData.Instance.IsBoss);
             if (SceneTransferData.Instance != null &&SceneTransferData.Instance.BattleMap!=null )
                 BattleMap = SceneTransferData.Instance.BattleMap;
             else

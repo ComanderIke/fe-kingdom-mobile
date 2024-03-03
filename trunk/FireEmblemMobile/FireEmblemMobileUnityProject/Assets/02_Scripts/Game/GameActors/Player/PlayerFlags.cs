@@ -21,6 +21,16 @@ namespace Game.GameActors.Players
         public bool PartyMemberAfterArea6 { get; set; }
         public bool StartingUpgrade { get; set; }
         public bool StartingSkill { get; set; }
+        public bool SmithingBonds { get; set; }
+        public bool EventBonds { get; set; }
+        public bool InnBonds { get; set; }
+        public bool InnSupplies { get; set; }
+        public bool CombatSkills { get; set; }
+        public bool LiquorBonds { get; set; }
+        public bool KillBonds { get; set; }
+        public bool BossKillBonds { get; set; }
+        public bool Secret { get; set; }
+        public bool LethalCritical { get; set; }
 
         public bool HasPartyMemberAfterArea(int partyAreaIndex)
         {

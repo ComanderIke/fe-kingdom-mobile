@@ -15,7 +15,8 @@ namespace LostGrace
     {
         public GameConfigProfile ConfigProfile;
         public static Attributes BonusStartAttributes;
-        
+        public static Attributes BonusAttributeGrowths;
+
         public  List<Unit> GetPlayerUnits()
         {
             var units =ConfigProfile.GetUnits();
@@ -29,6 +30,10 @@ namespace LostGrace
             {
                 if(BonusStartAttributes!=null)
                     unit.Stats.BaseAttributes += BonusStartAttributes;
+                if (BonusAttributeGrowths != null)
+                {
+                    unit.Stats.BaseGrowths += BonusAttributeGrowths;
+                }
                 if (Player.Instance.Flags.StrongestAttributeIncrease)
                 {
                     int strongest = 0;

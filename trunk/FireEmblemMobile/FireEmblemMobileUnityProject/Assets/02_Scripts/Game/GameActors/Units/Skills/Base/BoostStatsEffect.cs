@@ -10,7 +10,8 @@ namespace Game.GameActors.Units.Skills
     public enum BonusEffectType
     {
         Effect,
-        Blessing
+        Blessing,
+        Relic
     }
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Stats", fileName = "StatsEffect")]
     public class BoostStatsEffect : SelfTargetSkillEffectMixin
@@ -61,6 +62,8 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
             {
                 ApplyStats(level);
             }
+
+            target.Stats.BonusMovement += BonusMov;
             if(level<cantoAmount.Length)
                 target.GridComponent.Canto = cantoAmount[level];
         }
@@ -76,13 +79,22 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
                     target.Stats.BonusStatsFromEffects += BonusStats[BonusStats.Length - 1] * multiplier;
                 }
             }
-            else
+            else if(effectType == BonusEffectType.Blessing)
             {
                 if (level < BonusStats.Length)
                     target.Stats.BonusStatsFromBlessings += BonusStats[level] * multiplier;
                 else
                 {
                     target.Stats.BonusStatsFromBlessings += BonusStats[BonusStats.Length - 1]* multiplier;
+                }
+            }
+            else if(effectType == BonusEffectType.Relic)
+            {
+                if (level < BonusStats.Length)
+                    target.Stats.BonusStatsFromEquips += BonusStats[level] * multiplier;
+                else
+                {
+                    target.Stats.BonusStatsFromEquips += BonusStats[BonusStats.Length - 1]* multiplier;
                 }
             }
             
@@ -101,7 +113,7 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
                         BonusAttributes[BonusAttributes.Length - 1]* multiplier;
                 }
             }
-            else
+            else if (effectType == BonusEffectType.Blessing)
             {
                 if (level < BonusAttributes.Length)
                     target.Stats.BonusAttributesFromBlessings +=
@@ -112,33 +124,101 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
                         BonusAttributes[BonusAttributes.Length - 1]* multiplier;
                 }
             }
+            else if (effectType == BonusEffectType.Relic)
+            {
+                if (level < BonusAttributes.Length)
+                    target.Stats.BonusAttributesFromEquips +=
+                        BonusAttributes[level] * multiplier;
+                else
+                {
+                    target.Stats.BonusAttributesFromEquips +=
+                        BonusAttributes[BonusAttributes.Length - 1]* multiplier;
+                }
+            }
         }
 
+        void UnapplyAttributes(int level)
+        {
+
+            if (effectType == BonusEffectType.Effect)
+            {
+                if (level < BonusAttributes.Length)
+                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[level] * multiplier;
+                else
+                {
+                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[^1] * multiplier;
+                }
+            }
+            else if (effectType == BonusEffectType.Blessing)
+            {
+                if (level < BonusAttributes.Length)
+                    target.Stats.BonusAttributesFromBlessings -= BonusAttributes[level] * multiplier;
+                else
+                {
+                    target.Stats.BonusAttributesFromBlessings -= BonusAttributes[^1] * multiplier;
+                }
+            }
+            else if (effectType == BonusEffectType.Relic)
+            {
+                if (level < BonusAttributes.Length)
+                    target.Stats.BonusAttributesFromEquips -= BonusAttributes[level] * multiplier;
+                else
+                {
+                    target.Stats.BonusAttributesFromEquips -= BonusAttributes[^1] * multiplier;
+                }
+            }
+
+        }
+
+        void UnapplyStats(int level)
+        {
+            if (effectType == BonusEffectType.Effect)
+            {
+                if (level < BonusStats.Length)
+                    target.Stats.BonusStatsFromEffects -= BonusStats[level] * multiplier;
+                else
+                {
+                    target.Stats.BonusStatsFromEffects -= BonusStats[^1] * multiplier;
+                }
+            }
+            else if (effectType == BonusEffectType.Blessing)
+            {
+                if (level < BonusStats.Length)
+                    target.Stats.BonusStatsFromBlessings -= BonusStats[level] * multiplier;
+                else
+                {
+                    target.Stats.BonusStatsFromBlessings -= BonusStats[^1] * multiplier;
+                }
+            }
+            else if (effectType == BonusEffectType.Relic)
+            {
+                if (level < BonusStats.Length)
+                    target.Stats.BonusStatsFromEquips -= BonusStats[level] * multiplier;
+                else
+                {
+                    target.Stats.BonusStatsFromEquips -= BonusStats[^1] * multiplier;
+                }
+            }
+
+        }
         void RemoveBonuses(int level)
         {
             // if (skillTransferDataIsMultiplier && SkillTransferData != null&& SkillTransferData.data!=null)
             //     multiplier = (float)SkillTransferData.data * skillTransferDataMultiplierMultiplier;
             //USING LAST MULTIPLIER
             //"TODO remove actual added attributes because level can change");
+
             if (BonusAttributes != null && BonusAttributes.Length > 0)
             {
-                if (level < BonusAttributes.Length)
-                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[level]*multiplier;
-                else
-                {
-                    target.Stats.BonusAttributesFromEffects -= BonusAttributes[^1]*multiplier;
-                }
+                UnapplyAttributes(level);
             }
 
-            if (BonusStats != null&& BonusStats.Length>0)
+            if (BonusStats != null && BonusStats.Length > 0)
             {
-                if(level < BonusStats.Length)
-                    target.Stats.BonusStatsFromEffects -= BonusStats[level]*multiplier;
-                else
-                {
-                    target.Stats.BonusStatsFromEffects -= BonusStats[^1]*multiplier;
-                }
+                UnapplyStats(level);
             }
+            target.Stats.BonusMovement -= BonusMov;
+            
             if(cantoAmount.Length>0)
                 target.GridComponent.Canto = 0;
             Debug.Log("BOOST STATS DEACTIVATED "+target.GridComponent.Canto);

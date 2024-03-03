@@ -13,13 +13,7 @@ public class MerchantEncounterNode : EncounterNode
    
     public MerchantEncounterNode(List<EncounterNode> parents,int depth, int childIndex,string label, string description, Sprite sprite) : base(parents, depth, childIndex, label,description, sprite)
     {
-        merchant = new Merchant(GameBPData.Instance.DefaultMerchantSprite, GameBPData.Instance.DefaultMerchantName);
-        merchant.AddItem(new StockedItem(GameBPData.Instance.GetRandomItem(),3));
-        merchant.AddItem(new StockedItem(GameBPData.Instance.GetRandomItem(),1));
-        merchant.AddItem(new StockedItem(GameBPData.Instance.GetRandomItem(),1));
-        merchant.AddItem(new StockedItem(GameBPData.Instance.GetRandomItem(),2));
-        merchant.AddItem(new StockedItem(GameBPData.Instance.GetRandomItem(),1));
-        merchant.AddItem(new StockedItem(GameBPData.Instance.GetRandomItem(),1));
+        merchant = new Merchant(GameBPData.Instance.DefaultMerchantSprite, GameBPData.Instance.DefaultMerchantName, null);
         // merchant.AddItem(new ShopItem(GameBPData.Instance.GetItemByName("Health Potion"),Random.Range(2,4)));
         // merchant.AddItem(new ShopItem(GameBPData.Instance.GetRandomCommonConsumeables(),Random.Range(1,3)));
         // merchant.AddItem(new ShopItem(GameBPData.Instance.GetRandomCommonConsumeables(),Random.Range(1,2)));

@@ -21,18 +21,17 @@ namespace Game.WorldMapStuff.Controller
         public static GameSceneController Instance => instance ??= new GameSceneController();
 
         
-        public void LoadBattleLevel(Scenes buildIndex, BattleMap battleMap, bool boss=false)//, EncounterNode node)
+        public void LoadBattleLevel(Scenes buildIndex, BattleMap battleMap,BattleType battleType)//, EncounterNode node)
         {
             Vector3 cameraPos = GameObject.FindObjectOfType<EncounterAreaCameraController>().transform.position;
             PlayerPrefs.SetFloat("CameraX", cameraPos.x);
             PlayerPrefs.SetFloat("CameraX", cameraPos.y);
             PlayerPrefs.Save();
             SceneTransferData.Instance.Reset();
-            SceneTransferData.Instance.IsBoss = boss;
-            MyDebug.LogTest("Boss: "+boss);
            // Debug.Log("Load Battle Level: "+enemyParty.level + " " + enemyParty.name);
             // Debug.Log("Scene: "+buildIndex);
             SceneTransferData.Instance.BattleMap = battleMap;
+            SceneTransferData.Instance.BattleType = battleType;
             //SceneTransferData.Instance.EnemyPartyID = enemyParty.name;
             //SceneTransferData.Instance.NodeData =new NodeData(node.UniqueId);
             
@@ -71,7 +70,6 @@ namespace Game.WorldMapStuff.Controller
         {
             // SceneTransferData.Instance.BattleOutCome = victory?BattleOutcome.Victory:  BattleOutcome.Defeat;
             //
-            MyDebug.LogTest("Boss: "+SceneTransferData.Instance.IsBoss);
             if (victory)
             {
                 // if (SceneTransferData.Instance.IsBoss)

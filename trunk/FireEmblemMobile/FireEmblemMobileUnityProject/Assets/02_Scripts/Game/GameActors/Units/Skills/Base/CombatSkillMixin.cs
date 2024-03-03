@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _02_Scripts.Game.GUI.Utility;
+using Game.GameActors.Players;
 using Game.Manager;
 using Game.Mechanics;
 using LostGrace;
@@ -25,7 +26,7 @@ namespace Game.GameActors.Units.Skills
         }
         public int GetHpCost(int level)
         {
-            return hpCostPerLevel[level];
+            return hpCostPerLevel[level]+ Player.Instance.Modifiers.CombatSkillCost;
         }
         //[SerializeField]private EffectDescription[] effectDescriptionsPerLevel;
 
@@ -53,7 +54,7 @@ namespace Game.GameActors.Units.Skills
                     return;
                 if (reduceHp)
                 {
-                    user.Hp -= hpCostPerLevel[skill.level];
+                    user.Hp -= GetHpCost(skill.level);
                     Uses--;
                 }
                 this.unit = user;
@@ -67,7 +68,8 @@ namespace Game.GameActors.Units.Skills
         {
             if (!activated)
                 return;
-            unit.BattleComponent.BattleStats.SetPreventDoubleAttacks(false);
+            if(unit!=null)
+                unit.BattleComponent.BattleStats.SetPreventDoubleAttacks(false);
             Deactivate(skill.owner);
         }
 

@@ -174,10 +174,14 @@ public class UISmithyController : MonoBehaviour
 
     public void UpgradeClicked()
     {
+        
         party.Money -=smithy.GetGoldUpgradeCost(party.ActiveUnit.equippedWeapon);
         party.Storage.RemoveSmithingStones(smithy.GetStoneUpgradeCost(party.ActiveUnit.equippedWeapon));
         party.Storage.RemoveDragonScales(smithy.GetDragonScaleUpgradeCost(party.ActiveUnit.equippedWeapon));
         party.ActiveUnit.equippedWeapon.Upgrade(upgradeMode);
+        if(Player.Instance.Flags.SmithingBonds)
+            party.ActiveUnit.Bonds.Increase(GameBPData.Instance.GetGod("Hephaestus"),10);
+        
        
         UpdateUI();
     }

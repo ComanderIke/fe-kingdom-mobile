@@ -6211,6 +6211,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150395890}
   m_CullTransparentMesh: 1
+--- !u!114 &157204024 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 40767895409639886, guid: c67d4846dd934414390b5ec8ccba523f,
+    type: 3}
+  m_PrefabInstance: {fileID: 3841690190867181272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &170031906
 GameObject:
   m_ObjectHideFlags: 0
@@ -14965,6 +14977,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5405556696928285234, guid: 6c31e29cdf2e34a4cad14c2caff50aa5,
+        type: 3}
+      propertyPath: m_Name
+      value: SkillPointsValue
+      objectReference: {fileID: 0}
     - target: {fileID: 6417489431542836419, guid: 6c31e29cdf2e34a4cad14c2caff50aa5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -20981,6 +20998,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 853876120}
   parentCanvasGroup: {fileID: 0}
   inActiveAlpha: 0.7
+  skillPoints: {fileID: 0}
   useItemDialogController: {fileID: 0}
   useSkillDialogController: {fileID: 0}
   faceSprite: {fileID: 0}
@@ -55043,6 +55061,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: e2e6d172ec8b545d7b3dd0c8194c78c5,
         type: 2}
+    - target: {fileID: 1649151508630407637, guid: c67d4846dd934414390b5ec8ccba523f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 88
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649151508630407637, guid: c67d4846dd934414390b5ec8ccba523f,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 88
+      objectReference: {fileID: 0}
     - target: {fileID: 1720730161488018989, guid: c67d4846dd934414390b5ec8ccba523f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -55600,6 +55628,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3841690189852963069, guid: c67d4846dd934414390b5ec8ccba523f,
         type: 3}
+      propertyPath: skillPoints
+      value: 
+      objectReference: {fileID: 157204024}
+    - target: {fileID: 3841690189852963069, guid: c67d4846dd934414390b5ec8ccba523f,
+        type: 3}
       propertyPath: inActiveAlpha
       value: 0.5
       objectReference: {fileID: 0}
@@ -56064,6 +56097,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 6432098465902554474, guid: c67d4846dd934414390b5ec8ccba523f,
+        type: 3}
+      propertyPath: m_Name
+      value: SkillpointValue
+      objectReference: {fileID: 0}
     - target: {fileID: 6498093072840943830, guid: c67d4846dd934414390b5ec8ccba523f,
         type: 3}
       propertyPath: m_IsActive
@@ -56071,13 +56109,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6863745548528047730, guid: c67d4846dd934414390b5ec8ccba523f,
         type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -14.5
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6863745548528047730, guid: c67d4846dd934414390b5ec8ccba523f,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -7.5
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7075710463598928139, guid: c67d4846dd934414390b5ec8ccba523f,
         type: 3}

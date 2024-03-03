@@ -12,7 +12,7 @@ namespace Game.GameActors.Players
     public interface IAttackableTarget
     {
         public int Hp { get; set; }
-        public int MaxHp { get; set; }
+        public int MaxHp { get; }
         GameTransformManager GameTransformManager { get; set; }
         object Clone();
         bool IsAlive();

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace LostGrace
 {
@@ -13,6 +14,9 @@ namespace LostGrace
      //   [SerializeField] private ParticleSystem glow;
         [SerializeField] private ParticleSystem clouds;
         [SerializeField] private Animator animator;
+        [SerializeField] private Image godSprite;
+
+        [SerializeField] private God god;
         // private void OnEnable()
         // {
         //     Show();
@@ -23,7 +27,9 @@ namespace LostGrace
 
         IEnumerator ShowGoddessAnimation()
         {
-            
+            godSprite.sprite = god.DialogSpriteSet.BodySprite;
+            godSprite.material.SetTexture("_MainTex", god.DialogSpriteSet.BodySprite.texture);
+            godSprite.material.SetColor("_Color", god.bodyOutlineColor);
             LeanTween.cancel(canvasGroup.gameObject);
             StopCoroutine(nameof(ShowGoddessAnimation));
             StopCoroutine(nameof(HideGoddessAnimation));

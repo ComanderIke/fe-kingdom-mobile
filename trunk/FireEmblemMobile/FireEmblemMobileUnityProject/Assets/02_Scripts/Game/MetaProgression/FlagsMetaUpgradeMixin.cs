@@ -41,6 +41,27 @@ public class FlagsMetaUpgradeMixin : MetaUpgradeMixin
                     Player.Instance.Flags.RevivalStoneStart = valuePair.Value;break;
                 case FlagType.StrongestAttributeIncrease:
                     Player.Instance.Flags.StrongestAttributeIncrease = valuePair.Value;break;
+                case FlagType.SmithingBonds:
+                    Player.Instance.Flags.SmithingBonds = valuePair.Value;break;
+                case FlagType.EventBonds:
+                    Player.Instance.Flags.EventBonds = valuePair.Value;break;
+                case FlagType.InnBonds:
+                    Player.Instance.Flags.InnBonds = valuePair.Value;break;
+                case FlagType.InnSupplies:
+                    Player.Instance.Flags.InnSupplies = valuePair.Value;break;
+                case FlagType.CombatSkills:
+                    Player.Instance.Flags.CombatSkills = valuePair.Value;break;
+                case FlagType.LiquorBonds:
+                    Player.Instance.Flags.LiquorBonds = valuePair.Value;break;
+                case FlagType.KillBonds:
+                    Player.Instance.Flags.KillBonds = valuePair.Value;break;
+                case FlagType.BossKillBonds:
+                    Player.Instance.Flags.BossKillBonds = valuePair.Value;break;
+                case FlagType.Secret:
+                    Player.Instance.Flags.Secret = valuePair.Value;break;
+                case FlagType.LethalCritical:
+                    Player.Instance.Flags.LethalCritical = valuePair.Value;break;
+                
             }
         }
     }
@@ -71,4 +92,14 @@ public enum FlagType
     RevivalStoneStart,
     MoralityVisible,
     GluttonyForceEat,
+    SmithingBonds,
+    EventBonds,
+    InnBonds,
+    InnSupplies,
+    CombatSkills,
+    LiquorBonds,
+    KillBonds,
+    BossKillBonds,
+    Secret,
+    LethalCritical
 }
