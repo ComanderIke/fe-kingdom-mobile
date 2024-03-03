@@ -844,5 +844,17 @@ namespace Game.EncounterAreas.Management
             MyDebug.LogTODO("TODO here and in gridgamemanager cleanup happens multiple times from ondestroy/ondisable and cleanup");
             Deactivate();
         }
+
+        public float GetAreaWidth()
+        {
+            return areaWidth;
+        }
+
+        [SerializeField] private float areaWidth;
+        [SerializeField] private float areaHeight;
+        public float GetAreaHeight()
+        {
+            return areaHeight;
+        }
     }
 }

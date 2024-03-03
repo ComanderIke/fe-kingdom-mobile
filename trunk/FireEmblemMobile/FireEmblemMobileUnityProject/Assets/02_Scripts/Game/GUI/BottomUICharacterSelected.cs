@@ -131,7 +131,8 @@ namespace Game.GUI
             nameText.text = unit.Name;
             lvl.text = "" + unit.ExperienceManager.Level;
             exp.text = unit.ExperienceManager.Exp + "/" + ExperienceManager.MAX_EXP;
-            skillPoints.text = ""+unit.SkillManager.SkillPoints;
+            if(skillPoints!=null)
+                skillPoints.text = ""+unit.SkillManager.SkillPoints;
             //weaponType.text = unit.equippedWeapon.WeaponType.WeaponName;
             //weaponTypeIcon.sprite = unit.equippedWeapon.WeaponType.Icon;
             //move.text = "Mov " + unit.MovementRange;

@@ -33,12 +33,13 @@ namespace Game.Utility
         private float sunShaftBaseIntensity;
         private float sunSpotsBaseIntensity;
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             lightBaseIntensity = lightSource.intensity;
             sunShaftBaseIntensity = sunShafts[0].intensity;
             if(sunSpots.Count>0)
                 sunSpotsBaseIntensity = sunSpots[0].intensity;
+            //UpdateHour(0);
            
         }
          float time = 0;

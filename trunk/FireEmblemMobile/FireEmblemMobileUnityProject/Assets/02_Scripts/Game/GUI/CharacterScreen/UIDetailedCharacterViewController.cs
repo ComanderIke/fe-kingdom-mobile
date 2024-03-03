@@ -133,7 +133,8 @@ namespace Game.GUI.CharacterScreen
 
             }
             base.UpdateUI(unit);
-            skillPoints.text = ""+unit.SkillManager.SkillPoints;
+            if(skillPoints!=null)
+                skillPoints.text = ""+unit.SkillManager.SkillPoints;
             Lv.SetText("Lv. "+unit.ExperienceManager.Level);
             if(blessingEffect!=null)
                 blessingEffect.gameObject.SetActive(unit.Blessing!=null);

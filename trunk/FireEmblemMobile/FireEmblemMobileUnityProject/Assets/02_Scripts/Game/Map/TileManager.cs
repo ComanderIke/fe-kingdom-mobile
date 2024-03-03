@@ -43,6 +43,8 @@ namespace Game.Map
             {
                 glowSpots.Add(glowSpot);
             }
+
+            
             foreach (var tileData in tileDataContainer.tileDatas)
             {
                 if(tileData.tiles!=null&&tileData.tiles.Length>0)
@@ -51,6 +53,8 @@ namespace Game.Map
                         dataFromTiles.TryAdd(tile, tileData);
                     }
             }
+            
+            
         }
 
         public void InitGlowSpots(Tile[,] tiles)

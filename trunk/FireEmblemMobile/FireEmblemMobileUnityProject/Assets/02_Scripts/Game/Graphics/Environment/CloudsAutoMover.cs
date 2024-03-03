@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Game.EncounterAreas.Management;
 using Game.Grid;
 using Game.Manager;
 using Game.Utility;
@@ -17,7 +18,7 @@ namespace Game.Graphics.Environment
         public float minDistanceBetweenClouds = 2;
         public List<GameObject> instantiatedClouds;
 
-       
+        [SerializeField] private Vector3 positionOffset;
         public Vector2 directionMin;
         public Vector2 directionMax;
         private Vector2 direction;
@@ -100,18 +101,30 @@ namespace Game.Graphics.Environment
         {
             
             activeSpawnZones = new List<Rect>();
-            var gridSystem = ServiceProvider.Instance.GetSystem<GridSystem>();
-            mapWidth=(int)(gridSystem.width+cloudOffsetMin.x*2);
-            mapHeight=(int)(gridSystem.height+cloudOffsetMin.y*2);
-            transform.position = new Vector3(gridSystem.width / 2f , gridSystem.height / 2f,1);
-            SpawnZoneTop = new Rect(-cloudOffsetMin.x, gridSystem.height+ cloudOffsetMin.y, gridSystem.width+cloudOffsetMin.x*2, cloudOffsetMin.y);
-            SpawnZoneTopRight = new Rect(gridSystem.width+ cloudOffsetMin.x, gridSystem.height+ cloudOffsetMin.y, cloudOffsetMin.x, cloudOffsetMin.y);
-            SpawnZoneRight = new Rect(gridSystem.width+ cloudOffsetMin.x, -cloudOffsetMin.y, cloudOffsetMin.x, gridSystem.height+cloudOffsetMin.y*2);
-            SpawnZoneLeft = new Rect(-cloudOffsetMin.x*2, -cloudOffsetMin.y, cloudOffsetMin.x, gridSystem.height+cloudOffsetMin.y*2);
-            SpawnZoneBottom= new Rect(-cloudOffsetMin.x,  -cloudOffsetMin.y*2, gridSystem.width+cloudOffsetMin.x*2, cloudOffsetMin.y);
-            SpawnZoneTopLeft= new Rect(-cloudOffsetMin.x*2, gridSystem.height+ cloudOffsetMin.y, cloudOffsetMin.x, cloudOffsetMin.y);
-            SpawnZoneBottomLeft= new Rect(-cloudOffsetMin.x*2, -cloudOffsetMin.y*2, cloudOffsetMin.x, cloudOffsetMin.y);
-            SpawnZoneBottomRight= new Rect(gridSystem.width+ cloudOffsetMin.x, -cloudOffsetMin.y*2, cloudOffsetMin.x, cloudOffsetMin.y);
+            float width = 0;
+            float height = 0;
+            if (ServiceProvider.Instance.GetSystem<GridSystem>() != null)
+            {
+                width = ServiceProvider.Instance.GetSystem<GridSystem>().width;
+                height= ServiceProvider.Instance.GetSystem<GridSystem>().height;
+            }
+            else
+            {
+                width = AreaGameManager.Instance.GetAreaWidth();
+                height= AreaGameManager.Instance.GetAreaHeight();
+            }
+            
+            mapWidth=(int)(width+cloudOffsetMin.x*2);
+            mapHeight=(int)(height+cloudOffsetMin.y*2);
+            transform.position = new Vector3(width / 2f , height / 2f,1)+positionOffset;
+            SpawnZoneTop = new Rect(-cloudOffsetMin.x+positionOffset.x, height+ cloudOffsetMin.y+positionOffset.y, width+cloudOffsetMin.x*2, cloudOffsetMin.y);
+            SpawnZoneTopRight = new Rect(width+ cloudOffsetMin.x+positionOffset.x, height+ cloudOffsetMin.y+positionOffset.y, cloudOffsetMin.x, cloudOffsetMin.y);
+            SpawnZoneRight = new Rect(width+ cloudOffsetMin.x+positionOffset.x, -cloudOffsetMin.y+positionOffset.y, cloudOffsetMin.x, height+cloudOffsetMin.y*2);
+            SpawnZoneLeft = new Rect(-cloudOffsetMin.x*2+positionOffset.x, -cloudOffsetMin.y+positionOffset.y, cloudOffsetMin.x, height+cloudOffsetMin.y*2);
+            SpawnZoneBottom= new Rect(-cloudOffsetMin.x+positionOffset.x,  -cloudOffsetMin.y*2+positionOffset.y, width+cloudOffsetMin.x*2, cloudOffsetMin.y);
+            SpawnZoneTopLeft= new Rect(-cloudOffsetMin.x*2+positionOffset.x, height+ cloudOffsetMin.y+positionOffset.y, cloudOffsetMin.x, cloudOffsetMin.y);
+            SpawnZoneBottomLeft= new Rect(-cloudOffsetMin.x*2+positionOffset.x, -cloudOffsetMin.y*2+positionOffset.y, cloudOffsetMin.x, cloudOffsetMin.y);
+            SpawnZoneBottomRight= new Rect(width+ cloudOffsetMin.x+positionOffset.x, -cloudOffsetMin.y*2+positionOffset.y, cloudOffsetMin.x, cloudOffsetMin.y);
             cloudCount = mapWidth * mapHeight / 15;
             transform.DeleteAllChildren();
             instantiatedClouds = new List<GameObject>();
