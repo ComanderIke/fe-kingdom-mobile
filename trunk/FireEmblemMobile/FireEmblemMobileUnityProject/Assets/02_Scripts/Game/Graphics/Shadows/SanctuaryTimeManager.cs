@@ -24,7 +24,7 @@ namespace LostGrace
             hours += Time.deltaTime * HoursPerSecond;
             if (hours >= 24)
                 hours = 0;
-            timeOfDayManager.UpdateHour(hours);
+            timeOfDayManager.UpdateHourFixed(hours);
             MyDebug.LogTest("Hours: "+hours);
         }
     }

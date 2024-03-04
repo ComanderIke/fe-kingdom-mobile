@@ -173,9 +173,6 @@ namespace Game.Utility
             if (sunSpots.Count <= 0)
                 return;
             lerpFromIntensity_sunSpot = sunSpots[0].intensity;
-         
-           
-            
             lerpTargetIntensity_sunSpot = 0 + sunSpotsBaseIntensity;
         }
           public void UpdateHourFixed(float hour)

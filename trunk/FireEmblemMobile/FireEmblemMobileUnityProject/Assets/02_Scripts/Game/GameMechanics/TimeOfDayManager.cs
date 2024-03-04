@@ -71,6 +71,18 @@ namespace Game.GameMechanics
                 circleUI.Rotate(hour);
         }
 
+        public void UpdateHourFixed(float hour)
+        {
+            if (hour >= 24)
+                hour = 0;
+            this.hour = hour;
+            lightController.UpdateHourFixed(hour);
+            if(timeText!=null)
+                timeText.text = hour + ":00";
+            if(circleUI!=null)
+                circleUI.Rotate(hour);
+        }
+
         public void ElapseTimeStep()
         {
             // Debug.Log("Current hour "+hour);

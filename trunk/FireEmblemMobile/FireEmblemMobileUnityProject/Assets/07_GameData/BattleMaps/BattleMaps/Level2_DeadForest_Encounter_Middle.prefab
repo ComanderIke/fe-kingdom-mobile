@@ -5844,7 +5844,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099d844cded89544588cd6f9d503e650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0.15, y: 0.05}
+  cloudPrefabs: []
+  cloudOffsetMin: {x: 0, y: 0}
+  cloudCount: 8
+  minDistanceBetweenClouds: 2
+  instantiatedClouds: []
+  positionOffset: {x: 0, y: 0, z: 0}
+  directionMin: {x: 0, y: 0}
+  directionMax: {x: 0, y: 0}
 --- !u!1 &7833578866607156391
 GameObject:
   m_ObjectHideFlags: 0
@@ -15941,12 +15948,7 @@ MonoBehaviour:
   tilemaps:
   - {fileID: 7833578867474643872}
   - {fileID: 7833578867704477226}
-  standardTileData: {fileID: 11400000, guid: 74031c22fc2e6944080026a2830ca740, type: 2}
-  tileDatas:
-  - {fileID: 11400000, guid: 38e7a789b5d8fc44cb98b71f9c12f5d1, type: 2}
-  - {fileID: 11400000, guid: 74031c22fc2e6944080026a2830ca740, type: 2}
-  - {fileID: 11400000, guid: 5bb7a320e0ba4644485aeabbbcd85dd8, type: 2}
-  - {fileID: 11400000, guid: bbf4eb6fe271f9e469b2e63fd0de49c0, type: 2}
+  tileDataContainer: {fileID: 0}
   propsParent: {fileID: 7833578866204159185}
 --- !u!1 &7833578867439133639
 GameObject:
