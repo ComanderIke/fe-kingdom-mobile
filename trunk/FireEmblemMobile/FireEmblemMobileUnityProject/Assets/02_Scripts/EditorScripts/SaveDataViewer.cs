@@ -69,7 +69,7 @@ namespace __2___Scripts.External.Editor
             {
                 SaveGameManager.Load(0);
                 playerData = SaveGameManager.currentSaveData.playerData;
-                encounterData = SaveGameManager.currentSaveData.encounterTreeData;
+                encounterData = SaveGameManager.currentSaveData.EncounterAreaData.encounterTreeData;
             }
             
             
@@ -98,7 +98,7 @@ namespace __2___Scripts.External.Editor
                     chosenFile = shortName;
                     SaveGameManager.Load(index);
                     playerData = SaveGameManager.currentSaveData.playerData;
-                    encounterData = SaveGameManager.currentSaveData.encounterTreeData;
+                    encounterData = SaveGameManager.currentSaveData.EncounterAreaData.encounterTreeData;
                 }
 
                 index++;

@@ -330,13 +330,13 @@ namespace Game.EncounterAreas.AreaConstruction
             EncounterTree.Instance.spawnData = spawnData;
             EncounterTree.Instance.columns.Clear();
             if(SaveGameManager.HasEncounterSaveData())
-                EncounterTree.Instance.LoadData(data.encounterTreeData);
+                EncounterTree.Instance.LoadData( data.EncounterAreaData.encounterTreeData );
         
         }
 
         public void SaveData(ref SaveData data)
         {
-            data.encounterTreeData = EncounterTree.Instance.GetSaveData();
+            data.EncounterAreaData.encounterTreeData = EncounterTree.Instance.GetSaveData();
         }
 
    

@@ -3,13 +3,13 @@
 namespace Game.SerializedData
 {
     [System.Serializable]
-    public class CampaignData
+    public class GridBattleData
     {
         public int campaignId;
         //public List<LocationData>locationData;
         public int turnCount;
         public FactionData enemyFactionData;
-        public CampaignData(Campaign campaign)
+        public GridBattleData(Campaign campaign)
         {
             campaignId = campaign.campaignId;
             turnCount = campaign.turnCount;

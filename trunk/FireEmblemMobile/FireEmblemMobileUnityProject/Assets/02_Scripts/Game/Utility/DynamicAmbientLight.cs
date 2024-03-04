@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Game.Graphics.Environment;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Game.Utility
 {
@@ -18,9 +20,9 @@ namespace Game.Utility
         public Gradient sunset_particles_big;
         public Gradient sunrise_particles_big;
 
-        public Material particlesBig;
-        public Material particlesSmall;
-        public Material particlesNormal;
+        public List<Material> particlesBig;
+        public List<Material> particlesSmall;
+        public List<Material> particlesNormal;
         
        // public Gradient sunrise;
         public UnityEngine.Rendering.Universal.Light2D lightSource;
@@ -36,11 +38,29 @@ namespace Game.Utility
         void Awake()
         {
             lightBaseIntensity = lightSource.intensity;
+            
+            particlesBig.Clear();
+            particlesSmall.Clear();
+            particlesNormal.Clear();
+            var normalParticles = GameObject.FindGameObjectsWithTag("EnvironmentParticle");
+            foreach(var child in normalParticles)
+                particlesNormal.Add(child.GetComponent<ParticleSystemRenderer>().material);
+            var smallParticles = GameObject.FindGameObjectsWithTag("EnvironmentParticleSmall");
+            foreach(var child in smallParticles)
+                particlesSmall.Add(child.GetComponent<ParticleSystemRenderer>().material);
+            var bigParticles = GameObject.FindGameObjectsWithTag("EnvironmentParticleBig");
+            foreach(var child in bigParticles)
+                particlesBig.Add(child.GetComponent<ParticleSystemRenderer>().material);
+            sunShafts.Clear();
+            var sunShaftParent = GameObject.FindWithTag("Sunshafts");
+            sunShafts.Add(sunShaftParent.GetComponent<Light2D>());
+            foreach(var child in sunShaftParent.GetComponentsInChildren<Light2D>())
+                sunShafts.Add(child);
             sunShaftBaseIntensity = sunShafts[0].intensity;
             if(sunSpots.Count>0)
                 sunSpotsBaseIntensity = sunSpots[0].intensity;
             //UpdateHour(0);
-           
+
         }
          float time = 0;
          private Color lerpFromColor;
@@ -79,10 +99,13 @@ namespace Game.Utility
                     sunShaft.intensity =
                         Mathf.SmoothStep(lerpFromIntensity_sunShaft, lerpTargetIntensity_sunShaft, time);
                 }
-                particlesNormal.SetColor("_TintColor",Color.Lerp(lerpFromColor_particles, lerpTargetColor_particles, time));
+                foreach(var mat in particlesNormal)
+                    mat.SetColor(TintColor,Color.Lerp(lerpFromColor_particles, lerpTargetColor_particles, time));
                 //currentParticleColor = particlesNormal.GetColor("_TintColor");
-                 particlesBig.SetColor("_TintColor",Color.Lerp(lerpFromColor_particles_big, lerpTargetColor_particles_big, time));
-                 particlesSmall.SetColor("_TintColor",Color.Lerp(lerpFromColor_particles_small, lerpTargetColor_particles_small, time));
+                foreach(var mat in particlesBig)
+                    mat.SetColor(TintColor,Color.Lerp(lerpFromColor_particles_big, lerpTargetColor_particles_big, time));
+                foreach(var mat in particlesSmall)
+                    mat.SetColor(TintColor,Color.Lerp(lerpFromColor_particles_small, lerpTargetColor_particles_small, time));
                 foreach (var sunSpot in sunSpots)
                 {
                     sunSpot.color = Color.Lerp(lerpFromColor_shafts, lerpTargetColor_shafts, time);
@@ -108,6 +131,7 @@ namespace Game.Utility
 
         public float hour=0;
         private bool lerp = false;
+        private static readonly int TintColor = Shader.PropertyToID("_TintColor");
 
         public void UpdateHour(float hour)
         {
@@ -121,9 +145,12 @@ namespace Game.Utility
         {
             lerpFromColor = lightSource.color;
             lerpFromColor_shafts = sunShafts[0].color;
-            lerpFromColor_particles_small = particlesSmall.GetColor("_TintColor");
-            lerpFromColor_particles_big = particlesBig.GetColor("_TintColor");
-            lerpFromColor_particles = particlesNormal.GetColor("_TintColor");
+            if(particlesSmall.Count>1)
+                lerpFromColor_particles_small = particlesSmall[0].GetColor(TintColor);
+            if(particlesBig.Count>1)
+                lerpFromColor_particles_big = particlesBig[0].GetColor(TintColor);
+            if(particlesNormal.Count>1)
+                lerpFromColor_particles = particlesNormal[0].GetColor(TintColor);
             if (hour >= 12)
             {
                 lerpTargetColor = sunset.Evaluate((hour - 12) / 12f);
@@ -136,25 +163,20 @@ namespace Game.Utility
             {
                 lerpTargetColor= sunrise.Evaluate(hour/12f);
                 lerpTargetColor_shafts= sunrise_shafts.Evaluate(hour/12f);
-                lerpTargetColor_particles = sunrise_particles.Evaluate((hour - 12) / 12f);
-                lerpTargetColor_particles_small = sunrise_particles_small.Evaluate((hour - 12) / 12f);
-                lerpTargetColor_particles_big= sunrise_particles_big.Evaluate((hour - 12) / 12f);
+                lerpTargetColor_particles = sunrise_particles.Evaluate(hour/ 12f);
+                lerpTargetColor_particles_small = sunrise_particles_small.Evaluate(hour / 12f);
+                lerpTargetColor_particles_big= sunrise_particles_big.Evaluate(hour / 12f);
             }
 
             lerpFromIntensity_sunShaft = sunShafts[0].intensity;
+            lerpTargetIntensity_sunShaft = 0 + sunShaftBaseIntensity;
             if (sunSpots.Count <= 0)
                 return;
             lerpFromIntensity_sunSpot = sunSpots[0].intensity;
-            //hour 0 = intensitty0
-            //hour 12 = intensity 1
-            //hour 11 = intensity 0.9
-            // hour 13 = intensity 0.9
-            //hour 1 = intensity 0.1
-            float value = Mathf.Abs(hour-12);
-            if (value != 0)
-                value /= 12;
-            lerpTargetIntensity_sunShaft = 0 + sunShaftBaseIntensity;//* (1 - value);
-            lerpTargetIntensity_sunSpot = 0 + sunSpotsBaseIntensity;//* (1 - value);
+         
+           
+            
+            lerpTargetIntensity_sunSpot = 0 + sunSpotsBaseIntensity;
         }
           public void UpdateHourFixed(float hour)
           {
@@ -166,10 +188,12 @@ namespace Game.Utility
                     sunShaft.color = lerpTargetColor_shafts;
                     sunShaft.intensity = lerpTargetIntensity_sunShaft;
                 }
-                particlesNormal.SetColor("_TintColor",lerpTargetColor_particles);
-                //currentParticleColor = particlesNormal.GetColor("_TintColor");
-                particlesBig.SetColor("_TintColor",lerpTargetColor_particles_big);
-                particlesSmall.SetColor("_TintColor",lerpTargetColor_particles_small);
+                foreach(var mat in particlesNormal)
+                    mat.SetColor(TintColor,lerpTargetColor_particles);
+                foreach(var mat in particlesBig)
+                    mat.SetColor(TintColor,lerpTargetColor_particles_big);
+                foreach(var mat in particlesSmall)
+                    mat.SetColor(TintColor,lerpTargetColor_particles_small);
                 foreach (var sunSpot in sunSpots)
                 {
                     sunSpot.color = lerpTargetColor_shafts;
@@ -191,6 +215,16 @@ namespace Game.Utility
             //     lightSource.intensity = Mathf.SmoothStep(lightBaseIntensity, 0.4f, ((hour-12/24) * 2));
             // }
            
+        }
+        public void ClearSunSpots()
+        {
+            sunSpots.Clear();
+        }
+        public void AddSunSpot(Light2D sunSpot)
+        {
+            sunSpots.Add(sunSpot);
+            sunSpotsBaseIntensity = sunSpot.intensity;
+            UpdateHour(hour);
         }
     }
 }

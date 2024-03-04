@@ -323,7 +323,7 @@ namespace Game.SerializedData
 
         public static bool HasEncounterSaveData()
         {
-            return currentSaveData != null && currentSaveData.encounterTreeData != null&&currentSaveData.encounterTreeData.columns.Count!=0;
+            return currentSaveData != null && currentSaveData.EncounterAreaData!=null&&currentSaveData.EncounterAreaData.encounterTreeData != null&&currentSaveData.EncounterAreaData.encounterTreeData.columns.Count!=0;
         }
 
         public static void DeleteSaveFile(int slot)

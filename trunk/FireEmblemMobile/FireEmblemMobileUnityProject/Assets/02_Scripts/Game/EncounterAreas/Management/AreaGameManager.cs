@@ -137,7 +137,7 @@ namespace Game.EncounterAreas.Management
             uiCOntroller.Init(Player.Instance.Party);
             ResetMoveOptions();
             uiPartyController.Show(Player.Instance.Party);
-            timeOfDayManager.InitHour(6);
+            timeOfDayManager.Init();
             this.CallWithDelay(ShowMovedRoads,0.1f);//Some other scripts not started yet thtas why
             ShowAllInactiveNodes();
             if (!Player.Instance.Party.EncounterComponent.activatedEncounter)
@@ -647,11 +647,12 @@ namespace Game.EncounterAreas.Management
             //         road.NodeDeselected();
             // }
             // SetAllEncountersNotMovable();
+            timeOfDayManager.ElapseTimeStep();
             StartCoroutine(MovementAnimation(node));
        
             cursor.Hide();
         
-            timeOfDayManager.ElapseTimeStep();
+           
      
         }
 

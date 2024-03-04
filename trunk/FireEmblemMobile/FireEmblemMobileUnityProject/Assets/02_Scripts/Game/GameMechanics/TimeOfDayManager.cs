@@ -1,14 +1,26 @@
+using System;
 using Game.EncounterAreas.DayNightCycle;
 using Game.GameActors.Player;
 using Game.GUI;
 using Game.GUI.ToolTips;
+using Game.SerializedData;
 using Game.Utility;
 using TMPro;
 using UnityEngine;
 
 namespace Game.GameMechanics
 {
-    public class TimeOfDayManager : MonoBehaviour
+    [System.Serializable]
+    public class TimeOfDaySaveData
+    {
+        public float hour = -1;
+
+        public TimeOfDaySaveData(float hour)
+        {
+            this.hour = hour;
+        }
+    }
+    public class TimeOfDayManager : MonoBehaviour, IDataPersistance
     {
         [SerializeField] private DynamicAmbientLight lightController;
         [SerializeField] private int timeStep = 6;
@@ -42,7 +54,7 @@ namespace Game.GameMechanics
             return hour;
         }
 
-        public void InitHour(float hour)
+        private void InitHour(float hour)
         {
             timeSlider.SetValue(hour);
             UpdateHour(hour);
@@ -53,7 +65,8 @@ namespace Game.GameMechanics
                 hour = 0;
             this.hour = hour;
             lightController.UpdateHour(hour);
-            timeText.text = hour + ":00";
+            if(timeText!=null)
+                timeText.text = hour + ":00";
             if(circleUI!=null)
                 circleUI.Rotate(hour);
         }
@@ -88,6 +101,36 @@ namespace Game.GameMechanics
             hour = 6;
             // lightController.UpdateHour(hour);
             //  circleUI.RotateFull(hour);
+        }
+
+        public void LoadData(SaveData data)
+        {
+            this.hour = data.EncounterAreaData.timeOfDaySaveData.hour;
+            UpdateHour(hour);
+        }
+
+        public void SaveData(ref SaveData data)
+        {
+            data.EncounterAreaData.timeOfDaySaveData = new TimeOfDaySaveData(hour);
+        }
+        private void OnDestroy()
+        {
+            SaveGameManager.UnregisterDataPersistanceObject(this);
+        }
+
+        private void Awake()
+        {
+            SaveGameManager.RegisterDataPersistanceObject(this);
+        }
+
+        public void Init()
+        {
+            float hour = 6;
+            if(SaveGameManager.currentSaveData.EncounterAreaData!=null)
+                hour = SaveGameManager.currentSaveData.EncounterAreaData.timeOfDaySaveData.hour;
+            if (Math.Abs(hour - (-1)) < 0.01)//If new save file reset to 6
+                hour = 6;
+            InitHour(hour);      
         }
     }
 }

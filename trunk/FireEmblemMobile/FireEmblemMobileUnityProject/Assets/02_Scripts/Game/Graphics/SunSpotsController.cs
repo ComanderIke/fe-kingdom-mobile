@@ -5,6 +5,7 @@ using Game.Manager;
 using Game.Utility;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Rendering.Universal;
 
 namespace LostGrace
 {
@@ -28,6 +29,7 @@ namespace LostGrace
         void Init()
         {
             transform.DeleteAllChildren();
+            FindObjectOfType<DynamicAmbientLight>().ClearSunSpots();
             var gridSystem = ServiceProvider.Instance.GetSystem<GridSystem>();
             mapWidth=(int)(gridSystem.width+extraMapSize.x*2);
             mapHeight=(int)(gridSystem.height+extraMapSize.y*2);
@@ -58,6 +60,7 @@ namespace LostGrace
 
             go.transform.localPosition = spotPos;
             positions.Add(spotPos);
+            FindObjectOfType<DynamicAmbientLight>().AddSunSpot(go.GetComponent<Light2D>());
         }
 
         bool IsNearExistingSpot(Vector3 spotPos, List<Vector3> positions)

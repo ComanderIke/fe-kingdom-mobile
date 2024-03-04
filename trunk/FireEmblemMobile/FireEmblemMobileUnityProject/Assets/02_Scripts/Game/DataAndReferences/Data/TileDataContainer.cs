@@ -12,10 +12,11 @@ namespace Game.Map
         public TileData standardTileData;
         [SerializeField]
         public TileData[] tileDatas;
-
+#if UNITY_EDITOR
         public void OnValidate()
         {
             tileDatas= GameBPData.GetAllInstances<TileData>();
         }
+        #endif
     }
 }

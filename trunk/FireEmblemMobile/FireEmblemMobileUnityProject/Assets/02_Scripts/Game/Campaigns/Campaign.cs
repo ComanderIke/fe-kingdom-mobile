@@ -18,15 +18,15 @@ namespace Game.Campaigns
             get { return _instance ??= new Campaign(); }
         }
 
-         public CampaignData GetSaveData()
+         public GridBattleData GetSaveData()
         {
-            return new CampaignData(this);
+            return new GridBattleData(this);
         }
         
-        public void LoadData(CampaignData campaignData)
+        public void LoadData(GridBattleData gridBattleData)
         {
-            campaignId = campaignData.campaignId;
-            turnCount = campaignData.turnCount;
+            campaignId = gridBattleData.campaignId;
+            turnCount = gridBattleData.turnCount;
             scene =  GameBPData.Instance.campaigns[campaignId].scene;
             dataLoaded = true;
            
