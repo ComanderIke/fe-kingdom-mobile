@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.DataAndReferences.References;
 using Game.GameActors.Factions;
 using Game.GameActors.Grid;
 using Game.GameActors.Units;
@@ -49,7 +50,20 @@ namespace Game.Grid
            
             NodeHelper = new NodeHelper(width,height);
             TileManager.Instance.InitGlowSpots(Tiles);
-            
+            var gridLineRenderer = gameObject.AddComponent<LineRenderer>();
+            var positions = new Vector3[4];
+            positions[0] = new Vector3(0, 0, 0);
+            positions[1] = new Vector3(width, 0, 0);
+            positions[2] = new Vector3(width, height, 0);
+            positions[3] = new Vector3(0, height, 0);
+            gridLineRenderer.positionCount = 4;
+            gridLineRenderer.loop = true;
+            gridLineRenderer.material = GameAssets.Instance.grid.gridOutlineMaterial;
+            gridLineRenderer.textureMode = LineTextureMode.Tile;
+            gridLineRenderer.numCornerVertices = 15;
+            gridLineRenderer.colorGradient=GameAssets.Instance.grid.gridOutlineColorGradient;
+            gridLineRenderer.SetPositions(positions);
+
         }
 
         public void Init()

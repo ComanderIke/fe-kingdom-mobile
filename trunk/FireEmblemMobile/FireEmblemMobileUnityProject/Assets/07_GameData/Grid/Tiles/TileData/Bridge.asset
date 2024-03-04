@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e53456ce70545147a4e06ae081ea4b1, type: 3}
-  m_Name: River
+  m_Name: Bridge
   m_EditorClassIdentifier: 
-  sprites: []
-  TerrainType: 3
-  name: River
+  sprites:
+  - {fileID: 21300000, guid: 51965220498483844b248ba461661cad, type: 3}
+  TerrainType: 0
+  name: Bridge
   walkable: 1
   defenseBonus: 0
-  avoBonus: -20
-  speedMalus: -2
+  avoBonus: 0
+  speedMalus: 0
   tiles:
-  - {fileID: 11400000, guid: f63fe6b06dc9b4b429bbf9397097fd8a, type: 2}
+  - {fileID: 11400000, guid: 73895b535db72994b9236dbaccf8cc73, type: 2}
+  - {fileID: 11400000, guid: de017eb43e9defb49b7ff4c8054c11c3, type: 2}

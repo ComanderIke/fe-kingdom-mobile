@@ -10,5 +10,7 @@ namespace Game.DataAndReferences.References
         public Material gridMaterial;
         public Sprite standardSprite;
         public MoveArrowVisual moveArrowVisual;
+        public Material gridOutlineMaterial;
+        public Gradient gridOutlineColorGradient;
     }
 }
