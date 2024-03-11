@@ -3,7 +3,9 @@ using System.Linq;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Interfaces;
 using Game.Systems;
+using Game.Utility;
 using UnityEngine;
+using Utility;
 
 namespace Game.GameActors.Units
 {
@@ -21,15 +23,23 @@ namespace Game.GameActors.Units
         {
             return rageMeter;
         }
+
+        private float ragePointDelay = 0.8f;
         void UnitDamaged(Unit unit, int damage, DamageType damageType, bool crit, bool eff)
         {
             if (unit.Equals(agent))
             {
-                rageMeter++;
-                if (rageMeter > fullRageAmount)
-                    rageMeter = fullRageAmount;
-                OnRageMeterChanged?.Invoke();
-            }
+                AnimationQueue.Add(() =>
+                {
+                    rageMeter++;
+                    if (rageMeter > fullRageAmount)
+                        rageMeter = fullRageAmount;
+                    OnRageMeterChanged?.Invoke();
+                    MonoUtility.DelayFunction(()=> AnimationQueue.OnAnimationEnded?.Invoke(),ragePointDelay);
+                });
+            };
+               
+            
         }
 
         public override void Init(Unit agent)

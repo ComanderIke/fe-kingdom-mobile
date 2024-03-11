@@ -168,42 +168,51 @@ namespace Game.Systems
         {
             MonoUtility.DelayFunction(() =>
             {
+                if (battleSimulation.continuos && battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP == 0)//Make Duells not lethal
+                    battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP = 1;
+                if (battleSimulation.continuos && battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP == 0)//Make Duells not lethal
+                    battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP = 1;
+                int hpDelta = attacker.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP;
+                int stoneDelta = ((Unit)attacker).RevivalStones -
+                                 battleSimulation.combatRounds[lastCombatRoundIndex].AttackerRevivalStones;
+                hpDelta += stoneDelta * attacker.MaxHp;
+                ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, true);
+                // ((Unit)attacker).RevivalStones =
+                //     battleSimulation.combatRounds[lastCombatRoundIndex].AttackerRevivalStones;
+                // attacker.Hp = battleSimulation.Attacker.Hp;
+                if (battleSimulation.AttackableTarget == null)
+                {
+                    hpDelta = defender.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP;
+                    stoneDelta = ((Unit)defender).RevivalStones -
+                                     battleSimulation.combatRounds[lastCombatRoundIndex].DefenderRevivalStones;
+                    hpDelta += stoneDelta * defender.MaxHp;
+                    ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
+                    // ((Unit)defender).RevivalStones =
+                    //     battleSimulation.combatRounds[lastCombatRoundIndex].DefenderRevivalStones;
+                    //defender.Hp = battleSimulation.Defender.Hp;
+                }
+                else
+                {
+                    hpDelta = defender.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP;
+                    ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
+                    //defender.Hp = battleSimulation.AttackableTarget.Hp;
+                }
+
+           
+
+            
+                CheckExp();
+                
                 attacker.BattleComponent.RealBattleEnded(defender);
                 defender.BattleComponent.RealBattleEnded(attacker);
                 attacker = null;
                 defender = null;
             }, .7f);
 
-            if (battleSimulation.continuos && battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP == 0)//Make Duells not lethal
-                battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP = 1;
-            if (battleSimulation.continuos && battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP == 0)//Make Duells not lethal
-                battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP = 1;
-            int hpDelta = attacker.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP;
-            ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, true);
-             ((Unit)attacker).RevivalStones =
-                 battleSimulation.combatRounds[lastCombatRoundIndex].AttackerRevivalStones;
-           // attacker.Hp = battleSimulation.Attacker.Hp;
-            if (battleSimulation.AttackableTarget == null)
-            {
-                hpDelta = defender.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP;
-                
-                ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
-                 ((Unit)defender).RevivalStones =
-                    battleSimulation.combatRounds[lastCombatRoundIndex].DefenderRevivalStones;
-                //defender.Hp = battleSimulation.Defender.Hp;
-            }
-            else
-            {
-                hpDelta = defender.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP;
-                ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
-                //defender.Hp = battleSimulation.AttackableTarget.Hp;
-            }
-
-           
-
             DeactivateCombatSkills();
             BattleAnimation.Hide();
-            CheckExp();
+            
+            
            
             OnBattleFinishedBeforeAfterBattleStuff?.Invoke(battleSimulation.AttackResult);
            

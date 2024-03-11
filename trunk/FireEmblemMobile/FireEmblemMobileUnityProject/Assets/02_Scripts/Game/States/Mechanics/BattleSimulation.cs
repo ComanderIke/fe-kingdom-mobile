@@ -202,6 +202,8 @@ namespace Game.States.Mechanics
                       wrath = (float)defenseEffect.Value; break;
               }
           }
+
+          int defenderStonesAtStart = defender.RevivalStones;
           int damage = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender, luna);
          
             //int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
@@ -228,6 +230,13 @@ namespace Game.States.Mechanics
                 defender.Hp -= damage;
             if(sol>0)
                 attacker.Hp += (int)(damage * sol);
+            if (defenderStonesAtStart > 0)
+            {
+                if (defender.RevivalStones < defenderStonesAtStart)
+                {
+                    return true;
+                }
+            }
             return defender.Hp > 0;
         }
 
@@ -317,6 +326,7 @@ namespace Game.States.Mechanics
                             
                             if (!certainHit)
                             {
+                                MyDebug.LogTODO("Do stuff different if just revival stone was depleted");
                                 death = true;
                                 attackData.kill = true;
                                 defenderAttackCount = 0;

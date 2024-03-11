@@ -1,7 +1,6 @@
 using Game.GameActors.Units;
 using Game.Utility;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Game.GUI
 {
@@ -28,6 +27,7 @@ namespace Game.GUI
                 aiBehaviour.OnRageMeterChanged -= UpdateValues;
         }
 
+        private int currentRageMeter = 0;
         private void UpdateValues()
         {
             ragePointContainer.DeleteAllChildren();
@@ -36,9 +36,20 @@ namespace Game.GUI
                 var go = Instantiate(ragePointPrefab, ragePointContainer);
                 if (i < aiBehaviour.GetRageMeter())
                 {
-                    go.GetComponent<Image>().sprite = ragePointFullSprite;
+                    if (i >= currentRageMeter)
+                    {
+                        go.GetComponent<UIRageMeterPoint>().Activate();
+                    }
+                    else
+                    {
+                        go.GetComponent<UIRageMeterPoint>().Fill();
+                    }
+                    
+                  
                 }
             }
+
+            currentRageMeter = aiBehaviour.GetRageMeter();
         }
     }
 }

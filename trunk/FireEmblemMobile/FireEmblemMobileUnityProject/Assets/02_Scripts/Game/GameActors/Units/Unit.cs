@@ -250,17 +250,21 @@ namespace Game.GameActors.Units
             {
 
                 int tmpHP = hp;
+                bool stoneUsed = false;
                 hp = value > MaxHp ? MaxHp : value;
                 if (hp <= 0&&RevivalStones > 0)
                 {
+                    HpValueChanged?.Invoke();
                     RevivalStones--;
+                    stoneUsed = true;
                     hp = MaxHp;
                 }
                 if(tmpHP>1&& hp <=0)
                     OnAboutToDie?.Invoke(this);
                 if (hp <= 0) hp = 0;
                 // Debug.Log("HP VALUE CHANGED ON UNIT: "+name);
-                HpValueChanged?.Invoke();
+                if(tmpHP!=hp||stoneUsed)
+                    HpValueChanged?.Invoke();
             }
         }
         

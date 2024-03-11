@@ -4,6 +4,7 @@ using Game.Utility;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
 namespace Game.GUI
 {
@@ -25,13 +26,20 @@ namespace Game.GUI
         // Start is called before the first frame update
         public void Show(Unit unit)
         {
+            if (canvas.enabled)
+                return;
             this.unit = unit;
             canvas.enabled=true;
+            nameText.text = unit.name;
+            faceImage.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
             hpBar.SetEnemyColors();
             hpBar.UpdateValuesWithoutDamagePreview(unit.MaxHp, unit.Hp, unit.Hp);
-            UpdateValues();
-            unit.HpValueChanged -= UpdateValues;
-            unit.HpValueChanged += UpdateValues;
+            UpdateHPValues();
+            UpdateRevivalStones();
+            unit.HpValueChanged -= UpdateHPValues;
+            unit.HpValueChanged += UpdateHPValues;
+            unit.RevivalStonesChanged -= UpdateRevivalStones;
+            unit.RevivalStonesChanged += UpdateRevivalStones;
             Unit.UnitDied -= CheckBossDied;
             Unit.UnitDied += CheckBossDied;
             if (unit.AIComponent.AIBehaviour is MinotaurAIBehaviour minotaurAIBehaviour && minotaurAIBehaviour.GetMaxRageMeter() != 0)
@@ -44,8 +52,12 @@ namespace Game.GUI
 
         void Hide()
         {
-            if(unit!=null)
-                unit.HpValueChanged -= UpdateValues; 
+            if (unit != null)
+            {
+                unit.RevivalStonesChanged -= UpdateRevivalStones;
+                unit.HpValueChanged -= UpdateHPValues; 
+            }
+                
             Unit.UnitDied -= CheckBossDied;
             canvas.enabled = false;
         }
@@ -57,18 +69,39 @@ namespace Game.GUI
             }
         }
 
-        void UpdateValues()
+        private int currentUnitHp = 0;
+        void UpdateHPValues()
         {
-            nameText.text = unit.name;
-            faceImage.sprite = unit.visuals.CharacterSpriteSet.FaceSprite;
-            Debug.Log("SHOW BOSS UI " + unit.MaxHp+" "+unit.Hp);
-            hpBar.UpdateValuesAnimated(unit.MaxHp, unit.Hp);
-            revivalStonesContainer.DeleteAllChildren();
-            for (int i = 0; i < unit.RevivalStones; i++)
+            if (unit.Hp == currentUnitHp)
+                return;
+            MyDebug.LogTODO("THis Method is called too often.");
+            MyDebug.LogTODO("Only Animation if hp count changed!");
+            AnimationQueue.Add(() =>
             {
-                Instantiate(revivalStonePrefab, revivalStonesContainer);
-            }
-            
+                hpBar.UpdateValuesAnimated(unit.MaxHp, unit.Hp);
+                MonoUtility.DelayFunction(()=>
+                    AnimationQueue.OnAnimationEnded?.Invoke(), 1.5f);
+            });
+            currentUnitHp = unit.Hp;
+        }
+
+        private int currentRevivalStones = -1;
+        void UpdateRevivalStones()
+        {
+            if (unit.RevivalStones == currentRevivalStones)
+                return;
+            MyDebug.LogTODO("Only Animation if revival stone count changed!");
+            AnimationQueue.Add(() =>
+            {
+                revivalStonesContainer.DeleteAllChildren();
+                for (int i = 0; i < unit.RevivalStones; i++)
+                {
+                    Instantiate(revivalStonePrefab, revivalStonesContainer);
+                }
+                MonoUtility.DelayFunction(()=>
+                    AnimationQueue.OnAnimationEnded?.Invoke(), .5f);
+            });
+            currentRevivalStones = unit.RevivalStones;
         }
 
         private void OnDisable()
