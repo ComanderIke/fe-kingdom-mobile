@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Player;
 using Game.GameActors.Units;
 using Game.GameInput;
 using Game.GUI.Text;
@@ -41,11 +42,27 @@ namespace Game.States
         }
         public void StartTask()
         {
-         
 
+
+            CheckForItemDrops();
             ServiceProvider.Instance.StartChildCoroutine(ExpCoroutine());
 
 
+        }
+
+        void CheckForItemDrops()
+        {
+            foreach (var defender in defenders)
+            {
+                var unit = ((Unit)defender);
+                if (!defender.IsAlive())
+                {
+                    if (unit.DropableItem != null)
+                    {
+                        Player.Instance.Party.AddItem(unit.DropableItem);
+                    }
+                }
+            }
         }
 
         IEnumerator ExpForAttacker(Unit defenderAsUnit)
