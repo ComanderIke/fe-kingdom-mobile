@@ -45,6 +45,7 @@ namespace Game.GUI
         [SerializeField] private GameObject skillprefab;
         [SerializeField] private GameObject activeSkillprefab;
         [SerializeField] private GameObject combatSkillprefab;
+        [SerializeField] private UICombatItemSlot dropableItemSlot;
 
         private bool interactableForPlayer;
         private void Start()
@@ -148,6 +149,12 @@ namespace Game.GUI
             combatItem1.Show(unit.CombatItem1);
             combatItem1.OnClicked -= CombatItemClicked;
             combatItem1.OnClicked += CombatItemClicked;
+            if (dropableItemSlot != null)
+            {
+                dropableItemSlot.gameObject.SetActive(unit.DropableItem!=null);
+                //dropableItemSlot.Show(unit.DropableItem);
+            }
+                
             // combatItem2.Show(unit.CombatItem2);
             // combatItem2.OnClicked += CombatItemClicked;
 

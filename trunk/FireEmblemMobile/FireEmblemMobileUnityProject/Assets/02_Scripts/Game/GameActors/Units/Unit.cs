@@ -396,6 +396,8 @@ namespace Game.GameActors.Units
             }
         }
 
+        public Item DropableItem { get; set; }
+
         public event Action<Curse> OnAddCurse;
         public event Action OnCurseResisted;
         public event Action<Curse> OnRemoveCurse;
@@ -557,6 +559,7 @@ namespace Game.GameActors.Units
             clone.EquippedRelic= (Relic)EquippedRelic?.Clone();
             clone.tags = new List<UnitTags>(tags);
             clone.uniqueIdentifier = uniqueIdentifier;
+            clone.DropableItem = DropableItem;
             if(CombatItem1!=null)
                 clone.CombatItem1 = new StockedCombatItem((IEquipableCombatItem)CombatItem1.item.Clone(),CombatItem1.stock);
         }

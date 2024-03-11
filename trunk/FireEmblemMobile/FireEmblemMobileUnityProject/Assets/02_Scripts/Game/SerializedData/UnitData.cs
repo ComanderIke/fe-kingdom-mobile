@@ -25,6 +25,8 @@ namespace Game.SerializedData
         [SerializeField]
         public string combatItem1Id;
         [SerializeField]
+        public string dropableItemId;
+        [SerializeField]
         public int combatItem1Stock;
         [SerializeField]
         public int hp;
@@ -83,6 +85,11 @@ namespace Game.SerializedData
                 combatItem1Id = unit.CombatItem1.item.GetName();
                 combatItem1Stock = unit.CombatItem1.stock;
             }
+
+            if (unit.DropableItem != null)
+            {
+                dropableItemId = unit.DropableItem.GetName();
+            }
             skillData = new SkillData(unit.SkillManager);
             fielded = unit.Fielded;
             uniqueIdentifier = unit.uniqueIdentifier.ToString();
@@ -131,6 +138,10 @@ namespace Game.SerializedData
                 unit.Equip(new StockedCombatItem(
                     (IEquipableCombatItem)GameBPData.Instance.GetItemByName(combatItem1Id),
                     combatItem1Stock),1);
+            }
+            if (!string.IsNullOrEmpty(dropableItemId))
+            {
+                unit.DropableItem=GameBPData.Instance.GetItemByName(dropableItemId);
             }
 
             unit.ClassUpgraded = classUpgraded;

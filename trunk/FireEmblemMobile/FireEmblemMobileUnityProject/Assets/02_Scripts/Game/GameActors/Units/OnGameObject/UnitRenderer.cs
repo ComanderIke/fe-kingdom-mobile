@@ -48,6 +48,7 @@ namespace Game.GameActors.Units.OnGameObject
         //[SerializeField] private TextMeshProUGUI attackDamageText;
         [SerializeField] private TextMeshProUGUI xText;
         [SerializeField] private TextMeshProUGUI x2Text;
+        [SerializeField] private Image dropableItem;
         
         [FormerlySerializedAs("unitBp")] public Unit unit;
         private static readonly int Effective = Animator.StringToHash("effective");
@@ -103,6 +104,7 @@ namespace Game.GameActors.Units.OnGameObject
             unit.OnCurseResisted += CurseResisted;
             if(unit.IsCursed())
                 ShowCurse();
+            dropableItem.gameObject.SetActive(unit.DropableItem!=null);
            // hoverCanvas.alpha = 0;
             HpValueChanged();
         }

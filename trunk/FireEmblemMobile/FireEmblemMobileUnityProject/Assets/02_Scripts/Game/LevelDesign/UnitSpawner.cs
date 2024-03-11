@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.AI.DecisionMaking;
 using Game.GameActors.Factions;
+using Game.GameActors.Items;
 using Game.GameActors.Units;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -15,6 +16,7 @@ namespace Game.LevelDesign
         public FactionId FactionId;
         public WeightSet AIWeightSet;
         public AIBehaviour AIBehaviour;
+        public ItemBP DropableItem;
         public int X => (int) transform.localPosition.x;
         public int Y => (int)transform.localPosition.y;
 
@@ -30,7 +32,9 @@ namespace Game.LevelDesign
         public Unit GetUnit()
         {
             var unit = unitBp.Create(Guid.NewGuid(), AIBehaviour);
-          
+
+            if (DropableItem != null)
+                unit.DropableItem = DropableItem.Create();
             return unit;
         }
     }

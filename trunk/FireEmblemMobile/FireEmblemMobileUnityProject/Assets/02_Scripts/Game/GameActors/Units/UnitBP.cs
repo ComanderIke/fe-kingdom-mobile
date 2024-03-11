@@ -51,7 +51,7 @@ namespace Game.GameActors.Units
         [SerializeField]
         public CharacterAudioSet audio;
         [SerializeField] public ExperienceManager experienceManager;
-     
+        [SerializeField] public ItemBP dropableItem;
         [field:SerializeField]public ChronikEntry ChronikComponent { get; set; }
 
         public override string ToString()
@@ -126,7 +126,8 @@ namespace Game.GameActors.Units
                 unit.Equip(cItem2, 2);
             }
 
-           
+            if (dropableItem != null)
+                unit.DropableItem = dropableItem.Create();
            
            
           
