@@ -8,9 +8,10 @@ namespace Game.Graphics.BattleAnimations
     {
         public float MissTextScale = 3f;
         public float TextScale = 5f;
-        public float BattleTextMovementScale = 7f;
-        public float DamageNumberHorizontalMinValue=0.5f;
-        public float DamageNumberHorizontalMaxValue=0.8f;
+        public float NoDamageTextScale = 2.8f;
+        public float BattleTextMovementScale = 6f;
+        public float DamageNumberHorizontalMinValue=0.4f;
+        public float DamageNumberHorizontalMaxValue=0.65f;
         public float DamageNumberVerticalMinValue=0.4f;
         public float DamageNumberVerticalMaxValue=0.6f;
         public CombatTextRenderer()
@@ -44,7 +45,7 @@ namespace Game.Graphics.BattleAnimations
         {
             MonoUtility.DelayFunction(() =>
                     DamagePopUp.CreateForBattleView(position,
-                        dmg, style, TextScale,
+                        dmg, style, dmg==0?NoDamageTextScale:TextScale,
                         new Vector3(
                             floatDirection * Random.Range(DamageNumberHorizontalMinValue, DamageNumberHorizontalMaxValue),
                             Random.Range(DamageNumberVerticalMinValue, DamageNumberVerticalMaxValue)) * BattleTextMovementScale),

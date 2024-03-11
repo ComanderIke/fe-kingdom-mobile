@@ -43,7 +43,7 @@ namespace Game.GUI.PopUpText
 
         public void Setup(string damage,TextStyle style, float scale, Vector2 moveVector)
         {
-            textMesh.SetText(damage.ToString());
+            textMesh.SetText(style==TextStyle.NoDamage?"No Damage":damage.ToString());
             disappearTimer = DISAPPEAR_TIMER_MAX;
             switch (style)
             {
