@@ -1,3 +1,4 @@
+using System;
 using Game.GameActors.Factions;
 using Game.GUI.Other;
 using Game.Utility;
@@ -18,11 +19,19 @@ namespace Game.GameActors.InteractableGridObjects
 
         public SpriteRenderer sprite;
         public GameObject canvasTransform;
-   
+        private int x = 0;
+        private int y = 0;
         private void OnDestroy()
         {
             Destroyable.HpValueChanged -= HpValueChanged;
         }
+
+        private void OnEnable()
+        {
+            x=(int)transform.localPosition.x;
+            y = (int)transform.localPosition.y;
+        }
+
         public void Init()
         {
             Destroyable.HpValueChanged += HpValueChanged;
@@ -48,13 +57,15 @@ namespace Game.GameActors.InteractableGridObjects
                 hpText.SetText(""+Destroyable.Hp);
             }
         }
-        public bool IsOnPosition(int x, int y)
+        public bool IsOnPosition(int xPos, int yPos)
         {
-            for (int x1 = X; x1 <= X; x1++)
+            if (x == xPos && y == yPos)
+                return true;
+            for (int x1 = x+1; x1 <= x; x1++)
             {
-                for (int y1 = Y; y1 <= Y; y1++)
+                for (int y1 = y; y1 <= y; y1++)
                 {
-                    if (x1 == x && y1 == y)
+                    if (x1 == xPos && y1 == yPos)
                         return true;
                 }
             }
@@ -63,26 +74,17 @@ namespace Game.GameActors.InteractableGridObjects
 
         void Update()
         {
-            transform.localPosition = new Vector3((int) transform.localPosition.x, (int) transform.localPosition.y,
-                (int) transform.localPosition.z);
+            var transform1 = transform;
+            var localPosition = transform1.localPosition;
+            localPosition = new Vector3((int) localPosition.x, (int) localPosition.y,
+                (int) localPosition.z);
+            transform1.localPosition = localPosition;
 #if UNITY_EDITOR
             sprite.sprite = Destroyable.SpriteNotDestroyed;
 #endif
         }
-        public int X
-        {
-            get
-            {
-                return (int)transform.localPosition.x;
-            }
-        }
-        public int Y
-        {
-            get
-            {
-                return (int)transform.localPosition.y;
-            }
-        }
+        public int X => x;
+        public int Y => y;
 
         public Vector3 GetCenterPosition()
         {

@@ -638,10 +638,10 @@ namespace Game.GameActors.Units
 
         public bool IsEnemy(IGridActor unit)
         {
-            Debug.Log("Name: "+name);
-            Debug.Log("Faction: "+Faction);
-            Debug.Log("IsEnemy: "+unit);
-            Debug.Log("unit.Faction.Id: "+unit);
+            // Debug.Log("Name: "+name);
+            // Debug.Log("Faction: "+Faction);
+            // Debug.Log("IsEnemy: "+unit);
+            // Debug.Log("unit.Faction.Id: "+unit);
             if (Faction == null)
                 return ((Unit)unit).Party != Party;
             return Faction.Id != unit.Faction.Id;

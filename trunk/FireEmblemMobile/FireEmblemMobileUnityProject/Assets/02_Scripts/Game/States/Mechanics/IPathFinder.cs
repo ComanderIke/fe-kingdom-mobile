@@ -5,6 +5,6 @@ namespace Game.States.Mechanics
 {
     public interface IPathFinder
     {
-        MovementPath FindPath(int x, int y, int x2, int y2, IGridActor unit);
+        MovementPath FindPath(int x, int y, int x2, int y2, IGridActor unit, int stopAfterDistance=100);
     }
 }

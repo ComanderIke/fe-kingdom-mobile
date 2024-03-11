@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Game.AI.UnitSpecific;
 using Game.GameActors.InteractableGridObjects;
@@ -41,52 +42,73 @@ namespace Game.AI.DecisionMaking
                 var minDistance = int.MaxValue;
                 unit.AIComponent.ClosestTarget = null;
                 unit.AIComponent.Targets.Clear();
-                foreach (var destroyable in from faction in unit.Faction.GetOpponentFactions()
-                         from enemy in faction.Destroyables
-                         where enemy.IsAlive()
-                         select enemy)
-                {
-                    var AITarget = new AITarget();
-                    AITarget.TargetObject = destroyable;
+                minDistance = NonUnitsAsTargets(unit, minDistance);
 
-                    AITarget.Path = scoreCalculator.GetPathToEnemy(unit, destroyable);
-                    if(AITarget.Path!=null)
-                        AITarget.Distance = AITarget.Path.GetLength();
-                    else
-                    {
-                        AITarget.Distance = int.MaxValue;
-                    }
-                    unit.AIComponent.Targets.Add(AITarget);
-                    if ( AITarget.Distance <= minDistance)
-                    {
-                        minDistance = AITarget.Distance;
-                        unit.AIComponent.ClosestTarget = AITarget;
-                    }
+                GetMinDistanceFromUnitTargets(unit, minDistance);
+            }
+        }
+
+        private void GetMinDistanceFromUnitTargets(IAIAgent unit, int minDistance)
+        {
+            foreach (var enemyAgent in from faction in unit.Faction.GetOpponentFactions()
+                     from enemy in faction.Units
+                     where enemy.IsAlive()
+                     select enemy)
+            {
+                var AITarget = new AITarget();
+                AITarget.TargetObject = enemyAgent;
+//Todo only calculate path set goals if unit is within 10 manhatten distance
+//otherwise set Path to null
+                var gridPos = unit.GridComponent.GridPosition.AsVectorInt();
+                var enemyPos=enemyAgent.GridComponent.GridPosition.AsVectorInt();
+                if (ManhattanDistance(gridPos.x, enemyPos.x, gridPos.y,enemyPos.y)<=10)
+                    AITarget.Path = scoreCalculator.GetPathToEnemy(unit, enemyAgent, minDistance);
+                if (AITarget.Path != null)
+                    AITarget.Distance = AITarget.Path.GetLength();
+                else
+                {
+                    AITarget.Distance = int.MaxValue;
                 }
 
-                foreach (var enemyAgent in from faction in unit.Faction.GetOpponentFactions()
-                         from enemy in faction.Units
-                         where enemy.IsAlive()
-                         select enemy)
+                unit.AIComponent.Targets.Add(AITarget);
+                if (AITarget.Distance <= minDistance)
                 {
-                    var AITarget = new AITarget();
-                    AITarget.TargetObject = enemyAgent;
-
-                    AITarget.Path = scoreCalculator.GetPathToEnemy(unit, enemyAgent);
-                    if(AITarget.Path!=null)
-                        AITarget.Distance = AITarget.Path.GetLength();
-                    else
-                    {
-                        AITarget.Distance = int.MaxValue;
-                    }
-                    unit.AIComponent.Targets.Add(AITarget);
-                    if ( AITarget.Distance <= minDistance)
-                    {
-                        minDistance = AITarget.Distance;
-                        unit.AIComponent.ClosestTarget = AITarget;
-                    }
+                    minDistance = AITarget.Distance;
+                    unit.AIComponent.ClosestTarget = AITarget;
                 }
             }
+        }
+        public static int ManhattanDistance(int x1, int x2, int y1, int y2)
+        {
+            return Math.Abs(x1 - x2) + Math.Abs(y1 - y2);
+        }
+        private int NonUnitsAsTargets(IAIAgent unit, int minDistance)
+        {
+            foreach (var destroyable in from faction in unit.Faction.GetOpponentFactions()
+                     from enemy in faction.Destroyables
+                     where enemy.IsAlive()
+                     select enemy)
+            {
+                var AITarget = new AITarget();
+                AITarget.TargetObject = destroyable;
+
+                AITarget.Path = scoreCalculator.GetPathToEnemy(unit, destroyable, minDistance);
+                if (AITarget.Path != null)
+                    AITarget.Distance = AITarget.Path.GetLength();
+                else
+                {
+                    AITarget.Distance = int.MaxValue;
+                }
+
+                unit.AIComponent.Targets.Add(AITarget);
+                if (AITarget.Distance <= minDistance)
+                {
+                    minDistance = AITarget.Distance;
+                    unit.AIComponent.ClosestTarget = AITarget;
+                }
+            }
+
+            return minDistance;
         }
 
         private List<IAIAgent> CreateMoveOrderList(IEnumerable<IAIAgent> units)
@@ -108,40 +130,47 @@ namespace Game.AI.DecisionMaking
             
             Debug.Log(moveOrderList.Count);
             moveOrderList.RemoveAll(unit => unit.TurnStateManager.HasMoved);
-            IAIAgent unit = moveOrderList.First();
-            Debug.Log("First Unit in MoveOrderList: " + unit);
-
-            if (unit.AIComponent.AIBehaviour != null &&
-                unit.AIComponent.AIBehaviour.GetState() == AIBehaviour.State.Patrol)
+            while (moveOrderList.Count>0)
             {
-                var activePatrolPoint =unit.AIComponent.AIBehaviour.GetActivePatrolPoints();
-                if (unit.GridComponent.GridPosition.AsVector() == unit.AIComponent.AIBehaviour.GetActivePatrolPoints())
+                IAIAgent unit = moveOrderList.First();
+                Debug.Log("First Unit in MoveOrderList: " + unit);
+
+                if (unit.AIComponent.AIBehaviour != null &&
+                    unit.AIComponent.AIBehaviour.GetState() == AIBehaviour.State.Patrol)
                 {
-                    unit.AIComponent.AIBehaviour.UpdatePatrolPoint();
-                    activePatrolPoint = unit.AIComponent.AIBehaviour.GetActivePatrolPoints();
-                }
+                    var activePatrolPoint =unit.AIComponent.AIBehaviour.GetActivePatrolPoints();
+                    if (unit.GridComponent.GridPosition.AsVector() == unit.AIComponent.AIBehaviour.GetActivePatrolPoints())
+                    {
+                        unit.AIComponent.AIBehaviour.UpdatePatrolPoint();
+                        activePatrolPoint = unit.AIComponent.AIBehaviour.GetActivePatrolPoints();
+                    }
 
-                var location = ChooseBestLocationToNextPatrolPoint(unit, activePatrolPoint);
+                    var location = ChooseBestLocationToNextPatrolPoint(unit, activePatrolPoint);
               
-                return new AIUnitAction(location, null, UnitActionType.Wait, (Unit)unit, Vector2Int.zero);
+                    return new AIUnitAction(location, null, UnitActionType.Wait, (Unit)unit, Vector2Int.zero);
             
-                //Get towards current patrolPoint and if reached activate it.
-            }
-            else if (unit.AIComponent.AIBehaviour != null &&
-                     unit.AIComponent.AIBehaviour.WillStayIfNoEnemies()){
-                return new AIUnitAction(unit.GridComponent.GridPosition.AsVectorInt(), null, UnitActionType.Wait, unit,Vector2Int.zero);
-            }
-            else
-            {
-                var chaseTarget = ChooseChaseTarget(unit);
-                if (chaseTarget == null)
-                    Debug.Log("Chase Target = null!");
+                    //Get towards current patrolPoint and if reached activate it.
+                }
+                else if (unit.AIComponent.AIBehaviour != null &&
+                         unit.AIComponent.AIBehaviour.WillStayIfNoEnemies())
+                {
+                    moveOrderList.Remove(unit);
+                    unit.TurnStateManager.HasMoved = true;
+                    //return new AIUnitAction(unit.GridComponent.GridPosition.AsVectorInt(), null, UnitActionType.Wait, unit,Vector2Int.zero);
+                }
                 else
                 {
-                    Vector2Int location = ChooseBestLocationToChaseTarget(unit, chaseTarget);
-                    return new AIUnitAction(location, null, UnitActionType.Wait, (Unit)unit, Vector2Int.zero);
+                    var chaseTarget = ChooseChaseTarget(unit);
+                    if (chaseTarget == null)
+                        Debug.Log("Chase Target = null!");
+                    else
+                    {
+                        Vector2Int location = ChooseBestLocationToChaseTarget(unit, chaseTarget);
+                        return new AIUnitAction(location, null, UnitActionType.Wait, (Unit)unit, Vector2Int.zero);
+                    }
                 }
             }
+           
 
             return bestAction;
         }

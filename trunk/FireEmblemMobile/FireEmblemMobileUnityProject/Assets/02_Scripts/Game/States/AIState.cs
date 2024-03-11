@@ -11,7 +11,7 @@ namespace Game.States
 {
     public class AIState : GameState<NextStateTrigger>
     {
-        public const float PAUSE_BETWEEN_ACTIONS = 0.55f;
+        public const float PAUSE_BETWEEN_ACTIONS = 0.9f;//musst be higher than AISystem camera times
         private AISystem aiSystem;
         private ConditionManager ConditionManager;
         private float pauseTime;
@@ -66,12 +66,12 @@ namespace Game.States
 
                 if (!aiSystem.IsFinished())
                 {
-                    Debug.Log("THINK");
+                    // Debug.Log("THINK");
                     aiSystem.Think();
                 }
                 else
                 {
-                    Debug.Log("AI State Finished");
+                    // Debug.Log("AI State Finished");
                     GridGameManager.Instance.GetSystem<TurnSystem>().OnTriggerEndTurn();
                 }
             }

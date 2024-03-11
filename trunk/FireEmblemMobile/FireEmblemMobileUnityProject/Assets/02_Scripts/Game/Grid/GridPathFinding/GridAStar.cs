@@ -83,7 +83,7 @@ namespace Game.Grid.GridPathFinding
         {
             open.Remove(node);
         }
-  public MovementPath FindPath(int sx, int sy, int tx, int ty, IGridActor unit)
+  public MovementPath FindPath(int sx, int sy, int tx, int ty, IGridActor unit, int stopAfterDistance=100)
         {
             Nodes[sx, sy].CostFromStart = 0;
             Nodes[sx, sy].Depth = 0;
@@ -92,7 +92,7 @@ namespace Game.Grid.GridPathFinding
             open.Add(Nodes[sx, sy]);
             Nodes[tx, ty].Parent = null;
             int maxDepth = 0;
-            int maxSearchDistance = 100;
+            int maxSearchDistance = stopAfterDistance;
             while ((maxDepth < maxSearchDistance) && (open.Count != 0))
             {
                 var current = GetFirstInOpen();

@@ -9,7 +9,7 @@ namespace LostGrace
     public class GridBattleDayTimeController : MonoBehaviour
     {
         [SerializeField] private DynamicAmbientLight lightController;
-        [SerializeField] private float startHour = 0;
+        [SerializeField] private float startHour = 12;
         void Start()
         {
             

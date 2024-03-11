@@ -32,8 +32,8 @@ namespace Game.AI
         private GridSystem gridSystem;
         public AIRenderer AiRenderer;
 
-        private float cameraPerformerTime = 0.45f;
-        private float cameraTargetTime = 0.35f;
+        private float cameraPerformerTime = .85f;
+        private float cameraTargetTime = .75f;
 
         public Faction PlayerFaction
         {
@@ -66,7 +66,7 @@ namespace Game.AI
                 //StoreMovementDataOfAllUnit();
                 // store for each unit in AIAGent if they threaten an enemy in their current range
                 // optional store if they are threatend
-                Debug.Log("Start of Turn");
+                // Debug.Log("Start of Turn");
                 decisionMaker.InitTurnData(player.GetActiveUnits());
                 //goalManager.PrepareGoals();
             }

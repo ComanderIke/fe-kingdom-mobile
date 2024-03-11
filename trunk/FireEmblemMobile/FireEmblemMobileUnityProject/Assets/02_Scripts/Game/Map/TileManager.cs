@@ -67,31 +67,66 @@ namespace Game.Map
 
         public GridTerrainData GetData(int x, int y)
         {
+            if (GetDataFromDestroyables(x, y, out var gridTerrainData)) return gridTerrainData;
+            if (GetDataFromProps(x, y, out var propTerrainData)) return propTerrainData;
+            if (GetDataFromTileMaps(x, y, out var value)) return value;
+            
+
+            return tileDataContainer.standardTileData;
+        }
+
+        private bool GetDataFromDestroyables(int x, int y, out GridTerrainData gridTerrainData)
+        {
             foreach (var destroyable in destroyables)
             {
-                if (destroyable.IsOnPosition(x,y))
-                    return destroyable.Destroyable.TerrainData;
+                if (destroyable.IsOnPosition(x, y))
+                {
+                    gridTerrainData = destroyable.Destroyable.TerrainData;
+                    return true;
+                }
             }
+
+            gridTerrainData = null;
+            return false;
+        }
+
+        private bool GetDataFromProps(int x, int y, out GridTerrainData propTerrainData)
+        {
             foreach (var prop in props)
             {
                 if (prop.IsOnPosition(x, y))
-                    return prop.terrainData;
+                {
+                    propTerrainData = prop.terrainData;
+                    return true;
+                }
             }
+
+            propTerrainData = null;
+            return false;
+        }
+
+        private bool GetDataFromTileMaps(int x, int y, out GridTerrainData value)
+        {
             foreach (var tilemap in tilemaps)
             {
                 TileBase tileBase = tilemap.GetTile(new Vector3Int(x, y, 0));
                 if (tileBase == null)
                     continue;
-                if (dataFromTiles.ContainsKey(tileBase))
+                if (dataFromTiles.TryGetValue(tileBase, out var data))
                 {
                     //Debug.Log("tileBase: "+tileBase.name+" "+dataFromTiles[tileBase].name);
-                    return dataFromTiles[tileBase];
+                    {
+                        value = data;
+                        return true;
+                    }
                 }
             }
-       
 
+            value = null;
 
-            return tileDataContainer.standardTileData;
+            return false;
         }
     }
+
+   
 }
