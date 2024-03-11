@@ -25,7 +25,7 @@ MonoBehaviour:
   combatItem2:
     stock: 0
     item: {fileID: 0}
-  aiBehaviour: {fileID: 0}
+  aiBehaviour: {fileID: 11400000, guid: 17abba1c8f9ab4efc846e44818086e98, type: 2}
   stats:
     AttackRanges: 
     BaseAttributes:
@@ -61,6 +61,7 @@ MonoBehaviour:
     Mov: 4
   moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
   SkillManager:
+    uniqueStartSkill: {fileID: 0}
     startSkills:
     - {fileID: 11400000, guid: 4a26481e379df9f4e8421fae3f564fd9, type: 2}
     - {fileID: 11400000, guid: 9089237c59b915749a9bb3225f61fe46, type: 2}
@@ -84,6 +85,7 @@ MonoBehaviour:
         type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
+    AttackDelay: 0
   audio: {fileID: 0}
   experienceManager:
     level: 0

@@ -34,6 +34,11 @@ namespace Game.GUI
             unit.HpValueChanged += UpdateValues;
             Unit.UnitDied -= CheckBossDied;
             Unit.UnitDied += CheckBossDied;
+            if (unit.AIComponent.AIBehaviour is MinotaurAIBehaviour minotaurAIBehaviour && minotaurAIBehaviour.GetMaxRageMeter() != 0)
+            {
+                rageUI.Show(minotaurAIBehaviour);
+                
+            }
 
         }
 
@@ -63,11 +68,7 @@ namespace Game.GUI
             {
                 Instantiate(revivalStonePrefab, revivalStonesContainer);
             }
-            if (unit.AIComponent.AIBehaviour is MinotaurAIBehaviour minotaurAIBehaviour && minotaurAIBehaviour.GetMaxRageMeter() != 0)
-            {
-                rageUI.Show(minotaurAIBehaviour);
-                
-            }
+            
         }
 
         private void OnDisable()

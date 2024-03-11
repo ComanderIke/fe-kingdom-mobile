@@ -84,7 +84,7 @@ namespace Game.GameActors.Units
             stats.OnValidate();
         }
 
-        public virtual Unit Create(Guid uniqueIdentifierPostfix)
+        public virtual Unit Create(Guid uniqueIdentifierPostfix, AIBehaviour overrideAiBehaviour=null)
         {
           
            
@@ -94,7 +94,7 @@ namespace Game.GameActors.Units
            
             var unit = new Unit(bluePrintID, uniqueIdentifierPostfix,Name, rpgClass, (Stats)stats.Clone(), moveType, 
                 new UnitVisual(visuals), skillManager,
-                new ExperienceManager(experienceManager), isBoss, aiBehaviour);
+                new ExperienceManager(experienceManager), isBoss, overrideAiBehaviour!=null?Instantiate(overrideAiBehaviour):(aiBehaviour!=null?Instantiate(aiBehaviour):null));
             unit.RevivalStones = revivalStones;
             Weapon weapon = null;
             if (equippedWeaponBp != null)

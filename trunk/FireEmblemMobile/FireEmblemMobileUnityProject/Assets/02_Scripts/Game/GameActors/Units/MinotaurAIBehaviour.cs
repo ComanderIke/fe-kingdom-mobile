@@ -37,6 +37,7 @@ namespace Game.GameActors.Units
             rageMeter = 0;
             Unit.OnUnitDamaged -= UnitDamaged;
             Unit.OnUnitDamaged += UnitDamaged;
+            base.Init(agent);
         }
         public override void UpdateState(IAIAgent agent, bool hasAttackableTargets, bool usedSkill = false)
         {

@@ -29,9 +29,8 @@ namespace Game.LevelDesign
 
         public Unit GetUnit()
         {
-            var unit = unitBp.Create(Guid.NewGuid());
-            if(AIBehaviour!=null)
-                unit.AIComponent.AIBehaviour=Instantiate(AIBehaviour);
+            var unit = unitBp.Create(Guid.NewGuid(), AIBehaviour);
+          
             return unit;
         }
     }
