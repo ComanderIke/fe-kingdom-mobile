@@ -23,7 +23,9 @@ namespace Game.GameActors.Units
 
         protected Unit target;
         protected Unit agent;
-        [SerializeField] protected State state = State.Patrol;
+        [HideInInspector]
+        public AIGroup aiGroup;
+        [SerializeField] private State state = State.Patrol;
         private int activeIndex = 0;
 
       
@@ -40,19 +42,27 @@ namespace Game.GameActors.Units
        
         public State GetState()
         {
+            if (aiGroup != null)
+                return aiGroup.state;
             return state;
         }
 
+        public void SetState(State state)
+        {
+            if (aiGroup != null)
+                aiGroup.SetState(state);
+            this.state = state;
+        }
         public virtual void UpdateState(IAIAgent agent, bool hasAttackableTargets, bool usedSkill = false)
         {
             if (agent is Unit unit)
             {
-                switch (state)
+                switch (GetState())
                 {
                     case State.Patrol:
                         if (hasAttackableTargets)
                         {
-                            state = State.Aggressive;
+                            SetState(State.Aggressive);
                             UpdateState(agent, hasAttackableTargets);
                         }
                         break;
@@ -64,9 +74,7 @@ namespace Game.GameActors.Units
         {
             return patrolPoints;
         }
-
-       
-
+        
         public void UpdatePatrolPoint()
         {
             activeIndex++;
@@ -80,24 +88,24 @@ namespace Game.GameActors.Units
 
         public bool WillAttackOnTargetInRange()
         {
-            return state == AIBehaviour.State.Aggressive || state == State.OnRange||state==State.Guard;
+            return GetState() == AIBehaviour.State.Aggressive || GetState() == State.OnRange||GetState()==State.Guard;
         }
 
         public bool WillMoveIfAble()
         {
-            return state != State.Guard;
+            return GetState() != State.Guard;
         }
 
         public bool WillStayIfNoEnemies()
         {
-            return state == AIBehaviour.State.Guard || state == AIBehaviour.State.OnRange;
+            return GetState() == AIBehaviour.State.Guard || GetState() == AIBehaviour.State.OnRange;
         }
 
         public void AttackTriggered()
         {
-            if (state == State.Patrol || state == State.OnRange)
+            if (GetState() == State.Patrol || GetState() == State.OnRange)
             {
-                state = State.Aggressive;
+                SetState( State.Aggressive);
             }
         }
     }

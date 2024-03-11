@@ -4,6 +4,7 @@ using System.Linq;
 using Game.EncounterAreas.Model;
 using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Interfaces;
 using Game.Manager;
 using UnityEngine;
 
@@ -33,6 +34,7 @@ namespace Game.GameActors.Factions
         {
             Destroyables = new List<Destroyable>();
             Units = new List<Unit>();
+            aiGroups = new Dictionary<int, AIGroup>();
         }
 
         [SerializeField] private string factionPrefix;
@@ -41,6 +43,7 @@ namespace Game.GameActors.Factions
         {
             Id = number;
             Name = name;
+           
             unitAutoId = 0;
             IsPlayerControlled = isPlayerControlled;
         }
@@ -121,6 +124,20 @@ namespace Game.GameActors.Factions
         public bool IsOpponentFaction(Faction targetUnitFaction)
         {
             return GetOpponentFactions().Contains(targetUnitFaction);
+        }
+
+        private Dictionary<int,AIGroup> aiGroups;
+
+        public void AddtoAIGroup(int aiGroupId,AIBehaviour.State state, Unit unit)
+        {
+            if (aiGroups.ContainsKey(aiGroupId))
+            {
+                aiGroups[aiGroupId].AddAgent(unit);
+            }
+            else
+            {
+                aiGroups.Add(aiGroupId, new AIGroup(new List<IAIAgent>(){unit}, state));
+            }
         }
     }
 }

@@ -44,6 +44,7 @@ namespace Game.Manager
 
         private void Awake()
         {
+            // Application.targetFrameRate = 60;
             Instance = this;
             MyDebug.LogEngine("Awake " +gameObject.name);
             if (SceneTransferData.Instance != null &&SceneTransferData.Instance.BattleMap!=null )

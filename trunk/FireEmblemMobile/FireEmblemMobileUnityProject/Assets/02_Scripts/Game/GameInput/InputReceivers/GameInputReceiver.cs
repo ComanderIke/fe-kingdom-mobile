@@ -228,7 +228,7 @@ namespace Game.GameInput.InputReceivers
 
         public void LongClickOnCharacter(IGridActor unit)
         {
-            gameplayCommands.ViewUnit((Unit)unit);
+            //gameplayCommands.ViewUnit((Unit)unit);
         }
 
         private void ClickOnObject(int x, int y)

@@ -56,24 +56,24 @@ namespace Game.GameActors.Units
                 //check if stunned change state to stunned
                 if (unit.StatusEffectManager.Buffs.Any(d => d.BuffData is DebuffData debuffData&& debuffData.debuffType==DebuffType.Stunned))
                 {
-                    state = State.Stunned;
+                    SetState(State.Stunned);
                 }
                 else
                 {
-                    if (state == State.Stunned)
-                        state = State.Aggressive;
+                    if (GetState() == State.Stunned)
+                        SetState( State.Aggressive);
                 }
 
-                switch (state)
+                switch (GetState())
                 {
                     case State.Aggressive:
                         if (rageMeter >= fullRageAmount)
                         {
-                            state = State.UseSkill;
+                            SetState(State.UseSkill);
                         }
                         else
                         {
-                            state = State.Aggressive;
+                            SetState(State.Aggressive);
                         }
 
                         break;
@@ -85,7 +85,7 @@ namespace Game.GameActors.Units
                     case State.UseSkill:
                         if (usedSkill)
                         {
-                            state = State.Aggressive;
+                            SetState(State.Aggressive);
                             rageMeter = 0;
                             OnRageMeterChanged?.Invoke();
                         }
@@ -115,7 +115,7 @@ namespace Game.GameActors.Units
                     case State.Patrol:
                         if (hasAttackableTargets)
                         {
-                            state = State.Aggressive;
+                            SetState( State.Aggressive);
                             UpdateState(agent, hasAttackableTargets);
                         }
                            
