@@ -176,7 +176,8 @@ namespace Game.Systems
                 int stoneDelta = ((Unit)attacker).RevivalStones -
                                  battleSimulation.combatRounds[lastCombatRoundIndex].AttackerRevivalStones;
                 hpDelta += stoneDelta * attacker.MaxHp;
-                ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, true);
+                if(hpDelta!=0)
+                    ((Unit) attacker).InflictDirectDamage((Unit)defender, hpDelta,defender.GetEquippedWeapon().DamageType, true);
                 // ((Unit)attacker).RevivalStones =
                 //     battleSimulation.combatRounds[lastCombatRoundIndex].AttackerRevivalStones;
                 // attacker.Hp = battleSimulation.Attacker.Hp;
@@ -186,7 +187,8 @@ namespace Game.Systems
                     stoneDelta = ((Unit)defender).RevivalStones -
                                      battleSimulation.combatRounds[lastCombatRoundIndex].DefenderRevivalStones;
                     hpDelta += stoneDelta * defender.MaxHp;
-                    ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
+                    if(hpDelta!=0)
+                        ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
                     // ((Unit)defender).RevivalStones =
                     //     battleSimulation.combatRounds[lastCombatRoundIndex].DefenderRevivalStones;
                     //defender.Hp = battleSimulation.Defender.Hp;
@@ -194,7 +196,8 @@ namespace Game.Systems
                 else
                 {
                     hpDelta = defender.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP;
-                    ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
+                    if(hpDelta!=0)
+                        ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
                     //defender.Hp = battleSimulation.AttackableTarget.Hp;
                 }
 
