@@ -38,6 +38,10 @@ namespace Game.GUI.Other
         [SerializeField] private Gradient blinkColorEnemyHeal;
         public void UpdateValues(int maxHp, int currentHp, int afterBattleHp)
         {
+            if (currentHp < 0)
+                currentHp = 0;
+            if (afterBattleHp < 0)
+                afterBattleHp = 0;
             MyDebug.LogTest("UpdateValues");
 //            Debug.Log("UpdateValues");
             this.currentHp = currentHp;
@@ -77,7 +81,12 @@ namespace Game.GUI.Other
         public void UpdateValuesWithoutDamagePreview(int maxHp, int currentHp, int afterHp)
         {
             MyDebug.LogTest("UpdateValuesWithoutDamagePreview");
+            if (currentHp < 0)
+                currentHp = 0;
+            if (afterHp < 0)
+                afterHp = 0;
             this.currentHp = currentHp;
+            
             width = GetComponent<RectTransform>().rect.width;
             if(hpText!=null)
                 hpText.text =""+ currentHp;
@@ -104,6 +113,8 @@ namespace Game.GUI.Other
         public void UpdateValuesAnimated(int maxHp, int newHp)
         {
             MyDebug.LogTest("UpdateValuesAnimated");
+            if (newHp < 0)
+                newHp = 0;
             if(hpText!=null)
                 hpText.text =""+ newHp;
             beforeHpBar.gameObject.SetActive(false);

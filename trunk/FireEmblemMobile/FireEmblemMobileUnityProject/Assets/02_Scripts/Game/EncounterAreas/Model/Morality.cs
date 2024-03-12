@@ -31,5 +31,10 @@ namespace Game.EncounterAreas.Model
         {
             morality = f;
         }
+
+        public void Reset()
+        {
+            morality = 0;
+        }
     }
 }

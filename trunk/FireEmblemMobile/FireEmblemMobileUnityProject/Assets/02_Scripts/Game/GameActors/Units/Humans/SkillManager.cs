@@ -69,7 +69,14 @@ namespace Game.GameActors.Units.Humans
             get { return skillPoints; }
             set
             {
-                skillPoints = value;
+                if (value > maxSkillPoints)
+                    skillPoints = maxSkillPoints;
+                else
+                {
+                    skillPoints = value;
+                }
+
+               
                 // Debug.Log("SkillPoints value changed");
                 SkillPointsUpdated?.Invoke(skillPoints);
             }
@@ -293,6 +300,11 @@ namespace Game.GameActors.Units.Humans
         {
             skills.Clear();
             blessing = null;
+        }
+
+        public void AddSkillPoints(int points)
+        {
+            SkillPoints += points;
         }
     }
 }

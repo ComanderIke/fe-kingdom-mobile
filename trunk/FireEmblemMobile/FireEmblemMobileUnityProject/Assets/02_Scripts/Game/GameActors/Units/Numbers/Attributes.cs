@@ -375,6 +375,19 @@ namespace Game.GameActors.Units.Numbers
                 ret.lck = 0;
             return ret;
         }
+
+        public void IncreaseAllAttributes(int incr)
+        {
+            lck += incr;
+            str += incr;
+            dex += incr;
+            intel += incr;
+            agi += incr;
+            def += incr;
+            faith += incr;
+            maxHp += incr;
+            
+        }
     }
 
     public enum AttributeType
