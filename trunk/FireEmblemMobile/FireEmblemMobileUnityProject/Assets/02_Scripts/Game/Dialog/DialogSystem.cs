@@ -18,7 +18,7 @@ namespace Game.Dialog
 
         public void UnitLevelupDialog(Unit unit)
         {
-            Renderer.ShowDialog(unit.DialogComponent.GetLevelUpConversation());
+            Renderer.ShowDialog(unit.DialogComponent.GetNormalLevelUpConversation());
         }
         public void Deactivate()
         {

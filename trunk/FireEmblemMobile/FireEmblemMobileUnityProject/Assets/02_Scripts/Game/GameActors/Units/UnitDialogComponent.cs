@@ -12,7 +12,15 @@ namespace Game.GameActors.Units
         [SerializeField]private Conversation badLevelUpConversation;
         public DialogSpriteSet DialogueSpriteSet;
 
-        public Conversation GetLevelUpConversation()
+        public Conversation GetGoodLevelUpConversation()
+        {
+            return averageLevelUpConversation;
+        }
+        public Conversation GetNormalLevelUpConversation()
+        {
+            return averageLevelUpConversation;
+        }
+        public Conversation GetBadLevelUpConversation()
         {
             return averageLevelUpConversation;
         }
