@@ -135,8 +135,11 @@ namespace Game.GameActors.Units
         [HideInInspector][SerializeField]
         public int MaxHp {
             get
+            
             {
-                return stats.CombinedAttributes().MaxHp;
+                if(stats!=null)
+                    return stats.CombinedAttributes().MaxHp;
+                return 0;
             }  
         }
         public Stats Stats

@@ -28,7 +28,8 @@ namespace Game.GUI
         public void Init(DialogSpriteSet dialogSpriteSet)
         {
             characterSpriteSet = dialogSpriteSet;
-            
+            UpdateUI();
+
         }
         public void EyesOpen()
         {

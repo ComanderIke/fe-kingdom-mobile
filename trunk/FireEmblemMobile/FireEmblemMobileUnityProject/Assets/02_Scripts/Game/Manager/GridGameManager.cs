@@ -5,6 +5,7 @@ using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using Game.AI;
 using Game.DataAndReferences.Data;
+using Game.Dialog;
 using Game.EncounterAreas.Encounters.Battle;
 using Game.EncounterAreas.Model;
 using Game.GameActors.Factions;
@@ -81,6 +82,7 @@ namespace Game.Manager
                 new TurnSystem(),
                 new BattleSystem(),
                 new BattleStatsSystem(),
+                new DialogEngineSystem(),
                 new MoveSystem(),
                 new UnitProgressSystem(FactionManager),
                 new PopUpTextSystem(),
@@ -153,6 +155,7 @@ namespace Game.Manager
             GetSystem<MoveSystem>().pathFinder = pathFinder;
             GetSystem<TurnSystem>().factionManager = FactionManager;
             GetSystem<TurnSystem>().gameStateManager = GameStateManager;
+            GetSystem<DialogEngineSystem>().Renderer = FindObjectsOfType<MonoBehaviour>().OfType<DialogueManager>().First();
            // GameStateManager.WinState.successRenderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleSuccessRenderer>().First();
             GameStateManager.GameOverState.renderer =  FindObjectsOfType<MonoBehaviour>().OfType<IBattleLostRenderer>().First();
             GetSystem<BattleSystem>().BattleAnimation = ((IBattleAnimation)FindObjectOfType<BattleAnimationRenderer>()); //TODO .First can be different result inBuild
