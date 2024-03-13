@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.GameActors.Units;
+using UnityEngine;
 
 namespace Game.Dialog
 {
@@ -6,8 +7,8 @@ namespace Game.Dialog
     public class Line
     {
         public string sentence;
-        [SerializeField] DialogActor actor;
+        [SerializeField] UnitBP actor;
         public bool left = true;
-        public IDialogActor Actor => actor;
+        public UnitBP Actor => actor;
     }
 }

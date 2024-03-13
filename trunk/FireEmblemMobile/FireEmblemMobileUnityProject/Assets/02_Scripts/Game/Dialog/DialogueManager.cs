@@ -18,7 +18,7 @@ namespace Game.Dialog
             this.Conversation = conversation;
             active = true;
             index = -1;
-            dialog.Show();
+            dialog.Show(conversation);
             NextLine();
         }
 
@@ -41,7 +41,7 @@ namespace Game.Dialog
                 index++;
                 var line = Conversation.lines[index];
                 
-                dialog.NextLine(line.sentence, line.Actor.Name, line.Actor.FaceSprite, line.left);
+                dialog.NextLine(line.sentence, line.Actor.Name, line.left);
                 
                
             }

@@ -1,11 +1,12 @@
-﻿using Game.GUI.Controller;
+﻿using System.Runtime.InteropServices;
+using Game.GUI;
+using Game.GUI.Controller;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.Dialog
 {
-	
 	[System.Serializable]
 	public class Dialogue : MonoBehaviour
 	{
@@ -14,8 +15,8 @@ namespace Game.Dialog
 		[SerializeField] CanvasGroup speakerImageLeftCanvasGroup;
 		[SerializeField] CanvasGroup speakerImageRightCanvasGroup;
 		public TextMeshProUGUI speakerName;
-		public Image speakerImageLeft;
-		public Image speakerImageRight;
+		public UIDialogFaceController speakerImageLeft;
+		public UIDialogFaceController speakerImageRight;
 		public TextMeshProUGUI textDisplay;
 		public CanvasGroup dialogCanvas;
 		public AudioSource letterSource;
@@ -27,16 +28,6 @@ namespace Game.Dialog
 		private Coroutine textCoroutine;
 
 		
-		// IEnumerator TextAnimation()
-		// {
-		// 	foreach (char letter in line)
-		// 	{
-		// 		textDisplay.text += letter;
-		// 		letterSource.Play();
-		// 		yield return new WaitForSeconds(typingSpeed);
-		// 		letterSource.Stop();
-		// 	}
-		// }
 
 		private void Update()
 		{
@@ -46,7 +37,7 @@ namespace Game.Dialog
 			}
 		}
 
-		public void NextLine(string sentence, string speakerName, Sprite speakerSprite, bool left)
+		public void NextLine(string sentence, string speakerName, bool left)
 		{
 			//dialogCanvas.alpha = 0;
 			nextLineSource.Play();
@@ -57,14 +48,16 @@ namespace Game.Dialog
 			{
 				speakerImageRightCanvasGroup.alpha = 0;
 				TweenUtility.FastFadeIn(speakerImageLeftCanvasGroup);
-				speakerImageLeft.sprite = speakerSprite;
+				//speakerImageLeft.sprite = speakerSprite;
+				speakerImageLeft.Init(currentLine.Actor.dialogComponent.DialogueSpriteSet);
 				
 			}
 			else
 			{
 				speakerImageLeftCanvasGroup.alpha = 0;
 				TweenUtility.FastFadeIn(speakerImageRightCanvasGroup);
-				speakerImageRight.sprite = speakerSprite;
+				speakerImageRight.Init(currentLine.Actor.dialogComponent.DialogueSpriteSet);
+				//speakerImageRight.sprite = speakerSprite;
 			}
 
 			this.line = sentence;
@@ -74,9 +67,16 @@ namespace Game.Dialog
 			//textCoroutine = StartCoroutine(TextAnimation());
 		}
 
-		
-		public void Show()
+		private Conversation conversation;
+		private int currentLineIndex = 0;
+		private Line currentLine;
+		public void Show(Conversation conversation)
 		{
+			this.conversation = conversation;
+			currentLineIndex = 0;
+			currentLine = this.conversation.lines[currentLineIndex];
+			NextLine(currentLine.sentence, currentLine.Actor.Name, currentLine.left);
+			
 			gameObject.SetActive(true);
 			mainCanvasGroup.alpha = 0;
 			TweenUtility.FadeIn(mainCanvasGroup);

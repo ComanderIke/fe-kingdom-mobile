@@ -183,7 +183,7 @@ namespace Game.Systems
 
             if (levelUpRenderer != null)
             {
-                levelUpRenderer.UpdateValues(unit.name, unit.visuals.CharacterSpriteSet.FaceSprite,unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
+                levelUpRenderer.UpdateValues(unit,unit.name, unit.visuals.CharacterSpriteSet.FaceSprite,unit.ExperienceManager.Level - 1, unit.ExperienceManager.Level,
                     unit.Stats.BaseAttributes.AsArray(), currentStatIncreases, currentLevelupUnit.Stats.BaseAttributes.LCK);
                 
                 levelUpRenderer.Play();

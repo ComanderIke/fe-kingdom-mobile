@@ -19,34 +19,36 @@ namespace Game.GUI
         void UpdateUI()
         {
             face.sprite = characterSpriteSet.FaceSprite;
+            mouth.gameObject.SetActive(characterSpriteSet.MouthClosed!=null);
             mouth.sprite = characterSpriteSet.MouthClosed;
+            mouth.gameObject.SetActive(characterSpriteSet.EyesOpen!=null);
             eyes.sprite = characterSpriteSet.EyesOpen;
         }
 
-        public void Init(Unit unit)
+        public void Init(DialogSpriteSet dialogSpriteSet)
         {
-            characterSpriteSet = unit.visuals.CharacterSpriteSet.DialogSpriteSet;
+            characterSpriteSet = dialogSpriteSet;
             
         }
         public void EyesOpen()
         {
-            Debug.Log("EyesOpen");
+            // Debug.Log("EyesOpen");
             eyes.sprite = characterSpriteSet.EyesOpen;
         }
         public void EyesClosed()
         {
-            Debug.Log("EyesClosed");
+            // Debug.Log("EyesClosed");
             eyes.sprite = characterSpriteSet.EyesClosed;
         }
 
         public void MouthOpen()
         {
-            Debug.Log("MouthOpen");
+            // Debug.Log("MouthOpen");
             mouth.sprite = characterSpriteSet.MouthOpen;
         }
         public void MouthClosed()
         {
-            Debug.Log("MouthClosed");
+            // Debug.Log("MouthClosed");
             mouth.sprite = characterSpriteSet.MouthClosed;
         }
     }

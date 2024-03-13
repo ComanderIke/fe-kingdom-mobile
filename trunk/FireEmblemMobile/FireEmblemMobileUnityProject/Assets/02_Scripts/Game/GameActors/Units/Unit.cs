@@ -156,9 +156,9 @@ namespace Game.GameActors.Units
         {
             get { return visuals; }
         } 
-
+        [field:SerializeField]public UnitDialogComponent DialogComponent { get; set; }
         public Unit(string bluePrintID, Guid uniqueIdentifier, string name, RpgClass rpgClass, Stats stats, MoveType moveType,
-            UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager, bool isBoss, AIBehaviour aiBehaviour)
+            UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager, bool isBoss, AIBehaviour aiBehaviour, UnitDialogComponent dialogComponent)
         {
             this.uniqueIdentifier = uniqueIdentifier;
             this.bluePrintID = bluePrintID;
@@ -170,6 +170,7 @@ namespace Game.GameActors.Units
             this.moveType = moveType;
             this.visuals = visuals;
             this.name = name;
+            this.DialogComponent = dialogComponent;
             SkillManager = skillManager;
             SkillManager.SkillPointsUpdated += SkillPointsUpdated;
             Bonds = new Bonds();
@@ -560,6 +561,7 @@ namespace Game.GameActors.Units
             clone.tags = new List<UnitTags>(tags);
             clone.uniqueIdentifier = uniqueIdentifier;
             clone.DropableItem = DropableItem;
+            clone.DialogComponent = DialogComponent;
             if(CombatItem1!=null)
                 clone.CombatItem1 = new StockedCombatItem((IEquipableCombatItem)CombatItem1.item.Clone(),CombatItem1.stock);
         }

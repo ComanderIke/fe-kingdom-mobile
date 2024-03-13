@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.Dialog;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Numbers;
 using Game.GUI.Renderer;
+using Game.Manager;
 using Game.Utility;
 using TMPro;
 using UnityEngine;
@@ -220,6 +223,7 @@ namespace Game.GUI.Controller
                 actions.Add(CreateStatPopUpActionAnimationIn(fthLabelText, fthText, "" + (stats[7] + statsIncreases[7]), fthAddedText, statsIncreases[7]));
                 actions.Add(CreateStatPopUpActionAnimationOut(fthText));
             }
+            actions.Add(()=>ServiceProvider.Instance.GetSystem<DialogEngineSystem>().UnitLevelupDialog(unit));
             LeanTween.alphaCanvas(alphaCanvas, 1, 0.55f).setEaseOutQuad();
             LeanTween.scale(levelText.gameObject, levelText.transform.localScale * 1.2f, 0.5f).setEaseOutQuad().setDelay(0.65f).setOnStart(() => levelText.text = "Lv " + levelAfter)
                 .setOnComplete(() =>
@@ -234,9 +238,11 @@ namespace Game.GUI.Controller
             },.11f);
            
         }
-        public void UpdateValues(string name, Sprite sprite,int levelBefore, int levelAfter, int[] stats, int[] statsIncreases, int rerollAmount)
-        {
 
+        private Unit unit;
+        public void UpdateValues(Unit unit, string name, Sprite sprite,int levelBefore, int levelAfter, int[] stats, int[] statsIncreases, int rerollAmount)
+        {
+            this.unit = unit;
             Reset();
             MonoUtility.DelayFunction(() =>
             {

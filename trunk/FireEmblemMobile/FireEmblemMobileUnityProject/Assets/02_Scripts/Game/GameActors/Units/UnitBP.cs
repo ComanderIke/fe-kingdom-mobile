@@ -53,6 +53,7 @@ namespace Game.GameActors.Units
         [SerializeField] public ExperienceManager experienceManager;
         [SerializeField] public ItemBP dropableItem;
         [field:SerializeField]public ChronikEntry ChronikComponent { get; set; }
+        public UnitDialogComponent dialogComponent;
 
         public override string ToString()
         {
@@ -94,7 +95,7 @@ namespace Game.GameActors.Units
            
             var unit = new Unit(bluePrintID, uniqueIdentifierPostfix,Name, rpgClass, (Stats)stats.Clone(), moveType, 
                 new UnitVisual(visuals), skillManager,
-                new ExperienceManager(experienceManager), isBoss, overrideAiBehaviour!=null?Instantiate(overrideAiBehaviour):(aiBehaviour!=null?Instantiate(aiBehaviour):null));
+                new ExperienceManager(experienceManager), isBoss, overrideAiBehaviour!=null?Instantiate(overrideAiBehaviour):(aiBehaviour!=null?Instantiate(aiBehaviour):null),dialogComponent);
             unit.RevivalStones = revivalStones;
             Weapon weapon = null;
             if (equippedWeaponBp != null)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Game.DataAndReferences.Data;
+using Game.Dialog;
 using Game.EncounterAreas.AreaConstruction;
 using Game.EncounterAreas.Controller;
 using Game.EncounterAreas.Encounters;
@@ -280,6 +281,7 @@ namespace Game.EncounterAreas.Management
             Systems = new List<IEngineSystem>
             {
                 new BattleSystem(),
+                new DialogEngineSystem(),
                 new UnitProgressSystem(Player.Instance.Party),
                 new SkillSystem(GameBPData.Instance.SkillGenerationConfig,FindObjectsOfType<MonoBehaviour>().OfType<ISkillUIRenderer>().First()),
             };
@@ -293,6 +295,7 @@ namespace Game.EncounterAreas.Management
 
         private void InjectDependencies()
         {
+            GetSystem<DialogEngineSystem>().Renderer= FindObjectsOfType<MonoBehaviour>().OfType<DialogueManager>().First();
             GetSystem<BattleSystem>().BattleAnimation = FindObjectsOfType<MonoBehaviour>().OfType<IBattleAnimation>().First();
             GetSystem<BattleSystem>().BattleAnimation.Hide();
             GetSystem<UnitProgressSystem>().levelUpRenderer = FindObjectsOfType<MonoBehaviour>().OfType<ILevelUpRenderer>().First();

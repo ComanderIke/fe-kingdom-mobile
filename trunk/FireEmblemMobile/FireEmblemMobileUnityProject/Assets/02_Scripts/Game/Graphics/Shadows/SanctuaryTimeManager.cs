@@ -25,7 +25,7 @@ namespace LostGrace
             if (hours >= 24)
                 hours = 0;
             timeOfDayManager.UpdateHourFixed(hours);
-            MyDebug.LogTest("Hours: "+hours);
+            // MyDebug.LogTest("Hours: "+hours);
         }
     }
 }
