@@ -72,7 +72,8 @@ namespace Game.GameActors.Units.Skills.Base
         }
         public int GetHpCost(int level)
         {
-            var blessing = GetBlessing(skill.owner);
+            MyDebug.LogTest(skill);
+            var blessing = skill.owner!=null?GetBlessing(skill.owner):null;
             int costReduction = 0;
             if (blessing != null)
                 costReduction = synergies[blessing].costReduction;

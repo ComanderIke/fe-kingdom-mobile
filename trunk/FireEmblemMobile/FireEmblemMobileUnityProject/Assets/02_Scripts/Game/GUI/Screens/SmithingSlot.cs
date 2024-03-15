@@ -45,7 +45,12 @@ namespace Game.GUI.Screens
 
         public void TooltipButtonClicked()
         {
-            ToolTipSystem.Show(new StockedItem(equipable,1), transform.position);
+            if (equipable is Weapon weapon)
+            {
+                ToolTipSystem.Show(unit, weapon, transform.position);
+            }
+            else
+                ToolTipSystem.Show(new StockedItem(equipable,1), transform.position);
         }
 
         void UpdateUI()

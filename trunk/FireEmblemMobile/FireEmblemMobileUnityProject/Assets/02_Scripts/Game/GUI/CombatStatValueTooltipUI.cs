@@ -48,9 +48,43 @@ namespace Game.GUI
              switch (statType)
              {
                  case CombatStats.CombatStatType.Attack:
-                     bonusState=unit.Stats.GetAttributeBonusState(AttributeType.STR);
-                     statContainer.SetValue(physical? Attributes.GetAsText((int)AttributeType.STR):Attributes.GetAsText((int)AttributeType.INT), physical?unit.Stats.CombinedAttributes().STR: unit.Stats.CombinedAttributes().INT,false, bonusState);
-                     instantiatedObjects.Add(go);
+                     bool strScaling = unit.equippedWeapon.GetStrScaling() != 0;
+                     if (strScaling)
+                     {
+                         bonusState=unit.Stats.GetAttributeBonusState(AttributeType.STR);
+                         statContainer.SetValue( Attributes.GetAsText((int)AttributeType.STR)+" * "+unit.GetEquippedWeapon().GetStrScaling(), unit.Stats.CombinedAttributes().STR * unit.GetEquippedWeapon().GetStrScaling(),false, bonusState);
+                         instantiatedObjects.Add(go);
+                         
+                     }
+
+                     bool dexScaling = unit.equippedWeapon.GetDexScaling() != 0;
+                     if (dexScaling)
+                     {
+                         bool additive = false;
+                         if (strScaling)
+                         {
+                             go = Instantiate(statContainerPrefab, statContainerParent);
+                             statContainer = go.GetComponent<StatContainerUI>();
+                             additive = true;
+                         }
+                         bonusState=unit.Stats.GetAttributeBonusState(AttributeType.DEX);
+                         statContainer.SetValue( Attributes.GetAsText((int)AttributeType.DEX)+" * "+unit.GetEquippedWeapon().GetDexScaling(), unit.Stats.CombinedAttributes().DEX * unit.GetEquippedWeapon().GetDexScaling(),additive, bonusState);
+                         instantiatedObjects.Add(go);
+                     }
+                     if (unit.equippedWeapon.GetIntScaling() != 0)
+                     {
+                         bool additive = false;
+                         if (strScaling || dexScaling)
+                         {
+                             go = Instantiate(statContainerPrefab, statContainerParent);
+                             statContainer = go.GetComponent<StatContainerUI>();
+                             additive = true;
+                         }
+                         bonusState=unit.Stats.GetAttributeBonusState(AttributeType.INT);
+                         statContainer.SetValue( Attributes.GetAsText((int)AttributeType.INT)+" * "+unit.GetEquippedWeapon().GetIntScaling(), unit.Stats.CombinedAttributes().INT * unit.GetEquippedWeapon().GetIntScaling(),additive, bonusState);
+                         instantiatedObjects.Add(go);
+                     }
+                    
                      break;
                  case CombatStats.CombatStatType.Avoid:  
                      bonusState=unit.Stats.GetAttributeBonusState(AttributeType.AGI);

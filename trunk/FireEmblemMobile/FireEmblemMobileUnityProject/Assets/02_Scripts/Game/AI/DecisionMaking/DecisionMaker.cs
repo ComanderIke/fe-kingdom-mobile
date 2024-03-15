@@ -358,6 +358,7 @@ namespace Game.AI.DecisionMaking
                                      castTarget.y-tile.y).normalized;
                                 var direction = new Vector2Int((int)tmpDirection.x, (int)tmpDirection.y);
                                 int damageRatio = 0;
+                                int targetCount = 0;
 
                                 foreach (var skillTarget in ptsm.GetAllTargets((Unit)attacker, gridInfo.GetTiles(),
                                              castTarget.x,
@@ -365,13 +366,20 @@ namespace Game.AI.DecisionMaking
                                 {
 
                                     var damageMixin = ptsm.GetDamageMixin();
-                                    int damage = damageMixin.CalculateDamage(user, (Unit)skillTarget, skill.level);
-                                    var damageType = damageMixin.GetDamageType();
-                                    damageRatio += BattleHelper.GetDamageAgainst((Unit)skillTarget, damage, damageType);
+                                    if (damageMixin != null)
+                                    {
+                                        
+                                        int damage = damageMixin.CalculateDamage(user, (Unit)skillTarget, skill.level);
+                                        var damageType = damageMixin.GetDamageType();
+                                        damageRatio +=
+                                            BattleHelper.GetDamageAgainst((Unit)skillTarget, damage, damageType);
+                                    }
+
+                                    targetCount++;
                                 }
 
                                 ISkillResult combatInfo = new SkillResult((Unit)attacker,
-                                    gridInfo.GetTile(tile.x, tile.y), gridInfo.GetTile(castTarget.x, castTarget.y),damageRatio);
+                                    gridInfo.GetTile(tile.x, tile.y), gridInfo.GetTile(castTarget.x, castTarget.y),damageRatio, targetCount);
                                 combatInfos.Add(
                                     combatInfo); //combatInfo.GetCombatResultAtAttackLocation((IBattleActor)attacker,target.Target, tile));
                             }
@@ -419,7 +427,8 @@ namespace Game.AI.DecisionMaking
             private Skill skill;
             private int damageRatio;
             private Tile castTile;
-            public SkillResult(Unit user, Tile tile,Tile castTile, int damageRatio)
+            private int targetCount;
+            public SkillResult(Unit user, Tile tile,Tile castTile, int damageRatio, int targetCount)
             {
                 AttackResult = AttackResult.Win;
                 useSkillPosition = tile;
@@ -427,6 +436,7 @@ namespace Game.AI.DecisionMaking
                 this.skill = user.SkillManager.ActiveSkills[0];
                 this.damageRatio = damageRatio;
                 this.castTile = castTile;
+                this.targetCount = targetCount;
             }
             public Vector2Int GetAttackPosition()
             {
@@ -442,6 +452,11 @@ namespace Game.AI.DecisionMaking
             {
                 
                 return damageRatio;
+            }
+            public int GetTargetCount()
+            {
+                
+                return targetCount;
             }
 
             public int GetTileDefenseBonuses()
@@ -495,7 +510,8 @@ namespace Game.AI.DecisionMaking
                     unit.AIComponent.AIBehaviour.GetState() == AIBehaviour.State.UseSkill)
                 {
                     Unit u = (Unit)unit;
-                    var firstActiveSkill = u.SkillManager.ActiveSkills.First();
+                
+                    var firstActiveSkill = u.AIComponent.AIBehaviour.GetSkillToUse();
                     if (firstActiveSkill.FirstActiveMixin is SelfTargetSkillMixin)
                     {
                         skillUserList.Add(unit);

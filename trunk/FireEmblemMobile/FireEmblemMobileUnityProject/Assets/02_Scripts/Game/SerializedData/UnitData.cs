@@ -120,12 +120,7 @@ namespace Game.SerializedData
             unit.InitExperienceManager();
             unit.TurnStateManager = TurnStateManager;
             unit.Hp = hp;
-            if(blessingId!=""&&blessingId!=null)
-                unit.ReceiveBlessing(GameBPData.Instance.GetBlessing(blessingId));
-            foreach (var curseId in curseIds)
-            {
-                unit.ReceiveCurse(GameBPData.Instance.GetCurse(curseId));
-            }
+         
 
 
            // unit.equippedWeapon = weaponData.Load();
@@ -147,6 +142,12 @@ namespace Game.SerializedData
             unit.ClassUpgraded = classUpgraded;
             unit.SkillManager.Reset();
             skillData.Load(unit.SkillManager);
+            if(blessingId!=""&&blessingId!=null)
+                unit.ReceiveBlessing(GameBPData.Instance.GetBlessing(blessingId));
+            foreach (var curseId in curseIds)
+            {
+                unit.SkillManager.LearnSkill(GameBPData.Instance.GetCurse(curseId));
+            }
             unit.SpecialState = specialState;
             unit.RevivalStones = revivalStones;
             unit.tags = unitTags;

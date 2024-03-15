@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: RangerBow
   m_EditorClassIdentifier: 
   name: Bow
-  description: A fine bow made of wood. It looks well made.
+  description: 'A fine bow made of wood. It looks well made.<br><color=#00FF00>Dmg
+    Scaling: 50% STR 50% DEX</color>'
   cost: 100
   maxStack: 1
   rarity: 1
@@ -53,6 +54,9 @@ MonoBehaviour:
     weightCostAccuracy: 2
     weightCostCrit: 3
     weightCostSpecial: 0
+  strScaling: 0.5
+  dexScaling: 0.5
+  intScaling: 0
   weaponLevel: 1
   maxLevel: 3
   skillBp: {fileID: 0}

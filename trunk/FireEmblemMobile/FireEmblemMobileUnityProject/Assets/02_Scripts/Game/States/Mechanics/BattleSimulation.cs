@@ -539,6 +539,11 @@ namespace Game.States.Mechanics
             return attackPosTile.TileData.speedMalus;
         }
 
+        public int GetTargetCount()
+        {
+            return 1;
+        }
+
         public int GetTileAvoidBonuses()
         {
             if (attackPosTile == null)

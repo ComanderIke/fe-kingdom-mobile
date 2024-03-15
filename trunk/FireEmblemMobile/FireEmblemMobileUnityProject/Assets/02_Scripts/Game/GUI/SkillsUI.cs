@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills.Active;
 using Game.GameActors.Units.Skills.Base;
+using Game.GameMechanics;
 using Game.Manager;
 using Game.Systems;
 using Game.Utility;
@@ -13,7 +15,7 @@ namespace Game.GUI
         [SerializeField] private GameObject skillButtonPrefab;
         [SerializeField] private GameObject activeSkillButtonPrefab;
         [SerializeField] private GameObject combatSkillButtonPrefab;
-   
+        [SerializeField] private GameObject curseSkillButtonPrefab;
 
         private List<SkillUI> instantiatedButtons;
         private Unit unit;
@@ -39,11 +41,21 @@ namespace Game.GUI
         void InstantiateSkill(Skill skill, bool showDeleteIfFull)
         {
             var prefab = skillButtonPrefab;
-            if (skill.activeMixins.Count > 0)
+            if (skill is Curse)
+            {
+                prefab = curseSkillButtonPrefab;
+            }
+            else if (skill.activeMixins.Count > 0)
                 prefab = activeSkillButtonPrefab;
             else if (skill.CombatSkillMixin != null)
                 prefab = combatSkillButtonPrefab;
             var go = Instantiate(prefab, transform);
+            if (skill is Curse curse)
+            {
+                go.GetComponent<CurseSkillButtonUI>().Show(curse);
+                return;
+            }
+            
             var skillUI = go.GetComponent<SkillUI>();
             instantiatedButtons.Add(skillUI);
             bool canAffordHPCost =

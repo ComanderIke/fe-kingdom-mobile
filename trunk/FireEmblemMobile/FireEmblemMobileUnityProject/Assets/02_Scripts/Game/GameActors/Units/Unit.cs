@@ -736,11 +736,14 @@ namespace Game.GameActors.Units
             OnUnitDataChanged?.Invoke(this);
         }
 
-        public void ReceiveCurse(Curse curse)
+        public void ReceiveCurse(Curse curse, int curseStrength)
         {
-            var curseResistance = BattleComponent.BattleStats.GetFaithResistance()*30;
+            var curseResistance = BattleComponent.BattleStats.GetCurseResistance();
+            int difference = curseResistance - curseStrength;
+            
+            
             var rng = Random.Range(1, 101);
-            if (rng <= curseResistance)
+            if (rng <= difference*10)
             {
                 MyDebug.LogLogic("Resisted Curse");
                 MyDebug.LogTODO("Show Resisted VFX + Text");
@@ -749,7 +752,7 @@ namespace Game.GameActors.Units
             }
                 
             if(SkillManager.IsFull())
-                SkillManager.RemoveRandomSkill();
+                curse.OverwrittenSkill =SkillManager.RemoveRandomSkill();
             SkillManager.LearnSkill(curse);
             OnAddCurse?.Invoke(curse);
             Debug.Log("TODO Receive Curse");
@@ -797,6 +800,10 @@ namespace Game.GameActors.Units
         public void RemoveCurse(Curse curse)
         {
             SkillManager.RemoveSkill(curse);
+            if (curse.OverwrittenSkill != null)
+            {
+                SkillManager.LearnSkill(curse.OverwrittenSkill);
+            }
             OnRemoveCurse?.Invoke(curse);
             // if(Curse!=null)
             //     SkillManager.RemoveSkill(Curse);

@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Base;
+using Game.Manager;
 using Game.Systems;
 using Game.Utility;
 using UnityEngine;
@@ -14,6 +16,9 @@ namespace Game.GameActors.Units
     {
         private int rageMeter = 0;
         [SerializeField] private int fullRageAmount = 4;
+        public int fullRageSkillIndex = 1;
+        public int everyXTurnUseSkill = 3;
+        public int turnSkillIndex = 0;
         public Action OnRageMeterChanged;
         public int GetMaxRageMeter()
         {
@@ -41,6 +46,12 @@ namespace Game.GameActors.Units
                
             
         }
+        public override Skill GetSkillToUse()
+        {
+            if (rageMeter >= fullRageAmount)
+                return agent.SkillManager.ActiveSkills[fullRageSkillIndex];
+            return agent.SkillManager.ActiveSkills.First();
+        }
 
         public override void Init(Unit agent)
         {
@@ -53,6 +64,7 @@ namespace Game.GameActors.Units
         {
             if (agent is Unit unit)
             {
+                
                 //check if stunned change state to stunned
                 if (unit.StatusEffectManager.Buffs.Any(d => d.BuffData is DebuffData debuffData&& debuffData.debuffType==DebuffType.Stunned))
                 {
@@ -67,15 +79,22 @@ namespace Game.GameActors.Units
                 switch (GetState())
                 {
                     case State.Aggressive:
+                        Debug.Log("HÄH");
                         if (rageMeter >= fullRageAmount)
                         {
                             SetState(State.UseSkill);
                         }
                         else
                         {
-                            SetState(State.Aggressive);
+                            int turn = GridGameManager.Instance.GetSystem<TurnSystem>().TurnCount;
+                            if (turn % everyXTurnUseSkill == 0)
+                            {
+                                SetState( State.UseSkill);
+                            }
+                            else
+                                SetState(State.Aggressive);
                         }
-
+                        Debug.Log("HÄH");
                         break;
                     case State.Stunned:
                         //check if still stunned

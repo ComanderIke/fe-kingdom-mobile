@@ -14,7 +14,7 @@ namespace Game.States.Mechanics.Battle
         private const int AGILITY_TO_DOUBLE = 5;
         public const int HIT_DEX_MULT=3;
         public const int AVO_AGI_MULT=2;
-        public const int CURSE_RES_FTH_MULT = 3;
+        public const int CURSE_RES_FTH_MULT = 1;
         public const int CRIT_AVO_LCK_MULT=2;
         public const int CRIT_LCK_MULT = 1;
         public const float CRIT_DEX_MULT = 0f;
@@ -103,11 +103,9 @@ namespace Game.States.Mechanics.Battle
         {
             
             
-            int unmodifiedAttack = owner.Stats.CombinedAttributes().STR;
-            if (GetDamageType()==DamageType.Magic)
-            {
-                unmodifiedAttack = owner.Stats.CombinedAttributes().INT;
-            }
+            int unmodifiedAttack = (int)(owner.Stats.CombinedAttributes().STR*owner.GetEquippedWeapon().GetStrScaling()+
+                                         owner.Stats.CombinedAttributes().DEX* owner.GetEquippedWeapon().GetDexScaling()+
+                                          owner.Stats.CombinedAttributes().INT*owner.GetEquippedWeapon().GetIntScaling());
 
             int attack = unmodifiedAttack;
             if (attackModifier != null)

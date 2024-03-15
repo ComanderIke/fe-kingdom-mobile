@@ -5,8 +5,10 @@ using Game.GameActors.Items;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.Progression;
+using Game.GameActors.Units.Skills.Active;
 using Game.GameActors.Units.Skills.Base;
 using Game.GameInput.GameplayCommands;
+using Game.GameMechanics;
 using Game.GUI.Controller;
 using Game.GUI.EncounterUI.Merchant;
 using Game.GUI.Other;
@@ -45,6 +47,7 @@ namespace Game.GUI
         [SerializeField] private GameObject skillprefab;
         [SerializeField] private GameObject activeSkillprefab;
         [SerializeField] private GameObject combatSkillprefab;
+        [SerializeField] private GameObject curseSkillprefab;
         [SerializeField] private UICombatItemSlot dropableItemSlot;
 
         private bool interactableForPlayer;
@@ -167,23 +170,34 @@ namespace Game.GUI
             foreach (var skill in unit.SkillManager.Skills)
             {
                 var prefab = skillprefab;
+                if (skill is Curse)
+                    prefab = curseSkillprefab;
                 if (skill.activeMixins.Count > 0)
                     prefab = activeSkillprefab;
                 else if (skill.CombatSkillMixin != null)
                     prefab = combatSkillprefab;
                 var go =Instantiate(prefab, skillContainer);
-                var skillUI =  go.GetComponent<SkillUI>();
-                bool canAffordHPCost= skill.CanCast(unit);
-                bool hasUses=skill.FirstActiveMixin != null &&skill.FirstActiveMixin.Uses>0 || skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses>0;
-            
-                skillUI.SetSkill(skill, false, unit.Blessing!=null, canAffordHPCost, hasUses);
-                // if (skill.CombatSkillMixin != null&& skill.CombatSkillMixin.Selected)
-                // {
-                //     SelectSkill(skillUI);
-                // }
-                skillUI.OnClicked += SkillClicked;
-                instantiatedSkills.Add(skillUI);
-            
+                if (skill is Curse curse)
+                {
+                    go.GetComponent<CurseSkillButtonUI>().Show(curse);
+                    go.GetComponent<CurseSkillButtonUI>().OnClicked += CurseClicked;
+                }
+                else
+                {
+                    var skillUI = go.GetComponent<SkillUI>();
+                    bool canAffordHPCost = skill.CanCast(unit);
+                    bool hasUses = skill.FirstActiveMixin != null && skill.FirstActiveMixin.Uses > 0 ||
+                                   skill.CombatSkillMixin != null && skill.CombatSkillMixin.Uses > 0;
+
+                    skillUI.SetSkill(skill, false, unit.Blessing != null, canAffordHPCost, hasUses);
+                    // if (skill.CombatSkillMixin != null&& skill.CombatSkillMixin.Selected)
+                    // {
+                    //     SelectSkill(skillUI);
+                    // }
+                    skillUI.OnClicked += SkillClicked;
+                    instantiatedSkills.Add(skillUI);
+                }
+
             }
          
 
@@ -275,6 +289,11 @@ namespace Game.GUI
                 new GameplayCommands().DeselectSkill();
             }
             //useItemDialogController.Show((Item)combatItem.item,()=>new GameplayCommands().SelectItem((Item)combatItem.item));
+        }
+
+        public void CurseClicked()
+        {
+            MyDebug.LogTODO("Curse Clicked");
         }
         public void SkillClicked(SkillUI skillUI)
         {

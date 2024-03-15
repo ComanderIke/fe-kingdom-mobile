@@ -75,10 +75,10 @@ namespace Game.GUI.ToolTips
 
         private static Vector2 GetAnchoredPositionInTooltipCanvas(Vector2 position)
         {
-            MyDebug.LogTest("TooltipCaller position: "+ position);
+            // MyDebug.LogTest("TooltipCaller position: "+ position);
             Vector2 tooltipAnchoredPos;
             Vector2 startPos = Camera.main.WorldToScreenPoint(position);
-            MyDebug.LogTest("TooltipCaller screen position: "+ startPos);
+            // MyDebug.LogTest("TooltipCaller screen position: "+ startPos);
             RectTransformUtility.ScreenPointToLocalPointInRectangle(instance.transform as RectTransform, startPos, Camera.main,
                 out tooltipAnchoredPos);
             tooltipAnchoredPos += new Vector2((instance.transform as RectTransform).rect.width / 2f,(instance.transform as RectTransform).rect.height / 2f);
@@ -117,7 +117,7 @@ namespace Game.GUI.ToolTips
             instance.curseTooltip.gameObject.SetActive(true);
         }
 
-        public static void Show(Skill skill, bool blessed,Vector3 position)
+        public static void Show(Skill skill, bool blessed,Vector3 position, bool screenPos=false)
         {
             if (skill is Curse curse)
             {
@@ -129,7 +129,7 @@ namespace Game.GUI.ToolTips
             CloseAllToolTips();
             //Debug.Log(skill.Name);
             //Debug.Log("TooltipPosition: "+GameObject.FindWithTag("UICamera").GetComponent<Camera>().WorldToScreenPoint(position));
-            instance.skillToolTip.SetValues(skill, blessed, false,GetAnchoredPositionInTooltipCanvas(position));
+            instance.skillToolTip.SetValues(skill, blessed, false,screenPos?position:GetAnchoredPositionInTooltipCanvas(position));
         
             instance.skillToolTip.gameObject.SetActive(true);
         }

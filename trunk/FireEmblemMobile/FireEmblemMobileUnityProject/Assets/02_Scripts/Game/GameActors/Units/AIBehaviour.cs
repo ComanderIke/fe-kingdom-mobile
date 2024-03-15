@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.GameActors.Units.Interfaces;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -107,6 +109,11 @@ namespace Game.GameActors.Units
             {
                 SetState( State.Aggressive);
             }
+        }
+
+        public virtual Skill GetSkillToUse()
+        {
+            return agent.SkillManager.ActiveSkills.First();
         }
     }
 }

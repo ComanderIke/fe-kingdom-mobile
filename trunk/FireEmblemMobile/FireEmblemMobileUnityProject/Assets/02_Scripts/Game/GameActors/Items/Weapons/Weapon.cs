@@ -33,7 +33,7 @@ namespace Game.GameActors.Items.Weapons
 
         public Weapon(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, int weaponLevel, int maxLevel,int[] attackRanges,
             WeaponAttributes weaponAttributes,UpgradeAttributes[] weaponUpgrades, WeaponType weaponType, DamageType damageType, 
-            Skill skill, Dictionary<EffectiveAgainstType,  float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite, skill)
+            Skill skill, float strScaling, float dexScaling,float intScaling,Dictionary<EffectiveAgainstType,  float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite, skill)
         {
             this.weaponLevel = weaponLevel;
             this.maxLevel = maxLevel;
@@ -43,6 +43,9 @@ namespace Game.GameActors.Items.Weapons
             this.DamageType = damageType;
             this.effectiveAgainst = effectiveAgainst;
             this.WeaponUpgrades = weaponUpgrades;
+            this.strScaling = strScaling;
+            this.dexScaling = dexScaling;
+            this.intScaling = intScaling;
 
         }
 
@@ -186,6 +189,34 @@ namespace Game.GameActors.Items.Weapons
             return WeaponType.HasAdvantage(type);
         }
 
-        
+        private float dexScaling = 0;
+        private float strScaling = 1;
+        private float intScaling = 0;
+
+        public float GetDexScaling()
+        {
+            return dexScaling;
+        }
+        public float GetStrScaling()
+        {
+            return strScaling;
+        }
+        public float GetIntScaling()
+        {
+            return intScaling;
+        }
+
+        public void SetDexScaling(float dexScaling)
+        {
+            this.dexScaling = dexScaling;
+        }
+        public void SetStrScaling(float strScaling)
+        {
+            this.strScaling = strScaling;
+        }
+        public void SetIntScaling(float intScaling)
+        {
+            this.intScaling = intScaling;
+        }
     }
 }

@@ -599,12 +599,27 @@ namespace Game.GameActors.Units.Skills.Active
                 }
             }
 
+            if (castTargets.Count == 0)
+            {
+                if (Rooted && GetRange(level) == 0 && GetSize(level) > 0)
+                {
+                    castTargets.Add(new Vector2Int(x, y));
+                }
+            }
             return castTargets;
         }
 
         public DamageSkillEffectMixin GetDamageMixin()
         {
-            return (DamageSkillEffectMixin)skillEffectMixins.First(s => s is DamageSkillEffectMixin);
+            if (skillEffectMixins.Count == 0)
+                return null;
+            var all = skillEffectMixins.Where(s => s is DamageSkillEffectMixin);
+            if (!all.Any())
+                return null;
+            var first = all.First();
+            if (first == null)
+                return null;
+            return (DamageSkillEffectMixin)first;
         }
     }
 }

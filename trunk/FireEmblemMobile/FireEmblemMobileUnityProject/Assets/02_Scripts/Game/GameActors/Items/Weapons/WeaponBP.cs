@@ -22,6 +22,9 @@ namespace Game.GameActors.Items.Weapons
         [Header("WeaponAttributes")] 
         public WeaponAttributes WeaponAttributes;
         public UpgradeAttributes[] UpgradeAttributes;
+        public float strScaling = 1;
+        public float dexScaling = 0;
+        public float intScaling = 0;
         public int weaponLevel = 1;
         public int maxLevel = 3;
         public SkillBp skillBp;
@@ -38,7 +41,7 @@ namespace Game.GameActors.Items.Weapons
                 effectiveness.Add(effectiveAgainst[i], effectiveAgainstCoefficients[i]);
             }
             return new Weapon(name, description, cost, rarity,maxStack,sprite, weaponLevel, maxLevel, AttackRanges,
-                WeaponAttributes,UpgradeAttributes, WeaponType, DamageType, skillBp==null?null:skillBp.Create(),effectiveness );
+                WeaponAttributes,UpgradeAttributes, WeaponType, DamageType, skillBp==null?null:skillBp.Create(), strScaling, dexScaling,intScaling, effectiveness);
         }
     }
 }

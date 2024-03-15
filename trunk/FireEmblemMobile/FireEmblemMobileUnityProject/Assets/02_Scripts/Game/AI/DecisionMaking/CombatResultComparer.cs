@@ -19,7 +19,10 @@ namespace Game.AI.DecisionMaking
             {
                 ret=CompareDamageRatio(x, y);
             }
-
+            if (ret == 0)
+            {
+                ret=CompareTargetCount(x, y);
+            }
             if (ret == 0)
             {
                 ret=CompareDefenseTiles(x, y);
@@ -49,6 +52,19 @@ namespace Game.AI.DecisionMaking
                 return 1;
             }
             if (x.GetDamageRatio() < y.GetDamageRatio())
+            {
+                return -1;
+            }
+
+            return 0;
+        }
+        private int CompareTargetCount(ICombatResult x, ICombatResult y)
+        {
+            if (x.GetTargetCount() > y.GetTargetCount())
+            {
+                return 1;
+            }
+            if (x.GetTargetCount() < y.GetTargetCount())
             {
                 return -1;
             }

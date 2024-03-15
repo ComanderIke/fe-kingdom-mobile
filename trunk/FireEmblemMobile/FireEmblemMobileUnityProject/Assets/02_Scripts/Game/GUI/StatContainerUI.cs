@@ -18,7 +18,7 @@ namespace Game.GUI
         [SerializeField] private TMP_ColorGradient positiveColorGradient;
 
         
-        public void SetValue(string label, int value, bool additive, AttributeBonusState attributeBonusState)
+        public void SetValue(string label, float value, bool additive, AttributeBonusState attributeBonusState)
         {
             this.label.text = label;
             if (additive)

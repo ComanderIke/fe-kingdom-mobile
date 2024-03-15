@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Net;
 using Game.GameActors.Items.Consumables;
 using Game.GameActors.Player;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Skills.Active;
 using Game.GameActors.Units.Skills.Base;
 using Game.GameMechanics;
+using Game.Manager;
+using Game.Systems;
 using Game.Utility;
 using TMPro;
 using UnityEngine;
@@ -172,7 +175,11 @@ namespace Game.GUI
             description.text = skill.Description;
             bool isActiveMixin = skill.IsActive();
             Unit unit = null;
-            if (Player.Instance.Party.members.Count != 0)
+            if (ServiceProvider.Instance.GetSystem<UnitSelectionSystem>() != null)
+            {
+                unit = (Unit)ServiceProvider.Instance.GetSystem<UnitSelectionSystem>().SelectedCharacter;
+            }
+            else if (Player.Instance.Party.members.Count != 0)
             {
                 unit = Player.Instance.Party.ActiveUnit;
             }

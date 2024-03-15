@@ -11,7 +11,8 @@ namespace Game.States.Mechanics
         int GetTileDefenseBonuses();
         int GetTileAvoidBonuses();
         int GetTileSpeedBonuses();
- 
+
+        int GetTargetCount();
     }
     public interface ISkillResult:ICombatResult
     {

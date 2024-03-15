@@ -178,7 +178,7 @@ namespace Game.GameActors.Units.Humans
                 skillPoints = maxSkillPoints;
         }
 
-        public void RemoveSkill(Skill skill)
+        public Skill RemoveSkill(Skill skill)
         {
             if (skill is Blessing blessing)
             {
@@ -192,6 +192,7 @@ namespace Game.GameActors.Units.Humans
             }
 
             OnSkillsChanged?.Invoke();
+            return skill;
         }
 
         public bool IsFull()
@@ -199,9 +200,9 @@ namespace Game.GameActors.Units.Humans
             return skills.Count >= maxSkillCount;
         }
 
-        public void RemoveRandomSkill()
+        public Skill RemoveRandomSkill()
         {
-            RemoveSkill(skills[UnityEngine.Random.Range(0, skills.Count)]);
+            return RemoveSkill(skills[UnityEngine.Random.Range(0, skills.Count)]);
         }
 
         public event Action OnSkillsChanged;

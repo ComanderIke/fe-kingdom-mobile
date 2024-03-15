@@ -69,6 +69,9 @@ namespace Game.GUI
             // if (button.interactable)
             //     button.interactable = canAfforHpCost;
             background.raycastTarget = interactable;
+            if (skill.owner == null)//for cases when its in the background of a curseUibutton
+                return;
+            
             if (skill.IsActive() || skill.IsCombat())
             {
                 if (skill.FirstActiveMixin != null)

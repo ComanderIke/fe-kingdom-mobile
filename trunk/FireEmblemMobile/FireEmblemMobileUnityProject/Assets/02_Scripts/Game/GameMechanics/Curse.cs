@@ -16,18 +16,20 @@ namespace Game.GameMechanics
         {
         }
 
+        public Skill OverwrittenSkill { get; set; }
+
         public void Spread()
         {
-            var adjacentTiles = GridGameManager.Instance.GetSystem<GridSystem>().GetAdjacentTiles(owner.GridComponent.Tile);
-            foreach (var adjacentTile in adjacentTiles)
-            {
-                if (adjacentTile.GridObject != null)
-                {
-                    Unit unit = ((Unit)adjacentTile.GridObject);
-                    unit.ReceiveCurse((Curse)this.Clone());
-                }
-                 
-            }
+            // var adjacentTiles = GridGameManager.Instance.GetSystem<GridSystem>().GetAdjacentTiles(owner.GridComponent.Tile);
+            // foreach (var adjacentTile in adjacentTiles)
+            // {
+            //     if (adjacentTile.GridObject != null)
+            //     {
+            //         Unit unit = ((Unit)adjacentTile.GridObject);
+            //         unit.ReceiveCurse((Curse)this.Clone(), user);
+            //     }
+            //      
+            // }
         }
         public override Skill Clone()
         {
