@@ -65,6 +65,8 @@ namespace Game.GameActors.Units.Numbers
 
         void AttributesUpdate()
         {
+            //Update weapon weight here
+            
             onStatsUpdated?.Invoke();
         }
 
@@ -140,7 +142,7 @@ namespace Game.GameActors.Units.Numbers
 
         public Attributes BaseAttributesAndWeapons()
         {
-            return BaseAttributes + BonusAttributesFromWeapon;
+            return BaseAttributes;
         }
 
         public CombatStats GetBonusStatsWithoutWeapon()
@@ -209,8 +211,7 @@ namespace Game.GameActors.Units.Numbers
 
         public AttributeBonusState GetAttributeBonusState(AttributeType attribute)
         {
-            int baseAttributesAndWeapon = BaseAttributes.GetAttributeStat(attribute) +
-                                          BonusAttributesFromWeapon.GetAttributeStat(attribute);
+            int baseAttributesAndWeapon = BaseAttributes.GetAttributeStat(attribute);
             return baseAttributesAndWeapon <
                    CombinedAttributes().GetAttributeStat(attribute)
                 ? AttributeBonusState.Increasing

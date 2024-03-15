@@ -4,54 +4,20 @@ using System.Linq;
 using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units.Components;
 using Game.GameActors.Units.Interfaces;
-using Game.GameActors.Units.Skills.Passive;
 using Game.Systems;
 using UnityEngine;
 
 namespace Game.States.Mechanics.Battle
 {
-    public class BonusAttackStats
-    {
-        public bool BonusAttack { get; set; }
-        public Dictionary<AttackEffectEnum, object> AttackEffects { get; set; } //object userData like for Sol healhamount for luna def/res reduction
-        public Dictionary<GetHitEffectEnum, object> DefenseEffects { get; set; } 
-        public BonusAttackStats()
-        {
-            BonusAttack = false;
-            AttackEffects = new Dictionary<AttackEffectEnum, object>();
-            DefenseEffects = new Dictionary<GetHitEffectEnum, object>();
-        }
-
-        public void AddAttackEffect(AttackEffectEnum attackEffect, float f)
-        {
-            if (!AttackEffects.ContainsKey(attackEffect))
-            {
-                AttackEffects.Add(attackEffect, f);
-            }
-            else
-            {
-                if ((float)AttackEffects[attackEffect] < f) //Replace with stronger effect
-                    AttackEffects[attackEffect] = f;
-            }
-        }
-
-        public void AddGetHitEffect(GetHitEffectEnum getHitEffect, float f)
-        {
-            if (!DefenseEffects.ContainsKey(getHitEffect))
-            {
-                DefenseEffects.Add(getHitEffect, f);
-            }
-            else
-            {
-                if ((float)DefenseEffects[getHitEffect] < f) //Replace with stronger effect
-                    DefenseEffects[getHitEffect] = f;
-            }
-        }
-    }
-
     public class BattleStats
     {
         private const int AGILITY_TO_DOUBLE = 5;
+        public const int HIT_DEX_MULT=3;
+        public const int AVO_AGI_MULT=2;
+        public const int CURSE_RES_FTH_MULT = 3;
+        public const int CRIT_AVO_LCK_MULT=2;
+        public const int CRIT_LCK_MULT = 1;
+        public const float CRIT_DEX_MULT = 0f;
         public bool ExcessHitToCrit { get; set; }
         public bool MovementToDmg { get; set; }
         private readonly IBattleActor owner;
@@ -245,21 +211,21 @@ namespace Game.States.Mechanics.Battle
             return 0;
         }
 
-        public const int HIT_DEX_MULT=3;
+        
         
         public int GetHitrate()
         {
             
             
-            return (owner.Stats.CombinedAttributes().DEX) * HIT_DEX_MULT+  owner.Stats.CombinedBonusStats().Hit;
+            return (owner.Stats.CombinedAttributes().DEX-GetWeightReduction()) * HIT_DEX_MULT+  owner.Stats.CombinedBonusStats().Hit;
             
         }
-        public const int AVO_AGI_MULT=2;
+        
         public int GetAvoid()
         {
            
          
-           return  (owner.Stats.CombinedAttributes().AGI)* AVO_AGI_MULT+ owner.Stats.CombinedBonusStats().Avoid;
+           return  (owner.Stats.CombinedAttributes().AGI-GetWeightReduction())* AVO_AGI_MULT+ owner.Stats.CombinedBonusStats().Avoid;
             
             
         }
@@ -268,11 +234,20 @@ namespace Game.States.Mechanics.Battle
         {
             return GetHitrate() - target.BattleComponent.BattleStats.GetAvoid();
         }
-   
+
+        public int GetWeightReduction()
+        {
+            int weight= owner.GetEquippedWeapon().GetWeight()-owner.Stats.CombinedAttributes().STR ;
+            if (weight < 0)
+                weight = 0;
+            return weight;
+        }
 
         public int GetAttackSpeed()
         {
             int spd = owner.Stats.CombinedAttributes().AGI + owner.Stats.CombinedBonusStats().AttackSpeed;
+           
+            spd -= GetWeightReduction();
             if (MovementToAS)
             {
                 spd += ((GridActorComponent)owner.GridComponent).MovedTileCount* MovementToASMultiplier;
@@ -283,15 +258,14 @@ namespace Game.States.Mechanics.Battle
 
         public int GetCrit()
         {
-            int crit = owner.Stats.CombinedAttributes().LCK + owner.Stats.CombinedBonusStats().Crit;
+            int crit = (int)(owner.Stats.CombinedAttributes().DEX*CRIT_DEX_MULT+owner.Stats.CombinedAttributes().LCK *CRIT_LCK_MULT+ owner.Stats.CombinedBonusStats().Crit);
             if (MovementToCrit)
             {
                 crit += ((GridActorComponent)owner.GridComponent).MovedTileCount* MovementToCritMultiplier;
             }
             return crit;
         }
-        public const int CURSE_RES_FTH_MULT = 3;
-        public const int CRIT_AVO_LCK_MULT=2;
+       
         public int GetCritAvoid()
         {
             return 0;

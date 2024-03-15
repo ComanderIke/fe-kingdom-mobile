@@ -72,6 +72,10 @@ namespace Game.GameActors.Items.Weapons
         {
             return WeaponAttributes.Crit;
         }
+        public int GetWeight()
+        {
+            return WeaponAttributes.Weight;
+        }
    
         public void Upgrade(WeaponUpgradeMode mode)
         {

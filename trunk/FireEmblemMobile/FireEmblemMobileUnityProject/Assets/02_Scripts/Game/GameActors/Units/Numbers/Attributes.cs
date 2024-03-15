@@ -229,6 +229,40 @@ namespace Game.GameActors.Units.Numbers
             return base.Equals(obj);
         }
 
+        public void SetAttribute(int value, AttributeType attributeType)
+        {
+            switch (attributeType)
+            {
+                case AttributeType.STR:
+                    str = value; break;
+                case AttributeType.DEX:
+                    dex = value; break;
+                case AttributeType.INT:
+                    intel = value; break;
+                case AttributeType.AGI:
+                    agi = value; break;
+                case AttributeType.CON:
+                    maxHp = value; break;
+                case AttributeType.LCK:
+                    lck = value; break;
+                case AttributeType.DEF:
+                    def = value; break;
+                case AttributeType.FTH:
+                    faith = value; break;
+                case AttributeType.ALL:
+                    str = value; 
+                    dex = value;
+                    intel = value;
+                    agi = value;
+                    maxHp = value;
+                    lck = value;
+                    def = value;
+                    faith = value;
+                    break;
+            }
+            OnAttributesUpdated?.Invoke();
+        }
+
         public void IncreaseAttribute(int value, AttributeType attributeType)
         {
             switch (attributeType)

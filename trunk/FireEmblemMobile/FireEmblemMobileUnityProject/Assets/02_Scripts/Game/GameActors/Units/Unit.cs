@@ -407,13 +407,25 @@ namespace Game.GameActors.Units
         public event Action<Curse> OnRemoveCurse;
 
         public Guid uniqueIdentifier;
-     
 
+
+        void UpdateWeaponWeight()
+        {
+            int weight = equippedWeapon.GetWeight()-stats.CombinedAttributes().STR ;
+            if (weight < 0)
+                weight = 0;
+            if(stats.BonusAttributesFromWeapon.DEX!=-weight)
+                stats.BonusAttributesFromWeapon.SetAttribute(-weight,AttributeType.DEX);
+            if(stats.BonusAttributesFromWeapon.AGI!=-weight)
+                stats.BonusAttributesFromWeapon.SetAttribute(-weight,AttributeType.AGI);
+        }
         public void Equip(Weapon w)
         {
             if (w == equippedWeapon)
                 return;
-           
+            
+            stats.onStatsUpdated -= UpdateWeaponWeight;
+            stats.onStatsUpdated += UpdateWeaponWeight;
             if (equippedWeapon != null)
             {
                 
@@ -435,7 +447,7 @@ namespace Game.GameActors.Units
             stats.BonusStatsFromWeapon.Attack += equippedWeapon.GetDamage();
             stats.BonusStatsFromWeapon.Hit += equippedWeapon.GetHit();
             stats.BonusStatsFromWeapon.Crit += equippedWeapon.GetCrit();
-         
+            UpdateWeaponWeight();
             OnEquippedWeapon?.Invoke();
         }
         public void AutoEquip()
