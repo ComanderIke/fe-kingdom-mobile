@@ -130,29 +130,29 @@ namespace Game.GUI.CharacterScreen
             {
                 bool physical = unit.equippedWeapon.DamageType == DamageType.Physical;
                 int sumBonuses = unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Attack,physical);
-                STR.SetValue(unit.BattleComponent.BattleStats.GetDamage(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+                CON.SetValue(unit.BattleComponent.BattleStats.GetDamage(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
                 sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.AttackSpeed,physical);
                 INT.SetValue(unit.BattleComponent.BattleStats.GetAttackSpeed(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
                 sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Protection,physical);
-                DEF.SetValue(unit.BattleComponent.BattleStats.GetPhysicalResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+                AGI.SetValue(unit.BattleComponent.BattleStats.GetPhysicalResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
                 sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Resistance,physical);
-                FTH.SetValue(unit.BattleComponent.BattleStats.GetFaithResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+                DEF.SetValue(unit.BattleComponent.BattleStats.GetFaithResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
                 sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Hit,physical);
-                DEX.SetValue(unit.BattleComponent.BattleStats.GetHitrate(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+                STR.SetValue(unit.BattleComponent.BattleStats.GetHitrate(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
                 sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Avoid,physical);
-                AGI.SetValue(unit.BattleComponent.BattleStats.GetAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+                LCK.SetValue(unit.BattleComponent.BattleStats.GetAvoid(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
                 sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.Crit,physical);
-                LCK.SetValue(unit.BattleComponent.BattleStats.GetCrit(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+                DEX.SetValue(unit.BattleComponent.BattleStats.GetCrit(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
                 sumBonuses= unit.Stats.GetCombatStatBonuses(unit,CombatStats.CombatStatType.CurseResistance,physical);
-                CON.SetValue(unit.BattleComponent.BattleStats.GetCurseResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
-                STR_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Attack);
-                DEX_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Hit);
+                FTH.SetValue(unit.BattleComponent.BattleStats.GetCurseResistance(), sumBonuses > 0 ?AttributeBonusState.Increasing: sumBonuses<0? AttributeBonusState.Decreasing: AttributeBonusState.Same);
+                CON_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Attack);
+                STR_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Hit);
                 INT_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.AttackSpeed);
-                AGI_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Avoid);
-                LCK_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Crit);
-                CON_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.CurseResistance);
-                DEF_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Protection);
-                FTH_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Resistance);
+                LCK_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Avoid);
+                DEX_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Crit);
+                FTH_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.CurseResistance);
+                AGI_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Protection);
+                DEF_Label.text = CombatStats.GetAsText(CombatStats.CombatStatType.Resistance);
             }
             //Debug.Log("FTH: "+unit.Stats.BaseAttributes.FAITH+" "+unit.Stats.CombinedAttributes().FAITH+" "+unit.Stats.BonusAttributesFromFood.FAITH+" "+unit.Stats.BonusAttributesFromEffects.FAITH+" "+unit.Stats.BonusAttributesFromEquips.FAITH+" "+unit.Stats.BonusAttributesFromWeapon.FAITH+" "+unit.Stats.BaseAttributesAndWeapons().FAITH+unit.Stats.GetAttributeBonusState(AttributeType.FTH));
         }
@@ -177,7 +177,7 @@ namespace Game.GUI.CharacterScreen
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.STR, STR.transform.position);
             else if(showAttributeState==ShowAttributeState.CombatStats)
-                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Attack, STR.transform.position);
+                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Hit, STR.transform.position);
             //ToolTipSystem.ShowAttribute("Strength", "Increases ones physical damage output!",unit.Stats.BaseAttributes.STR, STR.transform.position);
         }
         public void INT_Clicked()
@@ -194,7 +194,7 @@ namespace Game.GUI.CharacterScreen
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.DEX, DEX.transform.position);
             else if(showAttributeState==ShowAttributeState.CombatStats)
-                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Hit, DEX.transform.position);
+                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Crit, DEX.transform.position);
             //ToolTipSystem.ShowAttribute("Dexterity", "Increases ones accuracy and influences critical hitrate!",unit.Stats.BaseAttributes.DEX,DEX.transform.position);
         }
         public void AGI_Clicked()
@@ -202,7 +202,7 @@ namespace Game.GUI.CharacterScreen
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.AGI, AGI.transform.position);
             else if(showAttributeState==ShowAttributeState.CombatStats)
-                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Avoid, AGI.transform.position);
+                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Protection, AGI.transform.position);
 
             // ToolTipSystem.ShowAttribute("Agility", "Increases ones ability to dodge as well as attack speed! Having 5 higher than your opponent allows for double attacks",unit.Stats.BaseAttributes.AGI,AGI.transform.position);
         }
@@ -211,7 +211,7 @@ namespace Game.GUI.CharacterScreen
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.DEF, DEF.transform.position);
             else if(showAttributeState==ShowAttributeState.CombatStats)
-                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Protection, DEF.transform.position);
+                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Resistance, DEF.transform.position);
 
             //ToolTipSystem.ShowAttribute("Defense", "Increases your physical damage resistance!",unit.Stats.BaseAttributes.DEF,DEF.transform.position);
         }
@@ -220,7 +220,7 @@ namespace Game.GUI.CharacterScreen
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.LCK, LCK.transform.position);
             else if(showAttributeState==ShowAttributeState.CombatStats)
-                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Crit, LCK.transform.position);
+                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Avoid, LCK.transform.position);
             //ToolTipSystem.ShowAttribute("Luck", "Increases ones critical hit rate and many other things!",unit.Stats.BaseAttributes.LCK,LCK.transform.position);
         }
         public void CON_Clicked()
@@ -228,7 +228,7 @@ namespace Game.GUI.CharacterScreen
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.CON, CON.transform.position);
             else if(showAttributeState==ShowAttributeState.CombatStats)
-                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.CurseResistance, CON.transform.position);
+                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Attack, CON.transform.position);
             //ToolTipSystem.ShowAttribute("Constitution", "Increases ones maximum Hitpoints and allows to wield heavier weapons!",unit.Stats.BaseAttributes.CON,CON.transform.position);
         }
         public void FTH_Clicked()
@@ -236,7 +236,7 @@ namespace Game.GUI.CharacterScreen
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.FTH, FTH.transform.position);
             else if(showAttributeState==ShowAttributeState.CombatStats)
-                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Resistance, FTH.transform.position);
+                ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.CurseResistance, FTH.transform.position);
             // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);
         }
    
