@@ -21,27 +21,39 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 49345b4e6b6effc4dbd63be9f4264bdc, type: 3}
   AttackRanges: 01000000
   WeaponAttributes:
-    effect: {fileID: 0}
     Dmg: 2
     Hit: 70
     Crit: 0
-    Weight: 6
+    Weight: 2
+    effect: {fileID: 0}
   UpgradeAttributes:
-  - effect: {fileID: 0}
-    Dmg: 2
+  - Dmg: 2
     Hit: 10
     Crit: 10
     Weight: 0
-  - effect: {fileID: 0}
-    Dmg: 2
+    effect: {fileID: 0}
+    weightCostPower: 2
+    weightCostAccuracy: 1
+    weightCostCrit: 1
+    weightCostSpecial: 0
+  - Dmg: 2
     Hit: 10
     Crit: 10
     Weight: 0
-  - effect: {fileID: 0}
-    Dmg: 3
+    effect: {fileID: 0}
+    weightCostPower: 2
+    weightCostAccuracy: 1
+    weightCostCrit: 1
+    weightCostSpecial: 0
+  - Dmg: 3
     Hit: 10
     Crit: 10
     Weight: 0
+    effect: {fileID: 0}
+    weightCostPower: 3
+    weightCostAccuracy: 1
+    weightCostCrit: 2
+    weightCostSpecial: 0
   weaponLevel: 1
   maxLevel: 3
   skillBp: {fileID: 11400000, guid: 184f13a4b63dd4befbc59c4acdf9ec4b, type: 2}

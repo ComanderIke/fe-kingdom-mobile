@@ -18,6 +18,7 @@ namespace Game.States.Mechanics.Battle
         public const int CRIT_AVO_LCK_MULT=2;
         public const int CRIT_LCK_MULT = 1;
         public const float CRIT_DEX_MULT = 0f;
+        public const float CONSECUTIVE_ATTACKS_MULT = .5f;
         public bool ExcessHitToCrit { get; set; }
         public bool MovementToDmg { get; set; }
         private readonly IBattleActor owner;
@@ -187,10 +188,10 @@ namespace Game.States.Mechanics.Battle
             else if(target is IBattleActor battleActor)
             {
                 
-                int attacks = 1;
+                float attacks = 1;
                 float multiplier = 1.0f;
                 if (CanDoubleAttack(battleActor))
-                    attacks = 2;
+                    attacks = 1 + CONSECUTIVE_ATTACKS_MULT;
                 int defense = 0;
                 if (GetDamageType() == DamageType.Magic||GetDamageType() == DamageType.Faith)
                 {

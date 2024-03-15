@@ -170,7 +170,7 @@ namespace Game.States.Mechanics
            
             this.attackPosition =attackPosition;
         }
-        public bool DoAttack(IBattleActor attacker, IBattleActor defender, ref AttackData attackData, bool preview)
+        public bool DoAttack(IBattleActor attacker, IBattleActor defender, ref AttackData attackData, bool consecutive, bool preview)
         {
           
           //  if(attacker.BattleComponent.BattleStats.BonusAttackStats.AttackEffects)
@@ -205,7 +205,9 @@ namespace Game.States.Mechanics
 
           int defenderStonesAtStart = defender.RevivalStones;
           int damage = attacker.BattleComponent.BattleStats.GetDamageAgainstTarget(defender, luna);
-         
+
+          if (consecutive)
+              damage = (int)(damage / 2f);
             //int spDamage= attacker.BattleComponent.BattleStats.GetTotalSpDamageAgainstTarget(defender);
             var hitRng = UnityEngine.Random.Range(0, 101);
             var critRng = UnityEngine.Random.Range(0, 101);
@@ -259,7 +261,9 @@ namespace Game.States.Mechanics
             }
             int attackerAttackCount = Attacker.BattleComponent.BattleStats.GetAttackCountAgainst(Defender);
             int defenderAttackCount = Defender.BattleComponent.BattleStats.GetAttackCountAgainst(Attacker);
-       
+
+            int attackerAttackedCount = 0;
+            int defenderAttackedCount = 0;
             GridPosition attackerGridPos = attackPosition;
    
             if (grid&&!((IGridActor)Defender).GetActorGridComponent().CanAttack(attackerGridPos.X, attackerGridPos.Y))
@@ -308,7 +312,7 @@ namespace Game.States.Mechanics
                             }
                         }
 
-                        if (DoAttack(Attacker, Defender, ref attackData, certainHit))
+                        if (DoAttack(Attacker, Defender, ref attackData, attackerAttackedCount !=0,certainHit))
                         {
                             attackerAttackCount--;
                             // if (Defender.SpBars <= 0)
@@ -339,13 +343,14 @@ namespace Game.States.Mechanics
 
                         combatRound.AttacksData.Add(attackData);
                         consecutiveAttack--;
+                        attackerAttackedCount++;
                     }
                 }
                
                 if (defenderAttackCount > 0)
                 {
                     AttackData attackData=new AttackData();
-                   
+                    MyDebug.LogTODO("Adept and such Skills not working for Defender");
                     attackData.attacker = false;
                     attackData.activatedAttackSkills = new List<Skill>();
                     attackData.activatedDefenseSkills = new List<Skill>();
@@ -355,7 +360,7 @@ namespace Game.States.Mechanics
                         attackData.activatedAttackSkills.AddRange(ActivateDefenseSkills(Attacker));
                     }
 
-                    if (DoAttack(Defender, Attacker, ref attackData, certainHit))
+                    if (DoAttack(Defender, Attacker, ref attackData, defenderAttackedCount!=0 ,certainHit))
                     {
                        
                         defenderAttackCount--;
@@ -373,6 +378,8 @@ namespace Game.States.Mechanics
                        
                        
                     }
+
+                    defenderAttackedCount++;
                     combatRound.AttacksData.Add(attackData);
                 }
             }
