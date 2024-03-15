@@ -76,6 +76,7 @@ namespace Game.GameActors.Units.UnitState
         }
 
         public bool HasCantoed { get; set; }
+        public event Action OnUnitWaited;
 
         public void UnitTurnFinished()
         {
@@ -119,6 +120,7 @@ namespace Game.GameActors.Units.UnitState
             IsSelected = false;
             HasMoved = true;
             HasCantoed = true;
+            OnUnitWaited?.Invoke();
         }
 
         public enum TurnStateEvent

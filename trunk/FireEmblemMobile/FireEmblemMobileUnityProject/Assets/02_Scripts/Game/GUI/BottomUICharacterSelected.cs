@@ -56,15 +56,16 @@ namespace Game.GUI
             UnitSelectionSystem.OnSkillSelected += SkillSelected;
             UnitSelectionSystem.OnSkillDeselected += SkillDeselected;
             Unit.OnUnitDataChanged += UnitDataChanged;
+            
         }
 
         private void OnDestroy()
         {
-            // if (unit != null)
-            // {
-            //     unit.HpValueChanged -= UpdateUI;
-            //     
-            // }
+            if (unit != null)
+            {
+                unit.TurnStateManager.OnUnitWaited -= UpdateUI;
+                
+            }
 
             Unit.OnUnitDataChanged -= UnitDataChanged;
             UiSystem.OnShowAttackPreview -= ShowSelectableCombatSkills;
@@ -192,13 +193,16 @@ namespace Game.GUI
         public void Show(Unit unit, bool interactableForPlayer=true)
         {
             base.Show();
-            // if (unit != null)
-            // {
-            //     unit.HpValueChanged -= UpdateUI;
-            //
-            // }
+            if (unit != null)
+            {
+                unit.TurnStateManager.OnUnitWaited -= UpdateUI;
+            
+            }
 
             this.unit = unit;
+            unit.TurnStateManager.OnUnitWaited -= UpdateUI;
+            unit.TurnStateManager.OnUnitWaited += UpdateUI;
+
             // unit.HpValueChanged -= UpdateUI;
             // unit.HpValueChanged += UpdateUI;
             this.interactableForPlayer = interactableForPlayer;
@@ -208,7 +212,7 @@ namespace Game.GUI
 
         public void WeaponClicked()
         {
-            ToolTipSystem.Show(unit, unit.equippedWeapon, weaponSlot.transform.position);
+           // ToolTipSystem.Show(unit, unit.equippedWeapon, weaponSlot.transform.position);
             var weapon = unit.equippedWeapon;
             if (!interactableForPlayer)
                 return;
