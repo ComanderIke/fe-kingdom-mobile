@@ -64,12 +64,12 @@ namespace Game.GUI.ToolTips
         
             instance.ItemToolTip.gameObject.SetActive(true);
         }
-        public static void Show(Weapon weapon, Vector3 position)
+        public static void Show(Unit user,Weapon weapon, Vector3 position)
         {
             MyDebug.LogInput("Show Weapon Tooltip");
             instance.tooltipShownThisFrame = true;
             CloseAllToolTips();
-            instance.WeaponToolTip.SetValues(weapon, GetAnchoredPositionInTooltipCanvas(position));
+            instance.WeaponToolTip.SetValues(user,weapon, GetAnchoredPositionInTooltipCanvas(position));
             instance.WeaponToolTip.gameObject.SetActive(true);
         }
 

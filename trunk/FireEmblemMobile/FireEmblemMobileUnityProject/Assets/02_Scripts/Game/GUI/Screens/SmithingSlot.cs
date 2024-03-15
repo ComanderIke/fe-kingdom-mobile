@@ -24,6 +24,7 @@ namespace Game.GUI.Screens
         [SerializeField] private SkillUI skillUI;
         [SerializeField] private TextMeshProUGUI soulsText;
         [SerializeField] private GameObject TooltipButtonArea;
+        [SerializeField] private WeightUI weightUI;
         private bool selected = false;
         private EquipableItem equipable;
         private Unit unit;
@@ -72,7 +73,9 @@ namespace Game.GUI.Screens
                 slot.gameObject.SetActive(false);
                 gem.sprite = null;
                 gem.enabled = false;
-            
+                if (weightUI != null)
+                    weightUI.Hide();
+
             }
             else
             {
@@ -82,6 +85,8 @@ namespace Game.GUI.Screens
                 image.color = normalColor;
                 if (equipable is Relic relic)
                 {
+                    if (weightUI != null)
+                        weightUI.Hide();
                     slot.gameObject.SetActive(true);
                     if (relic.GetGem() != null)
                     {
@@ -99,6 +104,16 @@ namespace Game.GUI.Screens
                 }
                 else
                 {
+                    if (equipable is Weapon weapon)
+                    {
+                        if (weightUI != null)
+                            weightUI.Show(weapon.GetWeight(), unit.Stats.CombinedAttributes().STR-weapon.GetWeight()<0);
+                    }
+                    else
+                    {
+                        if (weightUI != null)
+                            weightUI.Hide();
+                    }
                     slot.gameObject.SetActive(false);
                     gem.sprite = null;
                     gem.enabled = false;

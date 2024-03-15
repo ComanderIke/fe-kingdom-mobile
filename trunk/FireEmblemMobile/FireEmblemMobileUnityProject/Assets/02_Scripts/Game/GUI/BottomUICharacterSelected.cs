@@ -208,7 +208,7 @@ namespace Game.GUI
 
         public void WeaponClicked()
         {
-            ToolTipSystem.Show(unit.equippedWeapon, weaponSlot.transform.position);
+            ToolTipSystem.Show(unit, unit.equippedWeapon, weaponSlot.transform.position);
             var weapon = unit.equippedWeapon;
             if (!interactableForPlayer)
                 return;

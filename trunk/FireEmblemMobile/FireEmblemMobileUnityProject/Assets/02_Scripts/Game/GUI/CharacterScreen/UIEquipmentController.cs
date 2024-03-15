@@ -98,10 +98,13 @@ namespace Game.GUI.CharacterScreen
         public void WeaponSlotClicked()
         {
         
-            ToolTipSystem.Show(weapon,WeaponSlot.transform.position);
+            ToolTipSystem.Show(unit,weapon,WeaponSlot.transform.position);
         }
+
+        private Unit unit;
         public void Show(Unit unit)
         {
+            this.unit = unit;
             WeaponSlot.Show(unit, unit.equippedWeapon);
             if (unit.equippedWeapon != null)
             {

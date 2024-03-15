@@ -1,5 +1,7 @@
 using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units;
 using Game.GUI.EncounterUI.Merchant;
+using Game.GUI.Screens;
 using Game.GUI.ToolTips;
 using TMPro;
 using UnityEngine;
@@ -12,8 +14,7 @@ namespace Game.GUI
         public TextMeshProUGUI dmg;
         public TextMeshProUGUI hit;
         public TextMeshProUGUI crit;
-
-        public Image icon;
+        public SmithingSlot slot;
         // Start is called before the first frame update
         void Start()
         {
@@ -26,13 +27,13 @@ namespace Game.GUI
         
         }
 
-        public void SetValues(Weapon weapon,  Vector3 position)
+        public void SetValues(Unit user,Weapon weapon,  Vector3 position)
         {
             base.SetValues(new StockedItem(weapon,1), position);
             dmg.text = ""+weapon.GetDamage();
             hit.text = ""+weapon.GetHit()+" %";
             crit.text = ""+weapon.GetCrit()+" %";
-            icon.sprite = weapon.Sprite;
+            slot.Show(user, weapon,false);
         }
     }
 }
