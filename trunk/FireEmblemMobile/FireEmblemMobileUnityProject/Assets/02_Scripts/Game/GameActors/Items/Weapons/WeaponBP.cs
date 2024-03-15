@@ -21,7 +21,7 @@ namespace Game.GameActors.Items.Weapons
 
         [Header("WeaponAttributes")] 
         public WeaponAttributes WeaponAttributes;
-        public WeaponAttributes[] UpgradeAttributes;
+        public UpgradeAttributes[] UpgradeAttributes;
         public int weaponLevel = 1;
         public int maxLevel = 3;
         public SkillBp skillBp;

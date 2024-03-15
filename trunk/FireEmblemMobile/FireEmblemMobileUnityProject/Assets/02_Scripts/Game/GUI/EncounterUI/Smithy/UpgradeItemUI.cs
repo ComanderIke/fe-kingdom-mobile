@@ -14,6 +14,7 @@ namespace Game.GUI.EncounterUI.Smithy
         public TextMeshProUGUI hitAfter;
         public TextMeshProUGUI dmgAfter;
         public TextMeshProUGUI critAfter;
+        public TextMeshProUGUI weightAfter;
         public TextMeshProUGUI stoneCost;
         public Image cost2Icon;
         public Sprite stoneIcon;
@@ -64,6 +65,14 @@ namespace Game.GUI.EncounterUI.Smithy
                 critAfter.text = "" +(weapon.GetCrit()+ weapon.GetUpgradeableCrit());
                 hitAfter.text = "" + (weapon.GetHit()+weapon.GetUpgradeableHit());
                 dmgAfter.text = "" + (weapon.GetDamage()+weapon.GetUpgradeableDmg());
+                switch (upgradeMode)
+                {
+                    case WeaponUpgradeMode.Power:weightAfter.text = "" + (weapon.GetWeight() + weapon.GetUpgradeableWeightPower()); break;
+                    case WeaponUpgradeMode.Accuracy:weightAfter.text = "" + (weapon.GetWeight() + weapon.GetUpgradeableWeightAccuracy()); break;
+                    case WeaponUpgradeMode.Critical:weightAfter.text = "" + (weapon.GetWeight() + weapon.GetUpgradeableWeightCrit()); break;
+                    case WeaponUpgradeMode.Special:weightAfter.text = "" + (weapon.GetWeight() + weapon.GetUpgradeableWeightSpecial()); break;
+                }
+                
             }
         
         }

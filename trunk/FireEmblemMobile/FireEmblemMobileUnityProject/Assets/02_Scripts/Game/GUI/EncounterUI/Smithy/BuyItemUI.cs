@@ -14,6 +14,7 @@ namespace Game.GUI.EncounterUI.Smithy
         [SerializeField] TextMeshProUGUI hitCurrent;
         [SerializeField] TextMeshProUGUI dmgCurrent;
         [SerializeField] TextMeshProUGUI critCurrent;
+        [SerializeField] TextMeshProUGUI weightCurrent;
 
         // public TextMeshProUGUI weightCurrent;
         // public TextMeshProUGUI weightAfter;
@@ -63,6 +64,7 @@ namespace Game.GUI.EncounterUI.Smithy
                 critCurrent.text = "" + weapon.GetCrit();
                 hitCurrent.text = "" + weapon.GetHit();
                 dmgCurrent.text = "" + weapon.GetDamage();
+                weightCurrent.text = "" + weapon.GetWeight();
 
             }
      

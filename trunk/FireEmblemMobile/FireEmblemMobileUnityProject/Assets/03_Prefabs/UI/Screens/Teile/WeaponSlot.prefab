@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1713090655723260551}
   - component: {fileID: 667081985005607073}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Rank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -468,6 +468,11 @@ MonoBehaviour:
   soulsText: {fileID: 0}
   TooltipButtonArea: {fileID: 0}
   weightUI: {fileID: 6337044236676802376}
+  weaponRank: {fileID: 667081985005607073}
+  rankCColor: {fileID: 11400000, guid: 3fcbe7256db1c134a8c39e9a0e75f296, type: 2}
+  rankBColor: {fileID: 11400000, guid: 87f2f8a9420769246934e6cdfc93a443, type: 2}
+  rankAColor: {fileID: 11400000, guid: a626fbc0424514949bc53cc8a3c1c52f, type: 2}
+  rankSColor: {fileID: 11400000, guid: 7c88d76f1cc27614eb88f835992ec88f, type: 2}
 --- !u!114 &6488394773713736824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,6 +1052,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6529221609613739748, guid: 6f82899694d9cf14ea682b73707ec427,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6615909382277017844, guid: 6f82899694d9cf14ea682b73707ec427,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6615909382821566571, guid: 6f82899694d9cf14ea682b73707ec427,
         type: 3}
       propertyPath: m_SortingLayer
       value: 5

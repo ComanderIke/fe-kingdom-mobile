@@ -25,6 +25,12 @@ namespace Game.GUI.Screens
         [SerializeField] private TextMeshProUGUI soulsText;
         [SerializeField] private GameObject TooltipButtonArea;
         [SerializeField] private WeightUI weightUI;
+        [SerializeField] private TextMeshProUGUI weaponRank;
+        [SerializeField] private TMP_ColorGradient rankCColor;
+        [SerializeField] private TMP_ColorGradient rankBColor;
+        [SerializeField] private TMP_ColorGradient rankAColor;
+        [SerializeField] private TMP_ColorGradient rankSColor;
+        
         private bool selected = false;
         private EquipableItem equipable;
         private Unit unit;
@@ -108,6 +114,18 @@ namespace Game.GUI.Screens
                     {
                         if (weightUI != null)
                             weightUI.Show(weapon.GetWeight(), unit.Stats.CombinedAttributes().STR-weapon.GetWeight()<0);
+                        weaponRank.text = weapon.GetRank();
+                        switch (weaponRank.text)
+                        {
+                            case "C":
+                                weaponRank.colorGradientPreset = rankCColor; break;
+                            case "B":
+                                weaponRank.colorGradientPreset = rankBColor; break;
+                            case "A":
+                                weaponRank.colorGradientPreset = rankAColor; break;
+                            case "S":
+                                weaponRank.colorGradientPreset = rankSColor; break;
+                        }
                     }
                     else
                     {

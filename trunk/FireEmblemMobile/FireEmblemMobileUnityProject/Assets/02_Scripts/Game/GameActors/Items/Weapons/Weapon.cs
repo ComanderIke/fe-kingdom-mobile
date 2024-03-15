@@ -18,7 +18,7 @@ namespace Game.GameActors.Items.Weapons
         [Range(1, 4)] public int[] AttackRanges;
 
 
-        [Header("WeaponAttributes")] public WeaponAttributes[] WeaponUpgrades;
+        [Header("WeaponAttributes")] public UpgradeAttributes[] WeaponUpgrades;
         public WeaponAttributes WeaponAttributes;
         public int weaponLevel = 1;
         public int powerUpgLvl = 0;
@@ -32,7 +32,7 @@ namespace Game.GameActors.Items.Weapons
         [SerializeField] private Dictionary<EffectiveAgainstType, float> effectiveAgainst;
 
         public Weapon(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, int weaponLevel, int maxLevel,int[] attackRanges,
-            WeaponAttributes weaponAttributes,WeaponAttributes[] weaponUpgrades, WeaponType weaponType, DamageType damageType, 
+            WeaponAttributes weaponAttributes,UpgradeAttributes[] weaponUpgrades, WeaponType weaponType, DamageType damageType, 
             Skill skill, Dictionary<EffectiveAgainstType,  float> effectiveAgainst=null) : base(name, description, cost, rarity,maxStack,sprite, skill)
         {
             this.weaponLevel = weaponLevel;
@@ -76,6 +76,19 @@ namespace Game.GameActors.Items.Weapons
         {
             return WeaponAttributes.Weight;
         }
+
+        public string GetRank()
+        {
+            switch (weaponLevel-1)
+            {
+                case 0: return "C";
+                case 1: return "B";
+                case 2: return "A";
+                case 3: return "S";
+            }
+
+            return "U";
+        }
    
         public void Upgrade(WeaponUpgradeMode mode)
         {
@@ -84,14 +97,20 @@ namespace Game.GameActors.Items.Weapons
             {
                 case WeaponUpgradeMode.Power:
                     WeaponAttributes.Dmg += WeaponUpgrades[powerUpgLvl].Dmg;
+                    WeaponAttributes.Weight += WeaponUpgrades[powerUpgLvl].weightCostPower;
                     powerUpgLvl++; break;
                 case WeaponUpgradeMode.Accuracy:
                     WeaponAttributes.Hit += WeaponUpgrades[accUpgLvl].Hit;
+                    WeaponAttributes.Weight += WeaponUpgrades[accUpgLvl].weightCostAccuracy;
                     accUpgLvl++; break;
                 case WeaponUpgradeMode.Critical:
                     WeaponAttributes.Crit += WeaponUpgrades[critUpgLvl].Crit;
+                    WeaponAttributes.Weight += WeaponUpgrades[critUpgLvl].weightCostCrit;
                     critUpgLvl++; break;
                 case WeaponUpgradeMode.Special:
+                    WeaponAttributes.effect = WeaponUpgrades[specialUpgLvl].effect;
+                    WeaponAttributes.Weight += WeaponUpgrades[specialUpgLvl].weightCostSpecial;
+                    specialUpgLvl++;
                     Debug.Log("TODO SPECIAL UPGRADE"); break;
             }
             if (weaponLevel > maxLevel)
@@ -121,7 +140,34 @@ namespace Game.GameActors.Items.Weapons
             else
                 return 0;
         }
-
+        public int GetUpgradeableWeightPower()
+        {
+            if (weaponLevel + 1 <= maxLevel)
+                return WeaponUpgrades[powerUpgLvl].weightCostPower;
+            else
+                return 0;
+        }
+        public int GetUpgradeableWeightAccuracy()
+        {
+            if (weaponLevel + 1 <= maxLevel)
+                return WeaponUpgrades[accUpgLvl].weightCostAccuracy;
+            else
+                return 0;
+        }
+        public int GetUpgradeableWeightCrit()
+        {
+            if (weaponLevel + 1 <= maxLevel)
+                return WeaponUpgrades[critUpgLvl].weightCostCrit;
+            else
+                return 0;
+        }
+        public int GetUpgradeableWeightSpecial()
+        {
+            if (weaponLevel + 1 <= maxLevel)
+                return WeaponUpgrades[specialUpgLvl].weightCostSpecial;
+            else
+                return 0;
+        }
         public bool IsEffective(EffectiveAgainstType effectiveAgainstType)
         {
             return effectiveAgainst.ContainsKey(effectiveAgainstType)||WeaponType.IsEffective(effectiveAgainstType);
