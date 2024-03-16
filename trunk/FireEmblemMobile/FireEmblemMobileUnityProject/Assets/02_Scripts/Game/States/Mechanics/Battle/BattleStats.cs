@@ -19,6 +19,10 @@ namespace Game.States.Mechanics.Battle
         public const int CRIT_LCK_MULT = 1;
         public const float CRIT_DEX_MULT = 0f;
         public const float CONSECUTIVE_ATTACKS_MULT = .5f;
+        public const int BonusDamageEffective=4;
+        public const int BonusHitEffective=20;
+        public const int BonusDamageInEffective=0;
+        public const int BonusHitInEffective=0;
         public bool ExcessHitToCrit { get; set; }
         public bool MovementToDmg { get; set; }
         private readonly IBattleActor owner;
@@ -157,7 +161,15 @@ namespace Game.States.Mechanics.Battle
                 else
                     defense = battleActor.BattleComponent.BattleStats.GetDefense();
 
-                return (int)(Mathf.Clamp((GetDamage(atkMultiplier) - (defense-(int)(defense*penetration))) * dmgMult, 0, Mathf.Infinity));
+                bool effective = false;
+                bool inEffective = false;
+                if (target is IBattleActor defender)
+                {
+                    effective = owner.IsPowerTypeEffective(defender);
+                    inEffective = owner.IsPowerTypeInEffective(defender);
+                }
+
+                return (int)(Mathf.Clamp((GetDamage(atkMultiplier) - (defense-(int)(defense*penetration))) * dmgMult+(inEffective? BonusDamageInEffective:0)+(effective? BonusDamageEffective:0), 0, Mathf.Infinity));
             }
 
             return 0;
@@ -231,7 +243,14 @@ namespace Game.States.Mechanics.Battle
 
         public int GetHitAgainstTarget(IBattleActor target)
         {
-            return GetHitrate() - target.BattleComponent.BattleStats.GetAvoid();
+            bool effective = false;
+            bool inEffective = false;
+            if (target is IBattleActor defender)
+            {
+                effective = owner.IsPowerTypeEffective(defender);
+                inEffective = owner.IsPowerTypeInEffective(defender);
+            }
+            return GetHitrate() - target.BattleComponent.BattleStats.GetAvoid()+(inEffective? BonusHitInEffective:0)+(effective? BonusHitEffective:0);
         }
 
         public int GetWeightReduction()

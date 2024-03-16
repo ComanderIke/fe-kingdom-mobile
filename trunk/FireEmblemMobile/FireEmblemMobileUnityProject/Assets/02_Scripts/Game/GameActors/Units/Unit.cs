@@ -155,7 +155,7 @@ namespace Game.GameActors.Units
         public RpgClass rpgClass;
         [NonSerialized] public UnitVisual visuals;
 
-        public PowerTriangleType PowerTriangleType;
+        public PowerTriangleType PowerTriangleType { get; set; }
         public UnitVisual Visuals
         {
             get { return visuals; }
@@ -881,7 +881,7 @@ namespace Game.GameActors.Units
             OnUnitDataChanged?.Invoke(this);
         }
 
-        public bool IsPowerTypeEffective(Unit defender)
+        public bool IsPowerTypeEffective(IBattleActor defender)
         {
             var defType=defender.PowerTriangleType;
             if (PowerTriangleType == defType)
@@ -891,6 +891,19 @@ namespace Game.GameActors.Units
             if (PowerTriangleType == PowerTriangleType.Technique && defType == PowerTriangleType.Intellect)
                 return true;
             if (PowerTriangleType == PowerTriangleType.Intellect && defType == PowerTriangleType.Brawn)
+                return true;
+            return false;
+        }
+        public bool IsPowerTypeInEffective(IBattleActor defender)
+        {
+            var defType=defender.PowerTriangleType;
+            if (PowerTriangleType == defType)
+                return false;
+            if (PowerTriangleType == PowerTriangleType.Brawn && defType == PowerTriangleType.Intellect)
+                return true;
+            if (PowerTriangleType == PowerTriangleType.Technique && defType == PowerTriangleType.Brawn)
+                return true;
+            if (PowerTriangleType == PowerTriangleType.Intellect && defType == PowerTriangleType.Technique)
                 return true;
             return false;
         }

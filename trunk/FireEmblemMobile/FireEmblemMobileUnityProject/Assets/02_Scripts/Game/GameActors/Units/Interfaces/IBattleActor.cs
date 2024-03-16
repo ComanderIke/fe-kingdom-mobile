@@ -28,6 +28,9 @@ namespace Game.GameActors.Units.Interfaces
         UnitVisual Visuals { get; }
         GridComponent GridComponent { get; set; }
         StatusEffectManager StatusEffectManager { get; set; }
+        public PowerTriangleType PowerTriangleType { get; set; }
+        public bool IsPowerTypeEffective(IBattleActor defender);
+        public bool IsPowerTypeInEffective(IBattleActor defender);
         int RevivalStones { get; set; }
         Weapon GetEquippedWeapon();
         Tile GetTile();
