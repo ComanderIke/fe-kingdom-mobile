@@ -75,6 +75,8 @@ namespace Game.Graphics.BattleAnimations
             animationStateManager = new AnimationStateManager(attackingActor, defendingActor, battleSimulation, GetComponent<TimeLineController>(),GetComponent<CharacterCombatAnimations>());
             animationStateManager.OnCharacterAttack -= ShowActivatedAttackSkills;
             animationStateManager.OnCharacterAttack += ShowActivatedAttackSkills;
+            animationStateManager.OnCharacterCrit -= CharacterCrit;
+            animationStateManager.OnCharacterCrit += CharacterCrit;
             ShowActivatedCombatSkills((Unit)battleSimulation.Attacker, battleSimulation.AttackerActivatedCombatSkills, true);
             ShowActivatedCombatSkills((Unit)battleSimulation.Defender,battleSimulation.DefenderActivatedCombatSkills, false);
             animationStateManager.Start();
@@ -84,6 +86,11 @@ namespace Game.Graphics.BattleAnimations
         
             LeanTween.value(volume.weight, 1, 1.2f).setEaseOutQuad().setOnUpdate((value) => { volume.weight = value; });
         
+        }
+
+        void CharacterCrit(IBattleActor unit)
+        {
+            canvas.ShowCritical((Unit)unit);
         }
 
         private BattleSimulation battleSimulation;

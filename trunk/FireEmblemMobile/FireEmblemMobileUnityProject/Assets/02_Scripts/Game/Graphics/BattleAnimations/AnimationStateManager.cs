@@ -5,6 +5,7 @@ using Game.GameActors.Units;
 using Game.GameActors.Units.Interfaces;
 using Game.States.Mechanics;
 using Game.Utility;
+using Utility;
 using AttackData = Game.States.Mechanics.AttackData;
 
 namespace Game.Graphics.BattleAnimations
@@ -77,6 +78,7 @@ namespace Game.Graphics.BattleAnimations
         }
 
         public event Action<IBattleActor, AttackData> OnCharacterAttack;
+        public event Action<IBattleActor> OnCharacterCrit;
         public event Action<IBattleActor, AttackData> OnPreCharacterAttack;
         private bool surrender = false;
         private void ContinueBattle()
@@ -89,13 +91,31 @@ namespace Game.Graphics.BattleAnimations
            
                 return;
             }
-            OnCharacterAttack?.Invoke(currentRound.AttacksData[attackSequenzIndex].attacker?realAttacker:realDefender,currentRound.AttacksData[attackSequenzIndex]);
-            // OnPreCharacterAttack?.Invoke(currentRound.AttacksData[attackSequenzIndex].attacker?realAttacker:realDefender,currentRound.AttacksData[attackSequenzIndex]);
+
+            if (currentRound.AttacksData[attackSequenzIndex].crit)
+            {
+                OnCharacterCrit?.Invoke(currentRound.AttacksData[attackSequenzIndex].attacker?realAttacker:realDefender);
+                AnimationQueue.OnAllAnimationsEnded += AfterPotentialCritAnimation;
+            }
+            else
+            {
+                AfterPotentialCritAnimation();
+            }
+               // OnPreCharacterAttack?.Invoke(currentRound.AttacksData[attackSequenzIndex].attacker?realAttacker:realDefender,currentRound.AttacksData[attackSequenzIndex]);
        
+           
+
+           
+
+        }
+
+        void AfterPotentialCritAnimation()
+        {
+            OnCharacterAttack?.Invoke(currentRound.AttacksData[attackSequenzIndex].attacker?realAttacker:realDefender,currentRound.AttacksData[attackSequenzIndex]);
+            AnimationQueue.OnAllAnimationsEnded -= AfterPotentialCritAnimation;
             characterAnimations.CharacterAttack(currentRound.AttacksData[attackSequenzIndex],currentRound.AttacksData[attackSequenzIndex].attacker, leftCharacterAttacker);
             characterAnimations.OnAttackFinished -= AttackFinished;
             characterAnimations.OnAttackFinished += AttackFinished;
-
             TimeLineController.CameraShake();
 
         }

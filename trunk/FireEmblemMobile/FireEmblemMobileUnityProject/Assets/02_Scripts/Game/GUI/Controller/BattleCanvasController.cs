@@ -1,3 +1,5 @@
+using Game.GameActors.Units;
+using LostGrace;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +9,7 @@ namespace Game.GUI.Controller
     {
         public RawImage image;
         public RawImage charImage;
+        public CritCutInnController critCutinnController;
 
         public GameObject battleCanvas;
         private CanvasGroup battleCanvasGroup;
@@ -67,6 +70,11 @@ namespace Game.GUI.Controller
             // LeanTween.scaleY(battleCanvas,0,0.4f).setEaseInQuad();
             // LeanTween.alphaCanvas(battleCanvasGroup,0, fadeOutTime).setEaseInQuad();
        
+        }
+
+        public void ShowCritical(Unit unit)
+        {
+            critCutinnController.Show(unit);
         }
     }
 }
