@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.DataAndReferences.References;
 using Game.GameActors.Factions;
 using Game.GameActors.Units.Humans;
 using Game.GameActors.Units.Monsters;
@@ -31,7 +32,7 @@ namespace Game.GameActors.Units.OnGameObject
         [SerializeField] private StatsBarOnMap hpBar;
         [SerializeField] private TextMeshProUGUI hpText;
         [SerializeField] private GameObject pointLight;
-        [SerializeField] private Image weaponTypeIcon;
+        [FormerlySerializedAs("weaponTypeIcon")] [SerializeField] private Image powerTriangleTypeIcon;
         [SerializeField] private Image moveTypeIcon;
         [SerializeField] private Animator weaponTypeAnimator;
         [SerializeField] private Animator moveTypeAnimator;
@@ -243,7 +244,7 @@ namespace Game.GameActors.Units.OnGameObject
                 return;
             }
 
-            if (weaponTypeIcon == null)
+            if (powerTriangleTypeIcon == null)
             {
                 MyDebug.LogTest("WeaponTypeIcon is null");
             }
@@ -255,7 +256,7 @@ namespace Game.GameActors.Units.OnGameObject
             {
                 MyDebug.LogTest("Icon is null");
             }
-            weaponTypeIcon.sprite = unit.equippedWeapon.WeaponType.Icon;
+            powerTriangleTypeIcon.sprite = GameAssets.Instance.visuals.Icons.GetPowerTriangleIcon(unit.PowerTriangleType);
            
         }
         private void HpValueChanged()

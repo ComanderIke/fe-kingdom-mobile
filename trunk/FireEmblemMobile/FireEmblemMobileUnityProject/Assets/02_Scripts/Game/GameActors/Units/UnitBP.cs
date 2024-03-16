@@ -21,10 +21,17 @@ using UnityEngine.Serialization;
 
 namespace Game.GameActors.Units
 {
+    public enum PowerTriangleType
+    {
+        Brawn,
+        Technique, 
+        Intellect
+    }
     [Serializable]
     [CreateAssetMenu(menuName = "GameData/Human", fileName = "Human")]
     public class UnitBP : ScriptableObject
     {
+        [SerializeField] private PowerTriangleType powerTriangleType;
 
         [FormerlySerializedAs("EquippedWeapon")] public WeaponBP equippedWeaponBp;
         public RelicBP EquippedRelic1;
@@ -93,7 +100,7 @@ namespace Game.GameActors.Units
             skillManager.AddStartSkills();
             // kstring identifier = Name+uniqueIdentifierPostfix;
            
-            var unit = new Unit(bluePrintID, uniqueIdentifierPostfix,Name, rpgClass, (Stats)stats.Clone(), moveType, 
+            var unit = new Unit(bluePrintID, uniqueIdentifierPostfix,Name,powerTriangleType, rpgClass, (Stats)stats.Clone(), moveType, 
                 new UnitVisual(visuals), skillManager,
                 new ExperienceManager(experienceManager), isBoss, overrideAiBehaviour!=null?Instantiate(overrideAiBehaviour):(aiBehaviour!=null?Instantiate(aiBehaviour):null),dialogComponent);
             unit.RevivalStones = revivalStones;

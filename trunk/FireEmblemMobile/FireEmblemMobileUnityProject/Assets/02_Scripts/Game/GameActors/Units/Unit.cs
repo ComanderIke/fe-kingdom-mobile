@@ -155,14 +155,16 @@ namespace Game.GameActors.Units
         public RpgClass rpgClass;
         [NonSerialized] public UnitVisual visuals;
 
+        public PowerTriangleType PowerTriangleType;
         public UnitVisual Visuals
         {
             get { return visuals; }
         } 
         [field:SerializeField]public UnitDialogComponent DialogComponent { get; set; }
-        public Unit(string bluePrintID, Guid uniqueIdentifier, string name, RpgClass rpgClass, Stats stats, MoveType moveType,
+        public Unit(string bluePrintID, Guid uniqueIdentifier, string name, PowerTriangleType triangleType,RpgClass rpgClass, Stats stats, MoveType moveType,
             UnitVisual visuals, SkillManager skillManager, ExperienceManager experienceManager, bool isBoss, AIBehaviour aiBehaviour, UnitDialogComponent dialogComponent)
         {
+            this.PowerTriangleType = triangleType;
             this.uniqueIdentifier = uniqueIdentifier;
             this.bluePrintID = bluePrintID;
             HealingMultipliers = new List<float>();
@@ -550,6 +552,7 @@ namespace Game.GameActors.Units
       
         protected virtual void HandleCloned(Unit clone)
         {
+            clone.PowerTriangleType = PowerTriangleType;
             clone.experienceManager = new ExperienceManager(experienceManager);
             clone.BattleComponent = new BattleComponent(BattleComponent);
             clone.TurnStateManager = new TurnStateManager();

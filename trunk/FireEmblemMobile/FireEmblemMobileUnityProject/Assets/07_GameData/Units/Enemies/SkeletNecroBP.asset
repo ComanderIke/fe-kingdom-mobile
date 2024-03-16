@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
   m_Name: SkeletNecroBP
   m_EditorClassIdentifier: 
+  powerTriangleType: 2
   equippedWeaponBp: {fileID: 11400000, guid: 5e31920663f79f74c876da00046ef3e1, type: 2}
   EquippedRelic1: {fileID: 0}
   Name: Skelet Necromancer
@@ -61,6 +62,7 @@ MonoBehaviour:
     Mov: 2
   moveType: {fileID: 11400000, guid: d13592b1fa0af024a841b121149b8014, type: 2}
   SkillManager:
+    uniqueStartSkill: {fileID: 0}
     startSkills:
     - {fileID: 11400000, guid: 85a480235267e4fe3a16b045a5007b35, type: 2}
     startBlessing: {fileID: 0}
@@ -90,6 +92,7 @@ MonoBehaviour:
     exp: 0
     drainableExp: 50
     expLeftToDrain: 100
+  dropableItem: {fileID: 0}
   <ChronikComponent>k__BackingField:
     <BodySprite>k__BackingField: {fileID: 0}
     <FaceSprite>k__BackingField: {fileID: 0}
@@ -97,3 +100,4 @@ MonoBehaviour:
     <AlternateFaceSprite>k__BackingField: {fileID: 0}
     <Name>k__BackingField: 
     <Description>k__BackingField: 
+  dialogComponent: {fileID: 0}
