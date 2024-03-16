@@ -38,8 +38,8 @@ namespace Game.GUI.Other
                  Camera = Camera.main;
              
          //    Debug.Log(battlePreview.AttackerStats.AttackCount+" "+battlePreview.DefenderStats.AttackCount);
-             left.Show(attackerSprite, battlePreview.AttackerStats.Heal>0?battlePreview.AttackerStats.Heal:battlePreview.AttackerStats.TotalDamage,battlePreview.AttackerStats.Hit,battlePreview.AttackerStats.Crit, battlePreview.AttackerStats.MaxHp,battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, true);
-             right.Show(defenderSprite, battlePreview.DefenderStats.TotalDamage,battlePreview.DefenderStats.Hit,battlePreview.DefenderStats.Crit, battlePreview.DefenderStats.MaxHp,battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,battlePreview.DefenderStats.CanCounter, !ally);
+             left.Show(attackerSprite,attackerTriangleType,attackerIsEffective, battlePreview.AttackerStats.Heal>0?battlePreview.AttackerStats.Heal:battlePreview.AttackerStats.TotalDamage,battlePreview.AttackerStats.Hit,battlePreview.AttackerStats.Crit, battlePreview.AttackerStats.MaxHp,battlePreview.AttackerStats.CurrentHp, battlePreview.AttackerStats.AfterBattleHp, true);
+             right.Show(defenderSprite, defenderTriangleType,defenderIsEffective,battlePreview.DefenderStats.TotalDamage,battlePreview.DefenderStats.Hit,battlePreview.DefenderStats.Crit, battlePreview.DefenderStats.MaxHp,battlePreview.DefenderStats.CurrentHp, battlePreview.DefenderStats.AfterBattleHp,battlePreview.DefenderStats.CanCounter, !ally);
              attackOrderUI.Show(battlePreview.AttacksData, attackLabel,true);
            }
 
@@ -47,11 +47,21 @@ namespace Game.GUI.Other
         {
           
             ally = !attacker.IsEnemy(defender);
+            this.attackerTriangleType = attacker.PowerTriangleType;
+            this.attackerIsEffective = attacker.IsPowerTypeEffective(defender);;
+            this.defenderTriangleType = defender.PowerTriangleType;
+            this.defenderIsEffective = defender.IsPowerTypeEffective(attacker);;
             Show(battlePreview, attacker, attackLabel,defender.visuals.CharacterSpriteSet.FaceSprite);
         }
+
+        private PowerTriangleType attackerTriangleType;
+        private bool attackerIsEffective;
+        private PowerTriangleType defenderTriangleType;
+        private bool defenderIsEffective;
         public override void Show(BattlePreview battlePreview, Unit attacker, string attackLabel,Sprite attackableObjectSprite)
         {
             // Debug.Log("ATTACKPREVIEWLABEL: " + attackLabel);
+            
             this.attackLabel = attackLabel;
             attackerSprite = attacker.visuals.CharacterSpriteSet.FaceSprite;
             defenderSprite = attackableObjectSprite;

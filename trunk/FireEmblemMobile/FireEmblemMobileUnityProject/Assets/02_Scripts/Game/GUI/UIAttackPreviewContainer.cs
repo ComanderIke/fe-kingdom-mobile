@@ -1,3 +1,4 @@
+using Game.GameActors.Units;
 using Game.GUI.Other;
 using TMPro;
 using UnityEngine;
@@ -15,12 +16,14 @@ namespace Game.GUI
         [SerializeField] private TextMeshProUGUI critValue;
         [SerializeField] private AttackPreviewStatBar hpBar;
         [SerializeField] private GameObject redBlinkGO;
+        [SerializeField] private PowerTriangleUI powerTriangle;
         private int maxHp;
         
 
-        public void Show(Sprite face, int dmg, int hit, int crit, int maxHp, int currentHp, int afterHp, bool canCounter=true, bool enemy =false)
+        public void Show(Sprite face, PowerTriangleType powerTriangleType,bool effective,int dmg, int hit, int crit, int maxHp, int currentHp, int afterHp, bool canCounter=true, bool enemy =false)
         {
             this.maxHp = maxHp;
+            powerTriangle.Set(powerTriangleType,effective); 
             // Debug.Log(afterHp +" "+currentHp);
             if (afterHp > currentHp) //Heal{
             {

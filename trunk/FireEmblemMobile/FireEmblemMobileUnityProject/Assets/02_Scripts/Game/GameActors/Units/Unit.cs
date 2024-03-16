@@ -880,5 +880,19 @@ namespace Game.GameActors.Units
             }
             OnUnitDataChanged?.Invoke(this);
         }
+
+        public bool IsPowerTypeEffective(Unit defender)
+        {
+            var defType=defender.PowerTriangleType;
+            if (PowerTriangleType == defType)
+                return false;
+            if (PowerTriangleType == PowerTriangleType.Brawn && defType == PowerTriangleType.Technique)
+                return true;
+            if (PowerTriangleType == PowerTriangleType.Technique && defType == PowerTriangleType.Intellect)
+                return true;
+            if (PowerTriangleType == PowerTriangleType.Intellect && defType == PowerTriangleType.Brawn)
+                return true;
+            return false;
+        }
     }
 }
