@@ -9,46 +9,53 @@ using UnityEngine;
 
 namespace Game.States
 {
-    public class AIState : GameState<NextStateTrigger>
+    public class AIState : GameState<NextStateTrigger>, IMainPhaseState
     {
-        public const float PAUSE_BETWEEN_ACTIONS = 0.9f;//musst be higher than AISystem camera times
-        private AISystem aiSystem;
-        private ConditionManager ConditionManager;
-        private float pauseTime;
+       
         private readonly GridGameManager gridGameManager;
         private CameraSystem cameraSystem;
+        private ConditionManager ConditionManager;
+        private MainStateAI mainState;
+        private StartOfTurnState startOfTurnAIState;
+        private FactionManager factionManager;
+        protected StateMachine<PPStateTrigger> stateMachine;
         public AIState(ConditionManager manager)
         {
             ConditionManager = manager;
             gridGameManager = GridGameManager.Instance;
+            factionManager = gridGameManager.FactionManager;
             cameraSystem = GameObject.FindObjectOfType<CameraSystem>();
+            startOfTurnAIState = new StartOfTurnState(gridGameManager, factionManager, this);
+            mainState = new MainStateAI(gridGameManager);
+            startOfTurnAIState.Transitions.Add( PPStateTrigger.StartTurnFinished,mainState);
+            gridGameManager.GetSystem<TurnSystem>().OnStartTurn+= StartOfTurn;
         }
         public override void Enter()
         {
             //Debug.Log("Enter AI State");
            
-            if(aiSystem==null)
-                aiSystem = GridGameManager.Instance.GetSystem<AISystem>();
-            aiSystem.NewTurn();
-            //cameraSystem.AddMixin<FocusCameraMixin>().Construct();
-            int height = gridGameManager.BattleMap.GetHeight();
-            int width = gridGameManager.BattleMap.GetWidth();
-            // cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
-            //cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height);
+            stateMachine = new StateMachine<PPStateTrigger>(startOfTurnAIState);
+            stateMachine.Init();
+           
 
+        }
+        bool startTurnFinished = false;
+
+        void StartOfTurn()
+        {
+            startTurnFinished = false;
         }
 
         public override void Exit()
         {
            // Debug.Log("Exit AI State");
-          // cameraSystem.RemoveMixin<ClampCameraMixin>();
-          // cameraSystem.RemoveMixin<ViewOnGridMixin>();
-           //cameraSystem.RemoveMixin<FocusCameraMixin>();
+           // cameraSystem.RemoveMixin<ClampCameraMixin>();
+           // cameraSystem.RemoveMixin<ViewOnGridMixin>();
+           // cameraSystem.RemoveMixin<FocusCameraMixin>();
         }
 
         public override GameState<NextStateTrigger> Update()
         {
-            
             if (ConditionManager.CheckLose())
             {
                 return  GridGameManager.Instance.GameStateManager.GameOverState;
@@ -57,27 +64,20 @@ namespace Game.States
             {
                 return WinState.Create();
             }
-            
-            pauseTime += Time.deltaTime;
-            //wait so the player can follow what the AI is doing
-            if (pauseTime >= PAUSE_BETWEEN_ACTIONS)
-            {
-                pauseTime = 0;
-
-                if (!aiSystem.IsFinished())
-                {
-                    // Debug.Log("THINK");
-                    aiSystem.Think();
-                }
-                else
-                {
-                    // Debug.Log("AI State Finished");
-                    GridGameManager.Instance.GetSystem<TurnSystem>().OnTriggerEndTurn();
-                }
-            }
+            stateMachine.Update();
            
             return NextState;
 
+        }
+
+        public void Feed(PPStateTrigger trigger)
+        {
+            stateMachine.Feed(trigger);
+        }
+
+        public void SetStartTurnFinished()
+        {
+            startTurnFinished = true;
         }
     }
 }

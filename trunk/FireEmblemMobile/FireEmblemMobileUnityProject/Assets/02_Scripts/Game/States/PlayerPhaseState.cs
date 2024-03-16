@@ -17,10 +17,16 @@ namespace Game.States
     public enum PPStateTrigger
     {
         ChooseTarget,
-        Cancel
+        Cancel,
+        StartTurnFinished
     }
 
-    public class PlayerPhaseState : GameState<NextStateTrigger>
+    public interface IMainPhaseState
+    {
+        public void Feed(PPStateTrigger trigger);
+        public void SetStartTurnFinished();
+    }
+    public class PlayerPhaseState : GameState<NextStateTrigger>, IMainPhaseState
     {
         private readonly GridGameManager gridGameManager;
 
@@ -30,7 +36,7 @@ namespace Game.States
         private UnitInputSystem unitInputSystem;
        // private ISelectionDataProvider selectionDataProvider;
         private CameraSystem cameraSystem;
-       
+        public StartOfTurnState startOfTurnPlayerPhaseState;
         public MainPlayerPhaseState mainState;
         public ChooseTargetState chooseTargetState;
         protected StateMachine<PPStateTrigger> stateMachine;
@@ -45,8 +51,10 @@ namespace Game.States
             unitInputSystem = new UnitInputSystem();
             
             mainState = new MainPlayerPhaseState(gridGameManager,factionManager,gridInputSystem, unitInputSystem, this);
+            startOfTurnPlayerPhaseState = new StartOfTurnState(gridGameManager, factionManager, this);
             chooseTargetState = new ChooseTargetState(gridInputSystem, unitInputSystem, this);
 
+            startOfTurnPlayerPhaseState.AddTransition(mainState, PPStateTrigger.StartTurnFinished);
             mainState.AddTransition(chooseTargetState,PPStateTrigger.ChooseTarget);
             chooseTargetState.AddTransition(mainState,PPStateTrigger.Cancel);
             
@@ -54,13 +62,25 @@ namespace Game.States
             unitInputSystem.EndedDrag += ActivateCameraDrag;
             unitInputSystem.StartedDrag += DeactivateCameraDrag;
             unitInputSystem.MouseUp += FindBetterName;
-           
+            gridGameManager.GetSystem<TurnSystem>().OnStartTurn+= StartOfTurn;
+
+        }
+
+        void StartOfTurn()
+        {
+            startTurnFinished = false;
         }
 
         public void Feed(PPStateTrigger trigger)
         {
             stateMachine.Feed(trigger);
         }
+
+        public void SetStartTurnFinished()
+        {
+            startTurnFinished = true;
+        }
+
         public void Init()
         {
             gridInputSystem.inputReceiver = new GameInputReceiver(gridGameManager.GetSystem<GridSystem>());
@@ -76,23 +96,26 @@ namespace Game.States
             cameraSystem.GetMixin<ViewOnGridMixin>().ToogleZoom();
             zoomLevel = cameraSystem.GetMixin<ViewOnGridMixin>().zoomLevel;
         }
+
+        private bool startTurnFinished;
         public override void Enter()
         {
 
             // Debug.Log("PlayerPhaseEnter");
-            stateMachine = new StateMachine<PPStateTrigger>(mainState);
-           stateMachine.Init();
+            stateMachine = new StateMachine<PPStateTrigger>(startTurnFinished?mainState:startOfTurnPlayerPhaseState);
+          
            int height = gridGameManager.BattleMap.GetHeight();
            int width = gridGameManager.BattleMap.GetWidth();
            if(!cameraSystem.HasMixin<ViewOnGridMixin>())
                cameraSystem.AddMixin<ViewOnGridMixin>().Construct(width, height,zoomLevel);
 
            if(!cameraSystem.HasMixin<DragCameraMixin>())
-           cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
+            cameraSystem.AddMixin<DragCameraMixin>().Construct(new WorldPosDragPerformer(1f, cameraSystem.camera),
                 new ScreenPointToRayProvider(cameraSystem.camera), new HitChecker(),new MouseCameraInputProvider());
            if(!cameraSystem.HasMixin<FocusCameraMixin>())
-           cameraSystem.AddMixin<FocusCameraMixin>().Construct(.5f,false, true);
-          
+            cameraSystem.AddMixin<FocusCameraMixin>().Construct(.5f,false, true);
+           
+           stateMachine.Init();
            // cameraSystem.AddMixin<ClampCameraMixin>().Construct(width, height);
          
         }

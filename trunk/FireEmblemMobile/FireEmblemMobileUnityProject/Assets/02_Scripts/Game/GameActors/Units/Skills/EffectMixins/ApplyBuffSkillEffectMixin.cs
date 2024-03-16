@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using Game.AI;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Skills.Active;
 using Game.GameActors.Units.Skills.Base;
+using Game.Manager;
+using GameCamera;
 using UnityEngine;
+using Utility;
 
 namespace Game.GameActors.Units.Skills.EffectMixins
 {
@@ -14,28 +19,46 @@ namespace Game.GameActors.Units.Skills.EffectMixins
         public BuffDebuffBase appliedBuff;
         public StatModifier AppliedStatModifier;
         private bool applied = false;
-       
+        private CameraSystem cameraSystem;
 
         
 
         public override void Activate(Unit target,Unit caster, int level)
         {
+            if (cameraSystem == null)
+                cameraSystem = GameObject.FindObjectOfType<CameraSystem>();
             Debug.Log("ACTIVATE APPLY BUFF EFFECT MIXIN");
             float rng = Random.value;
             if (applyChance.Length <= level || rng <= applyChance[level])
             {
                 applied = true;
-                if (effect != null)
-                    GameObject.Instantiate(effect, target.GameTransformManager.GetCenterPosition(),
-                        Quaternion.identity);
-                if (appliedBuff != null)
-                    target.StatusEffectManager.AddBuffDebuff(Instantiate(appliedBuff), caster, level);
-                if (AppliedStatModifier != null)
-                {
-                    Debug.Log("ADD STAT MODIFIER");
-                    target.StatusEffectManager.AddStatModifier(Instantiate(AppliedStatModifier), level);
-                }
+                this.target = target;
+                this.caster = caster;
+                this.activatedLevel = level;
+               
+                AnimationQueue.Add(()=> cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(target.GameTransformManager.GameObject, AISystem.cameraPerformerTime));
+                FocusCameraMixin.OnArrived += CameraOnUnit;
             }
+        }
+        private Unit caster;
+        private Unit target;
+        private int activatedLevel;
+        void CameraOnUnit()
+        {
+
+            if (effect != null)
+                GameObject.Instantiate(effect, target.GameTransformManager.GetCenterPosition(),
+                    Quaternion.identity);
+            if (appliedBuff != null)
+                target.StatusEffectManager.AddBuffDebuff(Instantiate(appliedBuff), caster, activatedLevel);
+            if (AppliedStatModifier != null)
+            {
+                Debug.Log("ADD STAT MODIFIER");
+                target.StatusEffectManager.AddStatModifier(Instantiate(AppliedStatModifier), activatedLevel);
+            }
+            
+            FocusCameraMixin.OnArrived -= CameraOnUnit;
+            AnimationQueue.OnAnimationEnded?.Invoke();
         }
 
         public override void Deactivate(Unit target, Unit caster, int skillLevel)

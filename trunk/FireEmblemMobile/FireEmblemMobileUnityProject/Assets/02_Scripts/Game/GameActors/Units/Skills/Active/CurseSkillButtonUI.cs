@@ -31,7 +31,11 @@ namespace Game.GameActors.Units.Skills.Active
 
             MonoUtility.InvokeNextFrame(() =>
             {
-                if (gameObject!=null&&feedbacks != null)
+                if (this == null)
+                    return;
+                if (gameObject == null)
+                    return;
+                if (gameObject!=null&&this!=null&&feedbacks != null)
                     feedbacks.PlayFeedbacks();
             });
         }

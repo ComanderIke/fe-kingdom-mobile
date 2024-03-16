@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.GameActors.Units.Skills.Active;
 using Game.GameActors.Units.Skills.Base;
 using Game.Manager;
+using Game.States;
 using Game.Systems;
 using UnityEngine;
 
@@ -29,6 +30,8 @@ namespace Game.GameActors.Units.Skills.Passive
                 {
                     if (skillEffect is SelfTargetSkillEffectMixin selfTargetSkillMixin)
                         selfTargetSkillMixin.Activate(unit, skill.Level);
+                    if (skillEffect is UnitTargetSkillEffectMixin unitTargetSkillEffectMixin)
+                        unitTargetSkillEffectMixin.Activate(unit, unit, skill.Level);
                 }
             }
 
@@ -36,20 +39,21 @@ namespace Game.GameActors.Units.Skills.Passive
 
         void StartOfTurn()
         {
-            Activate(skill.owner);
+            if(GridGameManager.Instance.FactionManager.ActiveFaction.Id==skill.owner.Faction.Id)
+                Activate(skill.owner);
         }
         public override void BindToUnit(Unit unit, Skill skill)
         {
             //skill.SubscribeTo(unit.BattleComponent.onAttack);
             base.BindToUnit(unit, skill);
             
-            ServiceProvider.Instance.GetSystem<TurnSystem>().OnStartTurn+=StartOfTurn;
+            StartOfTurnState.OnStartOfTurnEffects+=StartOfTurn;
             
         }
         
         public override void UnbindFromUnit(Unit unit, Skill skill)
         {
-            ServiceProvider.Instance.GetSystem<TurnSystem>().OnStartTurn-=StartOfTurn;
+            StartOfTurnState.OnStartOfTurnEffects-=StartOfTurn;
             base.UnbindFromUnit(unit, skill);
            
         }

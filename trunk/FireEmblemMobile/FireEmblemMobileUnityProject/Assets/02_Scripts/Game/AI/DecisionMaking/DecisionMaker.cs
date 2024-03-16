@@ -473,7 +473,7 @@ namespace Game.AI.DecisionMaking
                 return useSkillPosition.TileData.avoBonus;
             }
         }
-        private void CalculateOptimalTilesToAttack()
+        public void CalculateOptimalTilesToAttack()
         {
             foreach (var attacker in attackerList)
             {
@@ -533,7 +533,7 @@ namespace Game.AI.DecisionMaking
             attackerList.Clear();
             foreach (var unit in units)
             {
-                unit.AIComponent.AttackableTargets=GetAttackTargets(unit);
+                unit.AIComponent.AttackableTargets=GetAttackTargets(gridInfo, unit);
                 if(unit.AIComponent.AIBehaviour!=null)
                     unit.AIComponent.AIBehaviour.UpdateState(unit, unit.AIComponent.AttackableTargets.Count()!=0 );
                 if (unit.AIComponent.AttackableTargets.Count() != 0)
@@ -549,7 +549,7 @@ namespace Game.AI.DecisionMaking
             }
         }
 
-        List<AIAttackTarget> GetAttackTargets(IAIAgent unit)
+        public static List<AIAttackTarget> GetAttackTargets(IGridInformation gridInfo, IAIAgent unit)
         {
             var attackTargetList = new List<AIAttackTarget>();
             var targetList = new List<IAttackableTarget>();

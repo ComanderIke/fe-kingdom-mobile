@@ -32,8 +32,8 @@ namespace Game.AI
         private GridSystem gridSystem;
         public AIRenderer AiRenderer;
 
-        private float cameraPerformerTime = .85f;
-        private float cameraTargetTime = .75f;
+        public const float cameraPerformerTime = .85f;
+        public const float cameraTargetTime = .75f;
 
         public Faction PlayerFaction
         {

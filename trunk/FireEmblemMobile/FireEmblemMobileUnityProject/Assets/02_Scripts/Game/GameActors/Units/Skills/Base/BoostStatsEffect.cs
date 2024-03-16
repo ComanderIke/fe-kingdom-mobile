@@ -11,7 +11,8 @@ namespace Game.GameActors.Units.Skills.Base
     {
         Effect,
         Blessing,
-        Relic
+        Relic,
+        Curse
     }
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Stats", fileName = "StatsEffect")]
     public class BoostStatsEffect : SelfTargetSkillEffectMixin

@@ -300,46 +300,46 @@ namespace Game.GameActors.Units.OnGameObject
             //Debug.Log("Show Effectivness: "+unit.name+" ");
             //Debug.Log(unit.GridComponent.GridPosition);
            // Debug.Log(this.GetInstanceID());
-            if (character.BattleComponent.IsEffective(unit.MoveType))
-            {
-                float eff = character.BattleComponent.GetEffectiveCoefficient(unit.MoveType);
-                
-                if(eff<1)
-                {
-                    moveTypeAnimator.SetBool(Effective, false);
-                    moveTypeAnimator.SetBool(Ineffective, true);
-                }
-                else
-                {
-                    moveTypeAnimator.SetBool(Effective, true);
-                    moveTypeAnimator.SetBool(Ineffective, false);
-                }
-            }
-            else
-            {
-                moveTypeAnimator.SetBool(Effective, false);
-                moveTypeAnimator.SetBool(Ineffective, false);
-            }
+            // if (character.BattleComponent.IsEffective(unit.MoveType))
+            // {
+            //     float eff = character.BattleComponent.GetEffectiveCoefficient(unit.MoveType);
+            //     
+            //     if(eff<1)
+            //     {
+            //         moveTypeAnimator.SetBool(Effective, false);
+            //         moveTypeAnimator.SetBool(Ineffective, true);
+            //     }
+            //     else
+            //     {
+            //         moveTypeAnimator.SetBool(Effective, true);
+            //         moveTypeAnimator.SetBool(Ineffective, false);
+            //     }
+            // }
+            // else
+            // {
+            //     moveTypeAnimator.SetBool(Effective, false);
+            //     moveTypeAnimator.SetBool(Ineffective, false);
+            // }
 
             if (character.BattleComponent.IsEffective(unit.equippedWeapon.WeaponType))
             {
                 float eff= character.BattleComponent.GetEffectiveCoefficient(unit.equippedWeapon.WeaponType);
                 if(eff<1)
                 {
-                    weaponTypeAnimator.SetBool(Effective, false);
-                    weaponTypeAnimator.SetBool(Ineffective, true);
+                    // weaponTypeAnimator.SetBool(Effective, false);
+                    // weaponTypeAnimator.SetBool(Ineffective, true);
                 }
                 else 
                 {
                     
-                    weaponTypeAnimator.SetBool(Effective, true);
-                    weaponTypeAnimator.SetBool(Ineffective, false);
+                    // weaponTypeAnimator.SetBool(Effective, true);
+                    // weaponTypeAnimator.SetBool(Ineffective, false);
                 }
             }
             else
             {
-                weaponTypeAnimator.SetBool(Effective, false);
-                weaponTypeAnimator.SetBool(Ineffective, false);
+                // weaponTypeAnimator.SetBool(Effective, false);
+                // weaponTypeAnimator.SetBool(Ineffective, false);
             }
         }
 

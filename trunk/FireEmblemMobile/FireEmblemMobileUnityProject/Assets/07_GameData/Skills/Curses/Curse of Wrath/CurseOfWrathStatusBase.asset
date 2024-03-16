@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdfa2610b8e9eed40ac24355b1cc24de, type: 3}
-  m_Name: Axe
+  m_Script: {fileID: 11500000, guid: 83c1fe6a32874db6aaef1013496a2489, type: 3}
+  m_Name: CurseOfWrathStatusBase
   m_EditorClassIdentifier: 
-  weaponName: 
-  icon: {fileID: 21300000, guid: e351edc0357f94366991fe12b5ba57dd, type: 3}
-  effectiveAgainst: []
-  effectiveAgainstCoefficients: []
-  advantageAgainst: []
+  BuffData: {fileID: 11400000, guid: 6478822c8aa394c3299c128bcaa4e3da, type: 2}
+  duration: 01000000
+  mixins:
+  - {fileID: 11400000, guid: 118ed555a4c1c4a8184a1713e1487619, type: 2}
