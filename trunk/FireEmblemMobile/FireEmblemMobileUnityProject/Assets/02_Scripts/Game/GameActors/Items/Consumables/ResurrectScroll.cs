@@ -1,19 +1,23 @@
 ﻿using Game.EncounterAreas.Model;
 using Game.GameActors.Units;
+using Game.GameActors.Units.Skills.Active;
+using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
 
 namespace Game.GameActors.Items.Consumables
 {
     public class ResurrectScroll : ConsumableItem, IEquipableCombatItem
     {
-        public ResurrectScroll(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, ItemTarget target) : base(name, description, cost, rarity,maxStack,sprite, target)
+        private Skill skill;
+        public ResurrectScroll(string name, string description, int cost,int rarity, int maxStack,Sprite sprite, ItemTarget target, Skill skill) : base(name, description, cost, rarity,maxStack,sprite, target)
         {
+            this.skill = skill;
         }
 
         public override void Use(Unit character, Party convoy)
         {
-            Unit unitToRevive =Player.Player.Instance.Party.deadMembers[ Player.Player.Instance.Party.deadMembers.Count-1];
-            Player.Player.Instance.Party.ReviveCharacter(unitToRevive);
+            ((SelfTargetSkillMixin)skill.FirstActiveMixin).Activate(character);
+           
             base.Use(character, convoy);
         }
     }

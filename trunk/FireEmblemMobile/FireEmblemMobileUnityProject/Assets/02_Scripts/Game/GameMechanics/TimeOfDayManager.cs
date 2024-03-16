@@ -5,6 +5,7 @@ using Game.GUI;
 using Game.GUI.ToolTips;
 using Game.SerializedData;
 using Game.Utility;
+using MoreMountains.Tools;
 using TMPro;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ namespace Game.GameMechanics
             this.hour = hour;
         }
     }
+
     public class TimeOfDayManager : MonoBehaviour, IDataPersistance
     {
         [SerializeField] private DynamicAmbientLight lightController;
@@ -31,14 +33,22 @@ namespace Game.GameMechanics
          private TimeOfDayBonuses nightBonuses;
          private TimeOfDayBonuses dayBonuses;
       
-        void Start()
-        {
-            nightBonuses = Player.Instance.Modifiers.NightBonuses;
-            dayBonuses = Player.Instance.Modifiers.DayBonuses;
-            
-            lightController.UpdateHour(hour);
-        }
+         private void Awake()
+         {
+             SaveGameManager.RegisterDataPersistanceObject(this);
+             
+         }
 
+
+         void Start()
+         {
+             nightBonuses = Player.Instance.Modifiers.NightBonuses;
+             dayBonuses = Player.Instance.Modifiers.DayBonuses;
+
+             if (lightController == null)
+                 lightController = FindObjectOfType<DynamicAmbientLight>();
+             lightController.UpdateHour(hour);
+         }
         void Update()
         {
         
@@ -130,11 +140,7 @@ namespace Game.GameMechanics
             SaveGameManager.UnregisterDataPersistanceObject(this);
         }
 
-        private void Awake()
-        {
-            SaveGameManager.RegisterDataPersistanceObject(this);
-        }
-
+       
         public void Init()
         {
             float hour = 6;

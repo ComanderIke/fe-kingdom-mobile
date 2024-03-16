@@ -1,4 +1,5 @@
 ﻿using Game.GameActors.Units.Skills.Base;
+using Game.Manager;
 using UnityEngine;
 
 namespace Game.GameActors.Units.Skills.Active
@@ -11,7 +12,7 @@ namespace Game.GameActors.Units.Skills.Active
         {
             base.Activate(user);
 
-            if (user != null)
+            if (user != null&& GridGameManager.Instance!=null)
             {
                SpawnAnimation(user.GameTransformManager.GetCenterPosition());
             }

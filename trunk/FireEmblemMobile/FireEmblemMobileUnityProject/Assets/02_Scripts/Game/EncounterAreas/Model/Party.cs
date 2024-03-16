@@ -394,7 +394,10 @@ namespace Game.EncounterAreas.Model
 
         public void ReviveCharacter(Unit unitToRevive)
         {
-            throw new NotImplementedException();
+            deadMembers.Remove(unitToRevive);
+            unitToRevive.Hp += 1;
+            members.Add(unitToRevive);
+            onActiveUnitChanged?.Invoke();
         }
 
 

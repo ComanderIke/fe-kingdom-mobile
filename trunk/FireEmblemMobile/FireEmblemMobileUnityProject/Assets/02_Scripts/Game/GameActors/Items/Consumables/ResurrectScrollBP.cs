@@ -10,7 +10,7 @@ namespace Game.GameActors.Items.Consumables
         
         public override Item Create()
         {
-            return new ResurrectScroll(name, description, cost, rarity,maxStack,sprite, target);
+            return new ResurrectScroll(name, description, cost, rarity,maxStack,sprite, target, skill.Create());
         }
     }
 }
