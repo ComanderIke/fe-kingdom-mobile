@@ -85,6 +85,7 @@ namespace Game.GameActors.Units.Skills.EffectMixins
 
         public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
+            return new List<EffectDescription>();
             return new List<EffectDescription>()
             {
                 new EffectDescription("Automatically Attacks an enemy nearby.","","")

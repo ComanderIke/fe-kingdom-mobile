@@ -252,7 +252,7 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
                     level++;
                 
                 string upgLabel = (BonusAttributes[level]*multiplier).GetTooltipValue();
-                list.Add(new EffectDescription(attributeslabel, "+"+valueLabel, "+"+upgLabel));
+                list.Add(new EffectDescription(attributeslabel, valueLabel, upgLabel));
             }
             if (level < BonusStats.Length)
             {
@@ -267,7 +267,7 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
 
                 for (int i = 0; i < bonusStatsLabels.Count; i++)
                 {
-                    list.Add(new EffectDescription(bonusStatsLabels[i], "+"+bonusStatsValues[i], "+"+bonusStatsUpgrades[i]));
+                    list.Add(new EffectDescription(bonusStatsLabels[i], bonusStatsValues[i], bonusStatsUpgrades[i]));
                 }
             }
             if(level<cantoAmount.Length)

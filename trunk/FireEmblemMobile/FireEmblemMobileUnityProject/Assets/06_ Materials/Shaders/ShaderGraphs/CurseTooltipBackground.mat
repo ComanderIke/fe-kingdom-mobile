@@ -7,38 +7,30 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MinotaurAttackTrail
-  m_Shader: {fileID: -6465566751694194690, guid: 8a75dbc8fc8038e4bab2d1750486e753,
+  m_Name: CurseTooltipBackground
+  m_Shader: {fileID: -6465566751694194690, guid: 23d5a863170d52d4fa8c2cfacfee4f93,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Gradient:
-        m_Texture: {fileID: 0}
+    - BlendTexture2:
+        m_Texture: {fileID: 2800000, guid: 8937a8535c9cdf640a26bf091757839a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - GradientTex:
-        m_Texture: {fileID: 2800000, guid: 4cecdf3870f7dae4286a8a82024a83ba, type: 3}
+    - _Emission:
+        m_Texture: {fileID: 2800000, guid: adf35405a3163af4fa533c6fe4a0e9c8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTexture:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: a463699282a2e094fa6da7f6205a3a31, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -55,8 +47,29 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Time: 0.27289173
-    - intensity: 1.5
+    - BlendOpactiy: 0.15
+    - _AlphaClip: 0
+    - _Blend: 0
+    - _Brightness: 0.15
+    - _CastShadows: 0
+    - _Cull: 2
+    - _DecalMeshBiasType: 0
+    - _DecalMeshDepthBias: 0
+    - _DecalMeshViewBias: 0
+    - _DrawOrder: 0
+    - _DstBlend: 0
+    - _Hue: 24.58
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _Saturation: 0
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _WorkflowMode: 1
+    - _ZTest: 7
+    - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _TInt: {r: 0.2547067, g: 0.1714133, b: 0.33962262, a: 1}
+    - _TintColor: {r: 0.4553997, g: 0.1994482, b: 0.509434, a: 1}
   m_BuildTextureStacks: []

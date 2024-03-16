@@ -2,6 +2,7 @@ using System;
 using Game.GameActors.Units.Skills.Base;
 using Game.GameMechanics;
 using Game.GUI;
+using Game.GUI.ToolTips;
 using Game.Utility;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -17,12 +18,20 @@ namespace Game.GameActors.Units.Skills.Active
         [SerializeField] private GameObject combatSkillButtonPrefab;
         [SerializeField] private MMF_Player feedbacks;
         public event Action OnClicked;
+        private Curse curse;
         public void Clicked()
         {
             OnClicked?.Invoke();
         }
+
+        public void TooltipClicked()
+        {
+            ToolTipSystem.Show(curse, transform.position);
+        }
         public void Show(Curse curse)
         {
+
+            this.curse = curse;
             curseIcon.sprite = curse.Icon;
             if (curse.OverwrittenSkill != null)
             {

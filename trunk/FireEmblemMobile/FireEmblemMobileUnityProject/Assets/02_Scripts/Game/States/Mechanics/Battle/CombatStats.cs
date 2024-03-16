@@ -239,7 +239,7 @@ namespace Game.States.Mechanics.Battle
             {
                 if (asArray[i] != 0)
                 {
-                    firstlabel += "" + asArray[i] + "/";
+                    firstlabel += ( asArray[i]>0?"+":"")+asArray[i] + "/";
                     cnt++;
                 }
                 if (cnt >= 2||(i==asArray.Length-1&&cnt!=0)||(bonusCount<=2&&cnt!=0))

@@ -33,7 +33,8 @@ namespace Game.GameActors.Units.CharStateEffects
         Enwebed,
         Slept,
         Tempted,
-        Frog
+        Frog,
+        Berserk
     }
 
     [CreateAssetMenu(menuName = "GameData/Buffs/BuffDebuffBase")]

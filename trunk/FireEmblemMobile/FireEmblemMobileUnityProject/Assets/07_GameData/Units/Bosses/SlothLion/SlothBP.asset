@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb843360a1e2024e9821031d19ee784, type: 3}
   m_Name: SlothBP
   m_EditorClassIdentifier: 
+  powerTriangleType: 1
   equippedWeaponBp: {fileID: 11400000, guid: 22ea5063ad9984e59acf30d99a63173a, type: 2}
   EquippedRelic1: {fileID: 0}
   Name: Nemean Lion Sin of Sloth
@@ -61,13 +62,16 @@ MonoBehaviour:
     Mov: 3
   moveType: {fileID: 11400000, guid: 580bbea6e1e3e824a81881f8e2a825ba, type: 2}
   SkillManager:
+    uniqueStartSkill: {fileID: 0}
     startSkills:
     - {fileID: 11400000, guid: 0a713ad640a4e4eedae2ac7a50d26d98, type: 2}
     - {fileID: 11400000, guid: 26d023faba9e14823934d29d7c0ebb45, type: 2}
     - {fileID: 11400000, guid: 44b66d09e910d4a8183b7d24a171e6bd, type: 2}
     startBlessing: {fileID: 0}
     maxSkillCount: 0
+    maxSkillPoints: 0
     skillPoints: 0
+    nextCastIsFree: 0
   rpgClass: 0
   bluePrintID: Sloth
   dialogActor: {fileID: 0}
@@ -83,17 +87,21 @@ MonoBehaviour:
         type: 2}
     UnitCharacterCircleUI: {fileID: 0}
     unitRenderer: {fileID: 0}
+    AttackDelay: 0
   audio: {fileID: 0}
   experienceManager:
     level: 0
     exp: 0
     drainableExp: 100
     expLeftToDrain: 100
+  dropableItem: {fileID: 0}
   <ChronikComponent>k__BackingField:
     <BodySprite>k__BackingField: {fileID: 88114694, guid: b4c935d198ab4d841908bb86727e6ba9,
       type: 3}
     <FaceSprite>k__BackingField: {fileID: 21300000, guid: 24ac2419721801f4b99a369cc219bc3b,
       type: 3}
+    <AlternateBodySprite>k__BackingField: {fileID: 0}
+    <AlternateFaceSprite>k__BackingField: {fileID: 0}
     <Name>k__BackingField: Nemean Lion Sin of Sloth
     <Description>k__BackingField: 'The chaos of the war disrupted the natural cycle
       of sleep. Witnessing the relentless exhaustion of mortals and gods without
@@ -104,3 +112,4 @@ MonoBehaviour:
       the weight of perpetual lethargy he now brought.
 
 '
+  dialogComponent: {fileID: 0}

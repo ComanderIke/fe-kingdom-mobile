@@ -344,7 +344,7 @@ namespace Game.GameActors.Units.Numbers
 
         public string GetTooltipValue()
         {
-           string valueLabel= "" + (STR != 0
+           string valueLabel= "+" + (STR != 0
                    ? STR + "/"
                    : "") //  either grant STR/SPD/SKL   5/4/3 -> 5/5/
                + (DEX != 0 ? DEX + "/" : "")
