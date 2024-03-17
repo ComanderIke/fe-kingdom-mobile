@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.Units.Skills.Base;
+using Game.Manager;
+using Game.Systems;
 using UnityEngine;
 
 namespace Game.GameActors.Units.CharStateEffects
@@ -45,6 +47,9 @@ namespace Game.GameActors.Units.CharStateEffects
                 case DebuffType.Stunned: unit.TurnStateManager.UnitTurnFinished(); 
                     break;
                 case DebuffType.Poisened: unit.Hp -= unit.MaxHp / 10;
+                    break;
+                case DebuffType.Slept: GridGameManager.Instance.GetSystem<UnitActionSystem>().Wait(unit);
+                    GridGameManager.Instance.GetSystem<UnitActionSystem>().ExecuteActions();
                     break;
                 
             }

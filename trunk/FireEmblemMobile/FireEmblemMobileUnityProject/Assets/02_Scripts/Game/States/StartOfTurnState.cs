@@ -43,7 +43,7 @@ namespace Game.States
         
         public override void Enter()
         {
-            AnimationQueue.OnAllAnimationsEnded += Finished;
+            AnimationQueue.OnAllAnimationsEnded += DoStatusEffectAnimations;
             gridGameManager.GetSystem<GridSystem>().cursor.Hide();
             foreach (var faction in factionManager.Factions)
             {
@@ -53,17 +53,24 @@ namespace Game.States
                     cursedUnit.SpreadCurse();
                 }
             }
-            
+            OnStartOfTurnEffects?.Invoke();
+
+            if (AnimationQueue.IsNoAnimationRunning())
+                DoStatusEffectAnimations();
+            // TODO Wait for all effects to be over. AnimationQueue?
+        }
+
+        void DoStatusEffectAnimations()
+        {
+            AnimationQueue.OnAllAnimationsEnded -= DoStatusEffectAnimations;
+            AnimationQueue.OnAllAnimationsEnded += Finished;
             for (int i=factionManager.ActiveFaction.Units.Count-1; i >=0; i--)//Collection might be modified(tempted)
             {
                 factionManager.ActiveFaction.Units[i].StatusEffectManager.UpdateTurn();
                 
             }
-            OnStartOfTurnEffects?.Invoke();
-
             if (AnimationQueue.IsNoAnimationRunning())
                 Finished();
-            // TODO Wait for all effects to be over. AnimationQueue?
         }
 
         public override void Exit()
