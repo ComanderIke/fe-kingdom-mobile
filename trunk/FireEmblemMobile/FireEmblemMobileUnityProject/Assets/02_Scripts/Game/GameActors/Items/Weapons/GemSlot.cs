@@ -23,9 +23,8 @@ namespace Game.GameActors.Items.Weapons
 
         public void Bind(Relic relic)
         {
-            boundTo = relic;
-           
-            gem.gemEffect.BindSkill(relic.user);
+            
+            gem.Bind(relic.user);
             gem.Rebind();
             // gem.onSoulsIncreased += SoulsIncreased;
             // Unit.UnitDied -= OnUnitDied;
@@ -39,7 +38,7 @@ namespace Game.GameActors.Items.Weapons
         public void Unbind(Relic relic)
         {
             boundTo =  null;
-            gem.gemEffect.UnbindSkill(relic.user);
+            gem.Unbind(relic.user);
             // gem.onSoulsIncreased -= SoulsIncreased;
             // Unit.UnitDied -= OnUnitDied;
         }

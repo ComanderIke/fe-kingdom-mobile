@@ -38,7 +38,7 @@ namespace Game.GUI
                 instantiatedObjects.RemoveAt(i);
             }
             GetComponent<RectTransform>().anchoredPosition= position+ new Vector3(0,100,0);
-            this.label.text = Attributes.GetAsText((int)attribute)+" Growth";
+            this.label.text = growth?Attributes.GetAsText((int)attribute)+" Growth": Attributes.GetAsLongText((int)attribute);
             var go = Instantiate(statContainerPrefab, statContainerParent.transform);
             var statContainer = go.GetComponent<StatContainerUI>();
             var value = unit.Stats.BaseAttributes.GetAttributeStat(attribute);

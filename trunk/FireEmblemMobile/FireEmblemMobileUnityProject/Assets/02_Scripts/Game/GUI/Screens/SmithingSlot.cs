@@ -53,6 +53,11 @@ namespace Game.GUI.Screens
                 ToolTipSystem.Show(new StockedItem(equipable,1), transform.position);
         }
 
+        public void GemSlotClicked()
+        {
+            if(equipable is Relic relic&& relic.GetGem()!=null)
+                ToolTipSystem.Show(new StockedItem(relic.GetGem(),1), transform.position);
+        }
         void UpdateUI()
         {
             if (skillUI != null&&equipable!=null)

@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.GameActors.Items.Weapons;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Skills;
 using Game.GameActors.Units.Skills.Base;
 using UnityEngine;
@@ -86,5 +87,15 @@ namespace Game.GameActors.Items.Gems
         // {
         //     this.currentSouls = souls;
         // }
+        public void Bind(Unit user)
+        {
+            gemEffect.Level = rarity-1;
+            gemEffect.BindSkill(user);
+        }
+
+        public void Unbind(Unit user)
+        {
+            gemEffect.UnbindSkill(user);
+        }
     }
 }

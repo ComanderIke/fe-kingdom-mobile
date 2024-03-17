@@ -154,6 +154,7 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
                         BonusAttributes[BonusAttributes.Length - 1]* multiplier;
                 }
             }
+            
         }
         private void ApplyGrowths(int level)
         {
