@@ -176,6 +176,8 @@ namespace Game.GUI.CharacterScreen
             Debug.Log("STR CLICKED");
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.STR, STR.transform.position);
+            else if(showAttributeState==ShowAttributeState.Growths)
+                ToolTipSystem.ShowAttributeValue(unit, AttributeType.STR, STR.transform.position, true);
             else if(showAttributeState==ShowAttributeState.CombatStats)
                 ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Hit, STR.transform.position);
             //ToolTipSystem.ShowAttribute("Strength", "Increases ones physical damage output!",unit.Stats.BaseAttributes.STR, STR.transform.position);
@@ -185,6 +187,8 @@ namespace Game.GUI.CharacterScreen
             Debug.Log("INT CLICKED");
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.INT, INT.transform.position);
+            else if(showAttributeState==ShowAttributeState.Growths)
+                ToolTipSystem.ShowAttributeValue(unit, AttributeType.INT, INT.transform.position, true);
             else if(showAttributeState==ShowAttributeState.CombatStats)
                 ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.AttackSpeed, INT.transform.position);
             //ToolTipSystem.ShowAttribute("Intelligence", "Increases ones magical damage output and something else!",unit.Stats.BaseAttributes.INT,INT.transform.position);
@@ -193,6 +197,8 @@ namespace Game.GUI.CharacterScreen
         {
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.DEX, DEX.transform.position);
+            else if(showAttributeState==ShowAttributeState.Growths)
+                ToolTipSystem.ShowAttributeValue(unit, AttributeType.DEX, DEX.transform.position, true);
             else if(showAttributeState==ShowAttributeState.CombatStats)
                 ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Crit, DEX.transform.position);
             //ToolTipSystem.ShowAttribute("Dexterity", "Increases ones accuracy and influences critical hitrate!",unit.Stats.BaseAttributes.DEX,DEX.transform.position);
@@ -201,6 +207,8 @@ namespace Game.GUI.CharacterScreen
         {
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.AGI, AGI.transform.position);
+            else if(showAttributeState==ShowAttributeState.Growths)
+                ToolTipSystem.ShowAttributeValue(unit, AttributeType.AGI, AGI.transform.position, true);
             else if(showAttributeState==ShowAttributeState.CombatStats)
                 ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Protection, AGI.transform.position);
 
@@ -210,6 +218,8 @@ namespace Game.GUI.CharacterScreen
         {
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.DEF, DEF.transform.position);
+            else if(showAttributeState==ShowAttributeState.Growths)
+                ToolTipSystem.ShowAttributeValue(unit, AttributeType.DEF, DEF.transform.position, true);
             else if(showAttributeState==ShowAttributeState.CombatStats)
                 ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Resistance, DEF.transform.position);
 
@@ -219,6 +229,8 @@ namespace Game.GUI.CharacterScreen
         {
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.LCK, LCK.transform.position);
+            else if(showAttributeState==ShowAttributeState.Growths)
+                ToolTipSystem.ShowAttributeValue(unit, AttributeType.LCK, LCK.transform.position, true);
             else if(showAttributeState==ShowAttributeState.CombatStats)
                 ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Avoid, LCK.transform.position);
             //ToolTipSystem.ShowAttribute("Luck", "Increases ones critical hit rate and many other things!",unit.Stats.BaseAttributes.LCK,LCK.transform.position);
@@ -227,6 +239,8 @@ namespace Game.GUI.CharacterScreen
         {
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.CON, CON.transform.position);
+            else if(showAttributeState==ShowAttributeState.Growths)
+                ToolTipSystem.ShowAttributeValue(unit, AttributeType.CON, CON.transform.position, true);
             else if(showAttributeState==ShowAttributeState.CombatStats)
                 ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.Attack, CON.transform.position);
             //ToolTipSystem.ShowAttribute("Constitution", "Increases ones maximum Hitpoints and allows to wield heavier weapons!",unit.Stats.BaseAttributes.CON,CON.transform.position);
@@ -235,6 +249,8 @@ namespace Game.GUI.CharacterScreen
         {
             if(showAttributeState==ShowAttributeState.Attributes)
                 ToolTipSystem.ShowAttributeValue(unit, AttributeType.FTH, FTH.transform.position);
+            else if(showAttributeState==ShowAttributeState.Growths)
+                ToolTipSystem.ShowAttributeValue(unit, AttributeType.FTH, FTH.transform.position, true);
             else if(showAttributeState==ShowAttributeState.CombatStats)
                 ToolTipSystem.ShowCombatStatValue(unit, CombatStats.CombatStatType.CurseResistance, FTH.transform.position);
             // ToolTipSystem.ShowAttribute("Faith", "Increases ones holy and occult damage and increases magical damage resistance!",unit.Stats.BaseAttributes.FAITH,FTH.transform.position);

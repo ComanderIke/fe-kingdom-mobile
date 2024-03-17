@@ -9,12 +9,12 @@ namespace Game.SerializedData
     public class GemData
     {
         [SerializeField] public string gemId;
-        [SerializeField] public int souls;
+        // [SerializeField] public int souls;
 
         public GemData(Gem gemSlotGem)
         {
             gemId = gemSlotGem.Name;
-            souls = gemSlotGem.GetCurrentSouls();
+            // souls = gemSlotGem.GetCurrentSouls();
         }
 
         public Gem Load()
@@ -23,7 +23,7 @@ namespace Game.SerializedData
             if (!String.IsNullOrEmpty(gemId))
             {
                 gem = GameBPData.Instance.GetGem(gemId);
-                gem.SetSouls(souls);
+                // gem.SetSouls(souls);
             }
             return gem;
         }

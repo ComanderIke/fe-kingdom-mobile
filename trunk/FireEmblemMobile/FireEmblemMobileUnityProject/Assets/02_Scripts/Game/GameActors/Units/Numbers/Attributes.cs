@@ -341,6 +341,7 @@ namespace Game.GameActors.Units.Numbers
                 return attributeslabel.Remove(attributeslabel.Length - 1, 1);
             return attributeslabel;
         }
+        
 
         public string GetTooltipValue()
         {
@@ -357,6 +358,10 @@ namespace Game.GameActors.Units.Numbers
             if (valueLabel.Length > 0)
                 return valueLabel.Remove(valueLabel.Length - 1, 1);
             return valueLabel;
+        }
+        public string GetTooltipGrowthValue()
+        {
+            return GetTooltipValue() + " %";
         }
 
         public void Clear()

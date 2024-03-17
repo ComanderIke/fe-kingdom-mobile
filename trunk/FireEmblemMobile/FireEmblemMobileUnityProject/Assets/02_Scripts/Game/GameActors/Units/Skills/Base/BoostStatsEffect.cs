@@ -12,7 +12,8 @@ namespace Game.GameActors.Units.Skills.Base
         Effect,
         Blessing,
         Relic,
-        Curse
+        Curse,
+        Gem
     }
     [CreateAssetMenu(menuName = "GameData/Skills/Effectmixin/Stats", fileName = "StatsEffect")]
     public class BoostStatsEffect : SelfTargetSkillEffectMixin
@@ -20,6 +21,7 @@ namespace Game.GameActors.Units.Skills.Base
       
         public Attributes[] BonusAttributes;
         public CombatStats[] BonusStats;
+        public bool attributesIsGrowths;
         public BonusEffectType effectType;
         public int BonusMov; 
         [SerializeField] private int[] cantoAmount;
@@ -46,6 +48,17 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
             activated = true;
         }
 
+        public override void Deactivate(Unit target, int level)
+        {
+            if (!activated)
+                return;
+            RemoveBonuses(level);
+            this.target = null;
+            this.activatedLevel = 0;
+           
+            activated = false;
+           
+        }
         private void ApplyBonuses(int level)
         {
             if (skillTransferDataIsMultiplier && SkillTransferData != null&& SkillTransferData.data!=null)
@@ -56,7 +69,12 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
 
             if (BonusAttributes != null&& BonusAttributes.Length>0)
             {
-                ApplyAttributes(level);
+                if(attributesIsGrowths)
+                    ApplyGrowths(level);
+                else
+                {
+                    ApplyAttributes(level);
+                }
             }
 
             if (BonusStats != null&& BonusStats.Length>0)
@@ -137,6 +155,19 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
                 }
             }
         }
+        private void ApplyGrowths(int level)
+        {
+            
+            if (level < BonusAttributes.Length)
+                target.Stats.BonusGrowths +=
+                    BonusAttributes[level]* multiplier;
+            else
+            {
+                target.Stats.BonusGrowths +=
+                    BonusAttributes[BonusAttributes.Length - 1]* multiplier;
+            }
+            
+        }
 
         void UnapplyAttributes(int level)
         {
@@ -168,6 +199,20 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
                     target.Stats.BonusAttributesFromEquips -= BonusAttributes[^1] * multiplier;
                 }
             }
+
+        }
+        void UnapplyGrowths(int level)
+        {
+
+            
+            if (level < BonusAttributes.Length)
+                target.Stats.BonusGrowths -= BonusAttributes[level] * multiplier;
+            else
+            {
+                target.Stats.BonusGrowths -= BonusAttributes[^1] * multiplier;
+            }
+            
+            
 
         }
 
@@ -211,7 +256,11 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
 
             if (BonusAttributes != null && BonusAttributes.Length > 0)
             {
-                UnapplyAttributes(level);
+                if(attributesIsGrowths)
+                    UnapplyGrowths(level);
+                else
+                    UnapplyAttributes(level);
+                
             }
 
             if (BonusStats != null && BonusStats.Length > 0)
@@ -225,17 +274,7 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
             Debug.Log("BOOST STATS DEACTIVATED "+target.GridComponent.Canto);
         }
 
-        public override void Deactivate(Unit target, int level)
-        {
-            if (!activated)
-                return;
-            RemoveBonuses(level);
-            this.target = null;
-            this.activatedLevel = 0;
-           
-            activated = false;
-           
-        }
+        
 
         public override List<EffectDescription> GetEffectDescription(Unit caster,int level)
         {
@@ -245,13 +284,31 @@ MyDebug.LogTest("ACTIVATE BOOST STATS EFFECT");
 
             if (level < BonusAttributes.Length)
             {
-                string attributeslabel = (BonusAttributes[level]*multiplier).GetTooltipText();
-                string valueLabel =(BonusAttributes[level]*multiplier).GetTooltipValue();
-                // if(level<MAXLEVEL)
-                if (level < BonusAttributes.Length - 1)
-                    level++;
+                string valueLabel = "";
+                string attributeslabel = "";
+                string upgLabel = "";
+               
+                if (attributesIsGrowths)
+                {
+                    attributeslabel = (BonusAttributes[level]*multiplier).GetTooltipText();
+                    valueLabel =(BonusAttributes[level]*multiplier).GetTooltipGrowthValue();
+                    // if(level<MAXLEVEL)
+                    if (level < BonusAttributes.Length - 1)
+                        level++;
                 
-                string upgLabel = (BonusAttributes[level]*multiplier).GetTooltipValue();
+                    upgLabel = (BonusAttributes[level]*multiplier).GetTooltipGrowthValue();
+                    list.Add(new EffectDescription("Growths:", "", ""));
+                }
+                else
+                {
+                    attributeslabel = (BonusAttributes[level]*multiplier).GetTooltipText();
+                    valueLabel =(BonusAttributes[level]*multiplier).GetTooltipValue();
+                    // if(level<MAXLEVEL)
+                    if (level < BonusAttributes.Length - 1)
+                        level++;
+                
+                    upgLabel = (BonusAttributes[level]*multiplier).GetTooltipValue();
+                }
                 list.Add(new EffectDescription(attributeslabel, valueLabel, upgLabel));
             }
             if (level < BonusStats.Length)

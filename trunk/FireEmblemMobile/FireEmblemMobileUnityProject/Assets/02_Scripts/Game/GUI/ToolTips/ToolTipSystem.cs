@@ -141,13 +141,13 @@ namespace Game.GUI.ToolTips
             instance.ItemToolTip.gameObject.SetActive(false);
         }
     
-        public static void ShowAttributeValue(Unit unit,AttributeType attributeType, Vector3 position)
+        public static void ShowAttributeValue(Unit unit,AttributeType attributeType, Vector3 position, bool growth =false)
         {
             instance.tooltipShownThisFrame = true;
             CloseAllToolTips();
             // Debug.Log("transformPos: "+position+" ScreenPos"+Camera.main.WorldToScreenPoint(position));
             instance.AttributeValueTooltipUI.gameObject.SetActive(true);
-            instance.AttributeValueTooltipUI.Show(unit,  attributeType, GetAnchoredPositionInTooltipCanvas(position));
+            instance.AttributeValueTooltipUI.Show(unit,  attributeType, GetAnchoredPositionInTooltipCanvas(position), growth);
         }
         public static void ShowCombatStatValue(Unit unit,CombatStats.CombatStatType combatStatType, Vector3 position)
         {

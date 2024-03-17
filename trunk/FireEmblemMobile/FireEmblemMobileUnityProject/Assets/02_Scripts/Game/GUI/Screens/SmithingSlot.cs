@@ -22,7 +22,7 @@ namespace Game.GUI.Screens
         [SerializeField] private Image gem;
         [SerializeField] private GameObject slot;
         [SerializeField] private SkillUI skillUI;
-        [SerializeField] private TextMeshProUGUI soulsText;
+        // [SerializeField] private TextMeshProUGUI soulsText;
         [SerializeField] private GameObject TooltipButtonArea;
         [SerializeField] private WeightUI weightUI;
         [SerializeField] private TextMeshProUGUI weaponRank;
@@ -103,14 +103,14 @@ namespace Game.GUI.Screens
                     {
                         gem.sprite = relic.GetGem().Sprite;
                         gem.enabled = true;
-                        soulsText.enabled = true;
-                        soulsText.text = ""+relic.GetGem().GetCurrentSouls();
+                        // soulsText.enabled = true;
+                        // soulsText.text = ""+relic.GetGem().GetCurrentSouls();
                     }
                     else
                     {
                         gem.sprite = null;
                         gem.enabled = false;
-                        soulsText.enabled = false;
+                        // soulsText.enabled = false;
                     }
                 }
                 else

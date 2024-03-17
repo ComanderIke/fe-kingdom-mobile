@@ -192,10 +192,10 @@ namespace __2___Scripts.External.Editor
                 {
                     activeUnit.SkillManager.RemoveRandomSkill();
                 }
-                if (GUILayout.Button("Grant SoulCharge"))
-                {
-                    activeUnit.EquippedRelic.GetGem().IncreaseSouls();
-                }
+                // if (GUILayout.Button("Grant SoulCharge"))
+                // {
+                //     activeUnit.EquippedRelic.GetGem().IncreaseSouls();
+                // }
             }
             else if (activeEnemy != null)
             {

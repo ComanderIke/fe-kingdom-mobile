@@ -15,15 +15,15 @@ namespace Game.GameActors.Items.Gems
         [SerializeField] public Skill gemEffect;
         private bool inserted = false;
         private Gem upgradeTo;
-        private int soulCapacity;
-        private int currentSouls;
+        // private int soulCapacity;
+        // private int currentSouls;
         public event Action onSoulsIncreased;
-        public Gem(string name, string description, int cost, int maxStack,Sprite sprite, int rarity, Skill gemEffect,int startSouls, int soulCapacity, Gem upgradeTo) : base(name, description, cost, rarity,maxStack,sprite)
+        public Gem(string name, string description, int cost, int maxStack,Sprite sprite, int rarity, Skill gemEffect, Gem upgradeTo) : base(name, description, cost, rarity,maxStack,sprite)
         {
             this.gemEffect = gemEffect;
             this.upgradeTo = upgradeTo;
-            this.soulCapacity = soulCapacity;
-            currentSouls = startSouls;
+            // this.soulCapacity = soulCapacity;
+            // currentSouls = startSouls;
         }
 
         // public GemType GetGemType(GemType gemType)
@@ -48,25 +48,25 @@ namespace Game.GameActors.Items.Gems
             return upgradeTo;
         }
 
-        public void IncreaseSouls()
-        {
-            currentSouls++;
-            if (currentSouls > soulCapacity)
-                currentSouls = soulCapacity;
-            else
-            {
-                
-                
-                Rebind();
-                onSoulsIncreased?.Invoke();
-            }
-            
-        }
+        // public void IncreaseSouls()
+        // {
+        //     currentSouls++;
+        //     if (currentSouls > soulCapacity)
+        //         currentSouls = soulCapacity;
+        //     else
+        //     {
+        //         
+        //         
+        //         Rebind();
+        //         onSoulsIncreased?.Invoke();
+        //     }
+        //     
+        // }
 
         public void Rebind()
         {
             // Debug.Log("REBIND GEM");
-            gemEffect.skillTransferData.data= (float)currentSouls;
+            // gemEffect.skillTransferData.data= (float)currentSouls;
             // Debug.Log("TransferData: "+ gemEffect.skillTransferData.data);
             // Debug.Log("GUID:" +gemEffect.skillTransferData.guid);
             gemEffect.Rebind();
@@ -77,14 +77,14 @@ namespace Game.GameActors.Items.Gems
             return upgradeTo != null;
         }
 
-        public int GetCurrentSouls()
-        {
-            return currentSouls;
-        }
+        // public int GetCurrentSouls()
+        // {
+        //     return currentSouls;
+        // }
 
-        public void SetSouls(int souls)
-        {
-            this.currentSouls = souls;
-        }
+        // public void SetSouls(int souls)
+        // {
+        //     this.currentSouls = souls;
+        // }
     }
 }
