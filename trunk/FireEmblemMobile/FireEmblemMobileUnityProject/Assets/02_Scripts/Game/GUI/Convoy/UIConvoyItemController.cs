@@ -21,6 +21,7 @@ namespace Game.GUI.Convoy
         public TextMeshProUGUI stockCount;
         [SerializeField] private Image gemImage;
         [SerializeField] private GameObject slot;
+        [SerializeField] private GameObject inSocket;
         [SerializeField] private GameObject showTooltipButtonArea;
         public event Action<UIConvoyItemController> onClicked;
         [SerializeField] private Image backgroundImage;
@@ -131,6 +132,10 @@ namespace Game.GUI.Convoy
             ToolTipSystem.Show(stockedItem, transform.position);
         }
 
+        public void SetInSocket(bool value)
+        {
+            inSocket.gameObject.SetActive(value);
+        }
         public virtual void Clicked()
         {
             onClicked?.Invoke(this);

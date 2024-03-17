@@ -3,6 +3,7 @@ using System.Linq;
 using Game.EncounterAreas.Encounters.Smithy;
 using Game.GameActors.Items.Gems;
 using Game.GameActors.Player;
+using Game.GUI.Convoy;
 using Game.GUI.EncounterUI.Merchant;
 using Game.Utility;
 using TMPro;
@@ -24,7 +25,7 @@ namespace Game.GUI.Screens
         [SerializeField] private Button combineButton;
 
   
-        private List<SelectableItemController> instantiatedItems;
+        private List<UIConvoyItemController> instantiatedItems;
         private StockedItem selected;
     
         public void Show()
@@ -35,7 +36,7 @@ namespace Game.GUI.Screens
 
         void UpdateUI()
         {
-            instantiatedItems = new List<SelectableItemController>();
+            instantiatedItems = new List<UIConvoyItemController>();
             combineButton.interactable = false;
      
             gemParent.DeleteAllChildren();
@@ -43,8 +44,8 @@ namespace Game.GUI.Screens
             foreach (var gem in Player.Instance.Party.Storage.GetAllGems())
             {
                 var gemGO=Instantiate(gemPrefab, gemParent);
-                var selectableItemUI =gemGO.GetComponent<SelectableItemController>();
-                selectableItemUI.SetValues(gem);
+                var selectableItemUI =gemGO.GetComponent<UIConvoyItemController>();
+                selectableItemUI.SetValues(gem,0);
                 if(selected==gem)
                     selectableItemUI.Select();
                 selectableItemUI.onClicked += ItemClicked;
@@ -53,7 +54,7 @@ namespace Game.GUI.Screens
             if (selected == null)
             {
                 if(instantiatedItems.Count!=0)
-                    selected = instantiatedItems[0].item;
+                    selected = instantiatedItems[0].stockedItem;
             }
             if (selected != null)
             {
@@ -96,9 +97,9 @@ namespace Game.GUI.Screens
 
             UpdateUI();
         }
-        void ItemClicked(SelectableItemController item)
+        void ItemClicked(UIConvoyItemController item)
         {
-            selected = item.item;
+            selected = item.stockedItem;
             foreach (var itemUI in instantiatedItems)
             {
                 if(itemUI==item)

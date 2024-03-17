@@ -18,6 +18,8 @@ namespace Game.GameActors.Items.Gems
     public class GemBP: ItemBP
     {
         [SerializeField] private SkillBp gemEffect;
+
+        [SerializeField] private string effectText;
         // [SerializeField] private int soulCapacity = 20;
         // [SerializeField] private int startSouls = 0;
         [SerializeField] private GemBP upgradeTo;
@@ -27,8 +29,8 @@ namespace Game.GameActors.Items.Gems
             if (gemEffect != null)
                 instSkill = gemEffect.Create();
             if(upgradeTo!=null)
-                return new Gem(name, description, cost, maxStack,sprite,rarity , instSkill,(Gem) upgradeTo.Create());
-            return new Gem(name, description, cost, maxStack,sprite,rarity , instSkill, null);
+                return new Gem(name, description, cost, maxStack,sprite,rarity , instSkill,(Gem) upgradeTo.Create(), effectText);
+            return new Gem(name, description, cost, maxStack,sprite,rarity , instSkill, null, effectText);
         }
 
         

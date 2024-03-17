@@ -16,13 +16,17 @@ namespace Game.GameActors.Items.Gems
         [SerializeField] public Skill gemEffect;
         private bool inserted = false;
         private Gem upgradeTo;
+
+        public string effectText;
+
         // private int soulCapacity;
         // private int currentSouls;
         public event Action onSoulsIncreased;
-        public Gem(string name, string description, int cost, int maxStack,Sprite sprite, int rarity, Skill gemEffect, Gem upgradeTo) : base(name, description, cost, rarity,maxStack,sprite)
+        public Gem(string name, string description, int cost, int maxStack,Sprite sprite, int rarity, Skill gemEffect, Gem upgradeTo, string effectText) : base(name, description, cost, rarity,maxStack,sprite)
         {
             this.gemEffect = gemEffect;
             this.upgradeTo = upgradeTo;
+            this.effectText = effectText;
             // this.soulCapacity = soulCapacity;
             // currentSouls = startSouls;
         }
