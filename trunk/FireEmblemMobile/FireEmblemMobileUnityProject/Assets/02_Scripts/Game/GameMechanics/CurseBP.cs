@@ -9,19 +9,7 @@ namespace Game.GameMechanics
     {
         public override Skill Create()
         {
-            var instantiatedPassiveMixins = new List<PassiveSkillMixin>();
-            if(passiveMixins!=null)
-                foreach (var passive in passiveMixins)
-                {
-                    instantiatedPassiveMixins.Add(Instantiate(passive));
-                }
-            var instantiatedActiveMixins = new List<ActiveSkillMixin>();
-            if(activeMixins!=null)
-                foreach (var active in activeMixins)
-                {
-                    instantiatedActiveMixins.Add(Instantiate(active));
-                }
-            return new Curse(Name, Description, Icon, Tier, maxLevel, instantiatedPassiveMixins,combatSkillMixin==null?null:Instantiate(combatSkillMixin), instantiatedActiveMixins, SkillTransferData);
+            return new Curse(Name, Description, Icon, Tier, maxLevel, base.InitPassiveSkillMixins(),base.InitCombatSkillMixin(), base.InitActiveSkillMixins(), SkillTransferData);
         }
 
     }

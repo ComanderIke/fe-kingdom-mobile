@@ -11,19 +11,7 @@ namespace Game.GameMechanics
         [SerializeField]public God god;
         public override Skill Create()
         {
-            var instantiatedPassiveMixins = new List<PassiveSkillMixin>();
-            if(passiveMixins!=null)
-                foreach (var passive in passiveMixins)
-                {
-                    instantiatedPassiveMixins.Add(Instantiate(passive));
-                }
-            var instantiatedActiveMixins = new List<ActiveSkillMixin>();
-            if(activeMixins!=null)
-                foreach (var active in activeMixins)
-                {
-                    instantiatedActiveMixins.Add(Instantiate(active));
-                }
-            return new Blessing(Name, Description, Icon, Tier, maxLevel, instantiatedPassiveMixins, combatSkillMixin==null?null:Instantiate(combatSkillMixin),instantiatedActiveMixins, SkillTransferData, god);
+            return new Blessing(Name, Description, Icon, Tier, maxLevel, base.InitPassiveSkillMixins(), base.InitCombatSkillMixin(),base.InitActiveSkillMixins(), SkillTransferData, god);
         }
 
     }

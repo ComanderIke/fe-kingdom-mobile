@@ -19,7 +19,8 @@ namespace Game.GameActors.Units.Skills.Base
         public int maxLevel = 5;
 
         public SkillTransferData SkillTransferData;
-        public virtual Skill Create()
+
+        protected List<PassiveSkillMixin> InitPassiveSkillMixins()
         {
             var instantiatedPassiveMixins = new List<PassiveSkillMixin>();
             if(passiveMixins!=null)
@@ -33,6 +34,12 @@ namespace Game.GameActors.Units.Skills.Base
                     }
                         
                 }
+
+            return instantiatedPassiveMixins;
+        }
+
+        protected List<ActiveSkillMixin> InitActiveSkillMixins()
+        {
             var instantiatedActiveMixins = new List<ActiveSkillMixin>();
             if(activeMixins!=null)
                 foreach (var active in activeMixins)
@@ -46,6 +53,12 @@ namespace Game.GameActors.Units.Skills.Base
                        
                 }
 
+            return instantiatedActiveMixins;
+        }
+
+        protected CombatSkillMixin InitCombatSkillMixin()
+        {
+            
             CombatSkillMixin instCombatskill = null;
             if (combatSkillMixin != null)
             {
@@ -53,10 +66,11 @@ namespace Game.GameActors.Units.Skills.Base
                 instCombatskill.Init();
             }
 
-            
-
-
-            return new Skill(Name, Description, Icon, Tier,maxLevel, instantiatedPassiveMixins,instCombatskill, instantiatedActiveMixins,SkillTransferData);
+            return instCombatskill;
+        }
+        public virtual Skill Create()
+        {
+            return new Skill(Name, Description, Icon, Tier,maxLevel, InitPassiveSkillMixins(),InitCombatSkillMixin(), InitActiveSkillMixins(),SkillTransferData);
         }
     }
 }
