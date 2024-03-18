@@ -15,7 +15,7 @@ namespace Game.GUI
         public void Show(MinotaurAIBehaviour minotaurBehaviour)
         {
             this.aiBehaviour = minotaurBehaviour;
-            
+            gameObject.SetActive(true);
             minotaurBehaviour.OnRageMeterChanged -= UpdateValues;
             minotaurBehaviour.OnRageMeterChanged += UpdateValues;
             UpdateValues();
@@ -38,11 +38,11 @@ namespace Game.GUI
                 {
                     if (i >= currentRageMeter)
                     {
-                        go.GetComponent<UIRageMeterPoint>().Activate();
+                        go.GetComponent<UIMeterPoint>().Activate();
                     }
                     else
                     {
-                        go.GetComponent<UIRageMeterPoint>().Fill();
+                        go.GetComponent<UIMeterPoint>().Fill();
                     }
                     
                   

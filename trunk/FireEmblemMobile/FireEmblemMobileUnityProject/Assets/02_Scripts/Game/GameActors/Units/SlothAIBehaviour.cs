@@ -6,54 +6,48 @@ using Game.GameActors.Units.Skills.Base;
 using Game.Systems;
 using Game.Utility;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utility;
 
 namespace Game.GameActors.Units
 {
-    [CreateAssetMenu(menuName = "GameData/AIBehaviour/Minotaur", fileName = "AIBehaviourMinotaur")]
-    public class MinotaurAIBehaviour : BossAIBehaviour
+    [CreateAssetMenu(menuName = "GameData/AIBehaviour/Sloth", fileName = "AIBehaviourSloth")]
+    public class SlothAIBehaviour : BossAIBehaviour
     {
-        private int rageMeter = 0;
-        [SerializeField] private int fullRageAmount = 4;
-        public int fullRageSkillIndex = 1;
+        private int sleepMeter = 0;
+        [FormerlySerializedAs("fullRageAmount")] [SerializeField] private int fullSleepMeter = 4;
        
-        public Action OnRageMeterChanged;
-        public int GetMaxRageMeter()
+        public Action OnSleepMeterChanged;
+        public int GetMaxSleepMeter()
         {
-            return fullRageAmount;
+            return fullSleepMeter;
         }
-        public int GetRageMeter()
+        public int GetSleepMeter()
         {
-            return rageMeter;
+            return sleepMeter;
         }
 
-        private float ragePointDelay = 0.8f;
+        private float sleepPointDelay = 0.8f;
         void UnitDamaged(Unit unit, int damage, DamageType damageType, bool crit, bool eff)
         {
             if (unit.Equals(agent))
             {
                 AnimationQueue.Add(() =>
                 {
-                    rageMeter++;
-                    if (rageMeter > fullRageAmount)
-                        rageMeter = fullRageAmount;
-                    OnRageMeterChanged?.Invoke();
-                    MonoUtility.DelayFunction(()=> AnimationQueue.OnAnimationEnded?.Invoke(),ragePointDelay);
+                    sleepMeter++;
+                    if (sleepMeter > fullSleepMeter)
+                        sleepMeter = fullSleepMeter;
+                    OnSleepMeterChanged?.Invoke();
+                    MonoUtility.DelayFunction(()=> AnimationQueue.OnAnimationEnded?.Invoke(),sleepPointDelay);
                 });
             };
                
             
         }
-        public override Skill GetSkillToUse()
-        {
-            if (rageMeter >= fullRageAmount)
-                return agent.SkillManager.ActiveSkills[fullRageSkillIndex];
-            return base.GetSkillToUse();
-        }
 
         public override void Init(Unit agent)
         {
-            rageMeter = 0;
+            sleepMeter = 0;
             Unit.OnUnitDamaged -= UnitDamaged;
             Unit.OnUnitDamaged += UnitDamaged;
             base.Init(agent);
@@ -77,7 +71,7 @@ namespace Game.GameActors.Units
                 {
                     case State.Aggressive:
                         Debug.Log("HÄH");
-                        if (rageMeter >= fullRageAmount)
+                        if (sleepMeter >= fullSleepMeter)
                         {
                             SetState(State.UseSkill);
                         }
@@ -96,8 +90,8 @@ namespace Game.GameActors.Units
                         if (usedSkill)
                         {
                             SetState(State.Aggressive);
-                            rageMeter = 0;
-                            OnRageMeterChanged?.Invoke();
+                            sleepMeter = 0;
+                            OnSleepMeterChanged?.Invoke();
                         }
                             
                         // if no enemies in attackrange AND no enemies in Range to stun

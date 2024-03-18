@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Game.GUI
 {
-    public class UIRageMeterPoint : MonoBehaviour
+    public class UIMeterPoint : MonoBehaviour
     {
         [SerializeField] private Image image;
         [SerializeField] private Sprite ragePointFullSprite;

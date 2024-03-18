@@ -21,6 +21,7 @@ namespace Game.GUI
         [SerializeField] private GameObject revivalStonePrefab;
 
         [SerializeField] private MinotaurRageMeterUI rageUI;
+        [SerializeField] private SlothSleepMeterUI sleepUI;
         [SerializeField] private Canvas canvas;
         private Unit unit;
         // Start is called before the first frame update
@@ -47,6 +48,12 @@ namespace Game.GUI
                 rageUI.Show(minotaurAIBehaviour);
                 
             }
+            else if (unit.AIComponent.AIBehaviour is SlothAIBehaviour slothAIBehaviour && slothAIBehaviour.GetSleepMeter() != slothAIBehaviour.GetMaxSleepMeter())
+            {
+                sleepUI.Show(slothAIBehaviour);
+                
+            }
+            
 
         }
 
@@ -102,17 +109,6 @@ namespace Game.GUI
                     AnimationQueue.OnAnimationEnded?.Invoke(), .5f);
             });
             currentRevivalStones = unit.RevivalStones;
-        }
-
-        private void OnDisable()
-        {
-            
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
     }
 }
