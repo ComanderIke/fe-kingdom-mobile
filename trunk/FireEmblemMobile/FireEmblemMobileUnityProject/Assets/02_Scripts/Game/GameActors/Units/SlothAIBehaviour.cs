@@ -6,6 +6,7 @@ using Game.GameActors.Units.Skills.Base;
 using Game.GameActors.Units.Skills.EffectMixins;
 using Game.Manager;
 using Game.States;
+using Game.States.Mechanics.Commands;
 using Game.Systems;
 using Game.Utility;
 using UnityEngine;
@@ -37,21 +38,37 @@ namespace Game.GameActors.Units
             {
                 AnimationQueue.Add(() =>
                 {
-                    sleepMeter++;
-                    if (sleepMeter > fullSleepMeter)
-                        sleepMeter = fullSleepMeter;
+                    sleepMeter=fullSleepMeter;
                     OnSleepMeterChanged?.Invoke();
                     MonoUtility.DelayFunction(()=> AnimationQueue.OnAnimationEnded?.Invoke(),sleepPointDelay);
                 });
-            };
+            }
                
             
+        }
+
+        void NoiseMade()
+        {
+            AnimationQueue.Add(() =>
+            {
+                sleepMeter++;
+                if (sleepMeter >= fullSleepMeter)
+                    sleepMeter = fullSleepMeter;
+                OnSleepMeterChanged?.Invoke();
+                MonoUtility.DelayFunction(()=> AnimationQueue.OnAnimationEnded?.Invoke(),sleepPointDelay);
+            });
         }
 
         public override void Init(Unit agent)
         {
             sleepMeter = 0;
             applysleepMixin = Instantiate(applysleepMixin);
+            AfterBattleTasks.OnFinished -= NoiseMade;
+            AfterBattleTasks.OnFinished += NoiseMade;
+            // UseSkillCommand.OnUseSkill += NoiseMade;
+            // UseSkillCommand.OnUseSkill -= NoiseMade;
+            // AttackCommand.OnAttackCommandPerformed += NoiseMade;
+            // AttackCommand.OnAttackCommandPerformed -= NoiseMade;
             Unit.OnUnitDamaged -= UnitDamaged;
             Unit.OnUnitDamaged += UnitDamaged;
             StartOfTurnState.OnStartOfTurnEffects -= StartofTurn;

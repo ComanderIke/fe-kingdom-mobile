@@ -1,5 +1,7 @@
-﻿using Game.AI.DecisionMaking;
+﻿using System;
+using Game.AI.DecisionMaking;
 using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units;
 using Game.GameActors.Units.Interfaces;
 using Game.Manager;
 using Game.Systems;
@@ -11,6 +13,7 @@ namespace Game.States.Mechanics.Commands
     {
         private readonly IBattleActor attacker;
         private readonly IAttackableTarget target;
+        public static event Action<Unit> OnAttackCommandPerformed;
 
         public AttackCommand(IBattleActor attacker, IAttackableTarget target)
         {
@@ -24,6 +27,7 @@ namespace Game.States.Mechanics.Commands
             GridGameManager.Instance.GameStateManager.BattleState.Start(attacker, target);
             BattleSystem.OnBattleFinished -= BattleFinished;
             BattleSystem.OnBattleFinished += BattleFinished;
+            OnAttackCommandPerformed?.Invoke((Unit)attacker);
 
         }
 

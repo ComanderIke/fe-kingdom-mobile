@@ -48,8 +48,8 @@ namespace LostGrace
             var go = Instantiate(lightSpotPrefabs[Random.Range(0, lightSpotPrefabs.Count)], transform);
             Vector3  spotPos= new Vector3(Random.Range(GetBoundLeft(),GetBoundRight()),
                 Random.Range(GetBoundBottom(), GetBoundTop()));
-            MyDebug.LogTest("LeftBound: "+GetBoundLeft());
-            MyDebug.LogTest("RightBound: "+GetBoundRight());
+            // MyDebug.LogTest("LeftBound: "+GetBoundLeft());
+            // MyDebug.LogTest("RightBound: "+GetBoundRight());
             int cnt = 0;
             while (IsNearExistingSpot(spotPos, positions)&& cnt< 10)
             {

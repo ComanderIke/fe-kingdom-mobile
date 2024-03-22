@@ -1,4 +1,5 @@
-﻿using Game.GameActors.InteractableGridObjects;
+﻿using System;
+using Game.GameActors.InteractableGridObjects;
 using Game.GameActors.Units;
 using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.Skills.Active;
@@ -12,6 +13,7 @@ namespace Game.States.Mechanics.Commands
     {
         private readonly Unit user;
         private readonly IAttackableTarget target;
+        public static event Action<Unit> OnUseSkill;
 
         private Vector2Int castLocation;
         public UseSkillCommand(IBattleActor user, IAttackableTarget target, Vector2Int castLocation)
@@ -36,7 +38,7 @@ namespace Game.States.Mechanics.Commands
                 Debug.Log(castLocation.x+" "+ castLocation.y);
                 stsm.Activate(user);
             }
-
+            OnUseSkill?.Invoke(user);
             IsFinished = true;
          //   MonoUtility.DelayFunction(()=>IsFinished=true, 2f);
           //  IsFinished = true;
