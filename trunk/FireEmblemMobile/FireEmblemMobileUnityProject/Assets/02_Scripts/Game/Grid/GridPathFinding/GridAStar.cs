@@ -90,6 +90,7 @@ namespace Game.Grid.GridPathFinding
             closed.Clear();
             open.Clear();
             open.Add(Nodes[sx, sy]);
+            MyDebug.LogTest("TX "+tx+" TY "+ty);
             Nodes[tx, ty].Parent = null;
             int maxDepth = 0;
             int maxSearchDistance = stopAfterDistance;
