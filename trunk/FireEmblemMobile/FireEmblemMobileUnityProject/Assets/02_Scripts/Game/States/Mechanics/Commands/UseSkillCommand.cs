@@ -11,12 +11,12 @@ namespace Game.States.Mechanics.Commands
 {
     public class UseSkillCommand : Command
     {
-        private readonly Unit user;
+        private readonly IAIAgent user;
         private readonly IAttackableTarget target;
         public static event Action<Unit> OnUseSkill;
 
         private Vector2Int castLocation;
-        public UseSkillCommand(IBattleActor user, IAttackableTarget target, Vector2Int castLocation)
+        public UseSkillCommand(IAIAgent user, IAttackableTarget target, Vector2Int castLocation)
         {
             this.user = (Unit)user;
             this.target = target;
@@ -26,19 +26,21 @@ namespace Game.States.Mechanics.Commands
         public override void Execute()
         {
             Debug.Log("EXECUTE USE SKILL ACTION");
-            var activeSkillMixin = user.SkillManager.ActiveSkills[0].FirstActiveMixin;
+            var skillToUse = user.AIComponent.AIBehaviour.GetSkillToUse();
+            var activeSkillMixin = skillToUse.FirstActiveMixin;
             var gridSystem = ServiceProvider.Instance.GetSystem<GridSystem>();
             if (activeSkillMixin is PositionTargetSkillMixin ptsm)
             {
                 Debug.Log(castLocation.x+" "+ castLocation.y);
-                ptsm.Activate(user,gridSystem.Tiles, castLocation.x, castLocation.y);
+                ptsm.Activate((Unit)user,gridSystem.Tiles, castLocation.x, castLocation.y);
             }
             else if (activeSkillMixin is SelfTargetSkillMixin stsm)
             {
                 Debug.Log(castLocation.x+" "+ castLocation.y);
-                stsm.Activate(user);
+                stsm.Activate((Unit)user);
             }
-            OnUseSkill?.Invoke(user);
+            
+            OnUseSkill?.Invoke((Unit)user);
             IsFinished = true;
          //   MonoUtility.DelayFunction(()=>IsFinished=true, 2f);
           //  IsFinished = true;

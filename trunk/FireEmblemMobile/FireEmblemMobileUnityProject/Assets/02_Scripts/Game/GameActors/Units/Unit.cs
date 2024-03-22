@@ -564,7 +564,7 @@ namespace Game.GameActors.Units
                 clone.GridComponent.Tile = GridComponent.Tile;
             }
             clone.GameTransformManager = new GameTransformManager();
-            clone.StatusEffectManager = new StatusEffectManager(clone);
+            clone.StatusEffectManager = new StatusEffectManager(clone, StatusEffectManager);
             clone.AIComponent = new AIComponent(AIComponent.AIBehaviour, clone,false);
             clone.visuals.UnitEffectVisual = visuals.UnitEffectVisual;
             clone.visuals = visuals;

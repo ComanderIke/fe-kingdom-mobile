@@ -35,9 +35,16 @@ namespace Game.GameActors.Units.Skills.EffectMixins
                 this.target = target;
                 this.caster = caster;
                 this.activatedLevel = level;
-               
-                AnimationQueue.Add(()=> cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(target.GameTransformManager.GameObject, AISystem.cameraPerformerTime));
-                FocusCameraMixin.OnArrived += CameraOnUnit;
+                if (cameraSystem.HasMixin<FocusCameraMixin>())
+                {
+                    AnimationQueue.Add(()=> cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(target.GameTransformManager.GameObject, AISystem.cameraPerformerTime));
+                    FocusCameraMixin.OnArrived += CameraOnUnit;
+                }
+                else
+                {
+                    CameraOnUnit();
+                }
+                   
             }
         }
         private Unit caster;

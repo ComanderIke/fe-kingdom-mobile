@@ -34,7 +34,7 @@ namespace Game.States
         {
             //Debug.Log("Enter AI State");
            
-            stateMachine = new StateMachine<PPStateTrigger>(startOfTurnAIState);
+            stateMachine = new StateMachine<PPStateTrigger>(startTurnFinished?mainState:startOfTurnAIState);
             stateMachine.Init();
            
 

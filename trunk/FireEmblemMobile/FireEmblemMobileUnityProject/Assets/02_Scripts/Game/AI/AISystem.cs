@@ -62,7 +62,7 @@ namespace Game.AI
             {
                 finished = true;
             }
-            else if (IsStartOfTurn()||!decisionMaker.moveOrderList.Any())
+            else if (IsStartOfTurn()||(decisionMaker.moveOrderList==null||!decisionMaker.moveOrderList.Any()))
             {
                 //Sort units based on melee=> range
                 //if both same range distance to closest enemy as tie break

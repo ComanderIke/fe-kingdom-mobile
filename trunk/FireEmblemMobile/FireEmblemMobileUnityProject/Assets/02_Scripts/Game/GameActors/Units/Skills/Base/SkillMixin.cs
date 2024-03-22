@@ -53,11 +53,11 @@ namespace Game.GameActors.Units.Skills.Base
 
        
 
-        protected bool Activate(Unit target=null)
+        protected bool Activate(Unit target=null, bool checkActivation=true)
         {
             CheckConditions(target);
             if (replaceConditions?blessingConditionValid:baseConditionValid){
-                CheckSkillEffectsAndSynergies(skill.owner, target, skill.level, replaceEffects, blessingConditionValid);
+                CheckSkillEffectsAndSynergies(checkActivation, skill.owner, target, skill.level, replaceEffects, blessingConditionValid);
                 return true;
             }
 
@@ -101,7 +101,7 @@ namespace Game.GameActors.Units.Skills.Base
             
             CheckConditions(target, tile);
             if (replaceConditions?blessingConditionValid:baseConditionValid){
-                CheckSkillEffectsAndSynergies(skill.owner, target, skill.level, replaceEffects, blessingConditionValid);
+                CheckSkillEffectsAndSynergies(true, skill.owner, target, skill.level, replaceEffects, blessingConditionValid);
             }
             else 
             {
@@ -109,11 +109,15 @@ namespace Game.GameActors.Units.Skills.Base
             }
         }
 
-        private void CheckSkillEffectsAndSynergies(Unit user, Unit target, int level,bool replaceEffects, bool blessingConditionValid)
+        private void CheckSkillEffectsAndSynergies(bool checkActivation,Unit user, Unit target, int level,bool replaceEffects, bool blessingConditionValid)
         {
-            if (activated)
-                return;
-            activated = true;
+            if (checkActivation)
+            {
+                if (activated)
+                    return;
+                activated = true;
+            }
+
             if (blessingConditionValid)
             {
                 blessingActivated = true;

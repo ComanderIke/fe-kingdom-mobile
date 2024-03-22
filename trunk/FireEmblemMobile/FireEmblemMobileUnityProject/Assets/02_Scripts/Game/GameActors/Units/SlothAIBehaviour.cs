@@ -20,7 +20,10 @@ namespace Game.GameActors.Units
     {
         private int sleepMeter = 0;
         [FormerlySerializedAs("fullRageAmount")] [SerializeField] private int fullSleepMeter = 4;
-        [SerializeField]private ApplyBuffSkillEffectMixin applysleepMixin;
+        [SerializeField] private ApplyBuffSkillEffectMixin applysleepMixin;
+        [SerializeField] private int healSkillIndex;
+        [SerializeField] private int healSkillUses = 1;
+        [SerializeField] private float UseHealSkillOnHp = .5f;
         public Action OnSleepMeterChanged;
         public int GetMaxSleepMeter()
         {
@@ -38,7 +41,7 @@ namespace Game.GameActors.Units
             {
                 AnimationQueue.Add(() =>
                 {
-                    sleepMeter=fullSleepMeter;
+                    SetSleepMeter(fullSleepMeter);
                     OnSleepMeterChanged?.Invoke();
                     MonoUtility.DelayFunction(()=> AnimationQueue.OnAnimationEnded?.Invoke(),sleepPointDelay);
                 });
@@ -51,17 +54,27 @@ namespace Game.GameActors.Units
         {
             AnimationQueue.Add(() =>
             {
-                sleepMeter++;
-                if (sleepMeter >= fullSleepMeter)
-                    sleepMeter = fullSleepMeter;
-                OnSleepMeterChanged?.Invoke();
+               SetSleepMeter(sleepMeter+1);
+              
                 MonoUtility.DelayFunction(()=> AnimationQueue.OnAnimationEnded?.Invoke(),sleepPointDelay);
             });
         }
 
+        void SetSleepMeter(int value)
+        {
+            sleepMeter=value;
+            if (sleepMeter >= fullSleepMeter)
+            {
+                sleepMeter = fullSleepMeter;
+                agent.StatusEffectManager.RemoveDebuff(DebuffType.Slept);
+            }
+                
+            OnSleepMeterChanged?.Invoke();
+        }
+
         public override void Init(Unit agent)
         {
-            sleepMeter = 0;
+            SetSleepMeter(0);
             applysleepMixin = Instantiate(applysleepMixin);
             AfterBattleTasks.OnFinished -= NoiseMade;
             AfterBattleTasks.OnFinished += NoiseMade;
@@ -73,9 +86,18 @@ namespace Game.GameActors.Units
             Unit.OnUnitDamaged += UnitDamaged;
             StartOfTurnState.OnStartOfTurnEffects -= StartofTurn;
             StartOfTurnState.OnStartOfTurnEffects += StartofTurn;
+            UnitPlacementState.OnStartOfMap -= StartOfMap;
+            UnitPlacementState.OnStartOfMap += StartOfMap;
             base.Init(agent);
         }
 
+        void StartOfMap()
+        {
+            
+            if(sleepMeter<GetMaxSleepMeter())
+                applysleepMixin.Activate(agent, agent, 0);
+            UnitPlacementState.OnStartOfMap -= StartOfMap;
+        }
         void StartofTurn()
         {
             if (GridGameManager.Instance.FactionManager.ActiveFaction.Id != agent.Faction.Id)
@@ -93,29 +115,23 @@ namespace Game.GameActors.Units
             {
                 
                 //check if stunned change state to stunned
-                if (unit.StatusEffectManager.Buffs.Any(d => d.BuffData is DebuffData debuffData&& debuffData.debuffType==DebuffType.Stunned))
+                if (unit.StatusEffectManager.Buffs.Any(d => d.BuffData is DebuffData debuffData&& debuffData.debuffType==DebuffType.Slept))
                 {
                     SetState(State.Stunned);
                 }
                 else
                 {
                     if (GetState() == State.Stunned)
-                        SetState( State.Aggressive);
+                        SetState( State.UseSkill);
                 }
 
                 switch (GetState())
                 {
                     case State.Aggressive:
                         Debug.Log("HÄH");
-                        if (sleepMeter >= fullSleepMeter)
-                        {
-                            SetState(State.UseSkill);
-                        }
-                        else
-                        {
-                            base.UpdateState(agent, hasAttackableTargets, usedSkill);
-                            
-                        }
+                        
+                        base.UpdateState(agent, hasAttackableTargets, usedSkill);
+                        
                         break;
                     case State.Stunned:
                         //check if still stunned
@@ -123,48 +139,25 @@ namespace Game.GameActors.Units
                         //if no=> change state to aggressive
                         break;
                     case State.UseSkill:
-                        if (usedSkill)
-                        {
-                            SetState(State.Aggressive);
-                            sleepMeter = 0;
-                            OnSleepMeterChanged?.Invoke();
-                        }
-                            
-                        // if no enemies in attackrange AND no enemies in Range to stun
-                        // do normal aggressive behaviour
-                        // EITHER
-                        // otherwise check for best skillTarget on each position
-                        // number of enemy targets=> possible kills => most damage done
-                        // OR
-                        // last enemy who attacked this unit is marked
-                        // unit will try to hit this unit with the skill.
-                        // still looks for best targets that include this unit
-                        // move as close to the target as possible while still able to hit it with the skill
-                        // 
-                        //After: change state to aggressive or stunned depending on collision
-                        if (target == null)
-                        {
+                        // if (usedSkill)
+                        // {
+                        //     SetState(State.Aggressive);
+                        // }
 
-                        }
-                        else
-                        {
-
-                        }
-
-                        break;
-                    case State.Patrol:
-                        if (hasAttackableTargets)
-                        {
-                            SetState( State.Aggressive);
-                            UpdateState(agent, hasAttackableTargets);
-                        }
-                           
-                        //check if enemy is in range
-                        //if Yes => change state to aggressive
-                        //if No => Move Unit along the patrol points
                         break;
                 }
             }
+        }
+        
+        public override Skill GetSkillToUse()
+        {
+            if (agent.Hp / (float)agent.MaxHp <= UseHealSkillOnHp && healSkillUses > 0)
+            {
+               
+                return agent.SkillManager.ActiveSkills[healSkillIndex];
+            }
+               
+            return base.GetSkillToUse();
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Game.GameActors.Units.OnGameObject
         public event Action OnAnimationEnded;
         public event Action OnAttackAnimationConnected;
 
+        public bool setStunnedOnBeginning = false;
         [SerializeField] private Animator animator;
         [SerializeField] private AnimationSpriteSwapper spriteSwapper;
         private static readonly int Selected = Animator.StringToHash("Selected");
@@ -49,6 +50,9 @@ namespace Game.GameActors.Units.OnGameObject
             lastPosition = transform.position;
             Unit.OnUnitDamaged -= UnitDamaged;
             Unit.OnUnitDamaged += UnitDamaged;
+            if(setStunnedOnBeginning)
+                animator.SetBool(Stunned,true);
+                
         }
 
         

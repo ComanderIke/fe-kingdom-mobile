@@ -21,6 +21,13 @@ namespace Game.GameActors.Units.UnitState
             Buffs = new List<BuffDebuffBase>();
             StatModifiers = new List<StatModifier>();
         }
+        public StatusEffectManager(Unit unit, StatusEffectManager toClone)
+        {
+            this.unit = unit;
+            // StatusEffects = new List<StatusEffect>();
+            Buffs = new List<BuffDebuffBase>(toClone.Buffs);
+            StatModifiers = new List<StatModifier>(toClone.StatModifiers);
+        }
         // public void AddStatusEffect(StatusEffect statusEffect)
         // {
         //     StatusEffects.Add(statusEffect);
@@ -33,18 +40,83 @@ namespace Game.GameActors.Units.UnitState
         //     OnStatusEffectRemoved?.Invoke(statusEffect);
         // }
         
-        public void AddBuffDebuff(BuffDebuffBase debuff, Unit caster, int level)
+        public void AddBuffDebuff(BuffDebuffBase newBuff, Unit caster, int level)
         {
-            
-            debuff.Apply(caster,unit, level);
-            Buffs.Add(debuff);
-            OnStatusEffectAdded?.Invoke(unit, debuff);
+            bool contains = false;
+            bool stronger = false;
+            BuffDebuffBase replaceBuff=null;
+            foreach (var buff in Buffs)
+            {
+                if (buff.BuffData is DebuffData debuffData)
+                {
+                    if (newBuff.BuffData is DebuffData newDebuffData)
+                    {
+                        if (debuffData.debuffType == newDebuffData.debuffType)
+                        {
+                            contains = true;
+                            //Clear weaker buff
+                            stronger = buff.GetDuration() < newBuff.duration[level];
+                            replaceBuff = buff;
+                            break;
+                        }
+                    }
+                }
+                
+            }
+
+            if (contains)
+            {
+                if (stronger)
+                {
+                   
+                    Buffs.Remove(replaceBuff);
+                    replaceBuff.Unapply(unit);
+                    Buffs.Add(newBuff);
+                    newBuff.Apply(caster,unit, level);
+                    OnStatusEffectAdded?.Invoke(unit, newBuff);
+                }
+                else
+                {
+                    MyDebug.LogTest("Adding Weaker Buff... Ignore?");
+                }
+            }
+            else
+            {
+                newBuff.Apply(caster,unit, level);
+                Buffs.Add(newBuff);
+                OnStatusEffectAdded?.Invoke(unit, newBuff);
+            }
+         
         }
         public void RemoveBuff(BuffDebuffBase buff)
         {
             Buffs.Remove(buff);
             buff.Unapply(unit);
             OnStatusEffectRemoved?.Invoke(unit, buff);
+        }
+        public void RemoveDebuff(DebuffType debuffType)
+        {
+            List<BuffDebuffBase> toRemove = new List<BuffDebuffBase>();
+            foreach (var buff in Buffs)
+            {
+                if (buff.BuffData is DebuffData debuffData)
+                {
+                    if (debuffData.debuffType == debuffType)
+                    {
+                        toRemove.Add(buff);
+                    }
+                }
+            }
+
+            foreach (var buff in toRemove)
+            {
+                Buffs.Remove(buff);
+                buff.Unapply(unit);
+                OnStatusEffectRemoved?.Invoke(unit, buff);
+            }
+            toRemove.Clear();
+            
+            
         }
         public void RemoveBuff(BuffDebuffBaseData buffData)
         {
@@ -81,6 +153,22 @@ namespace Game.GameActors.Units.UnitState
             StatModifiers.First(a=>a.Equals(appliedStatModifier)).Unapply(unit);
             StatModifiers.Remove(appliedStatModifier);
             OnStatusEffectRemoved?.Invoke(unit, appliedStatModifier);
+        }
+
+        public bool HasDebuff(DebuffType debuffTyoe)
+        {
+            foreach (var buff in Buffs)
+            {
+                if (buff.BuffData is DebuffData debuffData)
+                {
+                    if (debuffData.debuffType == debuffTyoe)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

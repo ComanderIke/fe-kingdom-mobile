@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.GameActors.InteractableGridObjects;
+using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Components;
 using Game.GameActors.Units.Interfaces;
 using Game.Systems;
@@ -69,6 +70,8 @@ namespace Game.States.Mechanics.Battle
         }
         public bool CanCounter(int attackingRange)
         {
+            if (owner.StatusEffectManager.HasDebuff(DebuffType.Slept))
+                return false;
             // Debug.Log(owner.GameTransformManager.GameObject.name+" Can Counter: "+attackingRange+" "+owner.GetEquippedWeapon().AttackRanges.Contains(attackingRange));
             return owner.GetEquippedWeapon().AttackRanges.Contains(attackingRange)||attackingRange==0;
         }
@@ -79,6 +82,8 @@ namespace Game.States.Mechanics.Battle
         public int GetAttackCountAgainst(IBattleActor c)
         {
             int attackCount = 1;
+            if (owner.StatusEffectManager.HasDebuff(DebuffType.Slept))
+                return 0;
             // if (owner.SpBars == 0)
             //     return 0;
 
@@ -234,7 +239,10 @@ namespace Game.States.Mechanics.Battle
         
         public int GetAvoid()
         {
-           
+            if (owner.StatusEffectManager.HasDebuff(DebuffType.Slept))
+            {
+                return 0;
+            }
          
            return  (owner.Stats.CombinedAttributes().AGI-GetWeightReduction())* AVO_AGI_MULT+ owner.Stats.CombinedBonusStats().Avoid;
             
@@ -318,6 +326,10 @@ namespace Game.States.Mechanics.Battle
 
         public int GetCritAgainstTarget(IBattleActor defender)
         {
+            if (defender.StatusEffectManager.HasDebuff(DebuffType.Slept))
+            {
+                return 100;
+            }
            
             if (ExcessHitToCrit)
             {

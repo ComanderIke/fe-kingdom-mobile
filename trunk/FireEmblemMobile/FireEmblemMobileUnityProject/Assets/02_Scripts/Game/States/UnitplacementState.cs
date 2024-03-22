@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.AI;
 using Game.Audio;
 using Game.GameActors.Player;
@@ -26,7 +27,7 @@ namespace Game.States
         private const float EXIT_DELAY = 0.5f;
         private float time = 0;
         private bool finished;
-        
+        public static event Action OnStartOfMap;
         public List<Unit> wholePartyUnits;
         public IUnitPlacementUI UnitPlacementUI { get; set; }
         public UnitPlacementInputSystem UnitPlacementInputSystem { get; set; }
@@ -84,6 +85,7 @@ namespace Game.States
             unitSpawnHelper.SpawnPlayerUnits(factionManager.Factions[0].Units, startPositionManager.startPositions);
             unitSpawnHelper.DestroySpawns();
             InitUnits();
+            OnStartOfMap?.Invoke();
             
         }
 

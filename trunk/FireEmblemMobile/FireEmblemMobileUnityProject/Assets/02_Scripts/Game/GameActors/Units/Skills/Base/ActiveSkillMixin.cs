@@ -62,7 +62,10 @@ namespace Game.GameActors.Units.Skills.Base
 
 
         }
-
+        protected bool Activate(Unit target=null)
+        {
+            return base.Activate(target, false);
+        }
 
         public int GetMaxUses(int level)
         {
