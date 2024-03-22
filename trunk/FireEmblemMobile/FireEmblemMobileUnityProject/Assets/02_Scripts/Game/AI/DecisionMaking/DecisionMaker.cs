@@ -386,6 +386,13 @@ namespace Game.AI.DecisionMaking
                             }
                         }
 
+                        else if (skillMixin is SelfTargetSkillMixin stsm)
+                        {
+                            ISkillResult combatInfo = new SkillResult((Unit)attacker,
+                                gridInfo.GetTile(tile.x, tile.y), gridInfo.GetTile(tile.x, tile.y),0, 0);
+                            combatInfos.Add(combatInfo);
+                        }
+
                         
                     }
                     //make new ResultComparer based on target number and damage
@@ -512,7 +519,11 @@ namespace Game.AI.DecisionMaking
                 {
                     Unit u = (Unit)unit;
                 
+                    if(!unit.AIComponent.AIBehaviour.CanUseSkill())
+                        continue;
                     var firstActiveSkill = u.AIComponent.AIBehaviour.GetSkillToUse();
+                    if (firstActiveSkill == null)
+                        continue;
                     if (firstActiveSkill.FirstActiveMixin is SelfTargetSkillMixin)
                     {
                         skillUserList.Add(unit);

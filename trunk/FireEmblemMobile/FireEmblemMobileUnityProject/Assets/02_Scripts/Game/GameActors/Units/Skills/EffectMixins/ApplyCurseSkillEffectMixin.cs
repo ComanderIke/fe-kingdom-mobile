@@ -13,11 +13,12 @@ namespace Game.GameActors.Units.Skills.EffectMixins
         public CurseBP CurseBp;
         public override void Activate(Unit target,Unit caster, int level)
         {
+            bool curseResisted= target.ReceiveCurse((Curse)CurseBp.Create(), caster.Stats.CombinedAttributes().FAITH);
             Debug.Log("ACTIVATE APPLY BUFF EFFECT MIXIN");
-            if (effect != null)
+            if (effect != null&& !curseResisted)
                 GameObject.Instantiate(effect, target.GameTransformManager.GetCenterPosition(),
                     Quaternion.identity);
-            target.ReceiveCurse((Curse)CurseBp.Create(), caster.Stats.CombinedAttributes().FAITH);
+           
         }
 
         public override void Deactivate(Unit target, Unit caster, int skillLevel)

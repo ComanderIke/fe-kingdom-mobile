@@ -39,7 +39,8 @@ namespace Game.Graphics.BattleAnimations
 
         public void CameraShake()
         {
-            StartCoroutine(cameraShake.Shake(duration, magnitude));
+            if(gameObject.activeInHierarchy)
+                StartCoroutine(cameraShake.Shake(duration, magnitude));
         }
         public void PlayZoomIn()
         {

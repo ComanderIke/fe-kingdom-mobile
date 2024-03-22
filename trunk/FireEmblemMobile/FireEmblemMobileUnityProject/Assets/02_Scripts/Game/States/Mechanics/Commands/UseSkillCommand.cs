@@ -41,6 +41,7 @@ namespace Game.States.Mechanics.Commands
             }
             
             OnUseSkill?.Invoke((Unit)user);
+            user.AIComponent.AIBehaviour.UsedSkill(skillToUse);
             IsFinished = true;
          //   MonoUtility.DelayFunction(()=>IsFinished=true, 2f);
           //  IsFinished = true;

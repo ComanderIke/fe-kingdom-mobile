@@ -212,6 +212,7 @@ namespace Game.GameActors.Units.Components
                 foreach (var listener in battleEvents[BattleEvent.AfterCombat])
                 {
                     listener.Activate((Unit)owner, (Unit)opponent);
+                    listener.Deactivate((Unit)owner, (Unit)opponent);
                 }
             }
         }

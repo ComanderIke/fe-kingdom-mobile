@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Codice.Client.BaseCommands.Revert;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.Skills.Base;
@@ -22,7 +23,8 @@ namespace Game.GameActors.Units
         [FormerlySerializedAs("fullRageAmount")] [SerializeField] private int fullSleepMeter = 4;
         [SerializeField] private ApplyBuffSkillEffectMixin applysleepMixin;
         [SerializeField] private int healSkillIndex;
-        [SerializeField] private int healSkillUses = 1;
+        [SerializeField] private int maxSkillUses = 1;
+        private int healSkillUses = 1;
         [SerializeField] private float UseHealSkillOnHp = .5f;
         public Action OnSleepMeterChanged;
         public int GetMaxSleepMeter()
@@ -74,6 +76,7 @@ namespace Game.GameActors.Units
 
         public override void Init(Unit agent)
         {
+            healSkillUses = maxSkillUses;
             SetSleepMeter(0);
             applysleepMixin = Instantiate(applysleepMixin);
             AfterBattleTasks.OnFinished -= NoiseMade;
@@ -84,11 +87,18 @@ namespace Game.GameActors.Units
             // AttackCommand.OnAttackCommandPerformed -= NoiseMade;
             Unit.OnUnitDamaged -= UnitDamaged;
             Unit.OnUnitDamaged += UnitDamaged;
+            agent.RevivalStonesChanged-=RevivalStonesChanged;
+            agent.RevivalStonesChanged+=RevivalStonesChanged;
             StartOfTurnState.OnStartOfTurnEffects -= StartofTurn;
             StartOfTurnState.OnStartOfTurnEffects += StartofTurn;
             UnitPlacementState.OnStartOfMap -= StartOfMap;
             UnitPlacementState.OnStartOfMap += StartOfMap;
             base.Init(agent);
+        }
+
+        void RevivalStonesChanged()
+        {
+            healSkillUses = maxSkillUses;
         }
 
         void StartOfMap()
@@ -148,16 +158,23 @@ namespace Game.GameActors.Units
                 }
             }
         }
-        
+        public override bool CanUseSkill()
+        {
+            return agent.Hp / (float)agent.MaxHp <= UseHealSkillOnHp && healSkillUses > 0;
+        }
+        public override void UsedSkill(Skill skillToUse)
+        {
+            healSkillUses--;
+        }
         public override Skill GetSkillToUse()
         {
-            if (agent.Hp / (float)agent.MaxHp <= UseHealSkillOnHp && healSkillUses > 0)
+            if (CanUseSkill())
             {
                
                 return agent.SkillManager.ActiveSkills[healSkillIndex];
             }
                
-            return base.GetSkillToUse();
+            return null;
         }
     }
 }

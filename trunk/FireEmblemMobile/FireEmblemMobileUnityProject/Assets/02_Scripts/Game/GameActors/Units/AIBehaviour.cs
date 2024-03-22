@@ -90,7 +90,7 @@ namespace Game.GameActors.Units
 
         public bool WillAttackOnTargetInRange()
         {
-            return GetState() == AIBehaviour.State.Aggressive || GetState() == State.OnRange||GetState()==State.Guard;
+            return GetState() == AIBehaviour.State.Aggressive||GetState() == AIBehaviour.State.UseSkill || GetState() == State.OnRange||GetState()==State.Guard;
         }
 
         public bool WillMoveIfAble()
@@ -115,6 +115,15 @@ namespace Game.GameActors.Units
         {
             return agent.SkillManager.ActiveSkills.First();
         }
-        
+
+        public virtual bool CanUseSkill()
+        {
+            return agent.SkillManager.ActiveSkills.Count > 0;
+        }
+
+        public virtual void UsedSkill(Skill skillToUse)
+        {
+            
+        }
     }
 }

@@ -172,6 +172,7 @@ namespace Game.Systems
                     battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP = 1;
                 if (battleSimulation.continuos && battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP == 0)//Make Duells not lethal
                     battleSimulation.combatRounds[lastCombatRoundIndex].DefenderHP = 1;
+                MyDebug.LogTest(attacker.Hp);
                 int hpDelta = attacker.Hp - battleSimulation.combatRounds[lastCombatRoundIndex].AttackerHP;
                 int stoneDelta = ((Unit)attacker).RevivalStones -
                                  battleSimulation.combatRounds[lastCombatRoundIndex].AttackerRevivalStones;
@@ -200,10 +201,6 @@ namespace Game.Systems
                         ((Unit) defender).InflictDirectDamage((Unit)attacker, hpDelta,attacker.GetEquippedWeapon().DamageType, true);
                     //defender.Hp = battleSimulation.AttackableTarget.Hp;
                 }
-
-           
-
-            
                 CheckExp();
                 
                 attacker.BattleComponent.RealBattleEnded(defender);

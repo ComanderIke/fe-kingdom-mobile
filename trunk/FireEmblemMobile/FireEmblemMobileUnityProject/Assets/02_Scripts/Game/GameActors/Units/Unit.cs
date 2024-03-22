@@ -739,7 +739,7 @@ namespace Game.GameActors.Units
             OnUnitDataChanged?.Invoke(this);
         }
 
-        public void ReceiveCurse(Curse curse, int curseStrength)
+        public bool ReceiveCurse(Curse curse, int curseStrength)
         {
             var curseResistance = BattleComponent.BattleStats.GetCurseResistance();
             int difference = curseResistance - curseStrength;
@@ -751,7 +751,7 @@ namespace Game.GameActors.Units
                 MyDebug.LogLogic("Resisted Curse");
                 MyDebug.LogTODO("Show Resisted VFX + Text");
                 OnCurseResisted?.Invoke();
-                return;
+                return true;
             }
                 
             if(SkillManager.IsFull())
@@ -760,6 +760,7 @@ namespace Game.GameActors.Units
             OnAddCurse?.Invoke(curse);
             Debug.Log("TODO Receive Curse");
             OnUnitDataChanged?.Invoke(this);
+            return false;
         }
         
         public void EncounterTick()
