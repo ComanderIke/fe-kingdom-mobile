@@ -22,7 +22,7 @@ AssetImportWorker1
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-49228
+59237
 Successfully changed project path to: /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -54,13 +54,13 @@ Successfully changed project path to: /Users/daniel/Documents/fe-kingdom-mobile/
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [7899979456] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 3071686690 [EditorId] 3071686690 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [7899979456] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 909260165 [EditorId] 909260165 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [7899979456] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 3071686690 [EditorId] 3071686690 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [7899979456] Host "[IP] 192.168.0.2 [Port] 0 [Flags] 2 [Guid] 909260165 [EditorId] 909260165 [Version] 1048832 [Id] OSXEditor(0,Daniels-MacBook-Pro.local) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 [Physics::Module] Initialized MultithreadedJobDispatcher with {0} workers.
-Refreshing native plugins compatible for Editor in 146.92 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 1.27 ms.
+Refreshing native plugins compatible for Editor in 137.77 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.52 ms.
 Initialize engine version: 2021.3.32f1 (3b9dae9532f5)
 [Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets
@@ -77,45 +77,45 @@ Initialize mono
 Mono path[0] = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Managed'
 Mono path[1] = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit-macos'
 Mono config path = '/Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56919
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56552
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: /Applications/Unity/Hub/Editor/2021.3.32f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll
-Registered in 0.002131 seconds.
+Registered in 0.001523 seconds.
 [usbmuxd] Start listen thread
 [usbmuxd] Listen thread started
 [usbmuxd] Send listen message
 Native extension for iOS target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 67 ms
+Android Extension - Scanning For ADB Devices 69 ms
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 123.04 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.20 ms.
+Refreshing native plugins compatible for Editor in 126.25 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.15 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.541 seconds
+- Completed reload, in  0.565 seconds
 Domain Reload Profiling:
-	ReloadAssembly (542ms)
-		BeginReloadAssembly (57ms)
+	ReloadAssembly (566ms)
+		BeginReloadAssembly (63ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (0ms)
-		EndReloadAssembly (437ms)
-			LoadAssemblies (58ms)
+		EndReloadAssembly (454ms)
+			LoadAssemblies (64ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (59ms)
+			SetupTypeCache (66ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (15ms)
-			SetupLoadedEditorAssemblies (341ms)
+			RebuildScriptCaches (18ms)
+			SetupLoadedEditorAssemblies (345ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (166ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (123ms)
+				RefreshPlugins (126ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (32ms)
+				ProcessInitializeOnLoadAttributes (34ms)
 				ProcessInitializeOnLoadMethodAttributes (18ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
@@ -123,41 +123,41 @@ Domain Reload Profiling:
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.001619 seconds.
+Registered in 0.007968 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory is not a mono symbol file
 Native extension for iOS target not found
 Native extension for Android target not found
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 130.48 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.20 ms.
+Refreshing native plugins compatible for Editor in 131.60 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.21 ms.
 Package Manager log level set to [2]
 [Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
 [Package Manager] Cannot connect to Unity Package Manager local server
 Mono: successfully reloaded assembly
-- Completed reload, in  1.253 seconds
+- Completed reload, in  1.249 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1254ms)
-		BeginReloadAssembly (52ms)
+	ReloadAssembly (1250ms)
+		BeginReloadAssembly (54ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (3ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (14ms)
-		EndReloadAssembly (1148ms)
-			LoadAssemblies (93ms)
+			CreateAndSetChildDomain (16ms)
+		EndReloadAssembly (1144ms)
+			LoadAssemblies (76ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (189ms)
+			SetupTypeCache (206ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (58ms)
-			SetupLoadedEditorAssemblies (774ms)
+			RebuildScriptCaches (65ms)
+			SetupLoadedEditorAssemblies (758ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (14ms)
+				InitializePlatformSupportModulesInManaged (13ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (131ms)
-				BeforeProcessingInitializeOnLoad (57ms)
-				ProcessInitializeOnLoadAttributes (488ms)
-				ProcessInitializeOnLoadMethodAttributes (84ms)
+				RefreshPlugins (132ms)
+				BeforeProcessingInitializeOnLoad (63ms)
+				ProcessInitializeOnLoadAttributes (460ms)
+				ProcessInitializeOnLoadMethodAttributes (89ms)
 				AfterProcessingInitializeOnLoad (1ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
@@ -169,13 +169,43 @@ Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
 Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
 Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
 Launching external process: /Applications/Unity/Hub/Editor/2021.3.32f1/Unity.app/Contents/Tools/UnityShaderCompiler
-Launched and connected shader compiler UnityShaderCompiler after 0.11 seconds
-Refreshing native plugins compatible for Editor in 1.05 ms, found 2 plugins.
-Preloading 1 native plugins for Editor in 0.16 ms.
-Unloading 6704 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 102 unused Assets / (2.1 MB). Loaded Objects now: 7208.
-Memory consumption went from 366.0 MB to 363.9 MB.
-Total: 5.287542 ms (FindLiveObjects: 0.222000 ms CreateObjectMapping: 0.064000 ms MarkObjects: 4.583333 ms  DeleteObjects: 0.417917 ms)
+Launched and connected shader compiler UnityShaderCompiler after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.48 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.19 ms.
+Unloading 6708 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 102 unused Assets / (2.1 MB). Loaded Objects now: 7212.
+Memory consumption went from 366.1 MB to 364.0 MB.
+Total: 5.942833 ms (FindLiveObjects: 0.216334 ms CreateObjectMapping: 0.090250 ms MarkObjects: 5.157084 ms  DeleteObjects: 0.478500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 93890.410551 seconds.
+  path: Assets/05_Audio/Music
+  artifactKey: Guid(caa7b99fff9d6844e8563f1b5e04da37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Number of updated assets reloaded before import = 0
+Start importing Assets/05_Audio/Music using Guid(caa7b99fff9d6844e8563f1b5e04da37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00a343b13b17d1bb6424af477c2bd014') in 0.008559 seconds 
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Prepare
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 3.78 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.15 ms.
+Unloading 78 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 78 unused Assets / (2.1 MB). Loaded Objects now: 7212.
+Memory consumption went from 213.1 MB to 211.0 MB.
+Total: 5.499042 ms (FindLiveObjects: 0.197958 ms CreateObjectMapping: 0.063209 ms MarkObjects: 4.873875 ms  DeleteObjects: 0.363250 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -191,211 +221,334 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 2547.697152 seconds.
-  path: Assets/07_GameData/BattleMaps/Area1Maps/Level1_DeadForest_Encounter_Boss.prefab
-  artifactKey: Guid(a558e6c03a2eb4a4da25141c6243e20e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+  Time since last request: 16.985923 seconds.
+  path: Assets/05_Audio/Music/Sanctuary
+  artifactKey: Guid(e73077637ef274af4b7856108c6e1002) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/Area1Maps/Level1_DeadForest_Encounter_Boss.prefab using Guid(a558e6c03a2eb4a4da25141c6243e20e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '124728068aa66274287e0d16eda50737') in 0.798464 seconds 
-Number of asset objects unloaded after import = 7347
+Start importing Assets/05_Audio/Music/Sanctuary using Guid(e73077637ef274af4b7856108c6e1002) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd930ef477984b7f8a663586e2da43d8f') in 0.001270 seconds 
+Number of asset objects unloaded after import = 0
 ========================================================================
-Received Import Request.
-  Time since last request: 0.000202 seconds.
-  path: Assets/07_GameData/BattleMaps/Sandbox/Level1_DeadForest_Encounter_Small1_3.prefab
-  artifactKey: Guid(a3417224f0f87114e80e1b31df1a8790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/Sandbox/Level1_DeadForest_Encounter_Small1_3.prefab using Guid(a3417224f0f87114e80e1b31df1a8790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1581e44b9d3467541d9768aab781e273') in 0.289091 seconds 
-Number of asset objects unloaded after import = 4055
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002389 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2f0987000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.53 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.24 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.228 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1228ms)
+		BeginReloadAssembly (146ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (8ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (75ms)
+		EndReloadAssembly (1034ms)
+			LoadAssemblies (54ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (244ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (41ms)
+			SetupLoadedEditorAssemblies (640ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (18ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (47ms)
+				ProcessInitializeOnLoadAttributes (468ms)
+				ProcessInitializeOnLoadMethodAttributes (104ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.86 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.21 ms.
+Unloading 6472 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7228.
+Memory consumption went from 344.2 MB to 342.1 MB.
+Total: 7.521792 ms (FindLiveObjects: 0.261167 ms CreateObjectMapping: 0.075000 ms MarkObjects: 6.716417 ms  DeleteObjects: 0.468167 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Import Request.
-  Time since last request: 0.000052 seconds.
-  path: Assets/07_GameData/BattleMaps/Sandbox/Level1_DeadForest_Encounter_Conquest_10Big.prefab
-  artifactKey: Guid(90062b443809e1545921523d9123444d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/Sandbox/Level1_DeadForest_Encounter_Conquest_10Big.prefab using Guid(90062b443809e1545921523d9123444d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ee015e9172e2606aee4c5b74780da3c3') in 0.233371 seconds 
-Number of asset objects unloaded after import = 5886
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001536 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2d6657000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.27 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.19 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.090 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1091ms)
+		BeginReloadAssembly (110ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (53ms)
+		EndReloadAssembly (933ms)
+			LoadAssemblies (44ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (214ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (34ms)
+			SetupLoadedEditorAssemblies (594ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (42ms)
+				ProcessInitializeOnLoadAttributes (447ms)
+				ProcessInitializeOnLoadMethodAttributes (88ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.41 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.31 ms.
+Unloading 6471 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7243.
+Memory consumption went from 344.2 MB to 342.1 MB.
+Total: 5.797708 ms (FindLiveObjects: 0.212458 ms CreateObjectMapping: 0.066083 ms MarkObjects: 5.144417 ms  DeleteObjects: 0.373875 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Import Request.
-  Time since last request: 0.000046 seconds.
-  path: Assets/07_GameData/BattleMaps/Sandbox/Level1_DeadForest_Encounter_Medium_2_3.prefab
-  artifactKey: Guid(3e285382b1ef1d64eaf4ce81bc63f124) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/Sandbox/Level1_DeadForest_Encounter_Medium_2_3.prefab using Guid(3e285382b1ef1d64eaf4ce81bc63f124) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae62cb486ad5db323b9423c3544dda31') in 0.208600 seconds 
-Number of asset objects unloaded after import = 4484
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002723 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x2d665f000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.26 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.144 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1145ms)
+		BeginReloadAssembly (111ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (55ms)
+		EndReloadAssembly (988ms)
+			LoadAssemblies (44ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (255ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (39ms)
+			SetupLoadedEditorAssemblies (602ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (41ms)
+				ProcessInitializeOnLoadAttributes (453ms)
+				ProcessInitializeOnLoadMethodAttributes (91ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.64 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.28 ms.
+Unloading 6471 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7258.
+Memory consumption went from 344.2 MB to 342.2 MB.
+Total: 6.577625 ms (FindLiveObjects: 0.212166 ms CreateObjectMapping: 0.071875 ms MarkObjects: 5.901167 ms  DeleteObjects: 0.391709 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/07_GameData/BattleMaps/Sandbox/Level1_DeadForest_Encounter_Medium_2_4.prefab
-  artifactKey: Guid(4092637d861ba074394085733e3f13e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/Sandbox/Level1_DeadForest_Encounter_Medium_2_4.prefab using Guid(4092637d861ba074394085733e3f13e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '205f01c523b59d9f853297a8e57a1a3a') in 0.209337 seconds 
-Number of asset objects unloaded after import = 4820
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002715 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16fc03000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.47 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.22 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.122 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1123ms)
+		BeginReloadAssembly (108ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (45ms)
+		EndReloadAssembly (970ms)
+			LoadAssemblies (40ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (230ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (33ms)
+			SetupLoadedEditorAssemblies (612ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (49ms)
+				ProcessInitializeOnLoadAttributes (452ms)
+				ProcessInitializeOnLoadMethodAttributes (92ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.80 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.19 ms.
+Unloading 6471 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7273.
+Memory consumption went from 344.2 MB to 342.2 MB.
+Total: 5.972125 ms (FindLiveObjects: 0.298292 ms CreateObjectMapping: 0.111542 ms MarkObjects: 5.106166 ms  DeleteObjects: 0.455500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Import Request.
-  Time since last request: 1.095192 seconds.
-  path: Assets/07_GameData/BattleMaps/Sandbox/Level2_DF_Middle_Fortress.prefab
-  artifactKey: Guid(1709179cfd1344f42be307a8542d6510) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/Sandbox/Level2_DF_Middle_Fortress.prefab using Guid(1709179cfd1344f42be307a8542d6510) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e1b1036d50a0203ac8ffdb90e5e63fc') in 0.187727 seconds 
-Number of asset objects unloaded after import = 3843
-========================================================================
-Received Import Request.
-  Time since last request: 0.000046 seconds.
-  path: Assets/07_GameData/Units/DialogComponents/Cavalry/LevelUpConversationBad.asset
-  artifactKey: Guid(e909241f6a22b43bfa5289f70ce43f8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/Units/DialogComponents/Cavalry/LevelUpConversationBad.asset using Guid(e909241f6a22b43bfa5289f70ce43f8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) SingletonScriptableObject results length==0 Game.DataAndReferences.References.GameAssets
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-GameEngine.SingletonScriptableObject`1<Game.DataAndReferences.References.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
-Game.MetaProgression.MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32)
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.001533 seconds.
+Begin MonoManager ReloadAssembly
+Thread 0x16fc03000 may have been prematurely finalized
+Symbol file LoadedFromMemory is not a mono symbol file
+Native extension for iOS target not found
+Native extension for Android target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 1.47 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.23 ms.
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Completed reload, in  1.123 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1124ms)
+		BeginReloadAssembly (111ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (56ms)
+		EndReloadAssembly (966ms)
+			LoadAssemblies (50ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (227ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (34ms)
+			SetupLoadedEditorAssemblies (605ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (45ms)
+				ProcessInitializeOnLoadAttributes (451ms)
+				ProcessInitializeOnLoadMethodAttributes (90ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Shader 'CartoonCoffee/Particle Additive': fallback shader '2' not found
+Shader 'MoreMountains/MMRipple': fallback shader 'Particle/AlphaBlended' not found
+Shader 'CartoonCoffee/Particle Basic': fallback shader '2' not found
+Refreshing native plugins compatible for Editor in 1.54 ms, found 2 plugins.
+Preloading 1 native plugins for Editor in 0.20 ms.
+Unloading 6471 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 80 unused Assets / (2.1 MB). Loaded Objects now: 7288.
+Memory consumption went from 344.3 MB to 342.2 MB.
+Total: 6.207208 ms (FindLiveObjects: 0.221125 ms CreateObjectMapping: 0.074708 ms MarkObjects: 5.486625 ms  DeleteObjects: 0.424084 ms)
 
-(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Game.MetaProgression.MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32 
-
-(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 32)
-
-SingletonScriptableObject results length==0 Game.DataAndReferences.References.GameAssets
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-GameEngine.SingletonScriptableObject`1<Game.DataAndReferences.References.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
-Game.MetaProgression.MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32)
-
-(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Game.MetaProgression.MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32 
-
-(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 32)
-
-SingletonScriptableObject results length==0 Game.DataAndReferences.References.GameAssets
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-GameEngine.SingletonScriptableObject`1<Game.DataAndReferences.References.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
-Game.MetaProgression.MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32)
-
-(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Game.MetaProgression.MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32 
-
-(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 32)
-
-SingletonScriptableObject results length==0 Game.DataAndReferences.References.GameAssets
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-GameEngine.SingletonScriptableObject`1<Game.DataAndReferences.References.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
-Game.MetaProgression.MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32)
-
-(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Game.MetaProgression.MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32 
-
-(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 32)
-
-SingletonScriptableObject results length==0 Game.DataAndReferences.References.GameAssets
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-GameEngine.SingletonScriptableObject`1<Game.DataAndReferences.References.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
-Game.MetaProgression.MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32)
-
-(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Game.MetaProgression.MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32 
-
-(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 32)
-
-SingletonScriptableObject results length==0 Game.DataAndReferences.References.GameAssets
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-GameEngine.SingletonScriptableObject`1<Game.DataAndReferences.References.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
-Game.MetaProgression.MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32)
-
-(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Game.MetaProgression.MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32 
-
-(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 32)
-
-SingletonScriptableObject results length==0 Game.DataAndReferences.References.GameAssets
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-GameEngine.SingletonScriptableObject`1<Game.DataAndReferences.References.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
-Game.MetaProgression.MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32)
-
-(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Game.MetaProgression.MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32 
-
-(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 32)
-
-SingletonScriptableObject results length==0 Game.DataAndReferences.References.GameAssets
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-GameEngine.SingletonScriptableObject`1<Game.DataAndReferences.References.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
-Game.MetaProgression.MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32)
-
-(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Game.MetaProgression.MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32 
-
-(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 32)
-
-SingletonScriptableObject results length==0 Game.DataAndReferences.References.GameAssets
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:37)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogError (object)
-GameEngine.SingletonScriptableObject`1<Game.DataAndReferences.References.GameAssets>:get_Instance () (at Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs:18)
-Game.MetaProgression.MetaUpgradeBP:OnEnable () (at Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32)
-
-(Filename: Assets/02_Scripts/GameEngine/SingletonScriptableObject.cs Line: 18)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Game.MetaProgression.MetaUpgradeBP.OnEnable () [0x00001] in /Users/daniel/Documents/fe-kingdom-mobile/trunk/FireEmblemMobile/FireEmblemMobileUnityProject/Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs:32 
-
-(Filename: Assets/02_Scripts/Game/MetaProgression/MetaUpgradeBP.cs Line: 32)
-
- -> (artifact id: 'b31ef82a399cf178c60a8cc84e39b462') in 0.213481 seconds 
-Number of asset objects unloaded after import = 924
-========================================================================
-Received Import Request.
-  Time since last request: 0.000049 seconds.
-  path: Assets/07_GameData/BattleMaps/Sandbox/Level3_Middle_Rescue.prefab
-  artifactKey: Guid(4eb8cb3187ba79741be57260aafbf60c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/Sandbox/Level3_Middle_Rescue.prefab using Guid(4eb8cb3187ba79741be57260aafbf60c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3506593dcd13cd1074387eb940fb1c13') in 0.142992 seconds 
-Number of asset objects unloaded after import = 3574
-========================================================================
-Received Import Request.
-  Time since last request: 0.869301 seconds.
-  path: Assets/07_GameData/BattleMaps/Sandbox/TODOLevel1_DeadForest_Encounter_Big_3_1.prefab
-  artifactKey: Guid(41aa21a4e5e522e4fb89af9b5c2db670) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Number of updated assets reloaded before import = 0
-Start importing Assets/07_GameData/BattleMaps/Sandbox/TODOLevel1_DeadForest_Encounter_Big_3_1.prefab using Guid(41aa21a4e5e522e4fb89af9b5c2db670) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f7393865e21be616654d27ff5cececa5') in 0.209771 seconds 
-Number of asset objects unloaded after import = 4821
-Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
-AssetImportWorker is now disconnected from the server
-Process exiting
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:CustomObjectIndexerAttribute: f67f22312cbe972f2da930a377ed3d15 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 

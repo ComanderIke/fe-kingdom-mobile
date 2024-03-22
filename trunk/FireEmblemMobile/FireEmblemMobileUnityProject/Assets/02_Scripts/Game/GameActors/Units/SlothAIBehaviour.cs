@@ -3,6 +3,9 @@ using System.Linq;
 using Game.GameActors.Units.CharStateEffects;
 using Game.GameActors.Units.Interfaces;
 using Game.GameActors.Units.Skills.Base;
+using Game.GameActors.Units.Skills.EffectMixins;
+using Game.Manager;
+using Game.States;
 using Game.Systems;
 using Game.Utility;
 using UnityEngine;
@@ -16,7 +19,7 @@ namespace Game.GameActors.Units
     {
         private int sleepMeter = 0;
         [FormerlySerializedAs("fullRageAmount")] [SerializeField] private int fullSleepMeter = 4;
-       
+        [SerializeField]private ApplyBuffSkillEffectMixin applysleepMixin;
         public Action OnSleepMeterChanged;
         public int GetMaxSleepMeter()
         {
@@ -48,14 +51,30 @@ namespace Game.GameActors.Units
         public override void Init(Unit agent)
         {
             sleepMeter = 0;
+            applysleepMixin = Instantiate(applysleepMixin);
             Unit.OnUnitDamaged -= UnitDamaged;
             Unit.OnUnitDamaged += UnitDamaged;
+            StartOfTurnState.OnStartOfTurnEffects -= StartofTurn;
+            StartOfTurnState.OnStartOfTurnEffects += StartofTurn;
             base.Init(agent);
+        }
+
+        void StartofTurn()
+        {
+            if (GridGameManager.Instance.FactionManager.ActiveFaction.Id != agent.Faction.Id)
+                return;
+            if(sleepMeter<GetMaxSleepMeter())
+                applysleepMixin.Activate(agent, agent, 0);
+            else
+            {
+                StartOfTurnState.OnStartOfTurnEffects -= StartofTurn;
+            }
         }
         public override void UpdateState(IAIAgent agent, bool hasAttackableTargets, bool usedSkill = false)
         {
             if (agent is Unit unit)
             {
+                
                 //check if stunned change state to stunned
                 if (unit.StatusEffectManager.Buffs.Any(d => d.BuffData is DebuffData debuffData&& debuffData.debuffType==DebuffType.Stunned))
                 {

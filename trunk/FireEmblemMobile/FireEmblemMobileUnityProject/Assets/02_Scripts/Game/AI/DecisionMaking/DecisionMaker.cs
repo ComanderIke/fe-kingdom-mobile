@@ -257,7 +257,8 @@ namespace Game.AI.DecisionMaking
                 ChooseBestSkillTargets();
                 var bestSkillUser = ChooseBestSkillUser();
                 bestSkillUser.AIComponent.AIBehaviour.UpdateState(bestSkillUser, false, true);
-                return CreateUseSkillAction(bestSkillUser);
+          
+                    return CreateUseSkillAction(bestSkillUser);
             }
             else if (attackerList.Count != 0)
             {

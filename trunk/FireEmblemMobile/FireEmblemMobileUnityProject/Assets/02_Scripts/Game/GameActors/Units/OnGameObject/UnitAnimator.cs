@@ -211,12 +211,28 @@ namespace Game.GameActors.Units.OnGameObject
             {
                 animator.SetBool(Stunned,true);
             }
+
+            if (effect.BuffData is DebuffData debuffData)
+            {
+                if (debuffData.debuffType == DebuffType.Slept)
+                {
+                    animator.SetBool(Stunned,true);
+                }
+            }
         }
         void StatusEffectRemovedAnimation(Unit u, BuffDebuffBase effect)
         {
             if (effect.name.Contains("Stunned"))
             {
                 animator.SetBool(Stunned,false);
+            }
+            
+            if (effect.BuffData is DebuffData debuffData)
+            {
+                if (debuffData.debuffType == DebuffType.Slept)
+                {
+                    animator.SetBool(Stunned,false);
+                }
             }
         }
 

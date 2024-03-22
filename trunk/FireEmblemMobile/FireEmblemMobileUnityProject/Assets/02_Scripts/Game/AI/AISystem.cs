@@ -58,7 +58,11 @@ namespace Game.AI
         private CameraSystem cameraSystem;
         public void Think()
         {
-            if (IsStartOfTurn()||!decisionMaker.moveOrderList.Any())
+            if (player.AllUnitsMoved())
+            {
+                finished = true;
+            }
+            else if (IsStartOfTurn()||!decisionMaker.moveOrderList.Any())
             {
                 //Sort units based on melee=> range
                 //if both same range distance to closest enemy as tie break

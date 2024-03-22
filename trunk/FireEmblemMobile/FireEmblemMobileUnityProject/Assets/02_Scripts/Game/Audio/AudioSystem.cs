@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Utility;
 using GameEngine;
 using UnityEngine;
 
@@ -126,13 +127,24 @@ namespace Game.Audio
                 FadeIn(name, fadeDuration, delay);
             else
                 m.Source.Play();
-            if(m.playAfter!=null)
+            if (m.playAfter != null)
+            {
                 m.playAfter.Source.PlayDelayed(m.Clip.length+delay);
+                MonoUtility.DelayFunction(()=>
+                {
+                    currentlyPlayedMusic.Remove(m);
+                    currentlyPlayedMusic.Add(m.playAfter);
+                }, m.Clip.length+delay);
+            }
+               
         }
 
+        private bool inBattle = false;
         public void SwitchIntoBattle()
         {
+            inBattle = true;
             MyDebug.LogMusic("Switch  into Battle");
+            MyDebug.LogTODO("When Switching to battle at end of loop starts again with out of battle version");
             foreach (var playedMusic in currentlyPlayedMusic)
             {
                 if (playedMusic is BattleMusicData battleMusicData)
@@ -152,21 +164,22 @@ namespace Game.Audio
         }
         public void SwitchOutofBattle()
         {
+            inBattle = false;
             MyDebug.LogMusic("Switch out of Battle");
             foreach (var playedMusic in currentlyPlayedMusic)
             {
                 if (playedMusic is BattleMusicData battleMusicData)
                 {
-                    var tmpTime = battleMusicData.Source.time;
-                    battleMusicData.Source.clip = battleMusicData.Clip;
-                    battleMusicData.Source.time = tmpTime;
-                    //battleMusicData.Source.volume = battleMusicData.Volume;
-                    battleMusicData.Source.Play();
-                    LeanTween.value(gameObject, battleMusicData.Source.volume, battleMusicData.Volume, battleVolumeFadeTime)
-                        .setEaseInOutQuad().setOnUpdate((val) =>
-                        {
-                            battleMusicData.Source.volume = val;
-                        });
+                        var tmpTime = battleMusicData.Source.time;
+                        battleMusicData.Source.clip = battleMusicData.Clip;
+                        battleMusicData.Source.time = tmpTime;
+                        //battleMusicData.Source.volume = battleMusicData.Volume;
+                        battleMusicData.Source.Play();
+                        LeanTween.value(gameObject, battleMusicData.Source.volume, battleMusicData.Volume, battleVolumeFadeTime)
+                            .setEaseInOutQuad().setOnUpdate((val) =>
+                            {
+                                battleMusicData.Source.volume = val;
+                            });
                 }
             }
         }
