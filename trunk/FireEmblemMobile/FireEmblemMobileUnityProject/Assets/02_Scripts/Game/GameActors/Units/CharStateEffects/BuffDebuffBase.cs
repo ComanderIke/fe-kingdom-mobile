@@ -73,11 +73,12 @@ namespace Game.GameActors.Units.CharStateEffects
         }
         public virtual bool TakeEffect(Unit unit)
         {
-            BuffData.TakeEffect(unit);
+            if(duration[level]>0)
+                BuffData.TakeEffect(unit);
            
             // Debug.Log("TAKE EFFECT"+duration[level]);
             duration[level]--;
-            return duration[level] <= 0;
+            return duration[level] < 0;
         }
 
         public virtual void Unapply(Unit target)
