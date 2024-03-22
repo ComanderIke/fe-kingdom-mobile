@@ -129,14 +129,33 @@ namespace Game.Audio
                 m.Source.Play();
             if (m.playAfter != null)
             {
-                m.playAfter.Source.PlayDelayed(m.Clip.length+delay);
-                MonoUtility.DelayFunction(()=>
-                {
-                    currentlyPlayedMusic.Remove(m);
-                    currentlyPlayedMusic.Add(m.playAfter);
-                }, m.Clip.length+delay);
+                // m.playAfter.Source.PlayDelayed(m.Clip.length+delay);
+                // MonoUtility.DelayFunction(()=>
+                // {
+                //     currentlyPlayedMusic.Remove(m);
+                //     currentlyPlayedMusic.Add(m.playAfter);
+                // }, m.Clip.length+delay);
             }
                
+        }
+
+        private void Update()
+        {
+            for(int i=currentlyPlayedMusic.Count-1; i>=0; i--)
+            {
+                var musicData = currentlyPlayedMusic[i];
+                if (musicData.playAfter != null)
+                {
+                    // MyDebug.LogTest(musicData.Source.time +" "+musicData.Source.clip.length);
+                    if (Mathf.Abs(musicData.Source.time - musicData.Source.clip.length)<=0.03f)
+                    {
+                        musicData.playAfter.Source.Play();
+                        currentlyPlayedMusic.Remove(musicData);
+                        currentlyPlayedMusic.Add(musicData.playAfter);
+                        MyDebug.LogTest("Music Finished: "+musicData.Source.clip.name);
+                    }
+                }
+            }
         }
 
         private bool inBattle = false;
