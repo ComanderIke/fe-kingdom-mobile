@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.GameActors.Units.CharStateEffects;
 using Game.Graphics.BattleAnimations;
 using Game.GUI.Utility;
+using Game.Manager;
 using Game.Systems;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -17,6 +18,9 @@ namespace Game.GameActors.Units.OnGameObject
         public event Action OnAttackAnimationConnected;
 
         public bool setStunnedOnBeginning = false;
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private SpriteRenderer weaponSpriteRenderer;
+        [SerializeField] private SpriteRenderer specialSpriteRenderer;
         [SerializeField] private Animator animator;
         [SerializeField] private AnimationSpriteSwapper spriteSwapper;
         private static readonly int Selected = Animator.StringToHash("Selected");
@@ -61,6 +65,24 @@ namespace Game.GameActors.Units.OnGameObject
             if (lockAnimation)
                 return;
            // Debug.Log(name+" "+Vector3.Distance(lastPosition,transform.position));
+           float xDiff = (lastPosition.x - transform.position.x);
+           if (xDiff > 0.003f)
+           {
+               spriteRenderer.flipX = true;
+           }
+            else if(xDiff<-0.003f)
+                spriteRenderer.flipX = false;
+            else
+            {
+               // spriteRenderer.flipX = !GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction);
+            }
+
+           var flipX = spriteRenderer.flipX;
+           if(weaponSpriteRenderer!= null)
+            weaponSpriteRenderer.flipX = flipX;
+           if(specialSpriteRenderer!=null)
+            specialSpriteRenderer.flipX = flipX;
+           
             if (Vector3.Distance(lastPosition,transform.position)>0.001f)
             {
                 frameCount=0;

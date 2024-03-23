@@ -55,7 +55,7 @@ namespace Game.GameActors.Units
                 aiGroup.SetState(state);
             this.state = state;
         }
-        public virtual void UpdateState(IAIAgent agent, bool hasAttackableTargets, bool usedSkill = false)
+        public virtual void UpdateState(IAIAgent agent, bool hasAttackableTargets)
         {
             if (agent is Unit unit)
             {

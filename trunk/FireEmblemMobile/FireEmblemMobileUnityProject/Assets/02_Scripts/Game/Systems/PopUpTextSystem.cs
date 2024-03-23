@@ -22,6 +22,8 @@ namespace Game.Systems
 
         private void UnitDamaged(Unit unit, int dmg, DamageType damageType, bool crit, bool eff)
         {
+            if (unit.GameTransformManager == null)
+                return;
             if (unit.GameTransformManager.GameObject == null) //Only if Real instantiaed Unit takes dmg(not cloned battlepreview unit)
                 return;
            

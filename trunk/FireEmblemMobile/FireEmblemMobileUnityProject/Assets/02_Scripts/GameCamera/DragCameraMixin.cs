@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography;
 using Game.GameInput;
 using GameEngine.Input;
 using GameEngine.Tools;
@@ -14,6 +15,7 @@ namespace GameCamera
         private IHitChecker HitChecker { get; set; }
         private ICameraInputProvider CameraInputProvider { get; set; }
         public static bool blockDrag = false;
+        private bool normalDragActive = true;
 
         public void Construct(IDragPerformer dragPerformer, IRayProvider rayProvider, IHitChecker hitChecker,
             ICameraInputProvider cameraInputProvider)
@@ -27,17 +29,46 @@ namespace GameCamera
         private void Update()
         {
             CameraSystem.IsDragging = DragPerformer.IsDragging;
-            if (blockDrag)
-                return;
+            var inputPosition = CameraInputProvider.InputPosition();
             if (CameraInputProvider.InputPressed())
             {
+                float xDragDirection = 0;
+                float yDragDirection = 0;
+                if (IsOnScreenEdge(inputPosition, out xDragDirection, out yDragDirection))
+                {
+                    Debug.Log("On Screen edge:" + inputPosition + " " + Screen.height + " " + Screen.width);
+                    // if (!CheckUIObjectsInPosition())
+                    // {
+                    float speed = 0.018f;
+                    transform.Translate(xDragDirection * speed, yDragDirection * speed, 0, Space.World);
+
+                        // if (DragPerformer.HasDragStarted())
+                        //     DragPerformer.Drag(transform, CameraInputProvider.InputPosition());
+                        // else
+                        // {
+                        //     DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition(), true);
+                        // }
+
+                        return;
+                    // }
+                }
+            }
+
+            if (blockDrag||!normalDragActive)
+                return;
+           
+           
+            if (CameraInputProvider.InputPressed())
+            {
+              
                 DragPerformer.Drag(transform, CameraInputProvider.InputPosition());
 
             }
 
             if (CameraInputProvider.InputPressedDown())
             {
-                var ray = RayProvider.CreateRay(CameraInputProvider.InputPosition());
+                
+                var ray = RayProvider.CreateRay(inputPosition);
                 if (HitChecker.CheckHit(ray))
                 {
                     if (!CheckUIObjectsInPosition())
@@ -45,13 +76,32 @@ namespace GameCamera
                         DragPerformer.StartDrag(transform, CameraInputProvider.InputPosition());
                     }
                 }
+                
             }
+            
 
             if (CameraInputProvider.InputPressedUp())
             {
                 DragPerformer.EndDrag(transform);
                 CameraSystem.ActivateMixins();
             }
+        }
+
+        public bool IsOnScreenEdge(Vector3 screenPos, out float xDirection, out float yDirection)
+        {
+            float threshold = 100;
+            xDirection = 0;
+            yDirection = 0;
+            Debug.Log(Mathf.Abs(screenPos.y - Screen.height) + " " + threshold);
+            if (Mathf.Abs(screenPos.x - Screen.width) <= threshold)
+                xDirection = 1;
+            if (Mathf.Abs(screenPos.y - Screen.height) <= threshold)
+                yDirection = 1;
+            if (screenPos.x  <= threshold)
+                xDirection = -1;
+            if (screenPos.y  <= threshold)
+                yDirection = -1;
+            return xDirection!=0 || yDirection!=0;
         }
 
         public static bool CheckUIObjectsInPosition()
@@ -87,6 +137,16 @@ namespace GameCamera
 
             //Debug.Log("UICLICKCHECKER RETURN FALSE");
             return false;
+        }
+
+        
+        public void ActivateNormalDrag()
+        {
+            normalDragActive = true;
+        }
+        public void DeactivateNormalDrag()
+        {
+            normalDragActive = false;
         }
     }
 }

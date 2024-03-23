@@ -15,7 +15,7 @@ namespace Game.GameActors.Units
             return agent.SkillManager.ActiveSkills.First();//TODO USE TURNSKILLINDEX?
         }
 
-        public override void UpdateState(IAIAgent agent, bool hasAttackableTargets, bool usedSkill = false)
+        public override void UpdateState(IAIAgent agent, bool hasAttackableTargets)
         {
             int turn = GridGameManager.Instance.GetSystem<TurnSystem>().TurnCount;
             if (turn % everyXTurnUseSkill == 0)

@@ -13,6 +13,12 @@ namespace Game.AI.UnitSpecific
         public List<Vector2Int> AttackableTiles { get; set; }
         public ICombatResult CombatResult { get; set; }
 
+        public void AddAttackableTile(Vector2Int pos)
+        {
+            if(!AttackableTiles.Contains(pos))
+                AttackableTiles.Add(pos);
+        }
+
         public AIAttackTarget(IAttackableTarget target)
         {
             Target = target;

@@ -662,8 +662,13 @@ namespace Game.GameActors.Units
             // Debug.Log("Faction: "+Faction);
             // Debug.Log("IsEnemy: "+unit);
             // Debug.Log("unit.Faction.Id: "+unit);
-            if (Faction == null)
+            if (unit == null)
+                return true;
+            if (Faction == null || unit.Faction == null)
+            {
                 return ((Unit)unit).Party != Party;
+            }
+                
             return Faction.Id != unit.Faction.Id;
         }
 
@@ -753,6 +758,9 @@ namespace Game.GameActors.Units
                 OnCurseResisted?.Invoke();
                 return true;
             }
+
+            if (SkillManager.HasCurse(curse))
+                return true;
                 
             if(SkillManager.IsFull())
                 curse.OverwrittenSkill =SkillManager.RemoveRandomSkill();

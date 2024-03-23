@@ -20,7 +20,7 @@ namespace Game.GameActors.Units.Skills.EffectMixins
         public StatModifier AppliedStatModifier;
         private bool applied = false;
         private CameraSystem cameraSystem;
-
+        [SerializeField] private bool moveCameraOnApply;
         
 
         public override void Activate(Unit target,Unit caster, int level)
@@ -35,7 +35,7 @@ namespace Game.GameActors.Units.Skills.EffectMixins
                 this.target = target;
                 this.caster = caster;
                 this.activatedLevel = level;
-                if (cameraSystem.HasMixin<FocusCameraMixin>())
+                if (cameraSystem.HasMixin<FocusCameraMixin>()&&moveCameraOnApply)
                 {
                     AnimationQueue.Add(()=> cameraSystem.GetMixin<FocusCameraMixin>().SetTargets(target.GameTransformManager.GameObject, AISystem.cameraPerformerTime));
                     FocusCameraMixin.OnArrived += CameraOnUnit;

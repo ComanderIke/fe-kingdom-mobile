@@ -119,7 +119,7 @@ namespace Game.GameActors.Units
                 StartOfTurnState.OnStartOfTurnEffects -= StartofTurn;
             }
         }
-        public override void UpdateState(IAIAgent agent, bool hasAttackableTargets, bool usedSkill = false)
+        public override void UpdateState(IAIAgent agent, bool hasAttackableTargets)
         {
             if (agent is Unit unit)
             {
@@ -140,7 +140,7 @@ namespace Game.GameActors.Units
                     case State.Aggressive:
                         Debug.Log("HÄH");
                         
-                        base.UpdateState(agent, hasAttackableTargets, usedSkill);
+                        base.UpdateState(agent, hasAttackableTargets);
                         
                         break;
                     case State.Stunned:

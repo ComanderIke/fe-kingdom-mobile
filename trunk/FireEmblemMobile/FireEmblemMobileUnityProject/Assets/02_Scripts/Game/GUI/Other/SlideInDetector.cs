@@ -122,7 +122,7 @@ namespace Game.GUI.Other
         
         }
 
-        public void StartDrag(Transform transform, Vector3 dragDestination)
+        public void StartDrag(Transform transform, Vector3 dragDestination, bool opposite=false)
         {
             lastPosition = startPos = dragDestination;
             startedDrag = true;
@@ -144,5 +144,9 @@ namespace Game.GUI.Other
         }
 
         public bool IsDragging { get; set; }
+        public bool HasDragStarted()
+        {
+            return startedDrag;
+        }
     }
 }

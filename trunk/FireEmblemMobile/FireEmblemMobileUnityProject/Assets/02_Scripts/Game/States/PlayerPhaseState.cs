@@ -126,12 +126,14 @@ namespace Game.States
         }
         private void ActivateCameraDrag()
         {
-            cameraSystem.ActivateMixin<DragCameraMixin>();
+            cameraSystem.GetMixin<DragCameraMixin>().ActivateNormalDrag();
+           // cameraSystem.ActivateMixin<DragCameraMixin>();
         }
 
         private void DeactivateCameraDrag()
         {
-            cameraSystem.DeactivateMixin<DragCameraMixin>();
+            cameraSystem.GetMixin<DragCameraMixin>().DeactivateNormalDrag();
+            // cameraSystem.DeactivateMixin<DragCameraMixin>();
         }
 
         public override GameState<NextStateTrigger> Update()

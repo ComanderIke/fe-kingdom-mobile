@@ -64,10 +64,9 @@ namespace Game.Grid
 
             return targets;
         }
-        public List<IAttackableTarget> GetSkillTargetsAtPosition(IGridActor gridActor, int x, int y)
+        public List<IAttackableTarget> GetSkillTargetsAtPosition(IGridActor gridActor,Skill skill, int x, int y)
         {
             Unit unit = (Unit)gridActor;
-            Skill skill =unit.SkillManager.ActiveSkills[0];
             ActiveSkillMixin activeSkillMixin = skill.FirstActiveMixin;
          
             List<IAttackableTarget> targets = new List<IAttackableTarget>();
@@ -79,7 +78,7 @@ namespace Game.Grid
                 {
                     var tmpdirection = new Vector2(castTarget.x-x, castTarget.y-y).normalized;
                     var direction = new Vector2Int((int)tmpdirection.x, (int)tmpdirection.y);
-                    targets.AddRange(ptsm.GetAllTargets(unit, Tiles, castTarget.x, castTarget.y, direction));
+                    targets.AddRange(ptsm.GetAllTargets(unit, Tiles, x, y, direction));
                 }
                
             }

@@ -534,9 +534,10 @@ namespace Game.GameActors.Units.Skills.Active
         }
 
 
-        public List<IAttackableTarget> GetAllTargets(Unit selectedUnit, Tile[,] tiles, int x, int y,
+        public List<IAttackableTarget> GetAllTargets(Unit user, Tile[,] tiles, int x, int y,
             Vector2Int direction = default)
         {
+            var gridSystem = GridGameManager.Instance.GetSystem<GridSystem>();
             List<IAttackableTarget> targets = new List<IAttackableTarget>();
             foreach (var pos in GetTargetPositions(skill.Level, direction))
             {
@@ -545,8 +546,12 @@ namespace Game.GameActors.Units.Skills.Active
                 if (xPosition >= 0 && xPosition < tiles.GetLength(0) && yPosition >= 0 &&
                     yPosition < tiles.GetLength(1))
                 {
+                    if (stopOnCollision &&
+                        !gridSystem.GridLogic.IsTileAccessible(xPosition, yPosition, user, false))
+                        break;
+                    //cHeck if tile is blocked an block on collision is true stop the loop.
                     if (tiles[xPosition, yPosition].GridObject != null &&
-                        tiles[xPosition, yPosition].GridObject.Faction.Id != selectedUnit.Faction.Id)
+                        tiles[xPosition, yPosition].GridObject.Faction.Id != user.Faction.Id)
                     {
                         targets.Add((IAttackableTarget)tiles[xPosition, yPosition].GridObject);
                     }
@@ -584,16 +589,16 @@ namespace Game.GameActors.Units.Skills.Active
                         {
                             var pos = castPosition + new Vector2Int(i, j);
                             if (!gridSystem.IsOutOfBounds(pos.x, pos.y))
-                                castTargets.Add(pos);
+                                AddCastTarget(castTargets,pos);
                             pos = castPosition + new Vector2Int(-i, j);
                             if (!gridSystem.IsOutOfBounds(pos.x, pos.y))
-                                castTargets.Add(pos);
+                                AddCastTarget(castTargets,pos);
                             pos = castPosition + new Vector2Int(i, -j);
                             if (!gridSystem.IsOutOfBounds(pos.x, pos.y))
-                                castTargets.Add(pos);
+                                AddCastTarget(castTargets,pos);
                             pos = castPosition + new Vector2Int(-i, -j);
                             if (!gridSystem.IsOutOfBounds(pos.x, pos.y))
-                                castTargets.Add(pos);
+                                AddCastTarget(castTargets,pos);
                         }
                     }
                 }
@@ -603,10 +608,16 @@ namespace Game.GameActors.Units.Skills.Active
             {
                 if (Rooted && GetRange(level) == 0 && GetSize(level) > 0)
                 {
-                    castTargets.Add(new Vector2Int(x, y));
+                    AddCastTarget(castTargets,new Vector2Int(x,y));
                 }
             }
             return castTargets;
+        }
+
+        void AddCastTarget(List<Vector2Int> castTargets, Vector2Int pos)
+        {
+            if(!castTargets.Contains(pos))
+                castTargets.Add(pos);
         }
 
         public DamageSkillEffectMixin GetDamageMixin()

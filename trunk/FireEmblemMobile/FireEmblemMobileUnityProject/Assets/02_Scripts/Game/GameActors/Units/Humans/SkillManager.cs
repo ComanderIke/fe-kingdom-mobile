@@ -307,5 +307,13 @@ namespace Game.GameActors.Units.Humans
         {
             SkillPoints += points;
         }
+
+        public bool HasCurse(Curse curse)
+        {
+            var curses = GetCurses();
+            if (curses.Count == 0)
+                return false;
+            return curses.Any(c => c.Name == curse.Name);
+        }
     }
 }

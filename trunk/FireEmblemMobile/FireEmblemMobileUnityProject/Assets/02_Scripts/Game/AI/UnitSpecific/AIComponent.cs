@@ -16,6 +16,7 @@ namespace Game.AI.UnitSpecific
             Targets = new List<AITarget>();
             MovementOptions = new List<Vector2Int>();
             AttackableTargets = new List<AIAttackTarget>();
+            SkillTargets = new List<AIAttackTarget>();
             AIBehaviour = aiBehaviour;
             if(AIBehaviour!=null&&initBehaviour)
                 AIBehaviour.Init(unit);
@@ -26,11 +27,13 @@ namespace Game.AI.UnitSpecific
         public List<Vector2Int> MovementOptions{ get; set; }
 
         public List<AIAttackTarget> AttackableTargets { get; set; }
+        public List<AIAttackTarget> SkillTargets { get; set; }
         public List<Goal> AIGoals { get; set; }
         public WeightSet WeightSet { get; set; }
         public List<AITarget> Targets { get; set; }
         public AITarget ClosestTarget { get; set; }
         public AIAttackTarget BestAttackTarget { get; set; }
+        public AIAttackTarget BestSkillTarget { get; set; }
 
         public int DistanceToClosestEnemy()
         {

@@ -139,6 +139,8 @@ namespace Game.GameInput.InputReceivers
 
         public void DraggedOverObject(IGridObject gridObject)
         {
+            if (selectionDataProvider.SelectedActor == null)
+                return;
             ResetDragSelectables();
             gridSystem.cursor.SetCurrentTile(gridSystem.Tiles[gridObject.GridComponent.GridPosition.X,
                 gridObject.GridComponent.GridPosition.Y]);

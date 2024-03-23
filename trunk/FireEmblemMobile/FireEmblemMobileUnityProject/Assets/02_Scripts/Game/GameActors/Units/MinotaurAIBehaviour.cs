@@ -35,6 +35,7 @@ namespace Game.GameActors.Units
                 AnimationQueue.Add(() =>
                 {
                     rageMeter++;
+                    SetState(State.UseSkill);
                     if (rageMeter > fullRageAmount)
                         rageMeter = fullRageAmount;
                     OnRageMeterChanged?.Invoke();
@@ -44,11 +45,19 @@ namespace Game.GameActors.Units
                
             
         }
+
+        public override void UsedSkill(Skill skillToUse)
+        {
+            rageMeter = 0;
+            OnRageMeterChanged?.Invoke();
+            base.UsedSkill(skillToUse);
+        }
+
         public override Skill GetSkillToUse()
         {
             if (rageMeter >= fullRageAmount)
                 return agent.SkillManager.ActiveSkills[fullRageSkillIndex];
-            return base.GetSkillToUse();
+            return null;
         }
 
         public override void Init(Unit agent)
@@ -58,7 +67,7 @@ namespace Game.GameActors.Units
             Unit.OnUnitDamaged += UnitDamaged;
             base.Init(agent);
         }
-        public override void UpdateState(IAIAgent agent, bool hasAttackableTargets, bool usedSkill = false)
+        public override void UpdateState(IAIAgent agent, bool hasAttackableTargets)
         {
             if (agent is Unit unit)
             {
@@ -72,20 +81,17 @@ namespace Game.GameActors.Units
                     if (GetState() == State.Stunned)
                         SetState( State.Aggressive);
                 }
+                if (rageMeter >= fullRageAmount)
+                {
+                    SetState(State.UseSkill);
+                }
 
                 switch (GetState())
                 {
                     case State.Aggressive:
                         Debug.Log("HÄH");
-                        if (rageMeter >= fullRageAmount)
-                        {
-                            SetState(State.UseSkill);
-                        }
-                        else
-                        {
-                            base.UpdateState(agent, hasAttackableTargets, usedSkill);
-                            
-                        }
+                        
+                            base.UpdateState(agent, hasAttackableTargets);
                         break;
                     case State.Stunned:
                         //check if still stunned
@@ -93,12 +99,6 @@ namespace Game.GameActors.Units
                         //if no=> change state to aggressive
                         break;
                     case State.UseSkill:
-                        if (usedSkill)
-                        {
-                            SetState(State.Aggressive);
-                            rageMeter = 0;
-                            OnRageMeterChanged?.Invoke();
-                        }
                             
                         // if no enemies in attackrange AND no enemies in Range to stun
                         // do normal aggressive behaviour

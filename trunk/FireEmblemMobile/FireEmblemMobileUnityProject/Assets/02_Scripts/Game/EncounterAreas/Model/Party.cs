@@ -173,7 +173,7 @@ namespace Game.EncounterAreas.Model
         public void PartyMemberDied(Unit member)
         {
             var tempUnit = ActiveUnit;
-            if (ActiveUnit.Equals(member))
+            if (ActiveUnit!=null&&ActiveUnit.Equals(member))
             {
                 if (ActiveUnitIndex != 0)
                     tempUnit = members[0];
