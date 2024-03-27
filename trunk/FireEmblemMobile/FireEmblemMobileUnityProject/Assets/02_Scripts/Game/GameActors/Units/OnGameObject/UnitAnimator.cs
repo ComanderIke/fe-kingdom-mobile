@@ -77,13 +77,16 @@ namespace Game.GameActors.Units.OnGameObject
                // spriteRenderer.flipX = !GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction);
             }
 
-           var flipX = spriteRenderer.flipX;
-           if(weaponSpriteRenderer!= null)
-            weaponSpriteRenderer.flipX = flipX;
-           if(specialSpriteRenderer!=null)
-            specialSpriteRenderer.flipX = flipX;
-           
-            if (Vector3.Distance(lastPosition,transform.position)>0.001f)
+           if (spriteRenderer != null)
+           {
+               var flipX = spriteRenderer.flipX;
+               if (weaponSpriteRenderer != null)
+                   weaponSpriteRenderer.flipX = flipX;
+               if (specialSpriteRenderer != null)
+                   specialSpriteRenderer.flipX = flipX;
+           }
+
+           if (Vector3.Distance(lastPosition,transform.position)>0.001f)
             {
                 frameCount=0;
                 if (!moving)
