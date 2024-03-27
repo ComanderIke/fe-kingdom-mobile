@@ -65,20 +65,21 @@ namespace Game.GameActors.Units.OnGameObject
             if (lockAnimation)
                 return;
            // Debug.Log(name+" "+Vector3.Distance(lastPosition,transform.position));
-           float xDiff = (lastPosition.x - transform.position.x);
-           if (xDiff > 0.003f)
-           {
-               spriteRenderer.flipX = true;
-           }
-            else if(xDiff<-0.003f)
-                spriteRenderer.flipX = false;
-            else
-            {
-               // spriteRenderer.flipX = !GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction);
-            }
+           
 
            if (spriteRenderer != null)
            {
+               float xDiff = (lastPosition.x - transform.position.x);
+               if (xDiff > 0.003f)
+               {
+                   spriteRenderer.flipX = true;
+               }
+               else if(xDiff<-0.003f)
+                   spriteRenderer.flipX = false;
+               else
+               {
+                   // spriteRenderer.flipX = !GridGameManager.Instance.FactionManager.IsActiveFaction(unit.Faction);
+               }
                var flipX = spriteRenderer.flipX;
                if (weaponSpriteRenderer != null)
                    weaponSpriteRenderer.flipX = flipX;
